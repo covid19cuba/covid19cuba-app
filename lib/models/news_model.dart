@@ -1,33 +1,54 @@
 
 import 'package:flutter/cupertino.dart';
 
-class NewsModel{
+class SimpleNews{
   final DateTime date;
   final String provider;
   final String message;
 
-  const NewsModel({@required this.date, @required this.provider, @required this.message})
+  const SimpleNews({@required this.date, @required this.provider, @required this.message})
       : assert(date != null),
         assert(provider != null),
         assert(message != null);
 
-  static NewsModel fromJson(Map<String, dynamic> json){
-      return NewsModel(
+  static SimpleNews fromJson(Map<String, dynamic> json){
+    return SimpleNews(
         date: new DateTime.fromMicrosecondsSinceEpoch(json['timestamp'] * 1000),
         provider: json['user'],
         message: json['message']
-      );
+    );
   }
 
-  static List<NewsModel> newsfromJson(Map<String, dynamic> json){
-      var newslist = new List<NewsModel>();
+  Map<String,dynamic> toJson(){
+    return <String,dynamic>{
+      'date': date.toIso8601String(),
+      'provider': provider,
+      'message' : message
+    };
+  }
+}
+
+class NewsModel{
+  final List<SimpleNews> news;
+
+  const NewsModel({@required this.news})
+      : assert(news != null);
+
+  static NewsModel fromJson(Map<String, dynamic> json){
+      var newslist = new List<SimpleNews>();
       if (json['state'] != 'success'){
         return null;
       }
       for(var key in json['entries']){
-        newslist.add(NewsModel.fromJson(key));
+        newslist.add(SimpleNews.fromJson(key));
       }
-      return newslist;
+      return NewsModel(news: newslist);
+  }
+
+  Map<String,dynamic> toJson(){
+    return <String,dynamic>{
+      'news': news,
+    };
   }
 
 }
