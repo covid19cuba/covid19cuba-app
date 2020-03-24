@@ -14,3 +14,7 @@ class LoadHomeEvent extends HomeEvent {
 class FetchHomeEvent extends HomeEvent {
   const FetchHomeEvent();
 }
+
+class RefreshHomeEvent extends HomeEvent {
+  const RefreshHomeEvent();
+}

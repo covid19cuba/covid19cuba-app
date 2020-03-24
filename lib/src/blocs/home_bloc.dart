@@ -20,11 +20,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is LoadHomeEvent) {
       yield LoadingHomeState();
       try {
-        var data = await getData(); // TODO: Make request to cache for load data
+        var data = await getDataFromCache();
         if (data == null) {
           data = await getData();
         }
-        // TODO: Make request to cache for save data
+        setDataToCache(data);
         yield LoadedHomeState(data: data);
       } on BadRequestException catch (e) {
         log(e.toString());
@@ -47,7 +47,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield LoadingHomeState();
       try {
         var data = await getData();
-        // TODO: Make request to cache for save data
+        setDataToCache(data);
+        yield LoadedHomeState(data: data);
+      } on BadRequestException catch (e) {
+        log(e.toString());
+        yield ErrorHomeState(
+          errorMessage: 'No se ha podido establecer conexión. Por favor, '
+              'revise su conexión y vuelva a intentarlo.',
+        );
+      } on SocketException catch (e) {
+        log(e.toString());
+        yield ErrorHomeState(
+          errorMessage: 'No se ha podido establecer conexión. Por favor, '
+              'revise su conexión y vuelva a intentarlo.',
+        );
+      } catch (e) {
+        log(e.toString());
+        yield ErrorHomeState(errorMessage: e.toString());
+      }
+    }
+    if (event is RefreshHomeEvent) {
+      try {
+        var data = await getData();
+        setDataToCache(data);
         yield LoadedHomeState(data: data);
       } on BadRequestException catch (e) {
         log(e.toString());
