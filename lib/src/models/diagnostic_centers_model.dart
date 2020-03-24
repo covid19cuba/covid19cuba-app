@@ -1,9 +1,9 @@
-import 'package:covid19cuba/models/models.dart';
+import 'package:covid19cuba/src/models/models.dart';
 
-class IsolationCentersModel {
+class DiagnosticCentersModel {
   Map<String, CenterModel> centers;
 
-  IsolationCentersModel({this.centers});
+  DiagnosticCentersModel({this.centers});
 
   Map<String, dynamic> toJson() {
     var result = Map<String, dynamic>();
@@ -13,12 +13,12 @@ class IsolationCentersModel {
     return result;
   }
 
-  static IsolationCentersModel fromJson(Map<String, dynamic> json) {
+  static DiagnosticCentersModel fromJson(Map<String, dynamic> json) {
     var centers = Map<String, CenterModel>();
     for (var key in json.keys) {
       var center = CenterModel.fromJson(json[key]);
       centers[key] = center;
     }
-    return IsolationCentersModel(centers: centers);
+    return DiagnosticCentersModel(centers: centers);
   }
 }
