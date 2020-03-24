@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'daily_status_model.dart';
 
 class RegionModel {
