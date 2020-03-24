@@ -10,6 +10,8 @@ class DayModel {
   List<String> deathsId;
   int evacueesNumber;
   List<String> evacueesId;
+  int recoveredNumber;
+  List<String> recoveredId;
 
   DayModel({
     this.date,
@@ -21,12 +23,15 @@ class DayModel {
     this.deathsId,
     this.evacueesNumber,
     this.evacueesId,
+    this.recoveredNumber,
+    this.recoveredId,
   });
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'fecha': '${date.year}/${date.month}/${date.day}',
-      'diagnosticados': diagnosed != null ? diagnosed.map((x) => x.toJson()).toList() : null,
+      'diagnosticados':
+          diagnosed != null ? diagnosed.map((x) => x.toJson()).toList() : null,
       'sujetos_riesgo': riskSubjects,
       'graves_numero': seriousNumber,
       'graves_id': seriousId,
@@ -34,6 +39,8 @@ class DayModel {
       'muertes_id': deathsId,
       'evacuados_numero': evacueesNumber,
       'evacuados_id': evacueesId,
+      'recuperados_numero': recoveredNumber,
+      'recuperados_id': recoveredId,
     };
   }
 
@@ -45,6 +52,7 @@ class DayModel {
     List<dynamic> seriousId = json['graves_id'];
     List<dynamic> deathsId = json['muertes_id'];
     List<dynamic> evacueesId = json['evacuados_id'];
+    List<dynamic> recoveredId = json['recuperados_id'];
     return DayModel(
       date: DateTime(year, month, day),
       diagnosed: diagnosed != null
@@ -61,6 +69,10 @@ class DayModel {
       evacueesNumber: json['evacuados_numero'],
       evacueesId: evacueesId != null
           ? evacueesId.map((x) => x.toString()).toList()
+          : null,
+      recoveredNumber: json['recuperados_numero'],
+      recoveredId: recoveredId != null
+          ? recoveredId.map((x) => x.toString()).toList()
           : null,
     );
   }
