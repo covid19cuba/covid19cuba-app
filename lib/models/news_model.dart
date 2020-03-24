@@ -13,7 +13,7 @@ class SimpleNews{
 
   static SimpleNews fromJson(Map<String, dynamic> json){
     return SimpleNews(
-        date: new DateTime.fromMicrosecondsSinceEpoch(json['timestamp'] * 1000),
+        date: new DateTime.fromMicrosecondsSinceEpoch(int.parse(json['timestamp']) * 1000),
         provider: json['user'],
         message: json['message']
     );
@@ -36,7 +36,7 @@ class NewsModel{
 
   static NewsModel fromJson(Map<String, dynamic> json){
       var newslist = new List<SimpleNews>();
-      if (json['state'] != 'success'){
+      if (!json['success']){
         return null;
       }
       for(var key in json['entries']){
@@ -47,7 +47,7 @@ class NewsModel{
 
   Map<String,dynamic> toJson(){
     return <String,dynamic>{
-      'news': news,
+      'news': news.map((i) => i.toJson()).toList(),
     };
   }
 
