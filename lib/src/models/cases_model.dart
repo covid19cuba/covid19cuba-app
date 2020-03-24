@@ -1,4 +1,4 @@
-import 'package:covid19cuba/models/models.dart';
+import 'package:covid19cuba/src/models/models.dart';
 
 class CasesModel {
   Map<String, DayModel> days;
