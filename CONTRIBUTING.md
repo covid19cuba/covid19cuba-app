@@ -3,6 +3,7 @@
 ### All contributors will be granted credit on the following list:
 * Leynier Gutiérrez González ([@leynier](https://github.com/leynier))
 * Norlan Capote Díaz ([@norlancd](https://github.com/norlancd))
+* Carlos Bermudez Porto ([@stdevCbermudez](https://github.com/stdevCbermudez))
 
 You can help out by: 
 - Reporting a bug
