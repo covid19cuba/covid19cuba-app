@@ -90,7 +90,7 @@ class ResumeWidget extends StatelessWidget {
               children: [
                 TableCell(
                   child: Container(
-                    margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(15),
                     child: Center(
                       child: Text(
                         'Actualización del ${data.update.day} de ${months[data.update.month - 1]} del ${data.update.year}',
