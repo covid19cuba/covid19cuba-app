@@ -2,6 +2,10 @@
 
 Mobile application of covid19cubadata.github.io
 
+[![Last commit](https://img.shields.io/github/last-commit/Covid19-Cuba-Efforts/covid19cuba-app.svg?style=flat)](https://github.com/Covid19-Cuba-Efforts/covid19cuba-app/commits) [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Covid19-Cuba-Efforts/covid19cuba-app)](https://github.com/Covid19-Cuba-Efforts/covid19cuba-app/commits) [![Github Stars](https://img.shields.io/github/stars/Covid19-Cuba-Efforts/covid19cuba-app?style=flat&logo=github)](https://github.com/Covid19-Cuba-Efforts/covid19cuba-app) [![Github Forks](https://img.shields.io/github/forks/Covid19-Cuba-Efforts/covid19cuba-app?style=flat&logo=github)](https://github.com/Covid19-Cuba-Efforts/covid19cuba-app) [![Github Watchers](https://img.shields.io/github/watchers/Covid19-Cuba-Efforts/covid19cuba-app?style=flat&logo=github)](https://github.com/Covid19-Cuba-Efforts/covid19cuba-app) [![GitHub contributors](https://img.shields.io/github/contributors/Covid19-Cuba-Efforts/covid19cuba-app)](https://github.com/Covid19-Cuba-Efforts/covid19cuba-app/graphs/contributors)
+
+Application for mobile devices of the Cuba Weather project implemented with Flutter.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
