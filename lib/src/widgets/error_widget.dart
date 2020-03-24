@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getflutter/getflutter.dart';
 
 import 'package:covid19cuba/src/blocs/blocs.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 
 class ErrorWidget extends StatelessWidget {
   final String errorMessage;
@@ -17,7 +18,7 @@ class ErrorWidget extends StatelessWidget {
           margin: EdgeInsets.all(30),
           child: Icon(
             Icons.error_outline,
-            color: Colors.white,
+            color: Constants.primaryColor,
             size: 150,
           ),
         ),
@@ -25,7 +26,7 @@ class ErrorWidget extends StatelessWidget {
           'Ha ocurrido un error',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Colors.white,
+            color: Constants.primaryColor,
             fontWeight: FontWeight.bold,
             fontSize: 30,
           ),
@@ -38,7 +39,7 @@ class ErrorWidget extends StatelessWidget {
               errorMessage,
               textAlign: TextAlign.left,
               style: TextStyle(
-                color: Colors.white,
+                color: Constants.primaryColor,
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
               ),
@@ -49,8 +50,8 @@ class ErrorWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 50),
           child: GFButton(
             text: 'Intentar actualizar la información',
-            textColor: Colors.white,
-            color: Colors.white,
+            textColor: Constants.primaryColor,
+            color: Constants.primaryColor,
             size: GFSize.LARGE,
             shape: GFButtonShape.pills,
             type: GFButtonType.outline2x,
@@ -64,8 +65,8 @@ class ErrorWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 50),
           child: GFButton(
             text: 'Ver última información obtenida',
-            textColor: Colors.white,
-            color: Colors.white,
+            textColor: Constants.primaryColor,
+            color: Constants.primaryColor,
             size: GFSize.LARGE,
             shape: GFButtonShape.pills,
             type: GFButtonType.outline2x,
