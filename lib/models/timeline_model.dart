@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'region_model.dart';
 
 class TimelineModel {
-  final String updated;
+  final DateTime updated;
   final List<RegionModel> regions;
 
   const TimelineModel({@required this.regions, @required this.updated})
@@ -11,19 +11,18 @@ class TimelineModel {
 
   static TimelineModel parse(dynamic json) {
     final data = json as Map;
-    String mark = '';
+    DateTime date;
     var regions = List<RegionModel>();
     for (final region in data.keys) {
       if (region == 'updated') {
-        mark = data[region];
-      }
-      else if (region == 'success'){
+        int timestamp = int.parse(data[region]) * 1000;
+        date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+      } else if (region == 'success') {
         continue; // this value is not needed
-      }
-      else {
+      } else {
         regions.add(RegionModel.parse(region, data[region]));
       }
     }
-    return TimelineModel(updated: mark,regions: regions);
+    return TimelineModel(updated: date, regions: regions);
   }
 }
