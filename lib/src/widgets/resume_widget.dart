@@ -37,6 +37,36 @@ class ResumeWidget extends StatelessWidget {
       children: <Widget>[
         Table(
           border: TableBorder(
+            top: BorderSide(
+              color: Colors.white,
+              width: 4,
+            ),
+            horizontalInside: borderSide,
+            bottom: borderSide,
+          ),
+          children: [
+            TableRow(
+              children: [
+                TableCell(
+                  child: Container(
+                    margin: EdgeInsets.all(15),
+                    child: Center(
+                      child: Text(
+                        'Actualización del ${data.update.day} de ${months[data.update.month - 1]} del ${data.update.year}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+        Table(
+          border: TableBorder(
             top: borderSide,
             horizontalInside: borderSide,
             bottom: borderSide,
@@ -75,36 +105,6 @@ class ResumeWidget extends StatelessWidget {
               ],
             );
           }).toList(),
-        ),
-        Table(
-          border: TableBorder(
-            top: BorderSide(
-              color: Colors.white,
-              width: 4,
-            ),
-            horizontalInside: borderSide,
-            bottom: borderSide,
-          ),
-          children: [
-            TableRow(
-              children: [
-                TableCell(
-                  child: Container(
-                    margin: EdgeInsets.all(15),
-                    child: Center(
-                      child: Text(
-                        'Actualización del ${data.update.day} de ${months[data.update.month - 1]} del ${data.update.year}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
         ),
       ],
     );
