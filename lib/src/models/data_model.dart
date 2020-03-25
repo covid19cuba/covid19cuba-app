@@ -146,6 +146,22 @@ class DataModel {
     return result;
   }
 
+  Map<String, String> get countriesPretty {
+    return <String, String>{
+      'cu': 'Cuba',
+      'it': 'Italia',
+      'be': 'Bélgica',
+      'us': 'USA',
+      'fr': 'Francia',
+      'ca': 'Canadá',
+      'es': 'España',
+      'cn': 'China',
+      'ru': 'Rusia',
+      'uy': 'Uruguay',
+      'do': 'R.Dominicana',
+    };
+  }
+
   Map<String, int> get countries {
     var result = Map<String, int>();
     days
