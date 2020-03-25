@@ -17,7 +17,7 @@ Future<TimelineModel> fecthTimeLine() async {
   try {
     result = TimelineModel.parse(jsonDecode(resp.body));
   } catch (e) {
-    log(e);
+    log(e.toString());
     throw ParseException('Parse error');
   }
   return result;

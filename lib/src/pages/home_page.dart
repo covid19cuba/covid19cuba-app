@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,10 +16,12 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   AnimationController fadeController;
   Animation<double> fadeAnimation;
+  Completer<void> refreshCompleter;
 
   @override
   void initState() {
     super.initState();
+    refreshCompleter = Completer<void>();
     fadeController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,
@@ -40,24 +44,42 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         drawer: HomeDrawer(),
         body: FadeTransition(
           opacity: fadeAnimation,
-          child: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              fadeController.reset();
-              fadeController.forward();
-              if (state is InitialHomeState) {
-                BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent());
-              }
-              if (state is LoadingHomeState) {
-                return LoadingWidget();
-              }
+          child: BlocListener<HomeBloc, HomeState>(
+            listener: (context, state) {
               if (state is LoadedHomeState) {
-                return HomeWidget(data: state.data);
+                refreshCompleter?.complete();
+                refreshCompleter = Completer();
               }
-              if (state is ErrorHomeState) {
-                return ew.ErrorWidget(errorMessage: state.errorMessage);
-              }
-              return Container();
             },
+            child: BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                fadeController.reset();
+                fadeController.forward();
+                if (state is InitialHomeState) {
+                  BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent());
+                }
+                if (state is LoadingHomeState) {
+                  return LoadingWidget();
+                }
+                if (state is LoadedHomeState) {
+                  return Container(
+                    child: RefreshIndicator(
+                      onRefresh: () {
+                        BlocProvider.of<HomeBloc>(context).add(
+                          RefreshHomeEvent(),
+                        );
+                        return refreshCompleter.future;
+                      },
+                      child: HomeWidget(data: state.data),
+                    ),
+                  );
+                }
+                if (state is ErrorHomeState) {
+                  return ew.ErrorWidget(errorMessage: state.errorMessage);
+                }
+                return Container();
+              },
+            ),
           ),
         ),
       ),

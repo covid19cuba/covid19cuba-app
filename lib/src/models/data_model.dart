@@ -58,6 +58,15 @@ class DataModel {
         'Desconocido',
       ];
 
+  Map<String, String> get contagionsPretty {
+    return <String, String>{
+      'importado': 'Importados',
+      'introducido': 'Introducidos',
+      'autoctono': 'Autóctonos',
+      'desconocido': 'Desconocidos',
+    };
+  }
+
   Map<String, int> get contagions {
     var result = <String, int>{
       'importado': 0,
@@ -80,6 +89,14 @@ class DataModel {
       });
     });
     return result;
+  }
+
+  Map<String, String> get gendersPretty {
+    return <String, String>{
+      'hombre': 'Hombres',
+      'mujer': 'Mujeres',
+      'no reportado': 'No Reportados',
+    };
   }
 
   Map<String, int> get genders {
@@ -127,6 +144,22 @@ class DataModel {
       });
     });
     return result;
+  }
+
+  Map<String, String> get countriesPretty {
+    return <String, String>{
+      'cu': 'Cuba',
+      'it': 'Italia',
+      'be': 'Bélgica',
+      'us': 'USA',
+      'fr': 'Francia',
+      'ca': 'Canadá',
+      'es': 'España',
+      'cn': 'China',
+      'ru': 'Rusia',
+      'uy': 'Uruguay',
+      'do': 'R.Dominicana',
+    };
   }
 
   Map<String, int> get countries {

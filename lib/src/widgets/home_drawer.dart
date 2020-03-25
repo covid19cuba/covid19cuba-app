@@ -59,6 +59,21 @@ class HomeDrawer extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
+                'Los datos se actualizan a partir de la información oficial '
+                'del MINSAP informados por las autoridades al dia siguiente.',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Container(
+              height: 2,
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Text(
                 'Puede contribuir al desarrollo de esta aplicación, pues '
                 'es un proyecto de código abierto.',
                 style: TextStyle(
@@ -66,16 +81,17 @@ class HomeDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            ListTile(
-              title: Text(
-                'Ver el código fuente',
-                style: TextStyle(
-                  color: Colors.white,
+            GestureDetector(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  'Ver el código fuente',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              leading: Icon(
-                Icons.link,
-                color: Colors.white,
               ),
               onTap: () async {
                 Navigator.pop(context);
@@ -87,6 +103,95 @@ class HomeDrawer extends StatelessWidget {
                   dev.log('Could not launch $url');
                 }
               },
+            ),
+            Container(
+              height: 2,
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+            ),
+            GestureDetector(
+              child: Container(
+                padding: EdgeInsets.only(left: 20, right: 20, top: 40),
+                child: Text(
+                  'MatCom',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              onTap: () async {
+                Navigator.pop(context);
+                const url = 'https://t.me/matcomuh';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  dev.log('Could not launch $url');
+                }
+              },
+            ),
+            GestureDetector(
+              child: Container(
+                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                child: Text(
+                  'postData.club',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              onTap: () async {
+                Navigator.pop(context);
+                const url = 'https://www.postdata.club';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  dev.log('Could not launch $url');
+                }
+              },
+            ),
+            GestureDetector(
+              child: Container(
+                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                child: Text(
+                  'Juventud Técnica',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              onTap: () async {
+                Navigator.pop(context);
+                const url = 'https://medium.com/juventud-técnica';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  dev.log('Could not launch $url');
+                }
+              },
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Copyright 2020',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Container(padding: EdgeInsets.all(2)),
+                  Icon(Icons.copyright, color: Colors.white),
+                ],
+              ),
             ),
           ],
         ),
