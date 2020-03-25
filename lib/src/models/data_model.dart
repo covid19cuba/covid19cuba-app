@@ -58,6 +58,15 @@ class DataModel {
         'Desconocido',
       ];
 
+  Map<String, String> get contagionsPretty {
+    return <String, String>{
+      'importado': 'Importados',
+      'introducido': 'Introducidos',
+      'autoctono': 'Autóctonos',
+      'desconocido': 'Desconocidos',
+    };
+  }
+
   Map<String, int> get contagions {
     var result = <String, int>{
       'importado': 0,
