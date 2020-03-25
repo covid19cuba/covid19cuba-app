@@ -82,6 +82,14 @@ class DataModel {
     return result;
   }
 
+  Map<String, String> get gendersPretty {
+    return <String, String>{
+      'hombre': 'Hombres',
+      'mujer': 'Mujeres',
+      'no reportado': 'No Reportados',
+    };
+  }
+
   Map<String, int> get genders {
     var result = <String, int>{
       'hombre': 0,
