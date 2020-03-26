@@ -1,4 +1,5 @@
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 
 class DayModel {
   DateTime date;
@@ -59,18 +60,18 @@ class DayModel {
           ? diagnosed.map((x) => DiagnosedModel.fromJson(x)).toList()
           : null,
       riskSubjects: json['sujetos_riesgo'],
-      seriousNumber: json['graves_numero'],
+      seriousNumber: getInt(json['graves_numero']),
       seriousId: seriousId != null
           ? seriousId.map((x) => x.toString()).toList()
           : null,
-      deathsNumber: json['muertes_numero'],
+      deathsNumber: getInt(json['muertes_numero']),
       deathsId:
           deathsId != null ? deathsId.map((x) => x.toString()).toList() : null,
-      evacueesNumber: json['evacuados_numero'],
+      evacueesNumber: getInt(json['evacuados_numero']),
       evacueesId: evacueesId != null
           ? evacueesId.map((x) => x.toString()).toList()
           : null,
-      recoveredNumber: json['recuperados_numero'],
+      recoveredNumber: getInt(json['recuperados_numero']),
       recoveredId: recoveredId != null
           ? recoveredId.map((x) => x.toString()).toList()
           : null,
