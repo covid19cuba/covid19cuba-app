@@ -8,3 +8,4 @@ export 'loading_widget.dart';
 export 'pie_contagion_widget.dart';
 export 'pie_sex_widget.dart';
 export 'resume_widget.dart';
+export 'countries_comparison.dart';
