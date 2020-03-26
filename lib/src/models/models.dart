@@ -6,3 +6,5 @@ export 'diagnosed_model.dart';
 export 'diagnostic_centers_model.dart';
 export 'isolation_centers_model.dart';
 export 'timeline_model.dart';
+export 'world_totals_model.dart';
+export 'country_total_model.dart';
