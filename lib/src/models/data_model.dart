@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:covid19cuba/src/models/models.dart';
 
 class DataModel {
@@ -201,12 +203,31 @@ class DataModel {
   }
 
   static DataModel fromJson(Map<String, dynamic> json) {
+    CasesModel cases;
+    DiagnosticCentersModel diagnosticCenter;
+    IsolationCentersModel isolationCenters;
+    try {
+      cases = CasesModel.fromJson(json['casos']);
+    } catch(e) {
+      log('cases->' + e.toString());
+      throw e;
+    }
+    try {
+     diagnosticCenter = DiagnosticCentersModel.fromJson(json['centros_diagnostico']);
+    } catch(e) {
+      log('diagnostic->' + e.toString());
+      throw e;
+    }
+    try {
+    isolationCenters = IsolationCentersModel.fromJson(json['centros_aislamiento']);
+    } catch(e) {
+      log('isolation->' + e.toString());
+      throw e;
+    }
     return DataModel(
-      cases: CasesModel.fromJson(json['casos']),
-      diagnosticCenters:
-          DiagnosticCentersModel.fromJson(json['centros_diagnostico']),
-      isolationCenters:
-          IsolationCentersModel.fromJson(json['centros_aislamiento']),
+      cases: cases,
+      diagnosticCenters: diagnosticCenter,
+      isolationCenters: isolationCenters,
     );
   }
 }

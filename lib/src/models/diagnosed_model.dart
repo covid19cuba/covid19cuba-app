@@ -1,3 +1,5 @@
+import 'package:covid19cuba/src/utils/utils.dart';
+
 class DiagnosedModel {
   String id;
   String country;
@@ -84,7 +86,7 @@ class DiagnosedModel {
     return DiagnosedModel(
       id: json['id'],
       country: json['pais'],
-      age: json['edad'],
+      age: getInt(json['edad']),
       sex: json['sexo'],
       arrivalInCubaFocus: json['arribo_a_cuba_foco'] != null
           ? DateTime(year1, month1, day1)
@@ -100,7 +102,7 @@ class DiagnosedModel {
       dpacodeVisitedProvinces:
           dpacodeVisitedProvinces.map((x) => x.toString()).toList(),
       contagion: json['contagio'],
-      focalContact: json['contacto_focal'],
+      focalContact: getInt(json['contacto_focal']),
       isolationCenter: json['centro_aislamiento'],
       diagnosticCenter: json['centro_diagnostico'],
       possibleOriginContagion:
