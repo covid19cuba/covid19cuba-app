@@ -1,51 +1,67 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:meta/meta.dart';
 
-class NotfificationManager {
-  static final NotfificationManager _singleton = NotfificationManager._mger();
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+class NotificationManager {
+  static final NotificationManager _singleton = NotificationManager._mger();
   final NotificationBuilder builder = NotificationBuilder();
 
-  factory NotfificationManager(){
+  factory NotificationManager() {
     return _singleton;
   }
 
-  NotfificationManager._mger();
+  NotificationManager._mger();
 
-  void stopAllNotifications(){
+  void stopAllNotifications() {
     builder.notifications.cancelAll();
   }
 
-  void showSimpleNotification(String title, String body){
-    showOngoingNotification(builder.notifications, title: title, body: body);
+  void showSimpleNotification(String title, String body) {
+    showOngoingNotification(
+      builder.notifications,
+      title: title,
+      body: body,
+    );
   }
 
-  void showSilentNotification(String title, String body){
-    _showNotification(builder.notifications, title: title, body: body, type: _noSound);
+  void showSilentNotification(String title, String body) {
+    _showNotification(
+      builder.notifications,
+      title: title,
+      body: body,
+      type: _noSound,
+    );
   }
 
-  void scheduleNotification(String title, String, body, DateTime date){
-    builder.notifications.schedule(0, title, body, date, _ongoing);
+  void scheduleNotification(String title, String body, DateTime date) {
+    builder.notifications.schedule(
+      0,
+      title,
+      body,
+      date,
+      _ongoing,
+    );
   }
 }
 
-class NotificationBuilder{
-
+class NotificationBuilder {
   FlutterLocalNotificationsPlugin notifications;
   AndroidInitializationSettings settingsAndroid;
   IOSInitializationSettings settingsIOS;
 
-   NotificationBuilder(){
-     notifications = FlutterLocalNotificationsPlugin();
-     settingsAndroid = AndroidInitializationSettings('icon');
-     settingsIOS = IOSInitializationSettings();
+  NotificationBuilder() {
+    notifications = FlutterLocalNotificationsPlugin();
+    settingsAndroid = AndroidInitializationSettings('icon');
+    settingsIOS = IOSInitializationSettings();
 
-     notifications.initialize(
-         InitializationSettings(settingsAndroid, settingsIOS));
-   }
+    notifications.initialize(
+      InitializationSettings(settingsAndroid, settingsIOS),
+    );
+  }
 
-   void stopAllNotifications(){
-     notifications.cancelAll();
-   }
+  void stopAllNotifications() {
+    notifications.cancelAll();
+  }
 }
 
 NotificationDetails get _noSound {
@@ -61,13 +77,18 @@ NotificationDetails get _noSound {
 }
 
 Future showSilentNotification(
-    FlutterLocalNotificationsPlugin notifications, {
-      @required String title,
-      @required String body,
-      int id = 0,
-    }) =>
-    _showNotification(notifications,
-        title: title, body: body, id: id, type: _noSound);
+  FlutterLocalNotificationsPlugin notifications, {
+  @required String title,
+  @required String body,
+  int id = 0,
+}) =>
+    _showNotification(
+      notifications,
+      title: title,
+      body: body,
+      id: id,
+      type: _noSound,
+    );
 
 NotificationDetails get _ongoing {
   final androidChannelSpecifics = AndroidNotificationDetails(
@@ -84,19 +105,29 @@ NotificationDetails get _ongoing {
 }
 
 Future showOngoingNotification(
-    FlutterLocalNotificationsPlugin notifications, {
-      @required String title,
-      @required String body,
-      int id = 0,
-    }) =>
-    _showNotification(notifications,
-        title: title, body: body, id: id, type: _ongoing);
+  FlutterLocalNotificationsPlugin notifications, {
+  @required String title,
+  @required String body,
+  int id = 0,
+}) =>
+    _showNotification(
+      notifications,
+      title: title,
+      body: body,
+      id: id,
+      type: _ongoing,
+    );
 
 Future _showNotification(
-    FlutterLocalNotificationsPlugin notifications, {
-      @required String title,
-      @required String body,
-      @required NotificationDetails type,
-      int id = 0,
-    }) =>
-    notifications.show(id, title, body, type);
+  FlutterLocalNotificationsPlugin notifications, {
+  @required String title,
+  @required String body,
+  @required NotificationDetails type,
+  int id = 0,
+}) =>
+    notifications.show(
+      id,
+      title,
+      body,
+      type,
+    );
