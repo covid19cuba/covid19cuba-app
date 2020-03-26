@@ -7,8 +7,10 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:preferences/preferences.dart';
 
-const urlCountriesCU = 'http://www.cusobu.nat.cu/covid/data/paises-info-dias.json';
-const urlCountriesIO = 'https://covid19cubadata.github.io/data/paises-info-dias.json';
+const urlCountriesCU =
+    'http://www.cusobu.nat.cu/covid/data/paises-info-dias.json';
+const urlCountriesIO =
+    'https://covid19cubadata.github.io/data/paises-info-dias.json';
 
 Future<WorldTotalsModel> getCountriesData() async {
   try {
@@ -28,7 +30,8 @@ Future<WorldTotalsModel> getCountriesDataFrom(String url) async {
   }
   WorldTotalsModel result;
   try {
-    result = WorldTotalsModel.fromJson(jsonDecode(resp.body));
+    var json = jsonDecode(resp.body);
+    result = WorldTotalsModel.fromJson(json['paises']);
   } catch (e) {
     log(e.toString());
     throw ParseException('Parse error');
