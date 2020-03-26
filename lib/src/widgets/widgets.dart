@@ -8,4 +8,3 @@ export 'loading_widget.dart';
 export 'pie_contagion_widget.dart';
 export 'pie_sex_widget.dart';
 export 'resume_widget.dart';
-export 'local_notification_widget.dart';
