@@ -1,11 +1,25 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:preferences/preference_service.dart';
 
-void main() => runApp(new MyApp());
+import 'package:covid19cuba/src/app.dart';
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  BlocSupervisor.delegate = SimpleBlocDelegate();
+
+  await PrefService.init();
+
+  return runApp(App());
+}
+
+class SimpleBlocDelegate extends BlocDelegate {
   @override
-  Widget build(BuildContext context) {
-    return Text('Hello World');
+  onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    log(transition.toString());
   }
 }
