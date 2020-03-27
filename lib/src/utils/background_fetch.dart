@@ -16,32 +16,32 @@ void headlessTask(String taskId) async {
   BackgroundFetch.finish(taskId);
 }
 
-class TaskManaguer {
+class TaskManager {
   static BackgroundFetchConfig config;
   static bool isInitialized;
-  static bool isRunnig;
+  static bool isRunning;
 
-  static Future<void> initialize(int minutes, Function regularTask) {
+  static Future<void> initialize(int minutes, Function regularTask) async {
     config = BackgroundFetchConfig(
       minimumFetchInterval: minutes,
       stopOnTerminate: false,
       enableHeadless: true,
       forceAlarmManager: true,
     );
-    BackgroundFetch.configure(config, regularTask);
+    await BackgroundFetch.configure(config, regularTask);
     isInitialized = true;
-    isRunnig = true;
+    isRunning = true;
   }
 
   static Future<void> stop() async {
     await BackgroundFetch.stop();
-    isRunnig = false;
+    isRunning = false;
   }
 
   static Future<void> restart() async {
     if (isInitialized) {
       await BackgroundFetch.start();
-      isRunnig = true;
+      isRunning = true;
     }
   }
 
