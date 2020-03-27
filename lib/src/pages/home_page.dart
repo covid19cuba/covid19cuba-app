@@ -70,7 +70,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         );
                         return refreshCompleter.future;
                       },
-                      child: HomeWidget(data: state.data),
+                      child: HomeWidget(data: state.data, countries: state.countries,),
                     ),
                   );
                 }
