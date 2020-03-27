@@ -13,23 +13,13 @@ class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  AnimationController fadeController;
-  Animation<double> fadeAnimation;
+class HomePageState extends State<HomePage> {
   Completer<void> refreshCompleter;
 
   @override
   void initState() {
     super.initState();
     refreshCompleter = Completer<void>();
-    fadeController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-    fadeAnimation = CurvedAnimation(
-      parent: fadeController,
-      curve: Curves.easeIn,
-    );
   }
 
   @override
@@ -41,45 +31,43 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           centerTitle: true,
           title: Text(Constants.appName),
         ),
-        drawer: HomeDrawer(),
-        body: FadeTransition(
-          opacity: fadeAnimation,
-          child: BlocListener<HomeBloc, HomeState>(
-            listener: (context, state) {
-              if (state is LoadedHomeState) {
-                refreshCompleter?.complete();
-                refreshCompleter = Completer();
+        drawer: HomeDrawerWidget(),
+        body: BlocListener<HomeBloc, HomeState>(
+          listener: (context, state) {
+            if (state is LoadedHomeState) {
+              refreshCompleter?.complete();
+              refreshCompleter = Completer();
+            }
+          },
+          child: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is InitialHomeState) {
+                BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent());
               }
-            },
-            child: BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                fadeController.reset();
-                fadeController.forward();
-                if (state is InitialHomeState) {
-                  BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent());
-                }
-                if (state is LoadingHomeState) {
-                  return LoadingWidget();
-                }
-                if (state is LoadedHomeState) {
-                  return Container(
-                    child: RefreshIndicator(
-                      onRefresh: () {
-                        BlocProvider.of<HomeBloc>(context).add(
-                          RefreshHomeEvent(),
-                        );
-                        return refreshCompleter.future;
-                      },
-                      child: HomeWidget(data: state.data, countries: state.countries,),
+              if (state is LoadingHomeState) {
+                return LoadingWidget();
+              }
+              if (state is LoadedHomeState) {
+                return Container(
+                  child: RefreshIndicator(
+                    onRefresh: () {
+                      BlocProvider.of<HomeBloc>(context).add(
+                        RefreshHomeEvent(),
+                      );
+                      return refreshCompleter.future;
+                    },
+                    child: HomeWidget(
+                      data: state.data,
+                      countries: state.countries,
                     ),
-                  );
-                }
-                if (state is ErrorHomeState) {
-                  return ew.ErrorWidget(errorMessage: state.errorMessage);
-                }
-                return Container();
-              },
-            ),
+                  ),
+                );
+              }
+              if (state is ErrorHomeState) {
+                return ew.ErrorWidget(errorMessage: state.errorMessage);
+              }
+              return Container();
+            },
           ),
         ),
       ),

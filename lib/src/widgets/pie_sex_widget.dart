@@ -56,6 +56,7 @@ class PieSexWidgetState extends State<PieSexWidget> {
                 data: widget.data.genders.keys.toList(),
               ),
             ],
+            animate: false,
             behaviors: [
               charts.DatumLegend(
                 position: charts.BehaviorPosition.bottom,
