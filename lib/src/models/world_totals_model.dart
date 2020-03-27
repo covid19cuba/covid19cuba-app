@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:meta/meta.dart';
 
 class WorldTotalsModel {
   final Map<String, List<int>> countries;
