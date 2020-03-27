@@ -20,11 +20,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is LoadHomeEvent) {
       yield LoadingHomeState();
       try {
-        var data = await getDataFromCache();
+        var data = await getCubaDataFromCache();
         if (data == null) {
-          data = await getData();
+          data = await getCubaData();
         }
-        setDataToCache(data);
+        setCubaDataToCache(data);
         var countries = await getCountriesDataFromCache();
         if (countries == null) countries = await getCountriesData();
         setCountriesDataToCache(countries);
@@ -49,8 +49,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is FetchHomeEvent) {
       yield LoadingHomeState();
       try {
-        var data = await getData();
-        setDataToCache(data);
+        var data = await getCubaData();
+        setCubaDataToCache(data);
         var countries = await getCountriesData();
         setCountriesDataToCache(countries);
         yield LoadedHomeState(data: data, countries: countries);
@@ -73,8 +73,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
     if (event is RefreshHomeEvent) {
       try {
-        var data = await getData();
-        setDataToCache(data);
+        var data = await getCubaData();
+        setCubaDataToCache(data);
         var countries = await getCountriesData();
         setCountriesDataToCache(countries);
         yield LoadedHomeState(data: data, countries: countries);
