@@ -9,3 +9,4 @@ export 'isolation_centers_model.dart';
 export 'timeline_model.dart';
 export 'world_totals_model.dart';
 export 'news_model.dart';
+export 'local_notification_model.dart';
