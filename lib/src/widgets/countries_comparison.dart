@@ -28,6 +28,12 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
       : assert(data != null),
         assert(countries != null);
 
+  List<String> getCountriesList() {
+    List<String> countriesList = countries.countries.keys.toList();
+    countriesList.sort();
+    return countriesList;
+  }
+
   List<charts.ChartBehavior> getBehaviors() {
     return [
       charts.ChartTitle(
@@ -131,7 +137,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
               selectedCountry = newValue;
             });
           },
-          items: countries.countries.keys
+          items: getCountriesList()
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
