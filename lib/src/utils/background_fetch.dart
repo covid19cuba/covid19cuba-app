@@ -1,50 +1,70 @@
-import 'dart:developer';
-
 import 'package:background_fetch/background_fetch.dart';
 
-Future<void> setAppRunningTasks(int interval, Function callback) async {
-  BackgroundFetchConfig config = BackgroundFetchConfig(
-    minimumFetchInterval: interval,
-    stopOnTerminate: false,
-    enableHeadless: false,
-    requiresBatteryNotLow: false,
-    requiresCharging: false,
-    requiresStorageNotLow: false,
-    requiresDeviceIdle: false,
-    requiredNetworkType: NetworkType.NONE,
-  );
+// This task is executed almost every minimumFetchInterval minutes
+void regularTask(String taskId) async {
+  // code here
 
-  BackgroundFetch.configure(config, callback);
-}
-
-void exampleTaskReceiver(String taskId) async {
-  print('Event recieved');
   // Is important to call finish before function return to avoid OS app punishments
   BackgroundFetch.finish(taskId);
 }
 
-void startBackgroundFetch() {
-  BackgroundFetch.start().then((int status) {
-    log('[BackgroundFetch] start success: $status');
-  }).catchError((e) {
-    log('[BackgroundFetch] start FAILURE: $e');
-  });
+// This task is executed almost every minimumFetchInterval minutes when the apps not running
+void headlessTask(String taskId) async {
+  // code here
+
+  // Is important to call finish before function return to avoid OS app punishments
+  BackgroundFetch.finish(taskId);
 }
 
-void stopBackgroundFetch() {
-  BackgroundFetch.stop().then((int status) {
-    log('[BackgroundFetch] stop success: $status');
-  });
-}
+class TaskManaguer {
+  static BackgroundFetchConfig config;
+  static bool isInitialized;
+  static bool isRunnig;
 
-void scheduleTask(int delay, String taskId, bool headless) {
+  static Future<void> initialize(int minutes, Function regularTask) {
+    config = BackgroundFetchConfig(
+      minimumFetchInterval: minutes,
+      stopOnTerminate: false,
+      enableHeadless: true,
+      forceAlarmManager: true,
+    );
+    BackgroundFetch.configure(config, regularTask);
+    isInitialized = true;
+    isRunnig = true;
+  }
+
+  static Future<void> stop() async {
+    await BackgroundFetch.stop();
+    isRunnig = false;
+  }
+
+  static Future<void> restart() async {
+    if (isInitialized) {
+      await BackgroundFetch.start();
+      isRunnig = true;
+    }
+  }
+
+  static Future<void> setHeadlessTask(Function headlessTask) async {
+    await BackgroundFetch.registerHeadlessTask(headlessTask);
+  }
+
   // Delay in milliseconds
-  BackgroundFetch.scheduleTask(
-      TaskConfig(delay: delay, taskId: taskId, enableHeadless: headless));
-}
+  static Future<void> scheduleInAppCustomTask(int delay, String taskId) async {
+    await BackgroundFetch.scheduleTask(TaskConfig(
+      delay: delay,
+      taskId: taskId,
+    ));
+  }
 
-void setHeadlessTaskReceiver(Function callback) {
-  // Register to receive BackgroundFetch events after app is terminated.
-  // Requires {stopOnTerminate: false, enableHeadless: true}
-  BackgroundFetch.registerHeadlessTask(callback);
+  // Delay in milliseconds
+  static Future<void> scheduleHeadlessCustomTask(
+      int delay, String taskId) async {
+    await BackgroundFetch.scheduleTask(TaskConfig(
+      delay: delay,
+      taskId: taskId,
+      stopOnTerminate: false,
+      enableHeadless: true,
+    ));
+  }
 }
