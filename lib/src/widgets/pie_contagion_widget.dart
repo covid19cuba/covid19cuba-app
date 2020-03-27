@@ -56,6 +56,7 @@ class PieContagionWidgetState extends State<PieContagionWidget> {
                 data: widget.data.contagions.keys.toList(),
               ),
             ],
+            animate: false,
             behaviors: [
               charts.DatumLegend(
                 position: charts.BehaviorPosition.bottom,

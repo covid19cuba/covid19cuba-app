@@ -26,7 +26,7 @@ class EvolutionWidget extends StatelessWidget {
               style: TextStyle(
                 color: Constants.primaryColor,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
           ),
@@ -52,6 +52,7 @@ class EvolutionWidget extends StatelessWidget {
                 data: data.days,
               ),
             ],
+            animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,

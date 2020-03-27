@@ -45,6 +45,7 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
                 data: data.diagnosed,
               ),
             ],
+            animate: false,
             defaultInteractions: true,
             behaviors: [
               charts.ChartTitle(

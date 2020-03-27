@@ -117,7 +117,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
               style: TextStyle(
                 color: Constants.primaryColor,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
           ),
@@ -168,6 +168,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           height: 250,
           child: charts.LineChart(
             getSeries(),
+            animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
@@ -198,6 +199,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           height: 250,
           child: charts.LineChart(
             getZoomSeries(),
+            animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
