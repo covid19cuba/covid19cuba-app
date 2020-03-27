@@ -4,6 +4,7 @@
 * Leynier Gutiérrez González ([@leynier](https://github.com/leynier))
 * Norlan Capote Díaz ([@norlancd](https://github.com/norlancd))
 * Carlos Bermudez Porto ([@stdevCbermudez](https://github.com/stdevCbermudez))
+* Roberto Martí Cedeño ([@rmarticedeno](https://github.com/rmarticedeno))
 
 You can help out by: 
 - Reporting a bug
