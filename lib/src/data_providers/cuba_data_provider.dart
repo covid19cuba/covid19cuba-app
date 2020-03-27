@@ -11,16 +11,16 @@ const urlCubaDataCU = 'http://www.cusobu.nat.cu/covid/data/covid19-cuba.json';
 const urlCubaDataIO =
     'https://covid19cubadata.github.io/data/covid19-cuba.json';
 
-Future<DataModel> getData() async {
+Future<DataModel> getCubaData() async {
   try {
-    return await getDataFrom(urlCubaDataCU);
+    return await getCubaDataFrom(urlCubaDataCU);
   } catch (e) {
     log(e.toString());
-    return await getDataFrom(urlCubaDataIO);
+    return await getCubaDataFrom(urlCubaDataIO);
   }
 }
 
-Future<DataModel> getDataFrom(String url) async {
+Future<DataModel> getCubaDataFrom(String url) async {
   var resp = await get(url);
   if (resp.statusCode == 404) {
     throw InvalidSourceException('Source is invalid');
@@ -37,7 +37,7 @@ Future<DataModel> getDataFrom(String url) async {
   return result;
 }
 
-Future<DataModel> getDataFromCache() async {
+Future<DataModel> getCubaDataFromCache() async {
   try {
     var data = PrefService.getString('data');
     if (data == null) {
@@ -50,7 +50,7 @@ Future<DataModel> getDataFromCache() async {
   return null;
 }
 
-Future<void> setDataToCache(DataModel data) async {
+Future<void> setCubaDataToCache(DataModel data) async {
   try {
     String result = jsonEncode(data.toJson());
     PrefService.setString('data', result);

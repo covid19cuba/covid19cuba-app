@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
-Future<TimelineModel> fecthTimeLine() async {
+Future<TimelineModel> fetchTimeLine() async {
   var resp = await get('http://www.cusobu.nat.cu/covid/timeseries/get');
   if (resp.statusCode == 404) {
     throw InvalidSourceException('Source is invalid');

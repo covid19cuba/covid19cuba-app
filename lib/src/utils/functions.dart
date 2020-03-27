@@ -1,4 +1,3 @@
 int getInt(dynamic value) {
-  if(value is String) return int.parse(value);
-  return value;
+  return value is String ? int.parse(value) : value;
 }
