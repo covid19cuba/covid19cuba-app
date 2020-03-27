@@ -50,15 +50,30 @@ class MapWebViewWidget extends StatelessWidget {
               onWebViewCreated: (WebViewController webViewController) {
                 _controller.complete(webViewController);
                 cont = webViewController;
-                cont
-                    .evaluateJavascript('covidData($basedata)')
-                    .whenComplete(() => print('Mapa injected'));
+                //cont
+                //    .evaluateJavascript('covidData($basedata)')
+                //    .whenComplete(() => print('Mapa injected'));
 
               }),
         ),
-
-          IconButton(icon: Icon(Icons.desktop_windows), onPressed: (){cont
-                  .evaluateJavascript("\$('#map-mun').hide();\$('#map-pro').show();");})
+        new OutlineButton(
+          child: new Text("Provincias"),
+          onPressed: () {
+            cont
+                  .evaluateJavascript("\$('#map-mun').hide();\$('#map-pro').show();")
+                  .whenComplete(() => print('Change to province map'));
+          },
+          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+        ),
+        new OutlineButton(
+          child: new Text("Municipios"),
+          onPressed: () {
+            cont
+                  .evaluateJavascript("\$('#map-pro').hide();\$('#map-mun').show();")
+                  .whenComplete(() => print('Change to municipality map'));
+          },
+          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+        )
       ],
     );
   }
