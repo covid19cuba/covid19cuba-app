@@ -17,10 +17,13 @@ class WorldTotalsModel {
   static WorldTotalsModel fromJson(Map<String, dynamic> json) {
     var countries = Map<String, List<int>>();
     for (String country in json.keys) {
-      countries[country] = json[country];
+      countries[country] = List<int>();
+      for (int value in json[country]) {
+        countries[country].add(value);
+      }
     }
     return WorldTotalsModel(
-      countries: json,
+      countries: countries,
     );
   }
 }
