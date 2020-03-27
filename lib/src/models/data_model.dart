@@ -6,11 +6,13 @@ class DataModel {
   CasesModel cases;
   DiagnosticCentersModel diagnosticCenters;
   IsolationCentersModel isolationCenters;
+  String note;
 
   DataModel({
     this.cases,
     this.diagnosticCenters,
     this.isolationCenters,
+    this.note,
   });
 
   int get numberOfDiagnosed => cases.days.values
@@ -199,6 +201,7 @@ class DataModel {
       'casos': cases.toJson(),
       'centros_diagnostico': diagnosticCenters.toJson(),
       'centros_aislamiento': isolationCenters.toJson(),
+      'note-text': note,
     };
   }
 
@@ -208,19 +211,23 @@ class DataModel {
     IsolationCentersModel isolationCenters;
     try {
       cases = CasesModel.fromJson(json['casos']);
-    } catch(e) {
+    } catch (e) {
       log('cases->' + e.toString());
       throw e;
     }
     try {
-     diagnosticCenter = DiagnosticCentersModel.fromJson(json['centros_diagnostico']);
-    } catch(e) {
+      diagnosticCenter = DiagnosticCentersModel.fromJson(
+        json['centros_diagnostico'],
+      );
+    } catch (e) {
       log('diagnostic->' + e.toString());
       throw e;
     }
     try {
-    isolationCenters = IsolationCentersModel.fromJson(json['centros_aislamiento']);
-    } catch(e) {
+      isolationCenters = IsolationCentersModel.fromJson(
+        json['centros_aislamiento'],
+      );
+    } catch (e) {
       log('isolation->' + e.toString());
       throw e;
     }
@@ -228,6 +235,7 @@ class DataModel {
       cases: cases,
       diagnosticCenters: diagnosticCenter,
       isolationCenters: isolationCenters,
+      note: json.containsKey('json') ? json['note-text'] : null,
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 
-class HomeDrawer extends StatelessWidget {
+class HomeDrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -19,9 +19,7 @@ class HomeDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Container(
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                      ),
+                      child: Image.asset(Constants.appLogo),
                       padding: EdgeInsets.all(5),
                       width: 100,
                     ),

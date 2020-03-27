@@ -45,6 +45,7 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
                 data: data.ageGroups,
               ),
             ],
+            animate: false,
             defaultInteractions: true,
             behaviors: [
               charts.ChartTitle(

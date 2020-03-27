@@ -7,29 +7,31 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:preferences/preferences.dart';
 
-const urlCubaDataCU = 'http://www.cusobu.nat.cu/covid/data/covid19-cuba.json';
-const urlCubaDataIO =
-    'https://covid19cubadata.github.io/data/covid19-cuba.json';
+const urlCountriesCU =
+    'http://www.cusobu.nat.cu/covid/data/paises-info-dias.json';
+const urlCountriesIO =
+    'https://covid19cubadata.github.io/data/paises-info-dias.json';
 
-Future<DataModel> getData() async {
+Future<WorldTotalsModel> getCountriesData() async {
   try {
-    return await getDataFrom(urlCubaDataCU);
+    return await getCountriesDataFrom(urlCountriesCU);
   } catch (e) {
     log(e.toString());
-    return await getDataFrom(urlCubaDataIO);
+    return await getCountriesDataFrom(urlCountriesIO);
   }
 }
 
-Future<DataModel> getDataFrom(String url) async {
+Future<WorldTotalsModel> getCountriesDataFrom(String url) async {
   var resp = await get(url);
   if (resp.statusCode == 404) {
     throw InvalidSourceException('Source is invalid');
   } else if (resp.statusCode != 200) {
     throw BadRequestException('Bad request');
   }
-  DataModel result;
+  WorldTotalsModel result;
   try {
-    result = DataModel.fromJson(jsonDecode(resp.body));
+    var json = jsonDecode(resp.body);
+    result = WorldTotalsModel.fromJson(json['paises']);
   } catch (e) {
     log(e.toString());
     throw ParseException('Parse error');
@@ -37,23 +39,23 @@ Future<DataModel> getDataFrom(String url) async {
   return result;
 }
 
-Future<DataModel> getDataFromCache() async {
+Future<WorldTotalsModel> getCountriesDataFromCache() async {
   try {
-    var data = PrefService.getString('data');
+    var data = PrefService.getString('countries_data');
     if (data == null) {
       return null;
     }
-    return DataModel.fromJson(jsonDecode(data));
+    return WorldTotalsModel.fromJson(jsonDecode(data));
   } catch (e) {
     log(e.toString());
   }
   return null;
 }
 
-Future<void> setDataToCache(DataModel data) async {
+Future<void> setCountriesDataToCache(WorldTotalsModel data) async {
   try {
     String result = jsonEncode(data.toJson());
-    PrefService.setString('data', result);
+    PrefService.setString('countries_data', result);
   } catch (e) {
     log(e.toString());
   }

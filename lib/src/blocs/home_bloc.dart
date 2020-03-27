@@ -25,7 +25,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           data = await getData();
         }
         setDataToCache(data);
-        yield LoadedHomeState(data: data);
+        var countries = await getCountriesDataFromCache();
+        if (countries == null) countries = await getCountriesData();
+        setCountriesDataToCache(countries);
+        yield LoadedHomeState(data: data, countries: countries);
       } on BadRequestException catch (e) {
         log(e.toString());
         yield ErrorHomeState(
@@ -48,7 +51,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       try {
         var data = await getData();
         setDataToCache(data);
-        yield LoadedHomeState(data: data);
+        var countries = await getCountriesData();
+        setCountriesDataToCache(countries);
+        yield LoadedHomeState(data: data, countries: countries);
       } on BadRequestException catch (e) {
         log(e.toString());
         yield ErrorHomeState(
@@ -70,7 +75,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       try {
         var data = await getData();
         setDataToCache(data);
-        yield LoadedHomeState(data: data);
+        var countries = await getCountriesData();
+        setCountriesDataToCache(countries);
+        yield LoadedHomeState(data: data, countries: countries);
       } on BadRequestException catch (e) {
         log(e.toString());
         yield ErrorHomeState(
