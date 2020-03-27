@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
+
 class MapWebViewWidget extends StatelessWidget {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
 
   WebViewController cont;
+  String selecte_view = 'Provincia';
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class MapWebViewWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Evolución en el tiempo',
+              'Distribución por $selecte_view',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -45,7 +47,16 @@ class MapWebViewWidget extends StatelessWidget {
               onPageFinished: (_) {
                 cont
                     .evaluateJavascript('covidData($basedata)')
-                    .whenComplete(() => print('Mapa injected'));
+                    .whenComplete((){
+                        print('Mapa injected');
+                        cont
+                        .evaluateJavascript("\$('#map-mun').hide();\$('#map-pro').show();")
+                        .whenComplete((){
+                          print('Change to province map');
+                          selecte_view = 'Provincia';
+                        });
+                      }
+                    );
               },
               onWebViewCreated: (WebViewController webViewController) {
                 _controller.complete(webViewController);
@@ -56,23 +67,44 @@ class MapWebViewWidget extends StatelessWidget {
 
               }),
         ),
-        new OutlineButton(
-          child: new Text("Provincias"),
-          onPressed: () {
-            cont
-                  .evaluateJavascript("\$('#map-mun').hide();\$('#map-pro').show();")
-                  .whenComplete(() => print('Change to province map'));
-          },
-          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
-        ),
-        new OutlineButton(
-          child: new Text("Municipios"),
-          onPressed: () {
-            cont
-                  .evaluateJavascript("\$('#map-pro').hide();\$('#map-mun').show();")
-                  .whenComplete(() => print('Change to municipality map'));
-          },
-          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+        ButtonBar(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              FlatButton(
+                color: Constants.primaryColor,
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                onPressed: () {
+                  cont
+                        .evaluateJavascript("\$('#map-mun').hide();\$('#map-pro').show();")
+                        .whenComplete(() => print('Change to province map'));
+                  selecte_view = 'Provincia';
+                  (context as Element).markNeedsBuild();
+                },
+                child: Text("Provincia",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              FlatButton(
+                color: Constants.primaryColor,
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                onPressed: () {
+                  cont
+                        .evaluateJavascript("\$('#map-pro').hide();\$('#map-mun').show();")
+                        .whenComplete(() => print('Change to municipality map'));
+                  selecte_view = 'Municipio';
+                  (context as Element).markNeedsBuild();
+                },
+                child: Text("Municipio",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ]
         )
       ],
     );
