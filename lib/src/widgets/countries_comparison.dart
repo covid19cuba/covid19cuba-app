@@ -1,16 +1,98 @@
+import 'dart:math';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
-class ComparisonWidget extends StatelessWidget {
+class ComparisonWidget extends StatefulWidget {
   final DataModel data;
   final WorldTotalsModel countries;
 
   const ComparisonWidget({this.data, this.countries})
       : assert(data != null),
         assert(countries != null);
+
+  @override
+  ComparisonWidgetState createState() =>
+      ComparisonWidgetState(data: data, countries: countries);
+}
+
+class ComparisonWidgetState extends State<ComparisonWidget> {
+  String selectedCountry = 'Italy';
+  final DataModel data;
+  final WorldTotalsModel countries;
+
+  ComparisonWidgetState({this.data, this.countries})
+      : assert(data != null),
+        assert(countries != null);
+
+  List<charts.ChartBehavior> getBehaviors() {
+    return [
+      charts.ChartTitle(
+        'Días',
+        behaviorPosition: charts.BehaviorPosition.bottom,
+        titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
+        titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
+      ),
+      charts.ChartTitle(
+        'Casos',
+        behaviorPosition: charts.BehaviorPosition.start,
+        titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
+        titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
+      ),
+      charts.SeriesLegend(
+        position: charts.BehaviorPosition.bottom,
+      ),
+      charts.LinePointHighlighter(
+        showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.all,
+        showVerticalFollowLine:
+            charts.LinePointHighlighterFollowLineType.nearest,
+      ),
+    ];
+  }
+
+  List<charts.Series<int, int>> getSeries() {
+    return [
+      charts.Series<int, int>(
+        id: selectedCountry,
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (_, i) => i,
+        measureFn: (item, _) => item,
+        data: countries.countries[selectedCountry],
+      ),
+      charts.Series<int, int>(
+        id: 'Cuba',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (_, i) => i,
+        measureFn: (item, _) => item,
+        data: data.accumulated,
+      ),
+    ];
+  }
+
+  List<charts.Series<int, int>> getZoomSeries() {
+    return [
+      charts.Series<int, int>(
+        id: 'Cuba',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (_, i) => i,
+        measureFn: (item, _) => item,
+        data: data.accumulated,
+      ),
+      charts.Series<int, int>(
+        id: selectedCountry,
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (_, i) => i,
+        measureFn: (item, _) => item,
+        data: countries.countries[selectedCountry].sublist(
+            0,
+            min(data.accumulated.length - 1,
+                countries.countries[selectedCountry].length - 1)),
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +106,7 @@ class ComparisonWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Evolución en el tiempo',
+              'Comparación de la curva acumulada de Cuba con:',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -34,55 +116,87 @@ class ComparisonWidget extends StatelessWidget {
             ),
           ),
         ),
+        DropdownButton<String>(
+          value: selectedCountry,
+          icon: Icon(Icons.arrow_downward),
+          iconSize: 24,
+          elevation: 16,
+          style: TextStyle(color: Constants.primaryColor),
+          underline: Container(
+            height: 2,
+            color: Constants.primaryColor,
+          ),
+          onChanged: (String newValue) {
+            setState(() {
+              selectedCountry = newValue;
+            });
+          },
+          items: countries.countries.keys
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          child: Center(
+            child: Text(
+              'Comparación en general',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ),
         Container(
           padding: EdgeInsets.all(10),
           height: 250,
           child: charts.LineChart(
-            [
-              charts.Series<int, int>(
-                id: 'Casos acumulados Cuba',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: data.accumulated,
-              ),
-              charts.Series<int, int>(
-                id: 'Casos acumulados Italia',
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: countries.countries['Italy'],
-              ),
-            ],
+            getSeries(),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
             ),
-            behaviors: [
-              charts.ChartTitle(
-                'Fecha',
-                behaviorPosition: charts.BehaviorPosition.bottom,
-                titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
-                titleOutsideJustification:
-                    charts.OutsideJustification.middleDrawArea,
+            behaviors: getBehaviors(),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          child: Center(
+            child: Text(
+              'Comparación en el período de Cuba',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
               ),
-              charts.ChartTitle(
-                'Casos',
-                behaviorPosition: charts.BehaviorPosition.start,
-                titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
-                titleOutsideJustification:
-                    charts.OutsideJustification.middleDrawArea,
-              ),
-              charts.SeriesLegend(
-                position: charts.BehaviorPosition.bottom,
-              ),
-              charts.LinePointHighlighter(
-                showHorizontalFollowLine:
-                    charts.LinePointHighlighterFollowLineType.all,
-                showVerticalFollowLine:
-                    charts.LinePointHighlighterFollowLineType.nearest,
-              ),
-            ],
+            ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(10),
+          height: 250,
+          child: charts.LineChart(
+            getZoomSeries(),
+            defaultInteractions: true,
+            defaultRenderer: charts.LineRendererConfig(
+              includePoints: true,
+            ),
+            behaviors: getBehaviors(),
           ),
         ),
       ],
