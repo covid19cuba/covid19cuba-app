@@ -38,7 +38,7 @@ List<LocalNotification> getApplicationNotifications() {
   );
   var rng = new Random();
   for (var i = 0; i < notifications.length; i++) {
-    var minutes = rng.nextInt(Constants.notificationMunitesRange);
+    var minutes = rng.nextInt(Constants.notificationMinutesRange);
     notifications[i].id = i;
     notifications[i].scheduledDate = DateTime.now().add(
       Duration(minutes: minutes),

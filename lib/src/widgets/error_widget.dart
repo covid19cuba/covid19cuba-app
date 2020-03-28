@@ -7,8 +7,9 @@ import 'package:covid19cuba/src/utils/utils.dart';
 
 class ErrorWidget extends StatelessWidget {
   final String errorMessage;
+  final bool cache;
 
-  const ErrorWidget({this.errorMessage});
+  const ErrorWidget({@required this.errorMessage, @required this.cache});
 
   @override
   Widget build(BuildContext context) {
@@ -61,21 +62,25 @@ class ErrorWidget extends StatelessWidget {
             },
           ),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 50),
-          child: GFButton(
-            text: 'Ver última información obtenida',
-            textColor: Constants.primaryColor,
-            color: Constants.primaryColor,
-            size: GFSize.LARGE,
-            shape: GFButtonShape.pills,
-            type: GFButtonType.outline2x,
-            fullWidthButton: true,
-            onPressed: () {
-              BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent());
-            },
-          ),
-        ),
+        cache
+            ? Container(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child: GFButton(
+                  text: 'Ver última información obtenida',
+                  textColor: Constants.primaryColor,
+                  color: Constants.primaryColor,
+                  size: GFSize.LARGE,
+                  shape: GFButtonShape.pills,
+                  type: GFButtonType.outline2x,
+                  fullWidthButton: true,
+                  onPressed: () {
+                    BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent(
+                      showNotification: false,
+                    ));
+                  },
+                ),
+              )
+            : Container(),
       ],
     );
   }
