@@ -51,7 +51,11 @@ class PieContagionWidgetState extends State<PieContagionWidget> {
               charts.Series<String, String>(
                 id: 'Casos por modo de contagio',
                 colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
-                domainFn: (item, _) => widget.data.contagionsPretty[item],
+                domainFn: (item, _) =>
+                    widget.data.contagionsPretty[item] ??
+                    (item != null && item.length > 0
+                        ? item[0].toUpperCase() + item.substring(1)
+                        : item),
                 measureFn: (item, _) => widget.data.contagions[item],
                 data: widget.data.contagions.keys.toList(),
               ),

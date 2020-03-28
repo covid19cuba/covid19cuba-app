@@ -14,7 +14,7 @@
     <application
         tools:replace="android:label"
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Covid19 Cuba Data"
+        android:label="Covid19 Cuba Data (Beta)"
         android:icon="@mipmap/ic_launcher">
 
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
