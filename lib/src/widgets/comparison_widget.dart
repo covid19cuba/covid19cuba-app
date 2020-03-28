@@ -20,7 +20,7 @@ class ComparisonWidget extends StatefulWidget {
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
-  String selectedCountry = 'Italy';
+  String selectedCountry = 'Greece';
   final DataModel data;
   final WorldTotalsModel countries;
 
@@ -94,8 +94,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         measureFn: (item, _) => item,
         data: countries.countries[selectedCountry].sublist(
             0,
-            min(data.accumulated.length - 1,
-                countries.countries[selectedCountry].length - 1)),
+            min(data.accumulated.length,
+                countries.countries[selectedCountry].length)),
       ),
     ];
   }
