@@ -18,6 +18,8 @@ void main() async {
 
   await NotificationManager.initialize();
 
+  await setUpTasks();
+
   var notifications = getApplicationNotifications();
   notifications.forEach((notif) => NotificationManager.schedule(
         id: notif.id,
@@ -25,6 +27,8 @@ void main() async {
         title: notif.title,
         body: notif.body,
       ));
+  
+
   return runApp(App());
 }
 

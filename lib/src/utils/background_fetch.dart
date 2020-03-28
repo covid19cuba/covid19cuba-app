@@ -27,6 +27,8 @@ class TaskManager {
       stopOnTerminate: false,
       enableHeadless: true,
       forceAlarmManager: true,
+      requiredNetworkType: NetworkType.ANY,
+      startOnBoot: true,
     );
     await BackgroundFetch.configure(config, regularTask);
     isInitialized = true;

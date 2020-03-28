@@ -30,6 +30,7 @@ class NotificationManager {
       importance: Importance.Max,
       priority: Priority.High,
       style: AndroidNotificationStyle.BigText,
+      ongoing: false,
     );
     iOSNotificationDetails = IOSNotificationDetails();
     notificationDetails = NotificationDetails(
