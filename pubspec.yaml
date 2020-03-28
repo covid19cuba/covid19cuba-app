@@ -23,6 +23,7 @@ dependencies:
   background_fetch: '^0.5.1'
   webview_flutter:
     path: ./webview_flutter
+  package_info: ^0.4.0+16
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
@@ -46,4 +47,3 @@ flutter:
 flutter_native_splash:
   image: assets/images/icon.jpg
   color: "1c1340"
-  android_disable_fullscreen: true

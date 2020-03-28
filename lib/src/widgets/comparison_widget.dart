@@ -20,7 +20,7 @@ class ComparisonWidget extends StatefulWidget {
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
-  String selectedCountry = 'Italy';
+  String selectedCountry = 'Greece';
   final DataModel data;
   final WorldTotalsModel countries;
 
@@ -29,10 +29,9 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         assert(countries != null);
 
   List<String> getCountriesList() {
-    List<String> countriesList = countries.countries.keys.toList();
-    countriesList.removeWhere((item) => item == 'Cuba');
-    countriesList.sort();
-    return countriesList;
+    var list = countries.countries.keys.where((c) => c != 'Cuba').toList();
+    list.sort();
+    return list;
   }
 
   List<charts.ChartBehavior> getBehaviors() {
@@ -95,8 +94,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         measureFn: (item, _) => item,
         data: countries.countries[selectedCountry].sublist(
             0,
-            min(data.accumulated.length - 1,
-                countries.countries[selectedCountry].length - 1)),
+            min(data.accumulated.length,
+                countries.countries[selectedCountry].length)),
       ),
     ];
   }
@@ -138,8 +137,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
               selectedCountry = newValue;
             });
           },
-          items: getCountriesList()
-              .map<DropdownMenuItem<String>>((String value) {
+          items:
+              getCountriesList().map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),
