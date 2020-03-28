@@ -2,10 +2,33 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info/package_info.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 
-class HomeDrawerWidget extends StatelessWidget {
+class HomeDrawerWidget extends StatefulWidget {
+  @override
+  _HomeDrawerWidgetState createState() => _HomeDrawerWidgetState();
+}
+
+class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
+  String appName = '';
+  String version = '';
+
+  @override
+  void initState() {
+    super.initState();
+    start();
+  }
+
+  void start() async {
+    var packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      appName = packageInfo.appName;
+      version = packageInfo.version;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -184,9 +207,21 @@ class HomeDrawerWidget extends StatelessWidget {
                 ],
               ),
             ),
+            versionAppDrawerItem()
           ],
         ),
       ),
+    );
+  }
+
+  Widget versionAppDrawerItem() {
+    return ListTile(
+      title: Text(
+        'v$version',
+        textAlign: TextAlign.right,
+        style: TextStyle(fontSize: 10, color: Colors.white),
+      ),
+      onTap: () {},
     );
   }
 }
