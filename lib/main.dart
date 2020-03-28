@@ -21,13 +21,14 @@ void main() async {
   await setUpTasks();
 
   var notifications = getApplicationNotifications();
-  notifications.forEach((notif) => NotificationManager.schedule(
-        id: notif.id,
-        scheduledDate: notif.scheduledDate,
-        title: notif.title,
-        body: notif.body,
-      ));
-  
+  notifications.forEach(
+    (notification) => NotificationManager.schedule(
+      id: notification.id,
+      scheduledDate: notification.scheduledDate,
+      title: notification.title,
+      body: notification.body,
+    ),
+  );
 
   return runApp(App());
 }
