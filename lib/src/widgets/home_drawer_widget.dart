@@ -23,13 +23,6 @@ class HomeDrawerWidget extends StatelessWidget {
                       padding: EdgeInsets.all(5),
                       width: 100,
                     ),
-                    /*Text(
-                          Constants.appName,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),*/
                   ],
                 ),
               ),
