@@ -9,8 +9,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/data_model.dart';
 
-const showMunicipality = "\$('#map-pro').hide();\$('#map-num').show();";
-const showProvince = "\$('#map-mun').hide();\$('#map-pro').show();";
+const showMunicipalities = "\$('#map-pro').hide();\$('#map-num').show();";
+const showProvinces = "\$('#map-mun').hide();\$('#map-pro').show();";
 
 class MapWebViewWidget extends StatefulWidget {
   final DataModel data;
@@ -24,7 +24,7 @@ class MapWebViewWidget extends StatefulWidget {
 class MapWebViewWidgetState extends State<MapWebViewWidget> {
   String mapData = "{}";
   WebViewController cont;
-  String selectedView = 'Municipio';
+  String selectedView = 'Municipios';
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +58,9 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
                 mapData = jsonEncode(widget.data.cases.toJson());
                 cont.evaluateJavascript('covidData($mapData)').whenComplete(
                   () {
-                    cont.evaluateJavascript(showMunicipality).whenComplete(() {
+                    cont.evaluateJavascript(showMunicipalities).whenComplete(() {
                       setState(() {
-                        selectedView = 'Municipio';
+                        selectedView = 'Municipios';
                       });
                     });
                   },
@@ -95,7 +95,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             GFButton(
-              text: 'Provincia',
+              text: 'Provincias',
               textColor: Constants.primaryColor,
               color: Constants.primaryColor,
               size: GFSize.LARGE,
@@ -103,14 +103,14 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
               type: GFButtonType.outline2x,
               fullWidthButton: true,
               onPressed: () {
-                cont.evaluateJavascript(showProvince);
+                cont.evaluateJavascript(showProvinces);
                 setState(() {
-                  selectedView = 'Provincia';
+                  selectedView = 'Provincias';
                 });
               },
             ),
             GFButton(
-              text: 'Municipio',
+              text: 'Municipios',
               textColor: Constants.primaryColor,
               color: Constants.primaryColor,
               size: GFSize.LARGE,
@@ -118,9 +118,9 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
               type: GFButtonType.outline2x,
               fullWidthButton: true,
               onPressed: () {
-                cont.evaluateJavascript(showMunicipality);
+                cont.evaluateJavascript(showMunicipalities);
                 setState(() {
-                  selectedView = 'Municipio';
+                  selectedView = 'Municipios';
                 });
               },
             ),
@@ -132,11 +132,11 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
               onPressed: () {
                 cont.evaluateJavascript(showProvince);
                 setState(() {
-                  selectedView = 'Provincia';
+                  selectedView = 'Provincias';
                 });
               },
               child: Text(
-                'Provincia',
+                'Provincias',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -151,11 +151,11 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
               onPressed: () {
                 cont.evaluateJavascript(showMunicipality);
                 setState(() {
-                  selectedView = 'Municipio';
+                  selectedView = 'Municipios';
                 });
               },
               child: Text(
-                'Municipio',
+                'Municipios',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

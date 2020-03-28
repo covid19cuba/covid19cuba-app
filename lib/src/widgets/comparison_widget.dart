@@ -20,7 +20,7 @@ class ComparisonWidget extends StatefulWidget {
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
-  String selectedCountry = 'Italy';
+  String selectedCountry = 'Greece';
   final DataModel data;
   final WorldTotalsModel countries;
 
@@ -112,7 +112,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Comparación de la curva acumulada de Cuba con:',
+              'Comparación de los casos acumulados de Cuba con:',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

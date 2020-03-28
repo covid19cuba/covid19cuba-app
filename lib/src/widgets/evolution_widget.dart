@@ -21,7 +21,7 @@ class EvolutionWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Evolución en el tiempo',
+              'Evolución de casos por días',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -38,14 +38,14 @@ class EvolutionWidget extends StatelessWidget {
             [
               charts.Series<int, DateTime>(
                 id: 'Casos acumulados',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
                 domainFn: (_, i) => data.days[i].date,
                 measureFn: (item, _) => item,
                 data: data.accumulated,
               ),
               charts.Series<DayModel, DateTime>(
-                id: 'Casos diarios',
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                id: 'Casos en el día',
+                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
                 domainFn: (item, _) => item.date,
                 measureFn: (item, _) =>
                     item.diagnosed != null ? item.diagnosed.length : 0,
