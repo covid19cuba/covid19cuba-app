@@ -93,12 +93,7 @@ class MapWebViewWidget extends StatelessWidget {
                     );
               },
               onWebViewCreated: (WebViewController webViewController) {
-                _controller.complete(webViewController);
                 cont = webViewController;
-                                //cont
-                //    .evaluateJavascript('covidData($basedata)')
-                //    .whenComplete(() => print('Mapa injected'));
-
               }),
         ),
         ButtonBar(
