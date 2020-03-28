@@ -27,7 +27,6 @@ void main() async {
         title: notif.title,
         body: notif.body,
       ));
-  
 
   return runApp(App());
 }
