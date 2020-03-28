@@ -70,7 +70,7 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: MapWebViewWidget(),
+            child: MapWebViewWidget(data: data),
           ),
         ),
         Container(padding: EdgeInsets.all(5)),

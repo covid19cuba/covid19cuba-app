@@ -33,10 +33,7 @@ flutter:
   assets:
     - assets/images/
     - assets/js/leaflet.js
-    - assets/js/c3.js
-    - assets/js/d3.min.js
     - assets/js/jquery.min.js
-    - assets/js/custom.js
     - assets/js/map.js
     - assets/css/bootstrap.min.css
     - assets/css/c3.css

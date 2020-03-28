@@ -2,9 +2,41 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/models/data_model.dart';
 
+import 'dart:developer';
+import 'dart:convert';
+
+String mapdata="{}";
+
+/*void LogPrint(Object object) {
+    int defaultPrintLength = 1020;
+    if (object == null || object.toString().length <= defaultPrintLength) {
+       print(object);
+    } else {
+       String log = object.toString();
+       int start = 0;
+       int endIndex = defaultPrintLength;
+       int logLength = log.length;
+       int tmpLogLength = log.length;
+       while (endIndex < logLength) {
+          print(log.substring(start, endIndex));
+          endIndex += defaultPrintLength;
+          start += defaultPrintLength;
+          tmpLogLength -= defaultPrintLength;
+       }
+       if (tmpLogLength > 0) {
+          print(log.substring(start, logLength));
+       }
+    }
+
+}*/
 
 class MapWebViewWidget extends StatelessWidget {
+
+  final DataModel data;
+  MapWebViewWidget({this.data}) : assert(data != null);
+
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
 
@@ -45,8 +77,10 @@ class MapWebViewWidget extends StatelessWidget {
               initialUrl: 'assets/map.html',
               javascriptMode: JavascriptMode.unrestricted,
               onPageFinished: (_) {
+                mapdata=jsonEncode(data.cases.toJson());
+                //LogPrint(mapdata);
                 cont
-                    .evaluateJavascript('covidData($basedata)')
+                    .evaluateJavascript('covidData($mapdata)')
                     .whenComplete((){
                         print('Mapa injected');
                         cont
@@ -61,7 +95,7 @@ class MapWebViewWidget extends StatelessWidget {
               onWebViewCreated: (WebViewController webViewController) {
                 _controller.complete(webViewController);
                 cont = webViewController;
-                //cont
+                                //cont
                 //    .evaluateJavascript('covidData($basedata)')
                 //    .whenComplete(() => print('Mapa injected'));
 

@@ -1,14 +1,3 @@
-$('#select-daily').on('change', function (e) {
-    var val = $('#select-daily').val();
-    if (val == 'daily-single-info') {
-        $('#daily-sum-info').hide();
-        $('#daily-single-info').show();
-    } else {
-        $('#daily-single-info').hide();
-        $('#daily-sum-info').show();
-    }
-});
-
 $('#select-map').on('change', function (e) {
     var val = $('#select-map').val();
     if (val == 'map-mun') {
@@ -20,271 +9,23 @@ $('#select-map').on('change', function (e) {
     }
 });
 
-var domains = {
-    'cu': 'Cuba',
-    'it': 'Italia',
-    'be': 'Bélgica',
-    'us': 'USA',
-    'fr': 'Francia',
-    'ca': 'Canadá',
-    'es': 'España',
-    'cn': 'China',
-    'ru': 'Rusia'
-};
-
-var contagio = {
-    'importado': 0,
-    'introducido': 0,
-    'autoctono': 0,
-    'desconocido': 0
-}
-
 covidData = function (data) {
 
-
+    //console.log(data)
+    //console.log(data.day);
     var factor = 20;
-
-    function getCountryFromDomain(dom) {
-        if (dom in domains) {
-            return domains[dom];
+    var cases = {};
+    for (var day in data.dias) {
+        if ('diagnosticados' in data.dias[day]) {
+            var diag = data.dias[day].diagnosticados;
+            for (var p in diag) {
+                cases[diag[p].id] = diag[p];
+                cases[diag[p].id]['fecha'] = data.dias[day].fecha;
+            }
         }
-        if (dom == 'unknown') {
-            return 'Desconocido';
-        }
-        return dom;
     }
 
-    function getAllCasesAndSimpleGraphics() {
-        var cases = {};
-        var deaths = 0;
-        var gone = 0;
-        var sex_male = 0;
-        var sex_female = 0;
-        var sex_unknown = 0;
-        var countries = {};
-        var ages = {
-            '0-18': 0,
-            '19-40': 0,
-            '41-60': 0,
-            '61 o más': 0,
-            'Desconocido': 0
-        }
-
-        for (var day in data.casos.dias) {
-            if ('diagnosticados' in data.casos.dias[day]) {
-                var diag = data.casos.dias[day].diagnosticados;
-                for (var p in diag) {
-                    cases[diag[p].id] = diag[p];
-                    cases[diag[p].id]['fecha'] = data.casos.dias[day].fecha;
-
-                    //sex
-                    if (diag[p].sexo == 'hombre') {
-                        sex_male += 1;
-                    } else {
-                        if (diag[p].sexo == 'mujer') {
-                            sex_female += 1;
-                        } else {
-                            sex_unknown += 1;
-                        }
-                    }
-
-                    //countries
-                    if (!(diag[p].pais in countries)) {
-                        countries[diag[p].pais] = 1;
-                    } else {
-                        countries[diag[p].pais] += 1;
-                    }
-
-                    //ages
-                    if (diag[p].edad == null) {
-                        ages['Desconocido'] += 1
-                    } else if ((diag[p].edad >= 0) && (diag[p].edad < 19)) {
-                        ages['0-18'] += 1
-                    } else if ((diag[p].edad >= 19) && (diag[p].edad <= 40)) {
-                        ages['19-40'] += 1
-                    } else if ((diag[p].edad >= 41) && (diag[p].edad <= 60)) {
-                        ages['41-60'] += 1
-                    } else {
-                        ages['61 o más'] += 1
-                    }
-
-                    //contagio
-                    if (diag[p].contagio == null) {
-                        contagio.desconocido += 1;
-                    } else {
-                        contagio[diag[p].contagio] += 1;
-                    }
-
-                }
-            }
-            if ('muertes_numero' in data.casos.dias[day]) {
-                deaths += data.casos.dias[day].muertes_numero;
-            }
-            if ('evacuados_numero' in data.casos.dias[day]) {
-                gone += data.casos.dias[day].evacuados_numero;
-            }
-        }
-
-        //Pie for sex
-        c3.generate({
-            bindto: "#sex-info",
-            data: {
-                columns: [['Hombres', sex_male], ['Mujeres', sex_female], ['No reportado', sex_unknown]],
-                type: 'pie'
-            }
-        });
-
-
-
-        //Bar for countries
-        var country = ['País'];
-        var countryDiagnoses = ['Diagnosticados'];
-        for (var c in countries) {
-            country.push(getCountryFromDomain(c));
-            countryDiagnoses.push(countries[c]);
-        }
-        c3.generate({
-            bindto: "#countries-info",
-            data: {
-                x: country[0],
-                columns: [
-                    country,
-                    countryDiagnoses
-                ],
-                type: 'bar',
-                colors: {
-                    'Diagnosticados': '#B01E22'
-                }
-            },
-            axis: {
-                x: {
-                    label: 'País',
-                    type: 'categorical'
-                },
-                y: {
-                    label: 'Casos Diagnosticados en Cuba',
-                    position: 'outer-middle',
-                }
-            }
-        });
-
-        //Bar for ages
-        var range = ['Rango Etario'];
-        var rangeDiagnoses = ['Diagnosticados'];
-        for (var r in ages) {
-            range.push(r);
-            rangeDiagnoses.push(ages[r]);
-        }
-        c3.generate({
-            bindto: "#ages-info",
-            data: {
-                x: range[0],
-                columns: [
-                    range,
-                    rangeDiagnoses
-                ],
-                type: 'bar',
-                colors: {
-                    'Diagnosticados': '#B01E22'
-                }
-            },
-            axis: {
-                x: {
-                    label: 'Rango etario',
-                    type: 'categorical'
-                },
-                y: {
-                    label: 'Casos Diagnosticados en Cuba',
-                    position: 'outer-middle',
-                }
-            }
-        });
-
-        //Pie for contagio
-        c3.generate({
-            bindto: "#contagio-info",
-            data: {
-                columns: [['Importado', contagio.importado], ['Introducido', contagio.introducido], ['Autóctono', contagio.autoctono], ['Desconocido', contagio.desconocido]],
-                type: 'pie'
-            }
-        });
-
-        //Lines for contagio evolution
-        var dates = ['Fecha'];
-        var dailySingle = ['Casos en el día'];
-        var dailySum = ['Casos en total'];
-        var total = 0;
-        for (var i = 1; i <= Object.keys(data.casos.dias).length; i++) {
-            dates.push(data.casos.dias[i].fecha.replace('2020/', ''));
-            if ('diagnosticados' in data.casos.dias[i]) {
-                dailySingle.push(data.casos.dias[i]['diagnosticados'].length);
-                total += data.casos.dias[i]['diagnosticados'].length;
-            } else {
-                dailySingle.push(0);
-            }
-            dailySum.push(total);
-        }
-        $('#update').html('2020/' + dates[dates.length - 1]);
-        c3.generate({
-            bindto: "#daily-single-info",
-            data: {
-                x: dates[0],
-                columns: [
-                    dates,
-                    dailySingle
-                ],
-                type: 'line',
-                colors: {
-                    'Casos en el día': '#B01E22'
-                }
-            },
-            axis: {
-                x: {
-                    label: 'Fecha',
-                    type: 'categorical'
-                },
-                y: {
-                    label: 'Casos diagnosticados en el día',
-                    position: 'outer-middle',
-                }
-            }
-        });
-        c3.generate({
-            bindto: "#daily-sum-info",
-            data: {
-                x: dates[0],
-                columns: [
-                    dates,
-                    dailySum
-                ],
-                type: 'line',
-                colors: {
-                    'Casos en total': '#B01E22'
-                }
-            },
-            axis: {
-                x: {
-                    label: 'Fecha',
-                    type: 'categorical'
-                },
-                y: {
-                    label: 'Casos diagnosticados hasta ese día',
-                    position: 'outer-middle'
-                }
-            }
-        });
-
-        return { "cases": cases, "deaths": deaths, "gone": gone, "female": sex_female, "male": sex_male, "unknownsex": sex_unknown };
-    }
-
-
-
-
-    var globalInfo = getAllCasesAndSimpleGraphics();
-
-
-    var casos = globalInfo.cases;
-
+    var casos = cases;
 
 
     function getAllRegions() {
@@ -326,29 +67,14 @@ covidData = function (data) {
             }
         }
 
-
-
         return {
             'max_muns': max_muns,
             'max_pros': max_pros,
-            'total': total,
-            "deaths": globalInfo.deaths,
-            "gone": globalInfo.gone,
-            "male": globalInfo.male,
-            "female": globalInfo.female,
-            "sexunknown": globalInfo.sex_unknown
+            'total': total
         };
     }
 
     var genInfo = resumeCases();
-
-    $('#gen-info-diagn-data').html(genInfo.total);
-    $('#gen-info-activ-data').html(genInfo.total - (genInfo.deaths + genInfo.gone));
-    $('#gen-info-death-data').html(genInfo.deaths);
-    $('#gen-info-gone-data').html(genInfo.gone);
-
-
-
 
 
     var geojsonM = L.geoJSON(municipios, { style: styleM });
