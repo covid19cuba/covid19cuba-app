@@ -124,44 +124,6 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
                 });
               },
             ),
-            /*FlatButton(
-              color: Constants.primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              onPressed: () {
-                cont.evaluateJavascript(showProvince);
-                setState(() {
-                  selectedView = 'Provincias';
-                });
-              },
-              child: Text(
-                'Provincias',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            FlatButton(
-              color: Constants.primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              onPressed: () {
-                cont.evaluateJavascript(showMunicipality);
-                setState(() {
-                  selectedView = 'Municipios';
-                });
-              },
-              child: Text(
-                'Municipios',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),*/
           ],
         )
       ],
