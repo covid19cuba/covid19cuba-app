@@ -36,6 +36,6 @@ class SplashPageState extends State<SplashPage> {
 
   Future navigateFromSplash() async {
     var page = HomePage();
-    Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => page));
   }
 }

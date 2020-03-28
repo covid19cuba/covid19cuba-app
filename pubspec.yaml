@@ -21,9 +21,29 @@ dependencies:
   url_launcher: ^5.4.1
   flutter_local_notifications: ^1.3.0
   background_fetch: '^0.5.1'
+  webview_flutter:
+    path: ./webview_flutter
+
+dev_dependencies:
+  flutter_native_splash: ^0.1.9
 
 flutter:
   uses-material-design: true
 
   assets:
     - assets/images/
+    - assets/js/leaflet.js
+    - assets/js/jquery.min.js
+    - assets/js/map.js
+    - assets/css/bootstrap.min.css
+    - assets/css/custom.css
+    - assets/css/leaflet.css
+    - assets/provincias.geojson
+    - assets/municipios.geojson
+    - assets/js/geojsondata.js
+    - assets/map.html
+
+flutter_native_splash:
+  image: assets/images/icon.jpg
+  color: "1c1340"
+  android_disable_fullscreen: true
