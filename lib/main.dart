@@ -16,6 +16,8 @@ void main() async {
 
   await NotificationManager.initialize();
 
+  await setUpTasks();
+
   return runApp(App());
 }
 
