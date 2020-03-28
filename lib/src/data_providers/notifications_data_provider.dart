@@ -7,11 +7,11 @@ List<LocalNotification> getApplicationNotifications() {
   List notifications = List<LocalNotification>();
   notifications.add(LocalNotification(
     title: 'Lava bien tus manos',
-    body: 'Con agua y jabón o deseinfectante para manos a base de alcohol.',
+    body: 'Con agua y jabón o desinfectante para manos a base de alcohol.',
   ));
   notifications.add(LocalNotification(
     title: 'Cubre tu nariz y tu boca al toser o estornudar',
-    body: 'Con pañuelos desechables o on tu antebrazo.',
+    body: 'Con pañuelos desechables o con tu antebrazo.',
   ));
   notifications.add(LocalNotification(
     title: 'Evita el contacto cercano',
@@ -20,11 +20,15 @@ List<LocalNotification> getApplicationNotifications() {
   notifications.add(LocalNotification(
     title: 'Evita las aglomeraciones',
     body:
-        'Mantenga una distancia de metro y medio de otras personas para evitar el contajio.',
+        'Mantenga una distancia de metro y medio de otras personas para evitar el contagio.',
+  ));
+  notifications.add(LocalNotification(
+    title: '¿Está presentando sintomas de COVID19?',
+    body: 'Por favor acuda al médico para recibir atención inmediata.',
   ));
   var rng = new Random();
   for (var i = 0; i < notifications.length; i++) {
-    int minutes = rng.nextInt(Constants.notificacionMunitesRange);
+    int minutes = rng.nextInt(Constants.notificationMunitesRange);
     notifications[i].id = i;
     notifications[i].scheduledDate =
         DateTime.now().add(Duration(minutes: minutes));
