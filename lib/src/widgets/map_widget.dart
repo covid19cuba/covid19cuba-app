@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/data_model.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 
 import 'dart:developer';
 import 'dart:convert';
@@ -41,7 +43,7 @@ class MapWebViewWidget extends StatelessWidget {
       Completer<WebViewController>();
 
   WebViewController cont;
-  String selecte_view = 'Provincia';
+  String selecte_view = 'Municipio';
 
   @override
   Widget build(BuildContext context) {
@@ -74,27 +76,42 @@ class MapWebViewWidget extends StatelessWidget {
           ),
           // constraints: Constrains,
           child: WebView(
-              initialUrl: 'assets/map.html',
-              javascriptMode: JavascriptMode.unrestricted,
-              onPageFinished: (_) {
-                mapdata=jsonEncode(data.cases.toJson());
-                //LogPrint(mapdata);
-                cont
-                    .evaluateJavascript('covidData($mapdata)')
-                    .whenComplete((){
-                        print('Mapa injected');
-                        cont
-                        .evaluateJavascript("\$('#map-mun').hide();\$('#map-pro').show();")
-                        .whenComplete((){
-                          print('Change to province map');
-                          selecte_view = 'Provincia';
-                        });
-                      }
-                    );
-              },
-              onWebViewCreated: (WebViewController webViewController) {
-                cont = webViewController;
-              }),
+            initialUrl: 'assets/map.html',
+            javascriptMode: JavascriptMode.unrestricted,
+            onPageFinished: (_) {
+              mapdata=jsonEncode(data.cases.toJson());
+              //LogPrint(mapdata);
+              cont
+                  .evaluateJavascript('covidData($mapdata)')
+                  .whenComplete((){
+                      print('Mapa injected');
+                      cont
+                      .evaluateJavascript("\$('#map-pro').hide();\$('#map-num').show();")
+                      .whenComplete((){
+                        print('Change to province map');
+                        selecte_view = 'Municipio';
+                      });
+                    }
+                  );
+            },
+            gestureRecognizers: Set()
+                ..add(
+                    Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
+                ..add(
+                  Factory<VerticalDragGestureRecognizer>(
+                      () => VerticalDragGestureRecognizer()),
+                )
+                ..add(
+                  Factory<HorizontalDragGestureRecognizer>(
+                      () => HorizontalDragGestureRecognizer()),
+                )
+                ..add(
+                  Factory<ScaleGestureRecognizer>(
+                      () => ScaleGestureRecognizer()),
+                ),
+            onWebViewCreated: (WebViewController webViewController) {
+              cont = webViewController;
+          }),
         ),
         ButtonBar(
             mainAxisSize: MainAxisSize.min,

@@ -30,6 +30,12 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
+            child: MapWebViewWidget(data: data),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
             child: EvolutionWidget(data: data),
           ),
         ),
@@ -65,12 +71,6 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: ComparisonWidget(data: data, countries: countries),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: MapWebViewWidget(data: data),
           ),
         ),
         Container(padding: EdgeInsets.all(5)),
