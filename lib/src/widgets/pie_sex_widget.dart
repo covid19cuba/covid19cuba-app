@@ -51,7 +51,11 @@ class PieSexWidgetState extends State<PieSexWidget> {
               charts.Series<String, String>(
                 id: 'Casos por sexo',
                 colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
-                domainFn: (item, _) => widget.data.gendersPretty[item],
+                domainFn: (item, _) =>
+                    widget.data.gendersPretty[item] ??
+                    (item != null && item.length > 0
+                        ? item[0].toUpperCase() + item.substring(1)
+                        : item),
                 measureFn: (item, _) => widget.data.genders[item],
                 data: widget.data.genders.keys.toList(),
               ),
