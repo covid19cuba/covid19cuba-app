@@ -10,7 +10,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: Constants.appName,
       theme: AppTheme.themeLight,
-      home: HomePage(),
+      home: OnBoardingPage(),
     );
   }
 }
