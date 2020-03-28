@@ -5,16 +5,23 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'dart:developer';
 
 void appTask(String taskId, [bool headless = false]) async {
-  InfoUpdate current_info = await isInfoUpdated();
-  if (current_info != null) {
-    if (current_info.needUpdate) {
+  InfoUpdate currentInfo;
+  try{
+    currentInfo = await isInfoUpdated();
+  }
+  catch(e){
+    log(e.toString());
+  }
+
+  if (currentInfo != null) {
+    if (currentInfo.needUpdate) {
       if (headless) {
         await NotificationManager.initialize();
       }
       NotificationManager.show(
         title: 'Nueva información !!!!',
-        body: 'Los datos se han actualizado, póngase al día.',
-        id: 0,
+        body: 'Los datos se han actualizado. Póngase al día. Toque para revisar.',
+        id: -1,
       );
     }
   } else {
@@ -25,4 +32,9 @@ void appTask(String taskId, [bool headless = false]) async {
 
 void appHeadlessTask(String taskId) async {
   return appTask(taskId, true);
+}
+
+Future<void> setUpTasks([int minutes = 15]) async{
+  await TaskManager.initialize(minutes, appTask);
+  await TaskManager.setHeadlessTask(appHeadlessTask);
 }
