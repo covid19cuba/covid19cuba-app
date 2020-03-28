@@ -30,6 +30,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
 
   List<String> getCountriesList() {
     List<String> countriesList = countries.countries.keys.toList();
+    countriesList.removeWhere((item) => item == 'Cuba');
     countriesList.sort();
     return countriesList;
   }

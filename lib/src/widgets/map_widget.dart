@@ -85,12 +85,7 @@ class MapWebViewWidget extends StatelessWidget {
                   .evaluateJavascript('covidData($mapdata)')
                   .whenComplete((){
                       print('Mapa injected');
-                      cont
-                      .evaluateJavascript("\$('#map-pro').hide();\$('#map-num').show();")
-                      .whenComplete((){
-                        print('Change to province map');
-                        selecte_view = 'Municipio';
-                      });
+                      selecte_view = 'Municipio';
                     }
                   );
             },

@@ -13,7 +13,7 @@ covidData = function (data) {
 
     //console.log(data)
     //console.log(data.day);
-    var factor = 20;
+    var factor = 40;
     var cases = {};
     for (var day in data.dias) {
         if ('diagnosticados' in data.dias[day]) {
@@ -202,34 +202,16 @@ covidData = function (data) {
 
 
     function setBounds() {
-        var val = $('#select-map').val();
-        console.log(val);
-        $('#map-mun').show();
+
         $('#map-pro').show();
+        $('#map-mun').show();
         map_pro.fitBounds(geojsonP.getBounds());
         map_mun.fitBounds(geojsonM.getBounds());
-        if (val == 'map-mun') {
-            $('#map-pro').hide();
-        }
-        if (val == 'map-pro') {
-            $('#map-mun').hide();
-        }
+        $('#map-pro').hide();
+
     }
 
     window.addEventListener('resize', setBounds);
-
-    $('#select-map').on('change', function (e) {
-        var val = $('#select-map').val();
-        if (val == 'map-mun') {
-            $('#map-pro').hide();
-            $('#map-mun').show();
-        } else {
-            $('#map-mun').hide();
-            $('#map-pro').show();
-        }
-
-    });
-
 
     $('#map-pro').hide();
     $('#map-mun').show();
