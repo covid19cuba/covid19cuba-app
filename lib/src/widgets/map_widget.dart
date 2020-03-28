@@ -45,7 +45,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
           ),
         ),
         Container(
-          height: 300,
+          height: 250,
           margin: EdgeInsets.only(
             left: 0,
             right: 0,
