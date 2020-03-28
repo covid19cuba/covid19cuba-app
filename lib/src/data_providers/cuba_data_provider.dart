@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:preferences/preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const urlCubaDataCU = 'http://www.cusobu.nat.cu/covid/data/covid19-cuba.json';
 const urlCubaDataIO =
@@ -33,6 +34,14 @@ Future<DataModel> getCubaDataFrom(String url) async {
   } catch (e) {
     log(e.toString());
     throw ParseException('Parse error');
+  }
+  try{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int time = (DateTime.now().millisecondsSinceEpoch / 1000).round() - 1;
+    prefs.setInt('last_data_update', time);
+  }
+  catch (e) {
+    log(e.toString());
   }
   return result;
 }
