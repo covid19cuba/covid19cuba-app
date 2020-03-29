@@ -74,7 +74,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
                 'Los datos se actualizan a partir de la información oficial '
-                'del MINSAP informados por las autoridades al dia siguiente.',
+                'del MINSAP informados por las autoridades al día siguiente.',
                 style: TextStyle(
                   color: Colors.white,
                 ),
