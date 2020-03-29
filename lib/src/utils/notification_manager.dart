@@ -13,7 +13,6 @@ AndroidNotificationDetails silent_channel = AndroidNotificationDetails(
   ongoing: false,
   enableVibration: false,
   playSound: false,
-
 );
 
 AndroidNotificationDetails noise_channel = AndroidNotificationDetails(
@@ -45,12 +44,12 @@ class NotificationManager {
     bool iOSDefaultPresentAlert = true,
     bool iOSDefaultPresentSound = true,
     bool iOSDefaultPresentBadge = true,
-    bool silentNotifications = false,
+    bool silentNotifications = true,
     DidReceiveLocalNotificationCallback iOSOnDidReceiveLocalNotification,
     SelectNotificationCallback onSelectNotification,
-
-  } ) async {
-    androidNotificationDetails = silentNotifications ? silent_channel : noise_channel;
+  }) async {
+    androidNotificationDetails =
+        silentNotifications ? silent_channel : noise_channel;
     iOSNotificationDetails = IOSNotificationDetails();
     notificationDetails = NotificationDetails(
       androidNotificationDetails,
