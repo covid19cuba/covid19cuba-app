@@ -3,6 +3,31 @@ import 'dart:developer';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:meta/meta.dart';
 
+AndroidNotificationDetails silent_channel = AndroidNotificationDetails(
+  'Notifications',
+  'Silent Notifications',
+  'Non annoying notifications',
+  importance: Importance.Default,
+  priority: Priority.Low,
+  style: AndroidNotificationStyle.BigText,
+  ongoing: false,
+  enableVibration: false,
+  playSound: false,
+
+);
+
+AndroidNotificationDetails noise_channel = AndroidNotificationDetails(
+  'Notifications',
+  'Regular Notifications',
+  'Important notifications',
+  importance: Importance.High,
+  priority: Priority.High,
+  style: AndroidNotificationStyle.BigText,
+  ongoing: false,
+  enableVibration: true,
+  playSound: true,
+);
+
 class NotificationManager {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static AndroidInitializationSettings androidInitializationSettings;
@@ -20,18 +45,12 @@ class NotificationManager {
     bool iOSDefaultPresentAlert = true,
     bool iOSDefaultPresentSound = true,
     bool iOSDefaultPresentBadge = true,
+    bool silentNotifications = false,
     DidReceiveLocalNotificationCallback iOSOnDidReceiveLocalNotification,
     SelectNotificationCallback onSelectNotification,
-  }) async {
-    androidNotificationDetails = AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
-      'your channel description',
-      importance: Importance.Max,
-      priority: Priority.High,
-      style: AndroidNotificationStyle.BigText,
-      ongoing: false,
-    );
+
+  } ) async {
+    androidNotificationDetails = silentNotifications ? silent_channel : noise_channel;
     iOSNotificationDetails = IOSNotificationDetails();
     notificationDetails = NotificationDetails(
       androidNotificationDetails,
