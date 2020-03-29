@@ -64,7 +64,10 @@ class HomePageState extends State<HomePage> {
                 );
               }
               if (state is ErrorHomeState) {
-                return ew.ErrorWidget(errorMessage: state.errorMessage);
+                return ew.ErrorWidget(
+                  errorMessage: state.errorMessage,
+                  cache: state.cache,
+                );
               }
               return Container();
             },
