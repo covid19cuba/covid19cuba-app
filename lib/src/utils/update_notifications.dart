@@ -16,7 +16,7 @@ void appTask(String taskId, [bool headless = false]) async {
   if (currentInfo != null) {
     if (currentInfo.needUpdate) {
       if (headless) {
-        await NotificationManager.initialize();
+        await NotificationManager.initialize(silentNotifications: false);
       }
       NotificationManager.show(
         title: 'Nueva Información!',
