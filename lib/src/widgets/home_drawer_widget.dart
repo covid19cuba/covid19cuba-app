@@ -59,7 +59,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
                 'Aplicación para conocer los reportes diarios, estadísticas, '
-                'etc respecto a la Covid-19 en Cuba.',
+                'etc respecto a la ${Constants.diseaseName} en Cuba.',
                 style: TextStyle(
                   color: Colors.white,
                 ),

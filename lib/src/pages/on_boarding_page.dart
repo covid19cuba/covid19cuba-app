@@ -6,6 +6,8 @@ import 'package:preferences/preferences.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
+import '../utils/constants.dart';
+
 class OnBoardingPage extends StatefulWidget {
   @override
   OnBoardingPageState createState() => OnBoardingPageState();
@@ -55,7 +57,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
         PageViewModel(
           title: '',
           body: 'Podrá consultar en tiempo real los datos de la evolución '
-              'de la epidemia de la Covid-19 en Cuba.',
+              'de la epidemia de la ${Constants.diseaseName} en Cuba.',
           image: buildImage(context, 'logo.png'),
           decoration: pageDecoration,
         ),
@@ -79,7 +81,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           title: 'Recuerde',
           body: 'Si todos seguimos las orientaciones de las autoridades '
               'de salud ganaremos la batalla contra la epidemia de '
-              'la Covid-19.',
+              'la ${Constants.diseaseName}.',
           image: buildImage(context, 'advice3.png'),
           decoration: pageDecoration,
           footer: Container(
