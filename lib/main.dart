@@ -7,8 +7,6 @@ import 'package:preferences/preference_service.dart';
 import 'package:covid19cuba/src/app.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-import 'src/data_providers/notifications_data_provider.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -20,7 +18,8 @@ void main() async {
 
   await setUpTasks();
 
-  var notifications = getApplicationNotifications();
+  // TODO: Bug in advice notifications, meanwhile they should be disabled
+  /*var notifications = getApplicationNotifications();
   notifications.forEach(
     (notification) => NotificationManager.schedule(
       id: notification.id,
@@ -28,7 +27,7 @@ void main() async {
       title: notification.title,
       body: notification.body,
     ),
-  );
+  );*/
 
   return runApp(App());
 }

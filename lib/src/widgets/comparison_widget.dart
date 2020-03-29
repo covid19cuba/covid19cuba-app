@@ -30,7 +30,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
 
   List<String> getCountriesList() {
     var list = countries.countries.keys.where((c) => c != 'Cuba').toList();
-    list.sort();
+    list.sort((a, b) => WorldTotalsModel.prettyCountry(a)
+        .compareTo(WorldTotalsModel.prettyCountry(b)));
     return list;
   }
 
@@ -50,6 +51,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
       ),
       charts.SeriesLegend(
         position: charts.BehaviorPosition.bottom,
+        desiredMaxColumns: 1,
       ),
       charts.LinePointHighlighter(
         showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.all,
@@ -62,7 +64,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   List<charts.Series<int, int>> getSeries() {
     return [
       charts.Series<int, int>(
-        id: selectedCountry,
+        id: WorldTotalsModel.prettyCountry(selectedCountry),
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
@@ -81,14 +83,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   List<charts.Series<int, int>> getZoomSeries() {
     return [
       charts.Series<int, int>(
-        id: 'Cuba',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: data.accumulated,
-      ),
-      charts.Series<int, int>(
-        id: selectedCountry,
+        id: WorldTotalsModel.prettyCountry(selectedCountry),
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
@@ -96,6 +91,13 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             0,
             min(data.accumulated.length,
                 countries.countries[selectedCountry].length)),
+      ),
+      charts.Series<int, int>(
+        id: 'Cuba',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (_, i) => i,
+        measureFn: (item, _) => item,
+        data: data.accumulated,
       ),
     ];
   }
@@ -141,7 +143,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
               getCountriesList().map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text(WorldTotalsModel.prettyCountry(value)),
             );
           }).toList(),
         ),
