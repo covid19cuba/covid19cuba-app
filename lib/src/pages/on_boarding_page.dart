@@ -1,24 +1,27 @@
-import 'package:covid19cuba/src/pages/pages.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:preferences/preferences.dart';
+
+import 'package:covid19cuba/src/pages/pages.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 
 class OnBoardingPage extends StatefulWidget {
   @override
-  _OnBoardingPageState createState() => _OnBoardingPageState();
+  OnBoardingPageState createState() => OnBoardingPageState();
 }
 
-class _OnBoardingPageState extends State<OnBoardingPage> {
+class OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  void _onIntroEnd(context) {
+  void onIntroEnd(context) {
+    PrefService.setBool(Constants.isOnBoarding, true);
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => HomePage()),
     );
   }
 
-  Widget _buildImage(BuildContext context, String assetName) {
+  Widget buildImage(BuildContext context, String assetName) {
     var size = MediaQuery.of(context).size;
     return Align(
       child: Image.asset('assets/images/$assetName', width: size.width / 2),
@@ -53,14 +56,14 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           title: '',
           body: 'Podrá consultar en tiempo real los datos de la evolución '
               'de la epidemia de la Covid-19 en Cuba.',
-          image: _buildImage(context, 'logo.png'),
+          image: buildImage(context, 'logo.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: 'Recomendación',
           body: 'Lávese las manos a fondo y con frecuencia con agua y '
               'jabón o usando un desinfectante a base de alcohol.',
-          image: _buildImage(context, 'advice1.png'),
+          image: buildImage(context, 'advice1.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
@@ -69,7 +72,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               'virus. Una vez contaminadas pueden transferir '
               'el virus a los ojos, la nariz o la boca. Desde allí, el '
               'virus puede entrar en su cuerpo.',
-          image: _buildImage(context, 'advice2.png'),
+          image: buildImage(context, 'advice2.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
@@ -77,7 +80,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           body: 'Si todos seguimos las orientaciones de las autoridades '
               'de salud ganaremos la batalla contra la epidemia de '
               'la Covid-19.',
-          image: _buildImage(context, 'advice3.png'),
+          image: buildImage(context, 'advice3.png'),
           decoration: pageDecoration,
           footer: Container(
             margin: EdgeInsets.symmetric(horizontal: 30),
@@ -90,14 +93,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               type: GFButtonType.outline2x,
               fullWidthButton: true,
               onPressed: () {
-                // TODO(norlancd): save in share preferences.
-                _onIntroEnd(context);
+                onIntroEnd(context);
               },
             ),
           ),
         ),
       ],
-      onDone: () => _onIntroEnd(context),
+      onDone: () => onIntroEnd(context),
       next: Icon(
         Icons.arrow_forward,
         color: Colors.white,
