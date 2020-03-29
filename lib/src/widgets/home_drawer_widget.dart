@@ -138,7 +138,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               ),
               onTap: () async {
                 Navigator.pop(context);
-                const url = 'https://t.me/matcomuh';
+                const url = 'https://http://www.matcom.uh.cu';
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
