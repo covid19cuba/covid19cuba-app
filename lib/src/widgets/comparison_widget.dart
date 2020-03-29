@@ -51,6 +51,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
       ),
       charts.SeriesLegend(
         position: charts.BehaviorPosition.bottom,
+        desiredMaxColumns: 1,
       ),
       charts.LinePointHighlighter(
         showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.all,
