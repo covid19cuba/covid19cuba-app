@@ -1,7 +1,7 @@
 name: covid19cuba
 description: Mobile application of Covid19 Cuba Efforts project implemented with Flutter.
 
-version: 1.0.0+2
+version: 0.1.0+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -24,6 +24,7 @@ dependencies:
   webview_flutter:
     path: ./webview_flutter
   package_info: ^0.4.0+16
+  introduction_screen: ^1.0.8
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9

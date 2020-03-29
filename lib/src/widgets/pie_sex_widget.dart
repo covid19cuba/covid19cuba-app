@@ -33,7 +33,7 @@ class PieSexWidgetState extends State<PieSexWidget> {
           ),
           child: Center(
             child: Text(
-              'Casos por sexo',
+              'Casos por Sexo',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -49,7 +49,7 @@ class PieSexWidgetState extends State<PieSexWidget> {
           child: charts.PieChart(
             [
               charts.Series<String, String>(
-                id: 'Casos por sexo',
+                id: 'Casos por Sexo',
                 colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
                 domainFn: (item, _) =>
                     widget.data.gendersPretty[item] ??

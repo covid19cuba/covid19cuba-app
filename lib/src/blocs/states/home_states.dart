@@ -28,9 +28,10 @@ class LoadedHomeState extends HomeState {
 
 class ErrorHomeState extends HomeState {
   final String errorMessage;
+  final bool cache;
 
-  const ErrorHomeState({@required this.errorMessage})
-      : assert(errorMessage != null);
+  const ErrorHomeState({@required this.errorMessage, @required this.cache})
+      : assert(errorMessage != null, cache != null);
 
   @override
   List<Object> get props => [errorMessage];

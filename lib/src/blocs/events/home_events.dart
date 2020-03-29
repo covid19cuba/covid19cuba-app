@@ -8,7 +8,9 @@ abstract class HomeEvent extends Equatable {
 }
 
 class LoadHomeEvent extends HomeEvent {
-  const LoadHomeEvent();
+  final bool showNotification;
+
+  const LoadHomeEvent({this.showNotification = true});
 }
 
 class FetchHomeEvent extends HomeEvent {

@@ -36,7 +36,13 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: EvolutionWidget(data: data),
+            child: PieSexWidget(data: data),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PieContagionWidget(data: data),
           ),
         ),
         Container(
@@ -58,13 +64,7 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: PieSexWidget(data: data),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: PieContagionWidget(data: data),
+            child: EvolutionWidget(data: data),
           ),
         ),
         Container(

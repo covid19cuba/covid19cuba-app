@@ -33,7 +33,7 @@ class PieContagionWidgetState extends State<PieContagionWidget> {
           ),
           child: Center(
             child: Text(
-              'Casos por modo de contagio',
+              'Casos por Modo de Contagio',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -49,7 +49,7 @@ class PieContagionWidgetState extends State<PieContagionWidget> {
           child: charts.PieChart(
             [
               charts.Series<String, String>(
-                id: 'Casos por modo de contagio',
+                id: 'Casos por Modo de Contagio',
                 colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
                 domainFn: (item, _) =>
                     widget.data.contagionsPretty[item] ??
