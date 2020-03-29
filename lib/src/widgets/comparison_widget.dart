@@ -68,6 +68,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         position: charts.BehaviorPosition.bottom,
         desiredMaxColumns: 1,
         showMeasures: true,
+        measureFormatter: (num measure) {
+          if(measure == null) return '';
+          return measure.toInt().toString() + ' Casos';
+        },
       ),
       charts.LinePointHighlighter(
         showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.all,
@@ -188,6 +192,12 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           child: charts.LineChart(
             getSeries(),
             animate: false,
+            domainAxis: charts.NumericAxisSpec(
+              viewport: charts.NumericExtents(
+                  1,
+                  max(countries.countries[selectedCountry].length,
+                      data.days.length)),
+            ),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
@@ -220,6 +230,9 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           child: charts.LineChart(
             getZoomSeries(),
             animate: false,
+            domainAxis: charts.NumericAxisSpec(
+              viewport: charts.NumericExtents(1, data.days.length),
+            ),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
