@@ -87,7 +87,7 @@ class NotificationManager {
     String payload,
   }) async {
     if (!isInitialized) {
-      log('Notification Manager not is initialized');
+      log('Notification Manager is not initialized');
       return;
     }
     await flutterLocalNotificationsPlugin.show(
@@ -109,7 +109,7 @@ class NotificationManager {
     androidAllowWhileIdle = false,
   }) async {
     if (!isInitialized) {
-      log('Notification Manager not is initialized');
+      log('Notification Manager is not initialized');
       return;
     }
     await flutterLocalNotificationsPlugin.schedule(
@@ -132,7 +132,7 @@ class NotificationManager {
     String payload,
   }) async {
     if (!isInitialized) {
-      log('Notification Manager not is initialized');
+      log('Notification Manager is not initialized');
       return;
     }
     await flutterLocalNotificationsPlugin.periodicallyShow(
@@ -154,7 +154,7 @@ class NotificationManager {
     String payload,
   }) async {
     if (!isInitialized) {
-      log('Notification Manager not is initialized');
+      log('Notification Manager is not initialized');
       return;
     }
     await flutterLocalNotificationsPlugin.showDailyAtTime(
@@ -177,7 +177,7 @@ class NotificationManager {
     String payload,
   }) async {
     if (!isInitialized) {
-      log('Notification Manager not is initialized');
+      log('Notification Manager is not initialized');
       return;
     }
     await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
@@ -194,7 +194,7 @@ class NotificationManager {
   static Future<List<PendingNotificationRequest>>
       pendingNotificationRequests() async {
     if (!isInitialized) {
-      log('Notification Manager not is initialized');
+      log('Notification Manager is not initialized');
       return null;
     }
     return await flutterLocalNotificationsPlugin.pendingNotificationRequests();
@@ -202,7 +202,7 @@ class NotificationManager {
 
   static Future<bool> iOSRequestPermissions() async {
     if (!isInitialized) {
-      log('Notification Manager not is initialized');
+      log('Notification Manager is not initialized');
       return false;
     }
     // If not platform is iOS return true
@@ -219,7 +219,7 @@ class NotificationManager {
 
   static Future<void> cancel(int id) async {
     if (!isInitialized) {
-      log('Notification Manager not is initialized');
+      log('Notification Manager is not initialized');
       return;
     }
     await flutterLocalNotificationsPlugin.cancel(id);
@@ -227,7 +227,7 @@ class NotificationManager {
 
   static Future<void> cancelAll() async {
     if (!isInitialized) {
-      log('Notification Manager not is initialized');
+      log('Notification Manager is not initialized');
       return;
     }
     await flutterLocalNotificationsPlugin.cancelAll();
