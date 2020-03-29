@@ -35,6 +35,21 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     return list;
   }
 
+  List<charts.SelectionModelConfig<num>> getSelectionModels() {
+    return [
+      charts.SelectionModelConfig(
+        changedListener: (charts.SelectionModel<num> model) {
+//          for (var datum in model.selectedDatum) {
+//            print(datum.series.id +
+//                ': ' +
+//                datum.datum
+//                    .toString()); // This could be used for further customization
+//          }
+        },
+      ),
+    ];
+  }
+
   List<charts.ChartBehavior> getBehaviors() {
     return [
       charts.ChartTitle(
@@ -52,12 +67,14 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
       charts.SeriesLegend(
         position: charts.BehaviorPosition.bottom,
         desiredMaxColumns: 1,
+        showMeasures: true,
       ),
       charts.LinePointHighlighter(
         showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.all,
         showVerticalFollowLine:
             charts.LinePointHighlighterFollowLineType.nearest,
       ),
+      charts.PanAndZoomBehavior(),
     ];
   }
 
@@ -176,6 +193,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
               includePoints: true,
             ),
             behaviors: getBehaviors(),
+            selectionModels: getSelectionModels(),
           ),
         ),
         Container(
@@ -207,6 +225,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
               includePoints: true,
             ),
             behaviors: getBehaviors(),
+            selectionModels: getSelectionModels(),
           ),
         ),
       ],
