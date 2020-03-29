@@ -69,7 +69,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         desiredMaxColumns: 1,
         showMeasures: true,
         measureFormatter: (num measure) {
-          if(measure == null) return '';
+          if (measure == null) return '';
           return measure.toInt().toString() + ' Casos';
         },
       ),
@@ -78,8 +78,19 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         showVerticalFollowLine:
             charts.LinePointHighlighterFollowLineType.nearest,
       ),
-      charts.PanAndZoomBehavior(),
     ];
+  }
+
+  List<charts.ChartBehavior> getSpecBehaviors() {
+    var behaviors = getBehaviors();
+    behaviors.addAll([
+      charts.RangeAnnotation([
+        charts.LineAnnotationSegment(
+            data.days.length - 1, charts.RangeAnnotationAxisType.domain,
+            startLabel: 'Día ' + data.days.length.toString())
+      ])
+    ]);
+    return behaviors;
   }
 
   List<charts.Series<int, int>> getSeries() {
@@ -202,7 +213,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
             ),
-            behaviors: getBehaviors(),
+            behaviors: getSpecBehaviors(),
             selectionModels: getSelectionModels(),
           ),
         ),
