@@ -10,5 +10,5 @@
 ### Fixed
 * Minor ui bugs
 
-## [0.1.0] - March 28, 2020
+## [0.1.1] - March 28, 2020
 * First implementation
