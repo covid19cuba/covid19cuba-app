@@ -75,6 +75,7 @@ class EvolutionWidget extends StatelessWidget {
               charts.SeriesLegend(
                 position: charts.BehaviorPosition.bottom,
                 desiredMaxColumns: 1,
+                showMeasures: true,
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:
