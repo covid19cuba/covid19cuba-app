@@ -35,6 +35,21 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     return list;
   }
 
+  List<charts.SelectionModelConfig<num>> getSelectionModels() {
+    return [
+      charts.SelectionModelConfig(
+        changedListener: (charts.SelectionModel<num> model) {
+//          for (var datum in model.selectedDatum) {
+//            print(datum.series.id +
+//                ': ' +
+//                datum.datum
+//                    .toString()); // This could be used for further customization
+//          }
+        },
+      ),
+    ];
+  }
+
   List<charts.ChartBehavior> getBehaviors() {
     return [
       charts.ChartTitle(
@@ -52,6 +67,11 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
       charts.SeriesLegend(
         position: charts.BehaviorPosition.bottom,
         desiredMaxColumns: 1,
+        showMeasures: true,
+        measureFormatter: (num measure) {
+          if (measure == null) return '';
+          return measure.toInt().toString() + ' Casos';
+        },
       ),
       charts.LinePointHighlighter(
         showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.all,
@@ -59,6 +79,18 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             charts.LinePointHighlighterFollowLineType.nearest,
       ),
     ];
+  }
+
+  List<charts.ChartBehavior> getSpecBehaviors() {
+    var behaviors = getBehaviors();
+    behaviors.addAll([
+      charts.RangeAnnotation([
+        charts.LineAnnotationSegment(
+            data.days.length - 1, charts.RangeAnnotationAxisType.domain,
+            startLabel: 'Día ' + data.days.length.toString())
+      ])
+    ]);
+    return behaviors;
   }
 
   List<charts.Series<int, int>> getSeries() {
@@ -171,11 +203,18 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           child: charts.LineChart(
             getSeries(),
             animate: false,
+            domainAxis: charts.NumericAxisSpec(
+              viewport: charts.NumericExtents(
+                  1,
+                  max(countries.countries[selectedCountry].length,
+                      data.days.length)),
+            ),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
             ),
-            behaviors: getBehaviors(),
+            behaviors: getSpecBehaviors(),
+            selectionModels: getSelectionModels(),
           ),
         ),
         Container(
@@ -202,11 +241,15 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           child: charts.LineChart(
             getZoomSeries(),
             animate: false,
+            domainAxis: charts.NumericAxisSpec(
+              viewport: charts.NumericExtents(1, data.days.length),
+            ),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
             ),
             behaviors: getBehaviors(),
+            selectionModels: getSelectionModels(),
           ),
         ),
       ],
