@@ -98,9 +98,12 @@ class DiagnosedModel {
       detectionProvince: json['provincia_detección'],
       dpacodeMunicipalityDetection: json['dpacode_municipio_deteccion'],
       dpacodeProvinceDetection: json['dpacode_provincia_deteccion'],
-      visitedProvinces: visitedProvinces.map((x) => x.toString()).toList(),
-      dpacodeVisitedProvinces:
-          dpacodeVisitedProvinces.map((x) => x.toString()).toList(),
+      visitedProvinces: visitedProvinces != null
+          ? visitedProvinces.map((x) => x.toString()).toList()
+          : null,
+      dpacodeVisitedProvinces: dpacodeVisitedProvinces != null
+          ? dpacodeVisitedProvinces.map((x) => x.toString()).toList()
+          : null,
       contagion: json['contagio'],
       focalContact: getInt(json['contacto_focal']),
       isolationCenter: json['centro_aislamiento'],
