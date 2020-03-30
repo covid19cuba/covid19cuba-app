@@ -22,7 +22,8 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Distribución por nacionalidad de los casos diagnosticados en Cuba',
+              'Distribución por nacionalidad de '
+              'los casos extrangeros diagnosticados',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -40,9 +41,9 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
               charts.Series<DiagnosedModel, String>(
                 id: 'Diagnosticados',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (item, _) => item.country,
+                domainFn: (item, _) => item.country.toUpperCase(),
                 measureFn: (item, _) => data.countries[item.country],
-                data: data.diagnosed,
+                data: data.diagnosed.where((x) => x.country != 'cu').toList(),
               ),
             ],
             animate: false,
@@ -61,6 +62,15 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea,
+              ),
+              charts.SeriesLegend(
+                position: charts.BehaviorPosition.bottom,
+                desiredMaxColumns: 1,
+                showMeasures: true,
+                measureFormatter: (num measure) {
+                  if (measure == null) return '';
+                  return measure.toInt().toString() + ' Casos';
+                },
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:
