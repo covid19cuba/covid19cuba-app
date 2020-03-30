@@ -86,6 +86,25 @@ class DataModel {
     ];
   }
 
+  List<List<dynamic>> get tests {
+    var result = List<List<dynamic>>();
+    var days = this.days.reversed.toList();
+    var accumulated = this.accumulated.reversed.toList();
+    for (var i = 0; i < days.length; ++i) {
+      if (days[i].testsTotal == null) {
+        break;
+      }
+      var actual = List<dynamic>();
+      actual.add(days[i].date);
+      actual.add(accumulated[i]);
+      actual.add(days[i].testsTotal - accumulated[i]);
+      actual.add(days[i].testsTotal);
+      result.add(actual);
+    }
+    result = result.reversed.toList();
+    return result;
+  }
+
   Map<String, int> get casesNationality {
     var result = <String, int>{
       'Extranjeros': 0,
