@@ -252,6 +252,24 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             selectionModels: getSelectionModels(),
           ),
         ),
+        Container(
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: 20,
+          ),
+          child: Center(
+            child: Text(
+              'Datos de los países tomados de\ngithub.com/pomber/covid19\ny actualizado el ${dateTimeToJson(countries.dateTime)}',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

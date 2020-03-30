@@ -1,11 +1,21 @@
-import 'dart:developer' show log;
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 
+part 'data_model.g.dart';
+
+@JsonSerializable(ignoreUnannotated: true)
 class DataModel {
+  @JsonKey(name: 'casos')
   CasesModel cases;
-  DiagnosticCentersModel diagnosticCenters;
-  IsolationCentersModel isolationCenters;
+
+  @JsonKey(name: 'centros_diagnostico')
+  Map<String, CenterModel> diagnosticCenters;
+
+  @JsonKey(name: 'centros_aislamiento')
+  Map<String, CenterModel> isolationCenters;
+
+  @JsonKey(name: 'note-text')
   String note;
 
   DataModel({
@@ -15,28 +25,40 @@ class DataModel {
     this.note,
   });
 
-  int get numberOfDiagnosed => cases.days.values
-      .where((x) => x.diagnosed != null)
-      .map((x) => x.diagnosed.length)
-      .reduce((v, e) => v + e);
+  int get numberOfDiagnosed {
+    return cases.days.values
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed.length)
+        .reduce((v, e) => v + e);
+  }
 
-  int get numberOfDeaths => cases.days.values
-      .where((x) => x.deathsNumber != null)
-      .map((x) => x.deathsNumber)
-      .reduce((v, e) => v + e);
+  int get numberOfDeaths {
+    return cases.days.values
+        .where((x) => x.deathsNumber != null)
+        .map((x) => x.deathsNumber)
+        .reduce((v, e) => v + e);
+  }
 
-  int get numberOfEvacuees => cases.days.values
-      .where((x) => x.evacueesNumber != null)
-      .map((x) => x.evacueesNumber)
-      .reduce((v, e) => v + e);
+  int get numberOfEvacuees {
+    return cases.days.values
+        .where((x) => x.evacueesNumber != null)
+        .map((x) => x.evacueesNumber)
+        .reduce((v, e) => v + e);
+  }
 
-  int get numberOfRecovered => cases.days.values
-      .where((x) => x.recoveredNumber != null)
-      .map((x) => x.recoveredNumber)
-      .reduce((v, e) => v + e);
+  int get numberOfRecovered {
+    return cases.days.values
+        .where((x) => x.recoveredNumber != null)
+        .map((x) => x.recoveredNumber)
+        .reduce((v, e) => v + e);
+  }
 
-  int get numberOfActive =>
-      numberOfDiagnosed - numberOfDeaths - numberOfEvacuees - numberOfRecovered;
+  int get numberOfActive {
+    return numberOfDiagnosed -
+        numberOfDeaths -
+        numberOfEvacuees -
+        numberOfRecovered;
+  }
 
   List<DayModel> get days {
     var result = cases.days.values.toList();
@@ -54,13 +76,57 @@ class DataModel {
     return result;
   }
 
-  List<String> get ageGroupsNames => [
-        '0-18',
-        '19-40',
-        '41-60',
-        '>=61',
-        'Desconocido',
-      ];
+  List<String> get ageGroupsNames {
+    return [
+      '0-18',
+      '19-40',
+      '41-60',
+      '>=61',
+      'Desconocido',
+    ];
+  }
+
+  List<List<dynamic>> get tests {
+    var result = List<List<dynamic>>();
+    var days = this.days.reversed.toList();
+    var accumulated = this.accumulated.reversed.toList();
+    for (var i = 0; i < days.length; ++i) {
+      if (days[i].testsTotal == null) {
+        break;
+      }
+      var actual = List<dynamic>();
+      actual.add(days[i].date);
+      actual.add(accumulated[i]);
+      actual.add(days[i].testsTotal - accumulated[i]);
+      actual.add(days[i].testsTotal);
+      result.add(actual);
+    }
+    result = result.reversed.toList();
+    return result;
+  }
+
+  Map<String, int> get casesNationality {
+    var result = <String, int>{
+      'Extranjeros': 0,
+      'Cubanos': 0,
+      'No Reportados': 0,
+    };
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (item.country == null || item.country.isEmpty) {
+          ++result['No Reportados'];
+        } else if (item.country == 'cu') {
+          ++result['Cubanos'];
+        } else {
+          ++result['Extranjeros'];
+        }
+      });
+    });
+    return result;
+  }
 
   Map<String, String> get contagionsPretty {
     return <String, String>{
@@ -176,7 +242,7 @@ class DataModel {
         if (result.containsKey(item.country)) {
           ++result[item.country];
         } else {
-          result[item.country] = 0;
+          result[item.country] = 1;
         }
       });
     });
@@ -196,46 +262,8 @@ class DataModel {
     return result;
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'casos': cases.toJson(),
-      'centros_diagnostico': diagnosticCenters.toJson(),
-      'centros_aislamiento': isolationCenters.toJson(),
-      'note-text': note,
-    };
-  }
+  factory DataModel.fromJson(Map<String, dynamic> json) =>
+      _$DataModelFromJson(json);
 
-  static DataModel fromJson(Map<String, dynamic> json) {
-    CasesModel cases;
-    DiagnosticCentersModel diagnosticCenter;
-    IsolationCentersModel isolationCenters;
-    try {
-      cases = CasesModel.fromJson(json['casos']);
-    } catch (e) {
-      log('cases->' + e.toString());
-      throw e;
-    }
-    try {
-      diagnosticCenter = DiagnosticCentersModel.fromJson(
-        json['centros_diagnostico'],
-      );
-    } catch (e) {
-      log('diagnostic->' + e.toString());
-      throw e;
-    }
-    try {
-      isolationCenters = IsolationCentersModel.fromJson(
-        json['centros_aislamiento'],
-      );
-    } catch (e) {
-      log('isolation->' + e.toString());
-      throw e;
-    }
-    return DataModel(
-      cases: cases,
-      diagnosticCenters: diagnosticCenter,
-      isolationCenters: isolationCenters,
-      note: json.containsKey('json') ? json['note-text'] : null,
-    );
-  }
+  Map<String, dynamic> toJson() => _$DataModelToJson(this);
 }
