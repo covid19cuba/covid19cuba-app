@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
+import 'package:covid19cuba/src/utils/utils.dart';
+
 part 'world_totals_model.g.dart';
 
 @JsonSerializable()
@@ -8,7 +10,10 @@ class WorldTotalsModel {
   @JsonKey(name: 'paises')
   final Map<String, List<int>> countries;
 
-  const WorldTotalsModel({@required this.countries})
+  @JsonKey(name: 'dia-actualizacion', fromJson: dateTimeFromJson, toJson: dateTimeToJson)
+  final DateTime dateTime;
+
+  const WorldTotalsModel({@required this.countries, @required this.dateTime})
       : assert(countries != null);
 
   factory WorldTotalsModel.fromJson(Map<String, dynamic> json) =>
