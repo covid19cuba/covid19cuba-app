@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
@@ -191,6 +193,7 @@ class DataModel {
   }
 
   Map<String, int> get countries {
+    log('=================================');
     var result = Map<String, int>();
     days
         .where((x) => x.diagnosed != null)
@@ -200,10 +203,14 @@ class DataModel {
         if (result.containsKey(item.country)) {
           ++result[item.country];
         } else {
-          result[item.country] = 0;
+          result[item.country] = 1;
+        }
+        if (item.country == 'it') {
+          log(item.id);
         }
       });
     });
+    log('=================================');
     return result;
   }
 
