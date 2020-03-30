@@ -1,6 +1,8 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
 
@@ -70,54 +72,13 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                'Los datos se actualizan a partir de la información oficial '
-                'del MINSAP informados por las autoridades al día siguiente.',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
+            linksDrawerItem(),
             Container(
               height: 2,
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                'Puede contribuir al desarrollo de esta aplicación, pues '
-                'es un proyecto de código abierto.',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            GestureDetector(
-              child: Container(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  'Ver el código fuente',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              onTap: () async {
-                Navigator.pop(context);
-                const url =
-                    'https://github.com/Covid19-Cuba-Efforts/covid19cuba-app';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  dev.log('Could not launch $url');
-                }
-              },
-            ),
+            sharerDrawerItem(),
             Container(
               height: 2,
               color: Colors.white,
@@ -207,10 +168,142 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 ],
               ),
             ),
+            Container(
+              height: 2,
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+            ),
             versionAppDrawerItem()
           ],
         ),
       ),
+    );
+  }
+
+  Widget createDrawerItem(
+    BuildContext context, {
+    IconData icon,
+    String text,
+    GestureTapCallback onTap,
+  }) {
+    return ListTile(
+      title: Row(
+        children: <Widget>[
+          Icon(
+            icon,
+            color: Colors.white,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 13),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        ],
+      ),
+      onTap: onTap,
+    );
+  }
+
+  Widget linksDrawerItem() {
+    return ExpansionTile(
+      initiallyExpanded: true,
+      title: Text(
+        'Enlaces de Interés',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      children: <Widget>[
+        createDrawerItem(
+          context,
+          icon: Icons.android,
+          text: 'Enlace en Apklis',
+          onTap: () async {
+            const url =
+                'https://www.apklis.cu/application/club.postdata.covid19cuba';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              dev.log('Could not launch $url');
+            }
+          },
+        ),
+        createDrawerItem(
+          context,
+          icon: FontAwesomeIcons.chrome,
+          text: 'Web en Internet',
+          onTap: () async {
+            const url = 'https://covid19cubadata.github.io';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              dev.log('Could not launch $url');
+            }
+          },
+        ),
+        createDrawerItem(
+          context,
+          icon: FontAwesomeIcons.home,
+          text: 'Web nacional',
+          onTap: () async {
+            const url = 'http://www.cusobu.nat.cu/covid/';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              dev.log('Could not launch $url');
+            }
+          },
+        ),
+        createDrawerItem(
+          context,
+          icon: FontAwesomeIcons.telegram,
+          text: 'Canal de Telegram',
+          onTap: () async {
+            const url = 'https://t.me/covid19cubadata';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              dev.log('Could not launch $url');
+            }
+          },
+        ),
+        createDrawerItem(
+          context,
+          icon: FontAwesomeIcons.github,
+          text: 'Enlace de GitHub',
+          onTap: () async {
+            const url =
+                'https://github.com/Covid19-Cuba-Efforts/covid19cuba-app';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              dev.log('Could not launch $url');
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget sharerDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.share,
+      text: 'Compartir',
+      onTap: () async {
+        Share.share(
+          'Yo uso $appName: la aplicación para conocer los reportes diarios, '
+          'estadísticas, etc respecto a la ${Constants.diseaseName} en Cuba.\n'
+          '\nDisponible en Apklis: https://www.apklis.cu/application/club.postdata.covid19cuba',
+          subject: '$appName',
+        );
+      },
     );
   }
 

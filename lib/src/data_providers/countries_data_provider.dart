@@ -31,7 +31,7 @@ Future<WorldTotalsModel> getCountriesDataFrom(String url) async {
   WorldTotalsModel result;
   try {
     var json = jsonDecode(resp.body);
-    result = WorldTotalsModel.fromJson(json['paises']);
+    result = WorldTotalsModel.fromJson(json);
   } catch (e) {
     log(e.toString());
     throw ParseException('Parse error');

@@ -1,7 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'center_model.g.dart';
+
+@JsonSerializable()
 class CenterModel {
   String id;
+  @JsonKey(name: 'nombre')
   String name;
+  @JsonKey(name: 'provincia')
   String province;
+  @JsonKey(name: 'dpacode_provincia')
   String dpacodeProvince;
 
   CenterModel({
@@ -11,21 +19,8 @@ class CenterModel {
     this.dpacodeProvince,
   });
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'id': id,
-      'nombre': name,
-      'provincia': province,
-      'dpacode_provincia': dpacodeProvince,
-    };
-  }
+  factory CenterModel.fromJson(Map<String, dynamic> json) =>
+      _$CenterModelFromJson(json);
 
-  static CenterModel fromJson(Map<String, dynamic> json) {
-    return CenterModel(
-      id: json['id'],
-      name: json['nombre'],
-      province: json['provincia'],
-      dpacodeProvince: json['dpacode_provincia'],
-    );
-  }
+  Map<String, dynamic> toJson() => _$CenterModelToJson(this);
 }
