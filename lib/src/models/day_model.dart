@@ -20,6 +20,9 @@ class DayModel {
   @JsonKey(name: 'sujetos_riesgo', fromJson: getInt)
   int riskSubjects;
 
+  @JsonKey(name: 'tests_total', fromJson: getInt)
+  int testsTotal;
+
   @JsonKey(name: 'graves_numero', fromJson: getInt)
   int seriousNumber;
 

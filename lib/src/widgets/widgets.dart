@@ -9,6 +9,7 @@ export 'note_widget.dart';
 export 'pie_cases_nationality.dart';
 export 'pie_contagion_widget.dart';
 export 'pie_sex_widget.dart';
+export 'pie_tests_percent_widget.dart';
 export 'resume_widget.dart';
 export 'comparison_widget.dart';
 export 'map_widget.dart';

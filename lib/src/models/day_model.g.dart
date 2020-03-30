@@ -25,13 +25,14 @@ DayModel _$DayModelFromJson(Map<String, dynamic> json) {
     recoveredNumber: getInt(json['recuperados_numero']),
     recoveredId:
         (json['recuperados_id'] as List)?.map((e) => e as String)?.toList(),
-  );
+  )..testsTotal = getInt(json['tests_total']);
 }
 
 Map<String, dynamic> _$DayModelToJson(DayModel instance) => <String, dynamic>{
       'fecha': dateTimeToJson(instance.date),
       'diagnosticados': instance.diagnosed,
       'sujetos_riesgo': instance.riskSubjects,
+      'tests_total': instance.testsTotal,
       'graves_numero': instance.seriousNumber,
       'graves_id': instance.seriousId,
       'muertes_numero': instance.deathsNumber,
