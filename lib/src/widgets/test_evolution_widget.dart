@@ -100,6 +100,24 @@ class TestEvolutionWidget extends StatelessWidget {
             ],
           ),
         ),
+        Container(
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: 20,
+          ),
+          child: Center(
+            child: Text(
+              'Esta información se reporta desde ${dateTimeToJson(data.tests[0][0])}',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
