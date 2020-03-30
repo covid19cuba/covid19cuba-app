@@ -1,22 +1,68 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'package:covid19cuba/src/utils/utils.dart';
 
+part 'diagnosed_model.g.dart';
+
+@JsonSerializable()
 class DiagnosedModel {
+  @JsonKey(name: 'id')
   String id;
+
+  @JsonKey(name: 'pais')
   String country;
+
+  @JsonKey(name: 'edad', fromJson: getInt)
   int age;
+
+  @JsonKey(name: 'sexo')
   String sex;
+
+  @JsonKey(
+    name: 'arribo_a_cuba_foco',
+    fromJson: dateTimeFromJson,
+    toJson: dateTimeToJson,
+  )
   DateTime arrivalInCubaFocus;
+
+  @JsonKey(
+    name: 'consulta_medico',
+    fromJson: dateTimeFromJson,
+    toJson: dateTimeToJson,
+  )
   DateTime medicalConsultation;
+
+  @JsonKey(name: 'municipio_detección')
   String detectionMunicipality;
+
+  @JsonKey(name: 'provincia_detección')
   String detectionProvince;
+
+  @JsonKey(name: 'dpacode_municipio_deteccion')
   String dpacodeMunicipalityDetection;
+
+  @JsonKey(name: 'dpacode_provincia_deteccion')
   String dpacodeProvinceDetection;
+
+  @JsonKey(name: 'provincias_visitadas')
   List<String> visitedProvinces;
+
+  @JsonKey(name: 'dpacode_provincias_visitadas')
   List<String> dpacodeVisitedProvinces;
+
+  @JsonKey(name: 'contagio')
   String contagion;
+
+  @JsonKey(name: 'contacto_focal', fromJson: getInt)
   int focalContact;
+
+  @JsonKey(name: 'centro_aislamiento')
   String isolationCenter;
+
+  @JsonKey(name: 'centro_diagnostico')
   String diagnosticCenter;
+
+  @JsonKey(name: 'posible_procedencia_contagio')
   List<String> possibleOriginContagion;
 
   DiagnosedModel({
@@ -39,77 +85,8 @@ class DiagnosedModel {
     this.possibleOriginContagion,
   });
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'id': id,
-      'pais': country,
-      'edad': age,
-      'sexo': sex,
-      'arribo_a_cuba_foco': arrivalInCubaFocus != null
-          ? '${arrivalInCubaFocus.year}/${arrivalInCubaFocus.month}/${arrivalInCubaFocus.day}'
-          : null,
-      'consulta_medico': medicalConsultation != null
-          ? '${medicalConsultation.year}/${medicalConsultation.month}/${medicalConsultation.day}'
-          : null,
-      'municipio_detección': detectionMunicipality,
-      'provincia_detección': detectionProvince,
-      'dpacode_municipio_deteccion': dpacodeMunicipalityDetection,
-      'dpacode_provincia_deteccion': dpacodeProvinceDetection,
-      'provincias_visitadas': visitedProvinces,
-      'dpacode_provincias_visitadas': dpacodeVisitedProvinces,
-      'contagio': contagion,
-      'contacto_focal': focalContact,
-      'centro_aislamiento': isolationCenter,
-      'centro_diagnostico': diagnosticCenter,
-      'posible_procedencia_contagio': possibleOriginContagion,
-    };
-  }
+  factory DiagnosedModel.fromJson(Map<String, dynamic> json) =>
+      _$DiagnosedModelFromJson(json);
 
-  static DiagnosedModel fromJson(Map<String, dynamic> json) {
-    int year1, month1, day1;
-    if (json['arribo_a_cuba_foco'] != null) {
-      year1 = int.parse(json['arribo_a_cuba_foco'].toString().split('/')[0]);
-      month1 = int.parse(json['arribo_a_cuba_foco'].toString().split('/')[1]);
-      day1 = int.parse(json['arribo_a_cuba_foco'].toString().split('/')[2]);
-    }
-    int year2, month2, day2;
-    if (json['consulta_medico'] != null) {
-      year2 = int.parse(json['consulta_medico'].toString().split('/')[0]);
-      month2 = int.parse(json['consulta_medico'].toString().split('/')[1]);
-      day2 = int.parse(json['consulta_medico'].toString().split('/')[2]);
-    }
-    List<dynamic> visitedProvinces = json['provincias_visitadas'];
-    List<dynamic> dpacodeVisitedProvinces =
-        json['dpacode_provincias_visitadas'];
-    List<dynamic> possibleOriginContagion =
-        json['posible_procedencia_contagio'];
-    return DiagnosedModel(
-      id: json['id'],
-      country: json['pais'],
-      age: getInt(json['edad']),
-      sex: json['sexo'],
-      arrivalInCubaFocus: json['arribo_a_cuba_foco'] != null
-          ? DateTime(year1, month1, day1)
-          : null,
-      medicalConsultation: json['consulta_medico'] != null
-          ? DateTime(year2, month2, day2)
-          : null,
-      detectionMunicipality: json['municipio_detección'],
-      detectionProvince: json['provincia_detección'],
-      dpacodeMunicipalityDetection: json['dpacode_municipio_deteccion'],
-      dpacodeProvinceDetection: json['dpacode_provincia_deteccion'],
-      visitedProvinces: visitedProvinces != null
-          ? visitedProvinces.map((x) => x.toString()).toList()
-          : null,
-      dpacodeVisitedProvinces: dpacodeVisitedProvinces != null
-          ? dpacodeVisitedProvinces.map((x) => x.toString()).toList()
-          : null,
-      contagion: json['contagio'],
-      focalContact: getInt(json['contacto_focal']),
-      isolationCenter: json['centro_aislamiento'],
-      diagnosticCenter: json['centro_diagnostico'],
-      possibleOriginContagion:
-          possibleOriginContagion.map((x) => x.toString()).toList(),
-    );
-  }
+  Map<String, dynamic> toJson() => _$DiagnosedModelToJson(this);
 }
