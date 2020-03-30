@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
@@ -86,6 +84,29 @@ class DataModel {
       '>=61',
       'Desconocido',
     ];
+  }
+
+  Map<String, int> get casesNationality {
+    var result = <String, int>{
+      'Extranjeros': 0,
+      'Cubanos': 0,
+      'No Reportados': 0,
+    };
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (item.country == null || item.country.isEmpty) {
+          ++result['No Reportados'];
+        } else if (item.country == 'cu') {
+          ++result['Cubanos'];
+        } else {
+          ++result['Extranjeros'];
+        }
+      });
+    });
+    return result;
   }
 
   Map<String, String> get contagionsPretty {
@@ -193,7 +214,6 @@ class DataModel {
   }
 
   Map<String, int> get countries {
-    log('=================================');
     var result = Map<String, int>();
     days
         .where((x) => x.diagnosed != null)
@@ -205,12 +225,8 @@ class DataModel {
         } else {
           result[item.country] = 1;
         }
-        if (item.country == 'it') {
-          log(item.id);
-        }
       });
     });
-    log('=================================');
     return result;
   }
 
