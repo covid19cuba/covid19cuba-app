@@ -86,6 +86,48 @@ class DataModel {
     ];
   }
 
+  List<List<dynamic>> get tests {
+    var result = List<List<dynamic>>();
+    var days = this.days.reversed.toList();
+    var accumulated = this.accumulated.reversed.toList();
+    for (var i = 0; i < days.length; ++i) {
+      if (days[i].testsTotal == null) {
+        break;
+      }
+      var actual = List<dynamic>();
+      actual.add(days[i].date);
+      actual.add(accumulated[i]);
+      actual.add(days[i].testsTotal - accumulated[i]);
+      actual.add(days[i].testsTotal);
+      result.add(actual);
+    }
+    result = result.reversed.toList();
+    return result;
+  }
+
+  Map<String, int> get casesNationality {
+    var result = <String, int>{
+      'Extranjeros': 0,
+      'Cubanos': 0,
+      'No Reportados': 0,
+    };
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (item.country == null || item.country.isEmpty) {
+          ++result['No Reportados'];
+        } else if (item.country == 'cu') {
+          ++result['Cubanos'];
+        } else {
+          ++result['Extranjeros'];
+        }
+      });
+    });
+    return result;
+  }
+
   Map<String, String> get contagionsPretty {
     return <String, String>{
       'importado': 'Importados',
@@ -200,7 +242,7 @@ class DataModel {
         if (result.containsKey(item.country)) {
           ++result[item.country];
         } else {
-          result[item.country] = 0;
+          result[item.country] = 1;
         }
       });
     });
