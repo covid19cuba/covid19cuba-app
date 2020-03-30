@@ -23,7 +23,7 @@ class InfoUpdate {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'updated': date.toIso8601String(),
-      'neeoupdate': needUpdate,
+      'needUpdate': needUpdate,
     };
   }
 }
