@@ -9,7 +9,7 @@ class NoteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (data.note == null) {
+    if (data.note == null || data.note.isEmpty) {
       return Container();
     }
     return Container(

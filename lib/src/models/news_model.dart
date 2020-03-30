@@ -1,56 +1,47 @@
-import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'news_model.g.dart';
+
+@JsonSerializable()
 class SimpleNews {
+  @JsonKey(
+    name: 'timestamp',
+    fromJson: dateTimeFromJson,
+    toJson: dateTimeToJson,
+  )
   final DateTime date;
   final String provider;
   final String message;
 
-  const SimpleNews({
-    @required this.date,
-    @required this.provider,
-    @required this.message,
-  })  : assert(date != null),
-        assert(provider != null),
-        assert(message != null);
+  const SimpleNews({this.date, this.provider, this.message});
 
-  static SimpleNews fromJson(Map<String, dynamic> json) {
-    return SimpleNews(
-      date: DateTime.fromMicrosecondsSinceEpoch(
-        int.parse(json['timestamp']) * 1000,
-      ),
-      provider: json['user'],
-      message: json['message'],
-    );
+  static DateTime dateTimeFromJson(String x) {
+    return DateTime.fromMicrosecondsSinceEpoch(int.parse(x) * 1000);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'date': date.toIso8601String(),
-      'provider': provider,
-      'message': message,
-    };
+  static String dateTimeToJson(DateTime dateTime) {
+    return dateTime.toIso8601String();
   }
+
+  factory SimpleNews.fromJson(Map<String, dynamic> json) =>
+      _$SimpleNewsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SimpleNewsToJson(this);
 }
 
+@JsonSerializable()
 class NewsModel {
+  @JsonKey(name: 'entries')
   final List<SimpleNews> news;
 
-  const NewsModel({@required this.news}) : assert(news != null);
+  const NewsModel({this.news});
 
   static NewsModel fromJson(Map<String, dynamic> json) {
-    var newsList = new List<SimpleNews>();
-    if (!json['success']) {
+    if (!json.containsKey('success') || !json['success']) {
       return null;
     }
-    for (var key in json['entries']) {
-      newsList.add(SimpleNews.fromJson(key));
-    }
-    return NewsModel(news: newsList);
+    return _$NewsModelFromJson(json);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'news': news.map((i) => i.toJson()).toList(),
-    };
-  }
+  Map<String, dynamic> toJson() => _$NewsModelToJson(this);
 }
