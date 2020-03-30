@@ -213,7 +213,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     return ExpansionTile(
       initiallyExpanded: true,
       title: Text(
-        'Enlaces de Interes',
+        'Enlaces de Interés',
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
