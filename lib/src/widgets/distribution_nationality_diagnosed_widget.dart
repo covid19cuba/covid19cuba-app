@@ -41,7 +41,7 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
               charts.Series<DiagnosedModel, String>(
                 id: 'Diagnosticados',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (item, _) => item.country,
+                domainFn: (item, _) => item.country.toUpperCase(),
                 measureFn: (item, _) => data.countries[item.country],
                 data: data.diagnosed.where((x) => x.country != 'cu').toList(),
               ),

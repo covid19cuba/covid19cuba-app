@@ -53,20 +53,29 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
                 behaviorPosition: charts.BehaviorPosition.bottom,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
-                charts.OutsideJustification.middleDrawArea,
+                    charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
                 'Casos',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
-                charts.OutsideJustification.middleDrawArea,
+                    charts.OutsideJustification.middleDrawArea,
+              ),
+              charts.SeriesLegend(
+                position: charts.BehaviorPosition.bottom,
+                desiredMaxColumns: 1,
+                showMeasures: true,
+                measureFormatter: (num measure) {
+                  if (measure == null) return '';
+                  return measure.toInt().toString() + ' Casos';
+                },
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:
-                charts.LinePointHighlighterFollowLineType.all,
+                    charts.LinePointHighlighterFollowLineType.all,
                 showVerticalFollowLine:
-                charts.LinePointHighlighterFollowLineType.nearest,
+                    charts.LinePointHighlighterFollowLineType.nearest,
               ),
             ],
           ),
