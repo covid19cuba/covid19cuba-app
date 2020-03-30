@@ -1,27 +1,18 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'package:covid19cuba/src/models/models.dart';
 
+part 'cases_model.g.dart';
+
+@JsonSerializable()
 class CasesModel {
+  @JsonKey(name: 'dias')
   Map<String, DayModel> days;
 
   CasesModel({this.days});
 
-  Map<String, dynamic> toJson() {
-    var result = Map<String, dynamic>();
-    for (var key in days.keys) {
-      result[key] = days[key].toJson();
-    }
-    return <String, dynamic>{
-      'dias': result,
-    };
-  }
+  factory CasesModel.fromJson(Map<String, dynamic> json) =>
+      _$CasesModelFromJson(json);
 
-  static CasesModel fromJson(Map<String, dynamic> json) {
-    json = json['dias'];
-    var days = Map<String, DayModel>();
-    for (var key in json.keys) {
-      var day = DayModel.fromJson(json[key]);
-      days[key] = day;
-    }
-    return CasesModel(days: days);
-  }
+  Map<String, dynamic> toJson() => _$CasesModelToJson(this);
 }
