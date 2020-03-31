@@ -1,19 +1,13 @@
-$('#select-map').on('change', function (e) {
-    var val = $('#select-map').val();
-    if (val == 'map-mun') {
-        $('#map-pro').hide();
-        $('#map-mun').show();
-    } else {
-        $('#map-mun').hide();
-        $('#map-pro').show();
+function logx(base, x){
+    if(base == 10){
+        return Math.log10(x);
     }
-});
+    return Math.log10(x)/Math.log10(base);
+}
 
 covidData = function (data) {
 
-    //console.log(data)
-    //console.log(data.day);
-    var factor = 20;
+    var factor = 45;
     var cases = {};
     for (var day in data.dias) {
         if ('diagnosticados' in data.dias[day]) {
@@ -81,14 +75,6 @@ covidData = function (data) {
 
     var geojsonP = L.geoJSON(provincias, { style: styleP });
 
-    geojsonM.bindTooltip(function (layer) {
-        return '<span class="bd">' + layer.feature.properties.province + '</span> - ' + layer.feature.properties.municipality;
-    }, { 'sticky': true });
-
-    geojsonP.bindTooltip(function (layer) {
-        return '<span class="bd">' + layer.feature.properties.province + '</span>';
-    }, { 'sticky': true });
-
     function getMunProfile(code, mun, pro) {
         var t = '';
         t += '<div class="small-pname"><span class="bd">' + pro + '</span> - <span>' + mun + '</span></div>';
@@ -150,7 +136,7 @@ covidData = function (data) {
 
     function getColorM(code) {
         if (code in muns) {
-            var opac = Math.log10(muns[code].total * factor / genInfo.max_muns);
+            var opac = logx(factor,muns[code].total * factor / genInfo.max_muns);
             return "rgba(176,30,34," + opac + ")";
         }
         return '#D1D2D4';
@@ -158,7 +144,7 @@ covidData = function (data) {
 
     function getColorP(code) {
         if (code in pros) {
-            var opac = Math.log10(pros[code].total * factor / genInfo.max_pros);
+            var opac = logx(factor,pros[code].total * factor / genInfo.max_pros);
             return "rgba(176,30,34," + opac + ")";
         }
         return '#D1D2D4';
@@ -202,34 +188,16 @@ covidData = function (data) {
 
 
     function setBounds() {
-        var val = $('#select-map').val();
-        console.log(val);
-        $('#map-mun').show();
+
         $('#map-pro').show();
+        $('#map-mun').show();
         map_pro.fitBounds(geojsonP.getBounds());
         map_mun.fitBounds(geojsonM.getBounds());
-        if (val == 'map-mun') {
-            $('#map-pro').hide();
-        }
-        if (val == 'map-pro') {
-            $('#map-mun').hide();
-        }
+        $('#map-pro').hide();
+
     }
 
     window.addEventListener('resize', setBounds);
-
-    $('#select-map').on('change', function (e) {
-        var val = $('#select-map').val();
-        if (val == 'map-mun') {
-            $('#map-pro').hide();
-            $('#map-mun').show();
-        } else {
-            $('#map-mun').hide();
-            $('#map-pro').show();
-        }
-
-    });
-
 
     $('#map-pro').hide();
     $('#map-mun').show();

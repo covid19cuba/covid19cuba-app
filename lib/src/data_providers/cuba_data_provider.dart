@@ -8,7 +8,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:preferences/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const urlCubaDataCU = 'http://www.cusobu.nat.cu/covid/data/covid19-cuba.json';
+const urlCubaDataCU = 'https://www.cusobu.nat.cu/covid/data/covid19-cuba.json';
 const urlCubaDataIO =
     'https://covid19cubadata.github.io/data/covid19-cuba.json';
 

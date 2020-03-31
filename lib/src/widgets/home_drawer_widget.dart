@@ -111,7 +111,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               child: Container(
                 padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: Text(
-                  'postData.club',
+                  'Postdata.club',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -194,7 +194,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             color: Colors.white,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 13),
+            padding: EdgeInsets.only(left: 15),
             child: Text(
               text,
               style: TextStyle(
@@ -223,7 +223,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         createDrawerItem(
           context,
           icon: Icons.android,
-          text: 'Enlace en Apklis',
+          text: 'Enlace de Apklis',
           onTap: () async {
             const url =
                 'https://www.apklis.cu/application/club.postdata.covid19cuba';
@@ -237,7 +237,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         createDrawerItem(
           context,
           icon: FontAwesomeIcons.chrome,
-          text: 'Web en Internet',
+          text: 'Web de Internet',
           onTap: () async {
             const url = 'https://covid19cubadata.github.io';
             if (await canLaunch(url)) {
@@ -250,7 +250,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         createDrawerItem(
           context,
           icon: FontAwesomeIcons.home,
-          text: 'Web nacional',
+          text: 'Web de la Red Cubana',
           onTap: () async {
             const url = 'http://www.cusobu.nat.cu/covid/';
             if (await canLaunch(url)) {
@@ -266,6 +266,19 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           text: 'Canal de Telegram',
           onTap: () async {
             const url = 'https://t.me/covid19cubadata';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              dev.log('Could not launch $url');
+            }
+          },
+        ),
+        createDrawerItem(
+          context,
+          icon: FontAwesomeIcons.robot,
+          text: 'Bot de Telegram',
+          onTap: () async {
+            const url = 'https://t.me/covid19cubadata_bot';
             if (await canLaunch(url)) {
               await launch(url);
             } else {

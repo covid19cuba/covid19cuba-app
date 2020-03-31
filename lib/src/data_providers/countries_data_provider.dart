@@ -8,7 +8,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:preferences/preferences.dart';
 
 const urlCountriesCU =
-    'http://www.cusobu.nat.cu/covid/data/paises-info-dias.json';
+    'https://www.cusobu.nat.cu/covid/data/paises-info-dias.json';
 const urlCountriesIO =
     'https://covid19cubadata.github.io/data/paises-info-dias.json';
 
