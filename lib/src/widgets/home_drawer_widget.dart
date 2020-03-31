@@ -194,7 +194,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             color: Colors.white,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 13),
+            padding: EdgeInsets.only(left: 15),
             child: Text(
               text,
               style: TextStyle(
@@ -266,6 +266,19 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           text: 'Canal de Telegram',
           onTap: () async {
             const url = 'https://t.me/covid19cubadata';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              dev.log('Could not launch $url');
+            }
+          },
+        ),
+        createDrawerItem(
+          context,
+          icon: FontAwesomeIcons.robot,
+          text: 'Bot de Telegram',
+          onTap: () async {
+            const url = 'https://t.me/covid19cubadata_bot';
             if (await canLaunch(url)) {
               await launch(url);
             } else {
