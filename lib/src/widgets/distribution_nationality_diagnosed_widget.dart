@@ -23,7 +23,7 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
           child: Center(
             child: Text(
               'Distribución por nacionalidad de '
-              'los casos extrangeros diagnosticados',
+              'los casos extranjeros diagnosticados',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -38,12 +38,12 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
           height: 250,
           child: charts.BarChart(
             [
-              charts.Series<DiagnosedModel, String>(
+              charts.Series<String, String>(
                 id: 'Diagnosticados',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (item, _) => item.country.toUpperCase(),
-                measureFn: (item, _) => data.countries[item.country],
-                data: data.diagnosed.where((x) => x.country != 'cu').toList(),
+                domainFn: (item, _) => item.toUpperCase(),
+                measureFn: (item, _) => data.countries[item],
+                data: data.countries.keys.toList().where((x) => x != 'cu').toList(),
               ),
             ],
             animate: false,
