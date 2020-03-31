@@ -237,7 +237,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         createDrawerItem(
           context,
           icon: FontAwesomeIcons.chrome,
-          text: 'Web de Internet',
+          text: 'Web - Internet',
           onTap: () async {
             const url = 'https://covid19cubadata.github.io';
             if (await canLaunch(url)) {
@@ -250,7 +250,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         createDrawerItem(
           context,
           icon: FontAwesomeIcons.home,
-          text: 'Web de la Red Cubana',
+          text: 'Web - Red Cubana',
           onTap: () async {
             const url = 'http://www.cusobu.nat.cu/covid/';
             if (await canLaunch(url)) {
