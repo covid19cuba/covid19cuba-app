@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Constants {
   static String appName = 'Covid19 Cuba Data (Alpha)';
@@ -12,4 +13,6 @@ class Constants {
   static int infoUpdateNotification = -1;
   static int appUpdateNotification = -2;
   static int clapsNotification = -3;
+
+  static Time clapsTime = Time(20, 59, 30);
 }
