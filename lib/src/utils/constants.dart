@@ -5,6 +5,7 @@ class Constants {
   static String appLogo = 'assets/images/logo.png';
   static String diseaseName = 'Covid-19';
   static Color primaryColor = Color.fromARGB(255, 28, 19, 64);
+  static Color primarytableColor = Color.fromARGB(200, 28, 19, 64);
   static int notificationMinutesRange = 1440;
   static String isOnBoarding = 'isOnBoarding';
 }

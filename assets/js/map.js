@@ -7,7 +7,7 @@ function logx(base, x){
 
 covidData = function (data) {
 
-    var factor = 45;
+    var factor = 100;
     var cases = {};
     for (var day in data.dias) {
         if ('diagnosticados' in data.dias[day]) {
