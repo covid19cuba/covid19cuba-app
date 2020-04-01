@@ -14,3 +14,4 @@ export 'pie_sex_widget.dart';
 export 'pie_tests_percent_widget.dart';
 export 'resume_widget.dart';
 export 'test_evolution_widget.dart';
+export 'tables_widget.dart';

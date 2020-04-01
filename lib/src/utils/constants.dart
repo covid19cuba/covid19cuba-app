@@ -6,6 +6,7 @@ class Constants {
   static const String appLogo = 'assets/images/logo.png';
   static const String diseaseName = 'Covid-19';
   static const Color primaryColor = Color.fromARGB(255, 28, 19, 64);
+  static const Color primaryTableColor = Color.fromARGB(200, 28, 19, 64);
   static const int notificationMinutesRange = 1440;
   static const String isOnBoarding = 'isOnBoarding';
 
