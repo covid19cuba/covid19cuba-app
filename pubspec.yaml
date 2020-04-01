@@ -28,7 +28,7 @@ dependencies:
   json_annotation: ^3.0.0
   font_awesome_flutter: ^8.5.0
   share: ^0.6.3+5
-  flutter_emoji: ">= 2.0.0"
+  demoji: ^1.0.1
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
