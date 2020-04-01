@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:background_fetch/background_fetch.dart';
+import 'package:demoji/demoji.dart';
 
 import 'package:covid19cuba/src/data_providers/data_providers.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:demoji/demoji.dart';
 
 void appTask(String taskId, [bool headless = false]) async {
   InfoUpdate currentInfo;
@@ -41,7 +41,7 @@ Future<void> setUpTasks([int minutes = 15]) async {
   await TaskManager.setHeadlessTask(appHeadlessTask);
 }
 
-Future<void> setUpClapsTime() {
+Future<void> setUpClapsTime() async {
   String claps = Demoji.clap +
       Demoji.clap +
       Demoji.clap +
@@ -51,7 +51,7 @@ Future<void> setUpClapsTime() {
       Demoji.clap +
       Demoji.clap;
 
-  NotificationManager.showDailyAtTime(
+  await NotificationManager.showDailyAtTime(
     id: Constants.clapsNotification,
     title: 'Hora de los aplausos!!!!!' + claps,
     body:
