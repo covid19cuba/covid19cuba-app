@@ -7,4 +7,9 @@ class Constants {
   static Color primaryColor = Color.fromARGB(255, 28, 19, 64);
   static int notificationMinutesRange = 1440;
   static String isOnBoarding = 'isOnBoarding';
+
+  // Notifications ids
+  static int infoUpdateNotification = -1;
+  static int appUpdateNotification = -2;
+  static int clapsNotification = -3;
 }
