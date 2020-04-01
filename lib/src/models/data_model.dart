@@ -262,6 +262,65 @@ class DataModel {
     return result;
   }
 
+  List<Map<String, dynamic>> get top10Province {
+    var provs = Map<String, int>();
+    int total = 0;
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (provs.containsKey(item.detectionProvince)) {
+          ++provs[item.detectionProvince];
+        } else {
+          provs[item.detectionProvince] = 1;
+        }
+        total+=1;
+      });
+    });
+    var result = List<Map<String, dynamic>>();
+    provs.forEach((k, v) { result.add({'Provincia': k, 'casos': v, 'total': total});});
+    result.sort((a,b)=> -(a['casos'].compareTo(b['casos'])));
+    var res =result.sublist(0,10);
+    int cont=1;
+    for(var item in res){
+      item.addEntries([MapEntry('index',cont)]);
+      cont+=1;
+    }
+    return res;
+  }
+
+  List<Map<String, dynamic>> get top10Municipality {
+    var mun = Map<String, int>();
+    var mun2 = Map<String, String>();
+    int total = 0;
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (mun.containsKey(item.detectionMunicipality)) {
+          ++mun[item.detectionMunicipality];
+        } else {
+          mun2[item.detectionMunicipality]=item.detectionProvince;
+          mun[item.detectionMunicipality] = 1;
+        }
+        total+=1;
+      });
+    });
+    var result = List<Map<String, dynamic>>();
+    mun.forEach((k, v) { result.add({'Municipio': k, 'casos': v, 'total': total});});
+    result.sort((a,b)=> -(a['casos'].compareTo(b['casos'])));
+    var res =result.sublist(0,10);
+    int cont=1;
+    for(var item in res){
+      item.addEntries([MapEntry('index',cont)]);
+      item.addEntries([MapEntry('Provincia',mun2[item['Municipio']])]);
+      cont+=1;
+    }
+    return res;
+  }
+
   factory DataModel.fromJson(Map<String, dynamic> json) =>
       _$DataModelFromJson(json);
 
