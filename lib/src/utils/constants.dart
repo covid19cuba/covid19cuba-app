@@ -15,5 +15,5 @@ class Constants {
   static int appUpdateNotification = -2;
   static int clapsNotification = -3;
 
-  static Time clapsTime = Time(20, 59, 30);
+  static Time clapsTime = Time(20, 55, 00);
 }
