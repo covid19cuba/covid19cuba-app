@@ -5,45 +5,36 @@ import 'package:covid19cuba/src/models/data_model.dart';
 class TableData extends StatelessWidget {
   final DataModel data;
 
-  final String info_to_show;
+  final String infoToShow;
 
-  const TableData({this.data, this.info_to_show})
+  const TableData({this.data, this.infoToShow})
       : assert(data != null),
-      assert(info_to_show != null);
+        assert(infoToShow != null);
 
   @override
   Widget build(BuildContext context) {
     var borderSide = BorderSide(
-      color: Colors.white,
-      width: 2,
+      color: Constants.primaryColor,
+      width: 1,
     );
-    List<Map<String, dynamic>> topdata = List<Map<String, dynamic>>();
+    List<Map<String, dynamic>> topData = List<Map<String, dynamic>>();
     String title = '';
-    if(info_to_show=='Provincia'){
-      topdata=data.top10Province;
-      title='Provincias';
+    if (infoToShow == 'Provincia') {
+      topData = data.top10Province;
+      title = 'Provincias';
     }
-    if(info_to_show=='Municipio'){
-      topdata=data.top10Municipality;
-      title='Municipios';
+    if (infoToShow == 'Municipio') {
+      topData = data.top10Municipality;
+      title = 'Municipios';
     }
     Map<int, TableColumnWidth> col = {
-      0: FlexColumnWidth(0.2),
+      0: FlexColumnWidth(0.3),
       1: FlexColumnWidth(1),
       2: FlexColumnWidth(1),
     };
-
     return Column(
       children: <Widget>[
         Table(
-          border: TableBorder(
-            top: BorderSide(
-              color: Colors.white,
-              width: 4,
-            ),
-            horizontalInside: borderSide,
-            bottom: borderSide,
-          ),
           children: [
             TableRow(
               children: [
@@ -52,10 +43,11 @@ class TableData extends StatelessWidget {
                     margin: EdgeInsets.all(15),
                     child: Center(
                       child: Text(
-                        'TOP10 ${title} ${info_to_show == 'Municipio' ? "Afectados" : "Afectadas"}',
+                        'TOP10 $title ${infoToShow == 'Municipio' ? "Afectados" : "Afectadas"}',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Constants.primaryColor,
                           fontWeight: FontWeight.bold,
+                          fontSize: 18,
                         ),
                       ),
                     ),
@@ -67,22 +59,60 @@ class TableData extends StatelessWidget {
         ),
         Table(
           columnWidths: col,
-          border: TableBorder(
-            top: borderSide,
-            horizontalInside: borderSide,
-            bottom: borderSide,
-          ),
-          children: topdata.map((key) {
+          border: TableBorder(horizontalInside: borderSide),
+          children: [TableRow(
+            children: [
+              TableCell(
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  child: Text(
+                    '#',
+                    style: TextStyle(
+                      color: Constants.primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              TableCell(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.all(10),
+                  child: Text(
+                    infoToShow,
+                    style: TextStyle(
+                      color: Constants.primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              TableCell(
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  child: Center(
+                    child: Text(
+                      '% del total',
+                      style: TextStyle(
+                        color: Constants.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )] + topData.map((key) {
             return TableRow(
               children: [
-                 TableCell(
+                TableCell(
                   child: Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
                       '${key['index']}',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        color: Constants.primaryColor,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
                   ),
@@ -92,23 +122,23 @@ class TableData extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.all(10),
                     child: Text(
-                      '${key[info_to_show]}${info_to_show == 'Municipio' ? "("+key['Provincia']+")" : ""}',
+                      '${key[infoToShow]} ${infoToShow == 'Municipio' ? "(" + key['Provincia'] + ")" : ""}',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        color: Constants.primaryColor,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
-                ),
+                  ),
                 ),
                 TableCell(
                   child: Container(
                     margin: EdgeInsets.all(10),
                     child: Center(
                       child: Text(
-                        '${(key['casos']/key['total']*100).toStringAsFixed(2)}',
+                        '${(key['casos'] / key['total'] * 100).toStringAsFixed(2)}%',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          color: Constants.primaryColor,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
