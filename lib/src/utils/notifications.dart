@@ -53,9 +53,9 @@ Future<void> setUpClapsTime() async {
 
   await NotificationManager.showDailyAtTime(
     id: Constants.clapsNotification,
-    title: 'Hora de los aplausos!!!!!' + claps,
+    title: 'Tiempo de aplausos!!!!!' + claps,
     body:
-        'Son las 9 de la noche. Aplaude por quienes trabajan por tu salud y seguridad. \n' +
+        'Ya casi son las 9 de la noche. Súmate a los aplausos por quienes trabajan por la salud y seguridad de todos. \n' +
             claps +
             claps,
     notificationTime: Constants.clapsTime,
