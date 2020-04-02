@@ -15,5 +15,6 @@ class Constants {
   static const int appUpdateNotification = -2;
   static const int clapsNotification = -3;
 
-  static final Time clapsTime = Time(20, 59, 30);
+  // static final Time clapsTime = Time(20, 59, 30);
+  static final Time clapsTime = Time(0, 0, 0);
 }
