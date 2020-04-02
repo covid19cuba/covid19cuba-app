@@ -1,4 +1,21 @@
-# Covid19 Cuba Application Changelog
+# Covid19 Cuba Data Mobile Application Changelog
+
+## [0.3.0] - April 2, 2020 
+
+### Added
+
+* Notification of claps before 9:00PM
+* Message error for parse exceptions
+* Provinces and municipalities tops
+
+### Changed
+
+* Evolution test in time chart
+
+### Fixed
+
+* Map color scale 
+* Reload of map
 
 ## [0.2.1] - March 30, 2020
 
