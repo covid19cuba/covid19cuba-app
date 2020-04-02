@@ -87,7 +87,7 @@ class DataModel {
   }
 
   List<List<dynamic>> get tests {
-    var result = List<List<dynamic>>();
+    var preResult = List<List<dynamic>>();
     var days = this.days.reversed.toList();
     var accumulated = this.accumulated.reversed.toList();
     for (var i = 0; i < days.length; ++i) {
@@ -99,9 +99,18 @@ class DataModel {
       actual.add(accumulated[i]);
       actual.add(days[i].testsTotal - accumulated[i]);
       actual.add(days[i].testsTotal);
+      preResult.add(actual);
+    }
+    preResult = preResult.reversed.toList();
+    var result = List<List<dynamic>>();
+    for (var i = 1; i < preResult.length; ++i) {
+      var actual = List<dynamic>();
+      actual.add(preResult[i][0]);
+      actual.add(preResult[i][1] - preResult[i - 1][1]);
+      actual.add(preResult[i][2] - preResult[i - 1][2]);
+      actual.add(preResult[i][3] - preResult[i - 1][3]);
       result.add(actual);
     }
-    result = result.reversed.toList();
     return result;
   }
 
