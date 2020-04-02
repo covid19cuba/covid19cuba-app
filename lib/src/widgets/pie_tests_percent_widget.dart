@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:charts_common/src/common/palette.dart'; // ignore: implementation_imports
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';

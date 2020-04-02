@@ -57,6 +57,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               'revise su conexión y vuelva a intentarlo.',
           cache: data != null,
         );
+      } on ParseException catch (e) {
+        log(e.toString());
+        var data = await getCubaDataFromCache();
+        yield ErrorHomeState(
+          errorMessage: 'Hay problema con los servidores. Por favor, '
+              'espere unos minutos y vuelva a intentarlo.',
+          cache: data != null,
+        );
       } catch (e) {
         log(e.toString());
         var data = await getCubaDataFromCache();
@@ -90,6 +98,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               'revise su conexión y vuelva a intentarlo.',
           cache: data != null,
         );
+      } on ParseException catch (e) {
+        log(e.toString());
+        var data = await getCubaDataFromCache();
+        yield ErrorHomeState(
+          errorMessage: 'Hay problema con los servidores. Por favor, '
+              'espere unos minutos y vuelva a intentarlo.',
+          cache: data != null,
+        );
       } catch (e) {
         log(e.toString());
         var data = await getCubaDataFromCache();
@@ -120,6 +136,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         yield ErrorHomeState(
           errorMessage: 'No se ha podido establecer conexión. Por favor, '
               'revise su conexión y vuelva a intentarlo.',
+          cache: data != null,
+        );
+      } on ParseException catch (e) {
+        log(e.toString());
+        var data = await getCubaDataFromCache();
+        yield ErrorHomeState(
+          errorMessage: 'Hay problema con los servidores. Por favor, '
+              'espere unos minutos y vuelva a intentarlo.',
           cache: data != null,
         );
       } catch (e) {

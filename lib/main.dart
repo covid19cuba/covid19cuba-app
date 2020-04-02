@@ -18,6 +18,8 @@ void main() async {
 
   await setUpTasks();
 
+  await setUpClapsTime();
+
   // TODO: Bug in advice notifications, meanwhile they should be disabled
   /*var notifications = getApplicationNotifications();
   notifications.forEach(

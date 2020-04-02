@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-const news_url = 'http://www.cusobu.nat.cu/covid/telegram/get';
+const news_url = 'https://www.cusobu.nat.cu/covid/telegram/get';
 
 Future<NewsModel> getNewsData(int date) async {
   var response = await post(
