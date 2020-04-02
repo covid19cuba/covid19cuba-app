@@ -95,7 +95,7 @@ class HomeWidget extends StatelessWidget {
            margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              color: Constants.primarytableColor,
+              color: Constants.primaryTableColor,
               child: TableData(data: data, info_to_show: 'Provincia'),
             ),
           ),
@@ -104,7 +104,7 @@ class HomeWidget extends StatelessWidget {
            margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              color: Constants.primarytableColor,
+              color: Constants.primaryTableColor,
               child: TableData(data: data, info_to_show: 'Municipio'),
             ),
           ),
