@@ -89,7 +89,7 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              child: TableData(data: data, infoToShow: 'Provincia'),
+              child: TableData(data: data, infoToShow: 'province'),
             ),
           ),
         ),
@@ -97,7 +97,7 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              child: TableData(data: data, infoToShow: 'Municipio'),
+              child: TableData(data: data, infoToShow: 'municipality'),
             ),
           ),
         ),

@@ -17,15 +17,12 @@ class TableData extends StatelessWidget {
       color: Constants.primaryColor,
       width: 1,
     );
-    List<Map<String, dynamic>> topData = List<Map<String, dynamic>>();
-    String title = '';
-    if (infoToShow == 'Provincia') {
-      topData = data.top10Province;
-      title = 'Provincias';
-    }
-    if (infoToShow == 'Municipio') {
-      topData = data.top10Municipality;
-      title = 'Municipios';
+    var title = infoToShow == 'municipality' ? 'Municipios' : 'Provincias';
+    var topData = infoToShow == 'municipality'
+        ? data.top10Municipality
+        : data.top10Province;
+    if (topData == null || topData.length == 0) {
+      return Container();
     }
     Map<int, TableColumnWidth> col = {
       0: FlexColumnWidth(0.3),
@@ -43,7 +40,7 @@ class TableData extends StatelessWidget {
                     margin: EdgeInsets.all(15),
                     child: Center(
                       child: Text(
-                        'TOP10 $title ${infoToShow == 'Municipio' ? "Afectados" : "Afectadas"}',
+                        'TOP${topData.length} $title ${infoToShow == 'municipality' ? "Afectados" : "Afectadas"}',
                         style: TextStyle(
                           color: Constants.primaryColor,
                           fontWeight: FontWeight.bold,
@@ -60,93 +57,101 @@ class TableData extends StatelessWidget {
         Table(
           columnWidths: col,
           border: TableBorder(horizontalInside: borderSide),
-          children: [TableRow(
-            children: [
-              TableCell(
-                child: Container(
-                  margin: EdgeInsets.all(10),
-                  child: Text(
-                    '#',
-                    style: TextStyle(
-                      color: Constants.primaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              TableCell(
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.all(10),
-                  child: Text(
-                    infoToShow,
-                    style: TextStyle(
-                      color: Constants.primaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              TableCell(
-                child: Container(
-                  margin: EdgeInsets.all(10),
-                  child: Center(
-                    child: Text(
-                      '% del total de casos',
-                      style: TextStyle(
-                        color: Constants.primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )] + topData.map((key) {
-            return TableRow(
-              children: [
-                TableCell(
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(
-                      '${key['index']}',
-                      style: TextStyle(
-                        color: Constants.primaryColor,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.all(10),
-                    child: Text(
-                      '${key[infoToShow]} ${infoToShow == 'Municipio' ? "(" + key['Provincia'] + ")" : ""}',
-                      style: TextStyle(
-                        color: Constants.primaryColor,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    child: Center(
-                      child: Text(
-                        '${(key['casos'] / key['total'] * 100).toStringAsFixed(2)}%',
-                        style: TextStyle(
-                          color: Constants.primaryColor,
-                          fontWeight: FontWeight.normal,
+          children: [
+                TableRow(
+                  children: [
+                    TableCell(
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        child: Text(
+                          '#',
+                          style: TextStyle(
+                            color: Constants.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ],
-            );
-          }).toList(),
+                    TableCell(
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.all(10),
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            color: Constants.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        child: Center(
+                          child: Text(
+                            '% del total de casos',
+                            style: TextStyle(
+                              color: Constants.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ] +
+              topData.map(
+                (key) {
+                  return TableRow(
+                    children: [
+                      TableCell(
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Text(
+                            '${key['index']}',
+                            style: TextStyle(
+                              color: Constants.primaryColor,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.all(10),
+                          child: Text(
+                            '${key[infoToShow]} '
+                            '${infoToShow == 'municipality' ? '(${key['province']})' : ''}',
+                            style: TextStyle(
+                              color: Constants.primaryColor,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Center(
+                            child: Text(
+                              (key['cases'] * 100 / key['total'])
+                                      .toStringAsFixed(2) +
+                                  '%',
+                              style: TextStyle(
+                                color: Constants.primaryColor,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ).toList(),
         ),
       ],
     );
