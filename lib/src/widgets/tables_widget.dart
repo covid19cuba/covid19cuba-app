@@ -92,7 +92,7 @@ class TableData extends StatelessWidget {
                   margin: EdgeInsets.all(10),
                   child: Center(
                     child: Text(
-                      '% del total',
+                      '% del total de casos',
                       style: TextStyle(
                         color: Constants.primaryColor,
                         fontWeight: FontWeight.bold,
