@@ -20,7 +20,7 @@ class ComparisonWidget extends StatefulWidget {
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
-  String selectedCountry = 'Greece';
+  String selectedCountry = 'Hungary';
   final DataModel data;
   final WorldTotalsModel countries;
 
