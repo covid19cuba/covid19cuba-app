@@ -272,62 +272,68 @@ class DataModel {
   }
 
   List<Map<String, dynamic>> get top10Province {
-    var provs = Map<String, int>();
-    int total = 0;
+    var provinces = Map<String, int>();
     days
         .where((x) => x.diagnosed != null)
         .map((x) => x.diagnosed)
         .forEach((diagnosed) {
       diagnosed.forEach((item) {
-        if (provs.containsKey(item.detectionProvince)) {
-          ++provs[item.detectionProvince];
+        if (provinces.containsKey(item.detectionProvince)) {
+          ++provinces[item.detectionProvince];
         } else {
-          provs[item.detectionProvince] = 1;
+          provinces[item.detectionProvince] = 1;
         }
-        total+=1;
       });
     });
+    var total = provinces.values.reduce((a, b) => a + b);
     var result = List<Map<String, dynamic>>();
-    provs.forEach((k, v) { result.add({'Provincia': k, 'casos': v, 'total': total});});
-    result.sort((a,b)=> -(a['casos'].compareTo(b['casos'])));
-    var res =result.sublist(0,10);
-    int cont=1;
-    for(var item in res){
-      item.addEntries([MapEntry('index',cont)]);
-      cont+=1;
+    provinces.forEach((k, v) {
+      if (k != null) {
+        result.add({'province': k, 'cases': v, 'total': total});
+      }
+    });
+    result.sort((a, b) => b['cases'].compareTo(a['cases']));
+    result = result.take(10).toList();
+    var cont = 1;
+    for (var item in result) {
+      item.addEntries([MapEntry('index', cont)]);
+      cont += 1;
     }
-    return res;
+    return result;
   }
 
   List<Map<String, dynamic>> get top10Municipality {
-    var mun = Map<String, int>();
-    var mun2 = Map<String, String>();
-    int total = 0;
+    var municipalities = Map<String, int>();
+    var provinces = Map<String, String>();
     days
         .where((x) => x.diagnosed != null)
         .map((x) => x.diagnosed)
         .forEach((diagnosed) {
       diagnosed.forEach((item) {
-        if (mun.containsKey(item.detectionMunicipality)) {
-          ++mun[item.detectionMunicipality];
+        if (municipalities.containsKey(item.detectionMunicipality)) {
+          ++municipalities[item.detectionMunicipality];
         } else {
-          mun2[item.detectionMunicipality]=item.detectionProvince;
-          mun[item.detectionMunicipality] = 1;
+          provinces[item.detectionMunicipality] = item.detectionProvince;
+          municipalities[item.detectionMunicipality] = 1;
         }
-        total+=1;
       });
     });
+    var total = municipalities.values.reduce((a, b) => a + b);
     var result = List<Map<String, dynamic>>();
-    mun.forEach((k, v) { result.add({'Municipio': k, 'casos': v, 'total': total});});
-    result.sort((a,b)=> -(a['casos'].compareTo(b['casos'])));
-    var res =result.sublist(0,10);
-    int cont=1;
-    for(var item in res){
-      item.addEntries([MapEntry('index',cont)]);
-      item.addEntries([MapEntry('Provincia',mun2[item['Municipio']])]);
-      cont+=1;
+    municipalities.forEach((k, v) {
+      if (k != null) {
+        result.add({'municipality': k, 'cases': v, 'total': total});
+      }
+    });
+    result.sort((a, b) => b['cases'].compareTo(a['cases']));
+    result = result.take(10).toList();
+    var cont = 1;
+    for (var item in result) {
+      item.addEntries([MapEntry('index', cont)]);
+      item.addEntries([MapEntry('province', provinces[item['municipality']])]);
+      cont += 1;
     }
-    return res;
+    return result;
   }
 
   factory DataModel.fromJson(Map<String, dynamic> json) =>

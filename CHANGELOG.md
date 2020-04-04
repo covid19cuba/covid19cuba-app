@@ -1,5 +1,16 @@
 # Covid19 Cuba Data Mobile Application Changelog
 
+## [0.3.1] - April 4, 2020 
+
+### Changed
+
+* Default comparison entity
+* Size of samples images of Gallery
+
+### Fixed
+
+* Bug in top tables
+
 ## [0.3.0] - April 2, 2020 
 
 ### Added
