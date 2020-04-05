@@ -7,10 +7,12 @@ import 'package:covid19cuba/src/widgets/widgets.dart';
 class HomeWidget extends StatelessWidget {
   final DataModel data;
   final WorldTotalsModel countries;
+  final ConfigurationModel config;
 
-  const HomeWidget({this.data, this.countries})
+  const HomeWidget({this.data, this.countries, this.config})
       : assert(data != null),
-        assert(countries != null);
+        assert(countries != null),
+        assert(config != null);
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,7 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              child: TableData(data: data, infoToShow: 'Provincia'),
+              child: TableData(data: data, infoToShow: 'province'),
             ),
           ),
         ),
@@ -97,14 +99,14 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              child: TableData(data: data, infoToShow: 'Municipio'),
+              child: TableData(data: data, infoToShow: 'municipality'),
             ),
           ),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: ComparisonWidget(data: data, countries: countries),
+            child: ComparisonWidget(data: data, countries: countries, config: config),
           ),
         ),
         Container(padding: EdgeInsets.all(5)),

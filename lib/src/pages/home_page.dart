@@ -87,6 +87,7 @@ class HomePageState extends State<HomePage> {
           child: HomeWidget(
             data: state.data,
             countries: state.countries,
+            config: state.config,
           ),
         ),
       );

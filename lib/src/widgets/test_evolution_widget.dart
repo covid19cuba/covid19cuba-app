@@ -76,7 +76,7 @@ class TestEvolutionWidget extends StatelessWidget {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Tests acumulados',
+                'Tests por días',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:

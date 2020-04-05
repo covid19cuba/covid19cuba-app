@@ -9,6 +9,7 @@ class Constants {
   static const Color primaryTableColor = Color.fromARGB(200, 28, 19, 64);
   static const int notificationMinutesRange = 1440;
   static const String isOnBoarding = 'isOnBoarding';
+  static const String defaultCompareCountry = 'Hungary';
 
   // Notifications ids
   static const int infoUpdateNotification = -1;

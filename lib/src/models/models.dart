@@ -7,3 +7,4 @@ export 'info_update_model.dart';
 export 'world_totals_model.dart';
 export 'news_model.dart';
 export 'local_notification_model.dart';
+export 'configuration.dart';
