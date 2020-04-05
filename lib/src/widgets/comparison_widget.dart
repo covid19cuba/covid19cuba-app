@@ -9,24 +9,29 @@ import 'package:covid19cuba/src/models/models.dart';
 class ComparisonWidget extends StatefulWidget {
   final DataModel data;
   final WorldTotalsModel countries;
+  final ConfigurationModel config;
 
-  const ComparisonWidget({this.data, this.countries})
+  const ComparisonWidget({this.data, this.countries, this.config})
       : assert(data != null),
-        assert(countries != null);
+        assert(countries != null),
+        assert(config != null);
 
   @override
   ComparisonWidgetState createState() =>
-      ComparisonWidgetState(data: data, countries: countries);
+      ComparisonWidgetState(data: data, countries: countries, config: config);
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
   String selectedCountry = 'Hungary';
   final DataModel data;
   final WorldTotalsModel countries;
+  final ConfigurationModel config;
 
-  ComparisonWidgetState({this.data, this.countries})
+  ComparisonWidgetState({this.data, this.countries, this.config})
       : assert(data != null),
-        assert(countries != null);
+        assert(countries != null),
+        assert(config != null),
+        selectedCountry=config.compare_country;
 
   List<String> getCountriesList() {
     var list = countries.countries.keys.where((c) => c != 'Cuba').toList();
@@ -167,6 +172,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             color: Constants.primaryColor,
           ),
           onChanged: (String newValue) {
+            print('save data: '+newValue);
+            config.saveCountry(newValue);
             setState(() {
               selectedCountry = newValue;
             });
