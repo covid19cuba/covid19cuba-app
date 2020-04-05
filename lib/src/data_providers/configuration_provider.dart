@@ -5,13 +5,14 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'package:preferences/preferences.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
+import '../utils/utils.dart';
 
 Future<ConfigurationModel> getConfigurationFromCache() async {
   try {
     var data = PrefService.getString('configuration');
     if (data == null) {
       ConfigurationModel data = ConfigurationModel.fromJson({
-        'pais_comparar': Constants.defaultCompareCountry,
+        Constants.prefCompareCountry: Constants.defaultCompareCountry,
       });
       setConfigurationToCache(data);
       return data;

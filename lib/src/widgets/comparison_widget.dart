@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
+import '../utils/constants.dart';
+import '../utils/utils.dart';
+
 class ComparisonWidget extends StatefulWidget {
   final DataModel data;
   final WorldTotalsModel countries;
@@ -22,7 +25,7 @@ class ComparisonWidget extends StatefulWidget {
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
-  String selectedCountry = 'Hungary';
+  String selectedCountry = Constants.defaultCompareCountry;
   final DataModel data;
   final WorldTotalsModel countries;
   final ConfigurationModel config;
@@ -31,10 +34,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
       : assert(data != null),
         assert(countries != null),
         assert(config != null),
-        selectedCountry=config.compare_country;
+        selectedCountry=config.compareCountry;
 
   List<String> getCountriesList() {
-    var list = countries.countries.keys.where((c) => c != 'Cuba').toList();
+    var list = countries.countries.keys.where((c) => c != Constants.countryCuba).toList();
     list.sort((a, b) => WorldTotalsModel.prettyCountry(a)
         .compareTo(WorldTotalsModel.prettyCountry(b)));
     return list;
@@ -108,7 +111,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         data: countries.countries[selectedCountry],
       ),
       charts.Series<int, int>(
-        id: 'Cuba',
+        id: Constants.countryCuba,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
@@ -130,7 +133,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
                 countries.countries[selectedCountry].length)),
       ),
       charts.Series<int, int>(
-        id: 'Cuba',
+        id: Constants.countryCuba,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
@@ -151,7 +154,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Comparación de los casos acumulados de Cuba con:',
+              'Comparación de los casos acumulados de ${Constants.countryCuba} con:',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -232,7 +235,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Comparación en el período de Cuba',
+              'Comparación en el período de ${Constants.countryCuba}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

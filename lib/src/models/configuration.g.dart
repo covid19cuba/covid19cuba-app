@@ -8,11 +8,11 @@ part of 'configuration.dart';
 
 ConfigurationModel _$ConfigurationModelFromJson(Map<String, dynamic> json) {
   return ConfigurationModel(
-    compare_country: json['pais_comparar'] as String,
+    compareCountry: json[Constants.prefCompareCountry] as String,
   );
 }
 
 Map<String, dynamic> _$ConfigurationModelToJson(ConfigurationModel instance) =>
     <String, dynamic>{
-      'pais_comparar': instance.compare_country,
+      Constants.prefCompareCountry: instance.compareCountry,
     };

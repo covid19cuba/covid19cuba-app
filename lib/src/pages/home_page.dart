@@ -65,7 +65,11 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget getHomeDrawer(BuildContext context, HomeState state) {
-    return HomeDrawerWidget();
+    if (state is LoadedHomeState) {
+      return HomeDrawerWidget(countries: state.countries, config: state.config);
+    } else {
+      return Container();
+    }
   }
 
   Widget getBody(BuildContext context, HomeState state) {
