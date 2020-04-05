@@ -8,8 +8,11 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/data_model.dart';
 
-const showMunicipalities = "\$('#map-pro').hide();\$('#map-num').show();";
-const showProvinces = "\$('#map-mun').hide();\$('#map-pro').show();";
+//const showMunicipalities = "\$('#map-pro').hide();\$('#map-num').show();";
+//const showProvinces = "\$('#map-mun').hide();\$('#map-pro').show();";
+
+const showMunicipalities = "covidData";
+const showProvinces = "covidData2";
 
 
 class WebViewKeepAlive extends StatefulWidget {
@@ -36,12 +39,14 @@ class _WebViewKeepAlive extends State<WebViewKeepAlive> with AutomaticKeepAliveC
             initialUrl: 'assets/map.html',
             javascriptMode: JavascriptMode.unrestricted,
             onPageFinished: (_) {
-              mapData = jsonEncode(widget.data.cases.toJson());
+              //mapData = jsonEncode(widget.data.cases.toJson());
+              mapData = jsonEncode(widget.data.mapData);
+              //print(mapData);
               controller
-                  .evaluateJavascript('covidData($mapData)')
+                  .evaluateJavascript(widget.jscommand+'($mapData)')
                   .whenComplete(
                 () {
-                  controller.evaluateJavascript(widget.jscommand);
+                  //controller.evaluateJavascript(widget.jscommand);
                 },
               );
             },

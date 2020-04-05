@@ -336,6 +336,51 @@ class DataModel {
     return result;
   }
 
+  Map<String,Map<String, int>> get mapData {
+    var municipalities = Map<String, int>();
+    var provinces = Map<String, int>();
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (municipalities.containsKey(item.dpacodeMunicipalityDetection)) {
+          ++municipalities[item.dpacodeMunicipalityDetection];
+        } else {
+          municipalities[item.dpacodeMunicipalityDetection] = 1;
+        }
+        if (provinces.containsKey(item.dpacodeProvinceDetection)) {
+          ++provinces[item.dpacodeProvinceDetection];
+        } else {
+          provinces[item.dpacodeProvinceDetection] = 1;
+        }
+      });
+    });
+    var total = 0;
+    var result = List<Map<String, dynamic>>();
+    int max_mun=0;
+    int max_pro=0;
+    municipalities.forEach((k, v) {
+      if (k != null) {
+        if(v>max_mun){
+          max_mun=v;
+        }
+      }
+    });
+    provinces.forEach((k, v) {
+      if (k != null) {
+        if(v>max_mun){
+          max_pro=v;
+        }
+        total+=v;
+      }
+    });
+    return {'muns': municipalities, 'pros': provinces,
+            'genInfo': {'max_muns': max_mun,
+                        'max_pros': max_pro,
+                        'total': total}};
+  }
+
   factory DataModel.fromJson(Map<String, dynamic> json) =>
       _$DataModelFromJson(json);
 
