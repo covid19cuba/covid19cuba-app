@@ -12,16 +12,28 @@ const urlCubaDataIO =
     'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/all.json';
 
 Future<DataModel> getCubaData() async {
-  try {
-    return await getCubaDataFrom(urlCubaDataCU);
-  } catch (e) {
-    log(e.toString());
-    return await getCubaDataFrom(urlCubaDataIO);
+  var mode = PrefService.getInt(Constants.prefConnectionMode) ??
+      Constants.ConnectionModeMerge;
+  switch (mode) {
+    case Constants.ConnectionModeIntranet:
+      return await getCubaDataFrom(urlCubaDataCU);
+    case Constants.ConnectionModeInternet:
+      return await getCubaDataFrom(urlCubaDataIO);
+    case Constants.ConnectionModeMerge:
+    default:
+      try {
+        return await getCubaDataFrom(urlCubaDataCU);
+      } catch (e) {
+        log(e.toString());
+        return await getCubaDataFrom(urlCubaDataIO);
+      }
   }
 }
 
 Future<DataModel> getCubaDataFrom(String url) async {
-  var resp = await get(url, headers: {'Accept-Encoding': 'gzip, deflate, br'});
+  var resp = await get(url, headers: {
+    'Accept-Encoding': 'gzip, deflate, br',
+  });
   if (resp.statusCode == 404) {
     throw InvalidSourceException('Source is invalid');
   } else if (resp.statusCode != 200) {

@@ -15,9 +15,14 @@ class Constants {
   //Shared preferences
   static const String prefIsOnBoarding = 'isOnBoarding';
   static const String prefCompareCountry = 'compareCountry';
-  static const String prefDataProvider = 'dataProvider';
-  static const String prefLastDataUpdate = 'last_data_update';
+  static const String prefConnectionMode = 'connectionMode';
+  static const String prefLastDataUpdate = 'lastDataUpdate';
   static const String prefSetUpTasksMinutes = 'setUpTasksMinutes';
+
+  //Connection Modes
+  static const int ConnectionModeIntranet = 0;
+  static const int ConnectionModeInternet = 1;
+  static const int ConnectionModeMerge = 2;
 
   // Notifications ids
   static const int infoUpdateNotification = -1;
