@@ -52,6 +52,7 @@ class SettingsPageState extends State<SettingsPage> {
           Constants.prefCompareCountry,
           defaultVal: widget.config.compareCountry,
           values: getCountriesList(),
+          displayValues: getCountriesList().map((value) => WorldTotalsModel.prettyCountry(value)).toList(),
           onChange: (newValue) {
             print('save data settings: ' + newValue);
             widget.config.saveCountry(newValue);
