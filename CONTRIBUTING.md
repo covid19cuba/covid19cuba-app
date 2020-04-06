@@ -5,6 +5,7 @@
 * Norlan Capote Díaz ([@norlancd](https://github.com/norlancd))
 * Carlos Bermudez Porto ([@stdevCbermudez](https://github.com/stdevCbermudez))
 * Roberto Martí Cedeño ([@rmarticedeno](https://github.com/rmarticedeno))
+* Sadan ([@fsadannn](https://github.com/fsadannn))
 
 You can help out by: 
 - Reporting a bug

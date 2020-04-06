@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
-class EvolutionWidget extends StatelessWidget {
+class EvolutionDeathWidget extends StatelessWidget {
   final DataModel data;
 
-  const EvolutionWidget({this.data}) : assert(data != null);
+  const EvolutionDeathWidget({this.data}) : assert(data != null);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class EvolutionWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Evolución de casos por días',
+              'Evolución de muertes por días',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -33,23 +33,22 @@ class EvolutionWidget extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 250,
+          height: 300,
           child: charts.TimeSeriesChart(
             [
               charts.Series<int, DateTime>(
-                id: 'Casos acumulados',
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                id: 'Muertes en el día',
+                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
                 domainFn: (_, i) => data.days[i].date,
                 measureFn: (item, _) => item,
-                data: data.accumulated,
+                data: data.death,
               ),
-              charts.Series<DayModel, DateTime>(
-                id: 'Casos en el día',
+              charts.Series<int, DateTime>(
+                id: 'Muertes acumuladas',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (item, _) => item.date,
-                measureFn: (item, _) =>
-                    item.diagnosed != null ? item.diagnosed.length : 0,
-                data: data.days,
+                domainFn: (_, i) => data.days[i].date,
+                measureFn: (item, _) => item,
+                data: data.accumulatedDeath,
               ),
             ],
             animate: false,
@@ -66,7 +65,7 @@ class EvolutionWidget extends StatelessWidget {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Casos',
+                'Muertes',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:

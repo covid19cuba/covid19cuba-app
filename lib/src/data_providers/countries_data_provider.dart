@@ -8,7 +8,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:preferences/preferences.dart';
 
 const urlCountriesCU =
-    'http://www.cusobu.nat.cu/covid/data/paises-info-dias.json';
+    'https://www.cusobu.nat.cu/covid/data/paises-info-dias.json';
 const urlCountriesIO =
     'https://covid19cubadata.github.io/data/paises-info-dias.json';
 
@@ -22,7 +22,7 @@ Future<WorldTotalsModel> getCountriesData() async {
 }
 
 Future<WorldTotalsModel> getCountriesDataFrom(String url) async {
-  var resp = await get(url);
+  var resp = await get(url, headers: {'Accept-Encoding':'gzip, deflate, br'});
   if (resp.statusCode == 404) {
     throw InvalidSourceException('Source is invalid');
   } else if (resp.statusCode != 200) {

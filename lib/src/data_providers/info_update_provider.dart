@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart';
+import 'package:preferences/preferences.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:preferences/preferences.dart';
 
-const is_info_updated_url = 'http://www.cusobu.nat.cu/covid/cubadata/status/';
+const is_info_updated_url = 'https://www.cusobu.nat.cu/covid/cubadata/status/';
 
 Future<InfoUpdate> isInfoUpdated() async {
   int time;

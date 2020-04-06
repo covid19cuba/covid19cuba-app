@@ -17,7 +17,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void onIntroEnd(context) {
-    PrefService.setBool(Constants.isOnBoarding, true);
+    PrefService.setBool(Constants.prefIsOnBoarding, true);
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => HomePage()),
     );

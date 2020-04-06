@@ -87,7 +87,7 @@ class DataModel {
   }
 
   List<List<dynamic>> get tests {
-    var result = List<List<dynamic>>();
+    var preResult = List<List<dynamic>>();
     var days = this.days.reversed.toList();
     var accumulated = this.accumulated.reversed.toList();
     for (var i = 0; i < days.length; ++i) {
@@ -99,9 +99,18 @@ class DataModel {
       actual.add(accumulated[i]);
       actual.add(days[i].testsTotal - accumulated[i]);
       actual.add(days[i].testsTotal);
+      preResult.add(actual);
+    }
+    preResult = preResult.reversed.toList();
+    var result = List<List<dynamic>>();
+    for (var i = 1; i < preResult.length; ++i) {
+      var actual = List<dynamic>();
+      actual.add(preResult[i][0]);
+      actual.add(preResult[i][1] - preResult[i - 1][1]);
+      actual.add(preResult[i][2] - preResult[i - 1][2]);
+      actual.add(preResult[i][3] - preResult[i - 1][3]);
       result.add(actual);
     }
-    result = result.reversed.toList();
     return result;
   }
 
@@ -260,6 +269,176 @@ class DataModel {
       }
     }
     return result;
+  }
+
+  List<int> get actives {
+    var result = List<int>();
+    var total = 0;
+    var deaths = 0;
+    var recover = 0;
+    var evacuees = 0;
+    for (var item in days) {
+      total += item.diagnosed?.length ?? 0;
+      deaths += item.deathsNumber ?? 0;
+      recover += item.recoveredNumber ?? 0;
+      evacuees += item.evacueesNumber ?? 0;
+      result.add(total - deaths - recover - evacuees);
+    }
+    return result;
+  }
+
+  List<int> get accumulatedRecovered {
+    var result = List<int>();
+    for (var item in days.map((x) => x.recoveredNumber ?? 0)) {
+      if (result.length == 0) {
+        result.add(item);
+      } else {
+        result.add(item + result.last);
+      }
+    }
+    return result;
+  }
+
+  List<int> get recovered {
+    var result = List<int>();
+    for (var item in days.map((x) => x.recoveredNumber ?? 0)) {
+      result.add(item);
+    }
+    return result;
+  }
+
+  List<int> get accumulatedDeath {
+    var result = List<int>();
+    for (var item in days.map((x) => x.deathsNumber ?? 0)) {
+      if (result.length == 0) {
+        result.add(item);
+      } else {
+        result.add(item + result.last);
+      }
+    }
+    return result;
+  }
+
+  List<int> get death {
+    var result = List<int>();
+    for (var item in days.map((x) => x.deathsNumber ?? 0)) {
+      result.add(item);
+    }
+    return result;
+  }
+
+  List<Map<String, dynamic>> get top10Province {
+    var provinces = Map<String, int>();
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (provinces.containsKey(item.detectionProvince)) {
+          ++provinces[item.detectionProvince];
+        } else {
+          provinces[item.detectionProvince] = 1;
+        }
+      });
+    });
+    var total = provinces.values.reduce((a, b) => a + b);
+    var result = List<Map<String, dynamic>>();
+    provinces.forEach((k, v) {
+      if (k != null) {
+        result.add({'province': k, 'cases': v, 'total': total});
+      }
+    });
+    result.sort((a, b) => b['cases'].compareTo(a['cases']));
+    result = result.take(10).toList();
+    var cont = 1;
+    for (var item in result) {
+      item.addEntries([MapEntry('index', cont)]);
+      cont += 1;
+    }
+    return result;
+  }
+
+  List<Map<String, dynamic>> get top10Municipality {
+    var municipalities = Map<String, int>();
+    var provinces = Map<String, String>();
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (municipalities.containsKey(item.detectionMunicipality)) {
+          ++municipalities[item.detectionMunicipality];
+        } else {
+          provinces[item.detectionMunicipality] = item.detectionProvince;
+          municipalities[item.detectionMunicipality] = 1;
+        }
+      });
+    });
+    var total = municipalities.values.reduce((a, b) => a + b);
+    var result = List<Map<String, dynamic>>();
+    municipalities.forEach((k, v) {
+      if (k != null) {
+        result.add({'municipality': k, 'cases': v, 'total': total});
+      }
+    });
+    result.sort((a, b) => b['cases'].compareTo(a['cases']));
+    result = result.take(10).toList();
+    var cont = 1;
+    for (var item in result) {
+      item.addEntries([MapEntry('index', cont)]);
+      item.addEntries([MapEntry('province', provinces[item['municipality']])]);
+      cont += 1;
+    }
+    return result;
+  }
+
+  Map<String, Map<String, int>> get mapData {
+    var municipalities = Map<String, int>();
+    var provinces = Map<String, int>();
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (municipalities.containsKey(item.dpacodeMunicipalityDetection)) {
+          ++municipalities[item.dpacodeMunicipalityDetection];
+        } else {
+          municipalities[item.dpacodeMunicipalityDetection] = 1;
+        }
+        if (provinces.containsKey(item.dpacodeProvinceDetection)) {
+          ++provinces[item.dpacodeProvinceDetection];
+        } else {
+          provinces[item.dpacodeProvinceDetection] = 1;
+        }
+      });
+    });
+    var total = 0;
+    var maxMunicipality = 0;
+    var maxProvince = 0;
+    municipalities.forEach((k, v) {
+      if (k != null) {
+        if (v > maxMunicipality) {
+          maxMunicipality = v;
+        }
+      }
+    });
+    provinces.forEach((k, v) {
+      if (k != null) {
+        if (v > maxMunicipality) {
+          maxProvince = v;
+        }
+        total += v;
+      }
+    });
+    return {
+      'muns': municipalities,
+      'pros': provinces,
+      'genInfo': {
+        'max_muns': maxMunicipality,
+        'max_pros': maxProvince,
+        'total': total,
+      }
+    };
   }
 
   factory DataModel.fromJson(Map<String, dynamic> json) =>

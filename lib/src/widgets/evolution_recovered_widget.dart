@@ -1,14 +1,13 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/models/models.dart';
 
-class DistributionNationalityDiagnosedWidget extends StatelessWidget {
+class EvolutionRecoveredWidget extends StatelessWidget {
   final DataModel data;
 
-  const DistributionNationalityDiagnosedWidget({this.data})
-      : assert(data != null);
+  const EvolutionRecoveredWidget({this.data}) : assert(data != null);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +21,7 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Distribución por nacionalidad de '
-              'los casos extranjeros diagnosticados',
+              'Evolución de altas por días',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -35,29 +33,39 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 250,
-          child: charts.BarChart(
+          height: 300,
+          child: charts.TimeSeriesChart(
             [
-              charts.Series<String, String>(
-                id: 'Diagnosticados',
+              charts.Series<int, DateTime>(
+                id: 'Altas en el día',
+                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+                domainFn: (_, i) => data.days[i].date,
+                measureFn: (item, _) => item,
+                data: data.recovered,
+              ),
+              charts.Series<int, DateTime>(
+                id: 'Altas acumuladas',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (item, _) => item.toUpperCase(),
-                measureFn: (item, _) => data.countries[item],
-                data: data.countries.keys.toList().where((x) => x != 'cu').toList(),
+                domainFn: (_, i) => data.days[i].date,
+                measureFn: (item, _) => item,
+                data: data.accumulatedRecovered,
               ),
             ],
             animate: false,
             defaultInteractions: true,
+            defaultRenderer: charts.LineRendererConfig(
+              includePoints: true,
+            ),
             behaviors: [
               charts.ChartTitle(
-                'País',
+                'Fecha',
                 behaviorPosition: charts.BehaviorPosition.bottom,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Casos',
+                'Altas',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -67,10 +75,6 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
                 position: charts.BehaviorPosition.bottom,
                 desiredMaxColumns: 1,
                 showMeasures: true,
-                measureFormatter: (num measure) {
-                  if (measure == null) return '';
-                  return measure.toInt().toString() + ' Casos';
-                },
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:

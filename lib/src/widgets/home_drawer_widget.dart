@@ -2,13 +2,19 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:package_info/package_info.dart';
 
+import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
+  final WorldTotalsModel countries;
+
+  HomeDrawerWidget({this.countries}) : assert(countries != null);
+
   @override
   _HomeDrawerWidgetState createState() => _HomeDrawerWidgetState();
 }
@@ -79,6 +85,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               margin: EdgeInsets.symmetric(horizontal: 10),
             ),
             sharerDrawerItem(),
+            settingsDrawerItem(),
             Container(
               height: 2,
               color: Colors.white,
@@ -111,7 +118,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               child: Container(
                 padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: Text(
-                  'postData.club',
+                  'Postdata.club',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -194,7 +201,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             color: Colors.white,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 13),
+            padding: EdgeInsets.only(left: 15),
             child: Text(
               text,
               style: TextStyle(
@@ -223,7 +230,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         createDrawerItem(
           context,
           icon: Icons.android,
-          text: 'Enlace en Apklis',
+          text: 'Enlace de Apklis',
           onTap: () async {
             const url =
                 'https://www.apklis.cu/application/club.postdata.covid19cuba';
@@ -237,7 +244,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         createDrawerItem(
           context,
           icon: FontAwesomeIcons.chrome,
-          text: 'Web en Internet',
+          text: 'Web - Internet',
           onTap: () async {
             const url = 'https://covid19cubadata.github.io';
             if (await canLaunch(url)) {
@@ -250,7 +257,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         createDrawerItem(
           context,
           icon: FontAwesomeIcons.home,
-          text: 'Web nacional',
+          text: 'Web - Red Cubana',
           onTap: () async {
             const url = 'http://www.cusobu.nat.cu/covid/';
             if (await canLaunch(url)) {
@@ -266,6 +273,19 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           text: 'Canal de Telegram',
           onTap: () async {
             const url = 'https://t.me/covid19cubadata';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              dev.log('Could not launch $url');
+            }
+          },
+        ),
+        createDrawerItem(
+          context,
+          icon: FontAwesomeIcons.robot,
+          text: 'Bot de Telegram',
+          onTap: () async {
+            const url = 'https://t.me/covid19cubadata_bot';
             if (await canLaunch(url)) {
               await launch(url);
             } else {
@@ -302,6 +322,23 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           'estadísticas, etc respecto a la ${Constants.diseaseName} en Cuba.\n'
           '\nDisponible en Apklis: https://www.apklis.cu/application/club.postdata.covid19cuba',
           subject: '$appName',
+        );
+      },
+    );
+  }
+
+  Widget settingsDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.settings,
+      text: 'Configuración',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SettingsPage(countries: widget.countries),
+          ),
         );
       },
     );
