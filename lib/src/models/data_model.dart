@@ -271,6 +271,76 @@ class DataModel {
     return result;
   }
 
+  List<int> get actives {
+    var result = List<int>();
+    int total = 0;
+    int deads = 0;
+    int recover = 0;
+    int evac = 0;
+
+    for (var item in days) {
+      if(item.diagnosed!=null){
+        total+=item.diagnosed.length;
+      }
+      if(item.deathsNumber!=null){
+        deads+=item.deathsNumber;
+      }
+      if(item.recoveredNumber!=null){
+        recover+=item.recoveredNumber;
+      }
+      if(item.evacueesNumber!=null){
+        evac+=item.evacueesNumber;
+      }
+      result.add(total-(deads+recover+evac));
+    }
+    return result;
+  }
+
+  List<int> get accumulatedRecovered {
+    var result = List<int>();
+    for (var item
+        in days.map((x) => x.recoveredNumber != null ? x.recoveredNumber : 0)) {
+      if (result.length == 0) {
+        result.add(item);
+      } else {
+        result.add(item + result.last);
+      }
+    }
+    return result;
+  }
+
+  List<int> get recovered {
+    var result = List<int>();
+    for (var item
+        in days.map((x) => x.recoveredNumber != null ? x.recoveredNumber : 0)) {
+        result.add(item);
+    }
+    return result;
+  }
+
+  List<int> get accumulatedDeath {
+    var result = List<int>();
+    for (var item
+        in days.map((x) => x.recoveredNumber != null ? x.recoveredNumber : 0)) {
+      if (result.length == 0) {
+        result.add(item);
+      } else {
+        result.add(item + result.last);
+      }
+    }
+    return result;
+  }
+
+  List<int> get death {
+    var result = List<int>();
+    for (var item
+        in days.map((x) => x.recoveredNumber != null ? x.recoveredNumber : 0)) {
+        result.add(item);
+    }
+    return result;
+  }
+
+
   List<Map<String, dynamic>> get top10Province {
     var provinces = Map<String, int>();
     days
