@@ -413,20 +413,19 @@ class DataModel {
       });
     });
     var total = 0;
-    var result = List<Map<String, dynamic>>();
-    int max_mun = 0;
-    int max_pro = 0;
+    var maxMunicipality = 0;
+    var maxProvince = 0;
     municipalities.forEach((k, v) {
       if (k != null) {
-        if (v > max_mun) {
-          max_mun = v;
+        if (v > maxMunicipality) {
+          maxMunicipality = v;
         }
       }
     });
     provinces.forEach((k, v) {
       if (k != null) {
-        if (v > max_mun) {
-          max_pro = v;
+        if (v > maxMunicipality) {
+          maxProvince = v;
         }
         total += v;
       }
@@ -434,7 +433,11 @@ class DataModel {
     return {
       'muns': municipalities,
       'pros': provinces,
-      'genInfo': {'max_muns': max_mun, 'max_pros': max_pro, 'total': total}
+      'genInfo': {
+        'max_muns': maxMunicipality,
+        'max_pros': maxProvince,
+        'total': total,
+      }
     };
   }
 
