@@ -33,7 +33,7 @@ class EvolutionDeathWidget extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 250,
+          height: 300,
           child: charts.TimeSeriesChart(
             [
               charts.Series<int, DateTime>(
@@ -45,7 +45,7 @@ class EvolutionDeathWidget extends StatelessWidget {
               ),
               charts.Series<int, DateTime>(
                 id: 'Muertes acumuladas',
-                colorFn: (_, __) => charts.MaterialPalette.black,
+                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
                 domainFn: (_, i) => data.days[i].date,
                 measureFn: (item, _) => item,
                 data: data.accumulatedDeath,
@@ -65,7 +65,7 @@ class EvolutionDeathWidget extends StatelessWidget {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Casos',
+                'Muertes',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:

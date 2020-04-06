@@ -273,33 +273,23 @@ class DataModel {
 
   List<int> get actives {
     var result = List<int>();
-    int total = 0;
-    int deads = 0;
-    int recover = 0;
-    int evac = 0;
-
+    var total = 0;
+    var deaths = 0;
+    var recover = 0;
+    var evacuees = 0;
     for (var item in days) {
-      if(item.diagnosed!=null){
-        total+=item.diagnosed.length;
-      }
-      if(item.deathsNumber!=null){
-        deads+=item.deathsNumber;
-      }
-      if(item.recoveredNumber!=null){
-        recover+=item.recoveredNumber;
-      }
-      if(item.evacueesNumber!=null){
-        evac+=item.evacueesNumber;
-      }
-      result.add(total-(deads+recover+evac));
+      total += item.diagnosed?.length ?? 0;
+      deaths += item.deathsNumber ?? 0;
+      recover += item.recoveredNumber ?? 0;
+      evacuees += item.evacueesNumber ?? 0;
+      result.add(total - deaths - recover - evacuees);
     }
     return result;
   }
 
   List<int> get accumulatedRecovered {
     var result = List<int>();
-    for (var item
-        in days.map((x) => x.recoveredNumber != null ? x.recoveredNumber : 0)) {
+    for (var item in days.map((x) => x.recoveredNumber ?? 0)) {
       if (result.length == 0) {
         result.add(item);
       } else {
@@ -311,17 +301,15 @@ class DataModel {
 
   List<int> get recovered {
     var result = List<int>();
-    for (var item
-        in days.map((x) => x.recoveredNumber != null ? x.recoveredNumber : 0)) {
-        result.add(item);
+    for (var item in days.map((x) => x.recoveredNumber ?? 0)) {
+      result.add(item);
     }
     return result;
   }
 
   List<int> get accumulatedDeath {
     var result = List<int>();
-    for (var item
-        in days.map((x) => x.recoveredNumber != null ? x.recoveredNumber : 0)) {
+    for (var item in days.map((x) => x.deathsNumber ?? 0)) {
       if (result.length == 0) {
         result.add(item);
       } else {
@@ -333,13 +321,11 @@ class DataModel {
 
   List<int> get death {
     var result = List<int>();
-    for (var item
-        in days.map((x) => x.recoveredNumber != null ? x.recoveredNumber : 0)) {
-        result.add(item);
+    for (var item in days.map((x) => x.deathsNumber ?? 0)) {
+      result.add(item);
     }
     return result;
   }
-
 
   List<Map<String, dynamic>> get top10Province {
     var provinces = Map<String, int>();
@@ -406,7 +392,7 @@ class DataModel {
     return result;
   }
 
-  Map<String,Map<String, int>> get mapData {
+  Map<String, Map<String, int>> get mapData {
     var municipalities = Map<String, int>();
     var provinces = Map<String, int>();
     days
@@ -428,27 +414,28 @@ class DataModel {
     });
     var total = 0;
     var result = List<Map<String, dynamic>>();
-    int max_mun=0;
-    int max_pro=0;
+    int max_mun = 0;
+    int max_pro = 0;
     municipalities.forEach((k, v) {
       if (k != null) {
-        if(v>max_mun){
-          max_mun=v;
+        if (v > max_mun) {
+          max_mun = v;
         }
       }
     });
     provinces.forEach((k, v) {
       if (k != null) {
-        if(v>max_mun){
-          max_pro=v;
+        if (v > max_mun) {
+          max_pro = v;
         }
-        total+=v;
+        total += v;
       }
     });
-    return {'muns': municipalities, 'pros': provinces,
-            'genInfo': {'max_muns': max_mun,
-                        'max_pros': max_pro,
-                        'total': total}};
+    return {
+      'muns': municipalities,
+      'pros': provinces,
+      'genInfo': {'max_muns': max_mun, 'max_pros': max_pro, 'total': total}
+    };
   }
 
   factory DataModel.fromJson(Map<String, dynamic> json) =>

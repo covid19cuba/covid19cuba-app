@@ -21,7 +21,7 @@ class TestEvolutionWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Tests acumulados por días',
+              'Tests por días',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

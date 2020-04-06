@@ -33,12 +33,12 @@ class EvolutionCasesWidget extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 250,
+          height: 400,
           child: charts.TimeSeriesChart(
             [
               charts.Series<DayModel, DateTime>(
                 id: 'Casos en el día',
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
                 domainFn: (item, _) => item.date,
                 measureFn: (item, _) =>
                     item.diagnosed != null ? item.diagnosed.length : 0,
@@ -53,7 +53,7 @@ class EvolutionCasesWidget extends StatelessWidget {
               ),
               charts.Series<int, DateTime>(
                 id: 'Casos acumulados',
-                colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault,
+                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
                 domainFn: (_, i) => data.days[i].date,
                 measureFn: (item, _) => item,
                 data: data.accumulated,

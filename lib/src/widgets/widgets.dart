@@ -2,7 +2,7 @@ export 'comparison_widget.dart';
 export 'distribution_age_groups_diagnosed_widget.dart';
 export 'distribution_nationality_diagnosed_widget.dart';
 export 'error_widget.dart';
-export 'evolution_casos_widget.dart';
+export 'evolution_cases_widget.dart';
 export 'evolution_recovered_widget.dart';
 export 'evolution_death_widget.dart';
 export 'home_drawer_widget.dart';

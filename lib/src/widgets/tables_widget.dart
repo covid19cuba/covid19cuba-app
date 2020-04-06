@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/data_model.dart';
 
@@ -40,7 +41,8 @@ class TableData extends StatelessWidget {
                     margin: EdgeInsets.all(15),
                     child: Center(
                       child: Text(
-                        'TOP${topData.length} $title ${infoToShow == 'municipality' ? "Afectados" : "Afectadas"}',
+                        'TOP${topData.length} $title '
+                        '${infoToShow == 'municipality' ? "Afectados" : "Afectadas"}',
                         style: TextStyle(
                           color: Constants.primaryColor,
                           fontWeight: FontWeight.bold,
