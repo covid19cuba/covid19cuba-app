@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
-class EvolutionWidget extends StatelessWidget {
+class EvolutionRecoveredWidget extends StatelessWidget {
   final DataModel data;
 
-  const EvolutionWidget({this.data}) : assert(data != null);
+  const EvolutionRecoveredWidget({this.data}) : assert(data != null);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class EvolutionWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Evolución de casos por días',
+              'Evolución de altas por días',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -37,19 +37,18 @@ class EvolutionWidget extends StatelessWidget {
           child: charts.TimeSeriesChart(
             [
               charts.Series<int, DateTime>(
-                id: 'Casos acumulados',
+                id: 'Altas en el día',
+                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+                domainFn: (_, i) => data.days[i].date,
+                measureFn: (item, _) => item,
+                data: data.recovered,
+              ),
+              charts.Series<int, DateTime>(
+                id: 'Altas acumuladas',
                 colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
                 domainFn: (_, i) => data.days[i].date,
                 measureFn: (item, _) => item,
-                data: data.accumulated,
-              ),
-              charts.Series<DayModel, DateTime>(
-                id: 'Casos en el día',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (item, _) => item.date,
-                measureFn: (item, _) =>
-                    item.diagnosed != null ? item.diagnosed.length : 0,
-                data: data.days,
+                data: data.accumulatedRecovered,
               ),
             ],
             animate: false,
