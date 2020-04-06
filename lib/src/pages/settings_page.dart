@@ -19,7 +19,7 @@ class SettingsPageState extends State<SettingsPage> {
         centerTitle: true,
       ),
       body: PreferencePage([
-        PreferenceTitle(
+        /*PreferenceTitle(
           'Intervalo de actualización:',
           style: TextStyle(
             color: Constants.primaryColor,
@@ -33,7 +33,7 @@ class SettingsPageState extends State<SettingsPage> {
           defaultVal: Constants.setUpTasksMinutesDefault,
           values: [15, 30, 60],
            displayValues: ["15 minutos", "30 minutos", "1 hora"],
-        ),
+        ),*/
         PreferenceTitle(
           'Modo de conexión:',
           style: TextStyle(
