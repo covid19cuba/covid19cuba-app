@@ -7,7 +7,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var isOnBoarding = PrefService.getBool(Constants.isOnBoarding) ?? false;
+    var isOnBoarding = PrefService.getBool(Constants.prefIsOnBoarding) ?? false;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: Constants.appName,
