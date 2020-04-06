@@ -7,12 +7,10 @@ import 'package:covid19cuba/src/widgets/widgets.dart';
 class HomeWidget extends StatelessWidget {
   final DataModel data;
   final WorldTotalsModel countries;
-  final ConfigurationModel config;
 
-  const HomeWidget({this.data, this.countries, this.config})
+  const HomeWidget({this.data, this.countries})
       : assert(data != null),
-        assert(countries != null),
-        assert(config != null);
+        assert(countries != null);
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +48,24 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
+            child: EvolutionCasesWidget(data: data),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: EvolutionRecoveredWidget(data: data),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: EvolutionDeathWidget(data: data),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
             child: DistributionAgeGroupsDiagnosedWidget(
               data: data,
             ),
@@ -67,12 +83,6 @@ class HomeWidget extends StatelessWidget {
             child: DistributionNationalityDiagnosedWidget(
               data: data,
             ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: EvolutionWidget(data: data),
           ),
         ),
         Container(
@@ -106,7 +116,10 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: ComparisonWidget(data: data, countries: countries, config: config),
+            child: ComparisonWidget(
+              data: data,
+              countries: countries,
+            ),
           ),
         ),
         Container(padding: EdgeInsets.all(5)),

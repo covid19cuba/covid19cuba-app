@@ -2,42 +2,38 @@ import 'dart:math';
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
-import '../utils/constants.dart';
-import '../utils/utils.dart';
-
 class ComparisonWidget extends StatefulWidget {
   final DataModel data;
   final WorldTotalsModel countries;
-  final ConfigurationModel config;
 
-  const ComparisonWidget({this.data, this.countries, this.config})
+  const ComparisonWidget({this.data, this.countries})
       : assert(data != null),
-        assert(countries != null),
-        assert(config != null);
+        assert(countries != null);
 
   @override
   ComparisonWidgetState createState() =>
-      ComparisonWidgetState(data: data, countries: countries, config: config);
+      ComparisonWidgetState(data: data, countries: countries);
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
   String selectedCountry = Constants.defaultCompareCountry;
   final DataModel data;
-  final WorldTotalsModel countries;
-  final ConfigurationModel config;
 
-  ComparisonWidgetState({this.data, this.countries, this.config})
+  ComparisonWidgetState({this.data, this.countries})
       : assert(data != null),
-        assert(countries != null),
-        assert(config != null),
-        selectedCountry=config.compareCountry;
+        assert(countries != null);
+
+  final WorldTotalsModel countries;
 
   List<String> getCountriesList() {
-    var list = countries.countries.keys.where((c) => c != Constants.countryCuba).toList();
+    var list = countries.countries.keys
+        .where((c) => c != Constants.countryCuba)
+        .toList();
     list.sort((a, b) => WorldTotalsModel.prettyCountry(a)
         .compareTo(WorldTotalsModel.prettyCountry(b)));
     return list;
@@ -47,12 +43,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     return [
       charts.SelectionModelConfig(
         changedListener: (charts.SelectionModel<num> model) {
-//          for (var datum in model.selectedDatum) {
-//            print(datum.series.id +
-//                ': ' +
-//                datum.datum
-//                    .toString()); // This could be used for further customization
-//          }
+          /*for (var datum in model.selectedDatum) {
+            // This could be used for further customization
+            print('${datum.series.id}: ${datum.datum}');
+          }*/
         },
       ),
     ];
@@ -94,8 +88,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     behaviors.addAll([
       charts.RangeAnnotation([
         charts.LineAnnotationSegment(
-            data.days.length - 1, charts.RangeAnnotationAxisType.domain,
-            startLabel: 'Día ' + data.days.length.toString())
+          data.days.length - 1,
+          charts.RangeAnnotationAxisType.domain,
+          startLabel: 'Día ${data.days.length}',
+        )
       ])
     ]);
     return behaviors;
@@ -144,6 +140,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
 
   @override
   Widget build(BuildContext context) {
+    selectedCountry = PrefService.getString(Constants.prefCompareCountry);
     return Column(
       children: <Widget>[
         Container(
@@ -154,7 +151,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Comparación de los casos acumulados de ${Constants.countryCuba} con:',
+              'Comparación de los casos acumulados '
+              'de ${Constants.countryCuba} con:',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -175,8 +173,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             color: Constants.primaryColor,
           ),
           onChanged: (String newValue) {
-            print('save data: '+newValue);
-            config.saveCountry(newValue);
+            PrefService.setString(Constants.prefCompareCountry, newValue);
             setState(() {
               selectedCountry = newValue;
             });
@@ -216,8 +213,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             domainAxis: charts.NumericAxisSpec(
               viewport: charts.NumericExtents(
                   1,
-                  max(countries.countries[selectedCountry].length,
-                      data.days.length)),
+                  max(
+                    countries.countries[selectedCountry].length,
+                    data.days.length,
+                  )),
             ),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
@@ -271,7 +270,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Datos de los países tomados de\ngithub.com/pomber/covid19\ny actualizado el ${dateTimeToJson(countries.dateTime)}',
+              'Datos de los países tomados de\ngithub.com/pomber/covid19\ny '
+              'actualizado el ${dateTimeToJson(countries.dateTime)}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

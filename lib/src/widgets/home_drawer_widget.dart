@@ -1,23 +1,19 @@
 import 'dart:developer' as dev;
 
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:package_info/package_info.dart';
 
+import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-
-import '../pages/pages.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
   final WorldTotalsModel countries;
-  final ConfigurationModel config;
 
-  HomeDrawerWidget({this.countries, this.config})
-      : assert(countries != null),
-        assert(config != null);
+  HomeDrawerWidget({this.countries}) : assert(countries != null);
 
   @override
   _HomeDrawerWidgetState createState() => _HomeDrawerWidgetState();
@@ -341,8 +337,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SettingsPage(
-                countries: widget.countries, config: widget.config),
+            builder: (context) => SettingsPage(countries: widget.countries),
           ),
         );
       },

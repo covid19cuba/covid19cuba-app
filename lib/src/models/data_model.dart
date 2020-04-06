@@ -271,6 +271,62 @@ class DataModel {
     return result;
   }
 
+  List<int> get actives {
+    var result = List<int>();
+    var total = 0;
+    var deaths = 0;
+    var recover = 0;
+    var evacuees = 0;
+    for (var item in days) {
+      total += item.diagnosed?.length ?? 0;
+      deaths += item.deathsNumber ?? 0;
+      recover += item.recoveredNumber ?? 0;
+      evacuees += item.evacueesNumber ?? 0;
+      result.add(total - deaths - recover - evacuees);
+    }
+    return result;
+  }
+
+  List<int> get accumulatedRecovered {
+    var result = List<int>();
+    for (var item in days.map((x) => x.recoveredNumber ?? 0)) {
+      if (result.length == 0) {
+        result.add(item);
+      } else {
+        result.add(item + result.last);
+      }
+    }
+    return result;
+  }
+
+  List<int> get recovered {
+    var result = List<int>();
+    for (var item in days.map((x) => x.recoveredNumber ?? 0)) {
+      result.add(item);
+    }
+    return result;
+  }
+
+  List<int> get accumulatedDeath {
+    var result = List<int>();
+    for (var item in days.map((x) => x.deathsNumber ?? 0)) {
+      if (result.length == 0) {
+        result.add(item);
+      } else {
+        result.add(item + result.last);
+      }
+    }
+    return result;
+  }
+
+  List<int> get death {
+    var result = List<int>();
+    for (var item in days.map((x) => x.deathsNumber ?? 0)) {
+      result.add(item);
+    }
+    return result;
+  }
+
   List<Map<String, dynamic>> get top10Province {
     var provinces = Map<String, int>();
     days
@@ -334,6 +390,55 @@ class DataModel {
       cont += 1;
     }
     return result;
+  }
+
+  Map<String, Map<String, int>> get mapData {
+    var municipalities = Map<String, int>();
+    var provinces = Map<String, int>();
+    days
+        .where((x) => x.diagnosed != null)
+        .map((x) => x.diagnosed)
+        .forEach((diagnosed) {
+      diagnosed.forEach((item) {
+        if (municipalities.containsKey(item.dpacodeMunicipalityDetection)) {
+          ++municipalities[item.dpacodeMunicipalityDetection];
+        } else {
+          municipalities[item.dpacodeMunicipalityDetection] = 1;
+        }
+        if (provinces.containsKey(item.dpacodeProvinceDetection)) {
+          ++provinces[item.dpacodeProvinceDetection];
+        } else {
+          provinces[item.dpacodeProvinceDetection] = 1;
+        }
+      });
+    });
+    var total = 0;
+    var maxMunicipality = 0;
+    var maxProvince = 0;
+    municipalities.forEach((k, v) {
+      if (k != null) {
+        if (v > maxMunicipality) {
+          maxMunicipality = v;
+        }
+      }
+    });
+    provinces.forEach((k, v) {
+      if (k != null) {
+        if (v > maxMunicipality) {
+          maxProvince = v;
+        }
+        total += v;
+      }
+    });
+    return {
+      'muns': municipalities,
+      'pros': provinces,
+      'genInfo': {
+        'max_muns': maxMunicipality,
+        'max_pros': maxProvince,
+        'total': total,
+      }
+    };
   }
 
   factory DataModel.fromJson(Map<String, dynamic> json) =>
