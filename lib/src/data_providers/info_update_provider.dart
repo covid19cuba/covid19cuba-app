@@ -12,7 +12,7 @@ const is_info_updated_url = 'https://www.cusobu.nat.cu/covid/cubadata/status/';
 Future<InfoUpdate> isInfoUpdated() async {
   int time;
   try {
-    time = PrefService.getInt('last_data_update');
+    time = PrefService.getInt(Constants.prefLastDataUpdate);
   } catch (e) {
     log(e.toString());
     time = (DateTime.now().millisecondsSinceEpoch / 1000).round() - 1;
