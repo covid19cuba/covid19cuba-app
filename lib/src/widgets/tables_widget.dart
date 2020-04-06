@@ -12,6 +12,118 @@ class TableData extends StatelessWidget {
       : assert(data != null),
         assert(infoToShow != null);
 
+  List<TableRow> getTableMunicipality() {
+    var topData = data.affectedMunicipalities?.take(10)?.toList();
+    if (topData == null || topData.length == 0) {
+      return null;
+    }
+    var index = 0;
+    return topData.map(
+      (item) {
+        index += 1;
+        return TableRow(
+          children: [
+            TableCell(
+              child: Container(
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  '$index',
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  '${item.name} (${item.province})',
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              child: Container(
+                margin: EdgeInsets.all(10),
+                child: Center(
+                  child: Text(
+                    (item.value * 100 / item.total).toStringAsFixed(2) + '%',
+                    style: TextStyle(
+                      color: Constants.primaryColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    ).toList();
+  }
+
+  List<TableRow> getTableProvince() {
+    var topData = data.affectedProvinces?.take(10)?.toList();
+    if (topData == null || topData.length == 0) {
+      return null;
+    }
+    var index = 0;
+    return topData.map(
+      (item) {
+        index += 1;
+        return TableRow(
+          children: [
+            TableCell(
+              child: Container(
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  '$index',
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  '${item.name}',
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              child: Container(
+                margin: EdgeInsets.all(10),
+                child: Center(
+                  child: Text(
+                    (item.value * 100 / item.total).toStringAsFixed(2) + '%',
+                    style: TextStyle(
+                      color: Constants.primaryColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    ).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     var borderSide = BorderSide(
@@ -20,8 +132,8 @@ class TableData extends StatelessWidget {
     );
     var title = infoToShow == 'municipality' ? 'Municipios' : 'Provincias';
     var topData = infoToShow == 'municipality'
-        ? data.top10Municipality
-        : data.top10Province;
+        ? getTableMunicipality()
+        : getTableProvince();
     if (topData == null || topData.length == 0) {
       return Container();
     }
@@ -104,56 +216,7 @@ class TableData extends StatelessWidget {
                   ],
                 )
               ] +
-              topData.map(
-                (key) {
-                  return TableRow(
-                    children: [
-                      TableCell(
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Text(
-                            '${key['index']}',
-                            style: TextStyle(
-                              color: Constants.primaryColor,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                      ),
-                      TableCell(
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.all(10),
-                          child: Text(
-                            '${key[infoToShow]} '
-                            '${infoToShow == 'municipality' ? '(${key['province']})' : ''}',
-                            style: TextStyle(
-                              color: Constants.primaryColor,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                      ),
-                      TableCell(
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Center(
-                            child: Text(
-                              (key['cases'] * 100 / key['total'])
-                                      .toStringAsFixed(2) +
-                                  '%',
-                              style: TextStyle(
-                                color: Constants.primaryColor,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ).toList(),
+              topData,
         ),
       ],
     );

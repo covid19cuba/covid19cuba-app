@@ -11,9 +11,7 @@ class PieSexWidget extends StatefulWidget {
   List<Palette> colorPalettes;
 
   PieSexWidget({this.data}) : assert(data != null) {
-    colorPalettes = charts.MaterialPalette.getOrderedPalettes(
-      data.genders.keys.length,
-    );
+    colorPalettes = charts.MaterialPalette.getOrderedPalettes(3);
   }
 
   @override
@@ -48,16 +46,16 @@ class PieSexWidgetState extends State<PieSexWidget> {
           height: 300,
           child: charts.PieChart(
             [
-              charts.Series<String, String>(
+              charts.Series<Item, String>(
                 id: 'Casos por Sexo',
                 colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
-                domainFn: (item, _) =>
-                    widget.data.gendersPretty[item] ??
-                    (item != null && item.length > 0
-                        ? item[0].toUpperCase() + item.substring(1)
-                        : item),
-                measureFn: (item, _) => widget.data.genders[item],
-                data: widget.data.genders.keys.toList(),
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.value,
+                data: [
+                  widget.data.casesBySex.men,
+                  widget.data.casesBySex.women,
+                  widget.data.casesBySex.unknown,
+                ],
               ),
             ],
             animate: false,

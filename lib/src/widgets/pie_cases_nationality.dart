@@ -11,9 +11,7 @@ class PieCasesNationalityWidget extends StatefulWidget {
   List<Palette> colorPalettes;
 
   PieCasesNationalityWidget({this.data}) : assert(data != null) {
-    colorPalettes = charts.MaterialPalette.getOrderedPalettes(
-      data.casesNationality.keys.length,
-    );
+    colorPalettes = charts.MaterialPalette.getOrderedPalettes(3);
   }
 
   @override
@@ -49,12 +47,16 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
           height: 300,
           child: charts.PieChart(
             [
-              charts.Series<String, String>(
+              charts.Series<Item, String>(
                 id: 'Casos por nacionalidad',
                 colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
-                domainFn: (item, _) => item,
-                measureFn: (item, _) => widget.data.casesNationality[item],
-                data: widget.data.casesNationality.keys.toList(),
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.value,
+                data: [
+                  widget.data.casesByNationality.foreign,
+                  widget.data.casesByNationality.cubans,
+                  widget.data.casesByNationality.unknown
+                ],
               ),
             ],
             animate: false,

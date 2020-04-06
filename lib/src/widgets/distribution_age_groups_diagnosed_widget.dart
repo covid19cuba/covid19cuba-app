@@ -37,12 +37,12 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
           height: 250,
           child: charts.BarChart(
             [
-              charts.Series<int, String>(
+              charts.Series<ItemCode, String>(
                 id: 'Diagnosticados',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => data.ageGroupsNames[i],
-                measureFn: (item, _) => item,
-                data: data.ageGroups,
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.value,
+                data: data.distributionByAgeRanges,
               ),
             ],
             animate: false,

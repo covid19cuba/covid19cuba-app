@@ -1,444 +1,246 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/functions.dart';
 
 part 'data_model.g.dart';
 
 @JsonSerializable(ignoreUnannotated: true)
 class DataModel {
-  @JsonKey(name: 'casos')
-  CasesModel cases;
+  @JsonKey(name: 'resume')
+  List<Item> resume;
 
-  @JsonKey(name: 'centros_diagnostico')
-  Map<String, CenterModel> diagnosticCenters;
+  @JsonKey(name: 'cases_by_sex')
+  CasesBySex casesBySex;
 
-  @JsonKey(name: 'centros_aislamiento')
-  Map<String, CenterModel> isolationCenters;
+  @JsonKey(name: 'cases_by_mode_of_contagion')
+  CasesByModeOfContagion casesByModeOfContagion;
 
-  @JsonKey(name: 'note-text')
+  @JsonKey(name: 'evolution_of_cases_by_days')
+  EvolutionOfCasesByDays evolutionOfCasesByDays;
+
+  @JsonKey(name: 'evolution_of_deaths_by_days')
+  EvolutionOfDeathsByDays evolutionOfDeathsByDays;
+
+  @JsonKey(name: 'evolution_of_recovered_by_days')
+  EvolutionOfRecoveredByDays evolutionOfRecoveredByDays;
+
+  @JsonKey(name: 'distribution_by_age_ranges')
+  List<ItemCode> distributionByAgeRanges;
+
+  @JsonKey(name: 'cases_by_nationality')
+  CasesByNationality casesByNationality;
+
+  @JsonKey(name: 'distribution_by_nationality_of_foreign_cases')
+  List<ItemCode> distributionByNationalityOfForeignCases;
+
+  @JsonKey(name: 'list_of_tests_performed')
+  ListOfTestsPerformed listOfTestsPerformed;
+
+  @JsonKey(name: 'tests_by_days')
+  TestsByDays testsByDays;
+
+  @JsonKey(name: 'affected_provinces')
+  List<ItemProvince> affectedProvinces;
+
+  @JsonKey(name: 'affected_municipalities')
+  List<ItemMunicipality> affectedMunicipalities;
+
+  @JsonKey(name: 'comparison_of_accumulated_cases')
+  ComparisonOfAccumulatedCases comparisonOfAccumulatedCases;
+
+  @JsonKey(name: 'map_data')
+  Map<String, dynamic> mapData;
+
+  @JsonKey(name: 'updated', fromJson: dateTimeFromJson, toJson: dateTimeToJson)
+  DateTime updated;
+
+  @JsonKey(name: 'note')
   String note;
 
-  DataModel({
-    this.cases,
-    this.diagnosticCenters,
-    this.isolationCenters,
-    this.note,
-  });
+  DataModel();
 
-  int get numberOfDiagnosed {
-    return cases.days.values
-        .where((x) => x.diagnosed != null)
-        .map((x) => x.diagnosed.length)
-        .reduce((v, e) => v + e);
-  }
-
-  int get numberOfDeaths {
-    return cases.days.values
-        .where((x) => x.deathsNumber != null)
-        .map((x) => x.deathsNumber)
-        .reduce((v, e) => v + e);
-  }
-
-  int get numberOfEvacuees {
-    return cases.days.values
-        .where((x) => x.evacueesNumber != null)
-        .map((x) => x.evacueesNumber)
-        .reduce((v, e) => v + e);
-  }
-
-  int get numberOfRecovered {
-    return cases.days.values
-        .where((x) => x.recoveredNumber != null)
-        .map((x) => x.recoveredNumber)
-        .reduce((v, e) => v + e);
-  }
-
-  int get numberOfActive {
-    return numberOfDiagnosed -
-        numberOfDeaths -
-        numberOfEvacuees -
-        numberOfRecovered;
-  }
-
-  List<DayModel> get days {
-    var result = cases.days.values.toList();
-    result.sort((a, b) => a.date.compareTo(b.date));
-    return result;
-  }
-
-  DateTime get update => days.last.date;
-
-  List<DiagnosedModel> get diagnosed {
-    var result = List<DiagnosedModel>();
-    days.where((x) => x.diagnosed != null).forEach((x) {
-      result.addAll(x.diagnosed);
-    });
-    return result;
-  }
-
-  List<String> get ageGroupsNames {
-    return [
-      '0-18',
-      '19-40',
-      '41-60',
-      '>=61',
-      'Desconocido',
-    ];
-  }
-
-  List<List<dynamic>> get tests {
-    var preResult = List<List<dynamic>>();
-    var days = this.days.reversed.toList();
-    var accumulated = this.accumulated.reversed.toList();
-    for (var i = 0; i < days.length; ++i) {
-      if (days[i].testsTotal == null) {
-        break;
-      }
-      var actual = List<dynamic>();
-      actual.add(days[i].date);
-      actual.add(accumulated[i]);
-      actual.add(days[i].testsTotal - accumulated[i]);
-      actual.add(days[i].testsTotal);
-      preResult.add(actual);
-    }
-    preResult = preResult.reversed.toList();
-    var result = List<List<dynamic>>();
-    for (var i = 1; i < preResult.length; ++i) {
-      var actual = List<dynamic>();
-      actual.add(preResult[i][0]);
-      actual.add(preResult[i][1] - preResult[i - 1][1]);
-      actual.add(preResult[i][2] - preResult[i - 1][2]);
-      actual.add(preResult[i][3] - preResult[i - 1][3]);
-      result.add(actual);
-    }
-    return result;
-  }
-
-  Map<String, int> get casesNationality {
-    var result = <String, int>{
-      'Extranjeros': 0,
-      'Cubanos': 0,
-      'No Reportados': 0,
+  static String prettyCountry(String country) {
+    var dict = <String, String>{
+      'Vietnam': 'Vietnam',
+      'Austria': 'Austria',
+      'Cambodia': 'Camboya',
+      'Kazakhstan': 'Kazajstán',
+      "Cote d'Ivoire": 'Costa de Marfil',
+      'Spain': 'España',
+      'Serbia': 'Serbia',
+      'Ethiopia': 'Etiopía',
+      'Brazil': 'Brasil',
+      'Pakistan': 'Pakistán',
+      'Panama': 'Panamá',
+      'Syria': 'Siria',
+      'France': 'Francia',
+      'Germany': 'Alemania',
+      'Montenegro': 'Montenegro',
+      'Switzerland': 'Suiza',
+      'Paraguay': 'Paraguay',
+      'Holy See': 'Santa Sede',
+      'Nepal': 'Nepal',
+      'Norway': 'Noruega',
+      'Afghanistan': 'Afganistán',
+      'Djibouti': 'Yitubi',
+      'Ireland': 'Irlanda',
+      'United Arab Emirates': 'Emiratos Árabes Unidos',
+      'Israel': 'Israel',
+      'Bulgaria': 'Bulgaria',
+      'Korea, South': 'Corea del Sur',
+      'Cyprus': 'Chipre',
+      'Peru': 'Perú',
+      'Azerbaijan': 'Azerbaiyán',
+      'Philippines': 'Filipinas',
+      'Bahamas': 'Bahamas',
+      'India': 'India',
+      'MS Zaandam': 'MS Zaandam',
+      'Canada': 'Canadá',
+      'Rwanda': 'Ruanda',
+      'Cuba': 'Cuba',
+      'Thailand': 'Tailandia',
+      'Brunei': 'Brunéi',
+      'El Salvador': 'El Salvador',
+      'North Macedonia': 'Macedonia del Norte',
+      'Saint Vincent and the Grenadines': 'San Vicente y las Granadinas',
+      'Jamaica': 'Jamaica',
+      'Greece': 'Grecia',
+      'Bolivia': 'Bolivia',
+      'Dominica': 'Dominica',
+      'Togo': 'Togo',
+      'Mauritius': 'Mauricio',
+      'Russia': 'Rusia',
+      'Lebanon': 'Líbano',
+      'Zimbabwe': 'Zimbabue',
+      'Nigeria': 'Nigeria',
+      'Finland': 'Finlandia',
+      'Burma': 'Birmania',
+      'Iraq': 'Irak',
+      'United Kingdom': 'Reino Unido',
+      'Tanzania': 'Tanzania',
+      'Uruguay': 'Uruguay',
+      'South Africa': 'Sudáfrica',
+      'Somalia': 'Somalia',
+      'Algeria': 'Argelia',
+      'Benin': 'Benín',
+      'Niger': 'Níger',
+      'West Bank and Gaza': 'Cisjordania',
+      'Uganda': 'Uganda',
+      'San Marino': 'San Marino',
+      'Liberia': 'Liberia',
+      'Iran': 'Irán',
+      'Mexico': 'México',
+      'Honduras': 'Honduras',
+      'Burkina Faso': 'Burkina Faso',
+      'Australia': 'Australia',
+      'Chile': 'Chile',
+      'Haiti': 'Haití',
+      'Turkey': 'Turquía',
+      'Madagascar': 'Madagascar',
+      'Saint Lucia': 'Santa Lucía',
+      'Papua New Guinea': 'Papúa Nueva Guinea',
+      'Central African Republic': 'República Centroafricana',
+      'Eritrea': 'Eritrea',
+      'Lithuania': 'Lituania',
+      'Kyrgyzstan': 'Kirguistán',
+      'Andorra': 'Andorra',
+      'Laos': 'Laos',
+      'Mali': 'Mali',
+      'Guinea': 'Guinea',
+      'Luxembourg': 'Luxemburgo',
+      'Gambia': 'Gambia',
+      'Mongolia': 'Mongolia',
+      'Costa Rica': 'Costa Rica',
+      'Trinidad and Tobago': 'Trinidad y Tobago',
+      'Mauritania': 'Mauritania',
+      'Antigua and Barbuda': 'Antigua y Barbuda',
+      'Libya': 'Libia',
+      'Zambia': 'Zambia',
+      'Timor-Leste': 'Timor-Leste',
+      'Guyana': 'Guayana',
+      'Tunisia': 'Túnez',
+      'Japan': 'Japón',
+      'Liechtenstein': 'Liechtenstein',
+      'Saint Kitts and Nevis': 'San Cristóbal y Nieves',
+      'Senegal': 'Senegal',
+      'Hungary': 'Hungría',
+      'Moldova': 'Moldavia',
+      'Qatar': 'Katar',
+      'US': 'Estados Unidos',
+      'Belarus': 'Bielorrusia',
+      'Chad': 'Chad',
+      'Malaysia': 'Malasia',
+      'Romania': 'Rumania',
+      'Argentina': 'Argentina',
+      'Belize': 'Belice',
+      'Angola': 'Angola',
+      'Sweden': 'Suecia',
+      'China': 'China',
+      'Jordan': 'Jordán',
+      'Italy': 'Italia',
+      'Latvia': 'Letonia',
+      'Seychelles': 'Seychelles',
+      'Ghana': 'Ghana',
+      'Colombia': 'Colombia',
+      'Albania': 'Albania',
+      'Saudi Arabia': 'Arabia Saudita',
+      'Estonia': 'Estonia',
+      'Monaco': 'Mónaco',
+      'Ukraine': 'Ucrania',
+      'Uzbekistan': 'Uzbekistán',
+      'Maldives': 'Maldivas',
+      'Morocco': 'Marruecos',
+      'Portugal': 'Portugal',
+      'Kenya': 'Kenia',
+      'Guatemala': 'Guatemala',
+      'Gabon': 'Gabón',
+      'Belgium': 'Bélgica',
+      'Iceland': 'Islandia',
+      'Cabo Verde': 'Cabo Verde',
+      'Mozambique': 'Mozambique',
+      'Indonesia': 'Indonesia',
+      'Egypt': 'Egipto',
+      'Taiwan*': 'Taiwán *',
+      'Netherlands': 'Países Bajos',
+      'Slovakia': 'Eslovaquia',
+      'Bosnia and Herzegovina': 'Bosnia y Herzegovina',
+      'Cameroon': 'Camerún',
+      'Venezuela': 'Venezuela',
+      'Kuwait': 'Kuwait',
+      'Malta': 'Malta',
+      'Nicaragua': 'Nicaragua',
+      'Congo (Kinshasa)': 'Congo (Kinshasa)',
+      'Singapore': 'Singapur',
+      'Bhutan': 'Bután',
+      'Bangladesh': 'Bangladesh',
+      'Ecuador': 'Ecuador',
+      'Georgia': 'Georgia',
+      'Namibia': 'Namibia',
+      'Denmark': 'Dinamarca',
+      'Poland': 'Polonia',
+      'Suriname': 'Surinam',
+      'Slovenia': 'Eslovenia',
+      'Congo (Brazzaville)': 'Congo (Brazzaville)',
+      'Guinea-Bissau': 'Guinea-Bissau',
+      'Dominican Republic': 'República Dominicana',
+      'Diamond Princess': 'Princesa del Diamante',
+      'Grenada': 'Granada',
+      'Barbados': 'Barbados',
+      'New Zealand': 'Nueva Zelanda',
+      'Eswatini': 'Eswatini',
+      'Czechia': 'Chequia',
+      'Kosovo': 'Kosovo',
+      'Sudan': 'Sudán',
+      'Armenia': 'Armenia',
+      'Bahrain': 'Bahrein',
+      'Sri Lanka': 'Sri Lanka',
+      'Equatorial Guinea': 'Guinea Ecuatorial',
+      'Croatia': 'Croacia',
+      'Oman': 'Omán',
+      'Fiji': 'Fiyi',
     };
-    days
-        .where((x) => x.diagnosed != null)
-        .map((x) => x.diagnosed)
-        .forEach((diagnosed) {
-      diagnosed.forEach((item) {
-        if (item.country == null || item.country.isEmpty) {
-          ++result['No Reportados'];
-        } else if (item.country == 'cu') {
-          ++result['Cubanos'];
-        } else {
-          ++result['Extranjeros'];
-        }
-      });
-    });
-    return result;
-  }
-
-  Map<String, String> get contagionsPretty {
-    return <String, String>{
-      'importado': 'Importados',
-      'introducido': 'Introducidos',
-      'autoctono': 'Autóctonos',
-      'desconocido': 'Desconocidos',
-    };
-  }
-
-  Map<String, int> get contagions {
-    var result = <String, int>{
-      'importado': 0,
-      'introducido': 0,
-      'autoctono': 0,
-      'desconocido': 0,
-    };
-    days
-        .where((x) => x.diagnosed != null)
-        .map((x) => x.diagnosed)
-        .forEach((diagnosed) {
-      diagnosed.forEach((item) {
-        if (item.contagion == null) {
-          ++result['desconocido'];
-        } else if (result.containsKey(item.contagion)) {
-          ++result[item.contagion];
-        } else {
-          result[item.contagion] = 0;
-        }
-      });
-    });
-    return result;
-  }
-
-  Map<String, String> get gendersPretty {
-    return <String, String>{
-      'hombre': 'Hombres',
-      'mujer': 'Mujeres',
-      'no reportado': 'No Reportados',
-    };
-  }
-
-  Map<String, int> get genders {
-    var result = <String, int>{
-      'hombre': 0,
-      'mujer': 0,
-      'no reportado': 0,
-    };
-    days
-        .where((x) => x.diagnosed != null)
-        .map((x) => x.diagnosed)
-        .forEach((diagnosed) {
-      diagnosed.forEach((item) {
-        if (item.sex == null) {
-          ++result['desconocido'];
-        } else if (result.containsKey(item.sex)) {
-          ++result[item.sex];
-        } else {
-          result[item.sex] = 0;
-        }
-      });
-    });
-    return result;
-  }
-
-  List<int> get ageGroups {
-    var result = [0, 0, 0, 0, 0];
-    days
-        .where((x) => x.diagnosed != null)
-        .map((x) => x.diagnosed)
-        .forEach((diagnosed) {
-      diagnosed.forEach((item) {
-        var age = item.age;
-        if (age == null) {
-          ++result[4];
-        } else if (0 <= age && age <= 18) {
-          ++result[0];
-        } else if (19 <= age && age <= 40) {
-          ++result[1];
-        } else if (41 <= age && age <= 60) {
-          ++result[2];
-        } else {
-          ++result[3];
-        }
-      });
-    });
-    return result;
-  }
-
-  Map<String, String> get countriesPretty {
-    return <String, String>{
-      'cu': 'Cuba',
-      'it': 'Italia',
-      'be': 'Bélgica',
-      'us': 'USA',
-      'fr': 'Francia',
-      'ca': 'Canadá',
-      'es': 'España',
-      'cn': 'China',
-      'ru': 'Rusia',
-      'uy': 'Uruguay',
-      'do': 'R.Dominicana',
-    };
-  }
-
-  Map<String, int> get countries {
-    var result = Map<String, int>();
-    days
-        .where((x) => x.diagnosed != null)
-        .map((x) => x.diagnosed)
-        .forEach((diagnosed) {
-      diagnosed.forEach((item) {
-        if (result.containsKey(item.country)) {
-          ++result[item.country];
-        } else {
-          result[item.country] = 1;
-        }
-      });
-    });
-    return result;
-  }
-
-  List<int> get accumulated {
-    var result = List<int>();
-    for (var item
-        in days.map((x) => x.diagnosed != null ? x.diagnosed.length : 0)) {
-      if (result.length == 0) {
-        result.add(item);
-      } else {
-        result.add(item + result.last);
-      }
-    }
-    return result;
-  }
-
-  List<int> get actives {
-    var result = List<int>();
-    var total = 0;
-    var deaths = 0;
-    var recover = 0;
-    var evacuees = 0;
-    for (var item in days) {
-      total += item.diagnosed?.length ?? 0;
-      deaths += item.deathsNumber ?? 0;
-      recover += item.recoveredNumber ?? 0;
-      evacuees += item.evacueesNumber ?? 0;
-      result.add(total - deaths - recover - evacuees);
-    }
-    return result;
-  }
-
-  List<int> get accumulatedRecovered {
-    var result = List<int>();
-    for (var item in days.map((x) => x.recoveredNumber ?? 0)) {
-      if (result.length == 0) {
-        result.add(item);
-      } else {
-        result.add(item + result.last);
-      }
-    }
-    return result;
-  }
-
-  List<int> get recovered {
-    var result = List<int>();
-    for (var item in days.map((x) => x.recoveredNumber ?? 0)) {
-      result.add(item);
-    }
-    return result;
-  }
-
-  List<int> get accumulatedDeath {
-    var result = List<int>();
-    for (var item in days.map((x) => x.deathsNumber ?? 0)) {
-      if (result.length == 0) {
-        result.add(item);
-      } else {
-        result.add(item + result.last);
-      }
-    }
-    return result;
-  }
-
-  List<int> get death {
-    var result = List<int>();
-    for (var item in days.map((x) => x.deathsNumber ?? 0)) {
-      result.add(item);
-    }
-    return result;
-  }
-
-  List<Map<String, dynamic>> get top10Province {
-    var provinces = Map<String, int>();
-    days
-        .where((x) => x.diagnosed != null)
-        .map((x) => x.diagnosed)
-        .forEach((diagnosed) {
-      diagnosed.forEach((item) {
-        if (provinces.containsKey(item.detectionProvince)) {
-          ++provinces[item.detectionProvince];
-        } else {
-          provinces[item.detectionProvince] = 1;
-        }
-      });
-    });
-    var total = provinces.values.reduce((a, b) => a + b);
-    var result = List<Map<String, dynamic>>();
-    provinces.forEach((k, v) {
-      if (k != null) {
-        result.add({'province': k, 'cases': v, 'total': total});
-      }
-    });
-    result.sort((a, b) => b['cases'].compareTo(a['cases']));
-    result = result.take(10).toList();
-    var cont = 1;
-    for (var item in result) {
-      item.addEntries([MapEntry('index', cont)]);
-      cont += 1;
-    }
-    return result;
-  }
-
-  List<Map<String, dynamic>> get top10Municipality {
-    var municipalities = Map<String, int>();
-    var provinces = Map<String, String>();
-    days
-        .where((x) => x.diagnosed != null)
-        .map((x) => x.diagnosed)
-        .forEach((diagnosed) {
-      diagnosed.forEach((item) {
-        if (municipalities.containsKey(item.detectionMunicipality)) {
-          ++municipalities[item.detectionMunicipality];
-        } else {
-          provinces[item.detectionMunicipality] = item.detectionProvince;
-          municipalities[item.detectionMunicipality] = 1;
-        }
-      });
-    });
-    var total = municipalities.values.reduce((a, b) => a + b);
-    var result = List<Map<String, dynamic>>();
-    municipalities.forEach((k, v) {
-      if (k != null) {
-        result.add({'municipality': k, 'cases': v, 'total': total});
-      }
-    });
-    result.sort((a, b) => b['cases'].compareTo(a['cases']));
-    result = result.take(10).toList();
-    var cont = 1;
-    for (var item in result) {
-      item.addEntries([MapEntry('index', cont)]);
-      item.addEntries([MapEntry('province', provinces[item['municipality']])]);
-      cont += 1;
-    }
-    return result;
-  }
-
-  Map<String, Map<String, int>> get mapData {
-    var municipalities = Map<String, int>();
-    var provinces = Map<String, int>();
-    days
-        .where((x) => x.diagnosed != null)
-        .map((x) => x.diagnosed)
-        .forEach((diagnosed) {
-      diagnosed.forEach((item) {
-        if (municipalities.containsKey(item.dpacodeMunicipalityDetection)) {
-          ++municipalities[item.dpacodeMunicipalityDetection];
-        } else {
-          municipalities[item.dpacodeMunicipalityDetection] = 1;
-        }
-        if (provinces.containsKey(item.dpacodeProvinceDetection)) {
-          ++provinces[item.dpacodeProvinceDetection];
-        } else {
-          provinces[item.dpacodeProvinceDetection] = 1;
-        }
-      });
-    });
-    var total = 0;
-    var maxMunicipality = 0;
-    var maxProvince = 0;
-    municipalities.forEach((k, v) {
-      if (k != null) {
-        if (v > maxMunicipality) {
-          maxMunicipality = v;
-        }
-      }
-    });
-    provinces.forEach((k, v) {
-      if (k != null) {
-        if (v > maxMunicipality) {
-          maxProvince = v;
-        }
-        total += v;
-      }
-    });
-    return {
-      'muns': municipalities,
-      'pros': provinces,
-      'genInfo': {
-        'max_muns': maxMunicipality,
-        'max_pros': maxProvince,
-        'total': total,
-      }
-    };
+    return dict.containsKey(country) ? dict[country] : country;
   }
 
   factory DataModel.fromJson(Map<String, dynamic> json) =>

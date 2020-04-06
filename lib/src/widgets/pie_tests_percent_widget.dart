@@ -49,19 +49,18 @@ class PieTestsPercentWidgetState extends State<PieTestsPercentWidget> {
             children: <Widget>[
               charts.PieChart(
                 [
-                  charts.Series<String, String>(
+                  charts.Series<Item, String>(
                     id: 'Relación de tests realizados',
                     colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
-                    domainFn: (item, _) => item,
-                    measureFn: (item, _) => item == 'Positivos'
-                        ? widget.data.numberOfDiagnosed /
-                            widget.data.days.last.testsTotal *
-                            100
-                        : (widget.data.days.last.testsTotal -
-                                widget.data.numberOfDiagnosed) /
-                            widget.data.days.last.testsTotal *
-                            100,
-                    data: ['Positivos', 'Negativos'],
+                    domainFn: (item, _) => item.name,
+                    measureFn: (item, _) =>
+                        item.value *
+                        100 /
+                        widget.data.listOfTestsPerformed.total.value,
+                    data: [
+                      widget.data.listOfTestsPerformed.positive,
+                      widget.data.listOfTestsPerformed.negative
+                    ],
                   ),
                 ],
                 animate: false,
@@ -83,7 +82,8 @@ class PieTestsPercentWidgetState extends State<PieTestsPercentWidget> {
               Container(
                 margin: EdgeInsets.only(bottom: 70),
                 child: Text(
-                  '${widget.data.days.last.testsTotal} tests',
+                  '${widget.data.listOfTestsPerformed.total.value} '
+                  'tests',
                   style: TextStyle(
                     color: Constants.primaryColor,
                   ),
