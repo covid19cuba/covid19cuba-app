@@ -17,12 +17,10 @@ class LoadingHomeState extends HomeState {}
 class LoadedHomeState extends HomeState {
   final DataModel data;
   final WorldTotalsModel countries;
-  final ConfigurationModel config;
 
-  const LoadedHomeState({@required this.data, @required this.countries, @required this.config})
+  const LoadedHomeState({@required this.data, @required this.countries})
       : assert(data != null),
-        assert(countries != null),
-        assert(config != null);
+        assert(countries != null);
 
   @override
   List<Object> get props => [data];

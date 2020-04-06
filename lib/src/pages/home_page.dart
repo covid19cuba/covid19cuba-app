@@ -66,7 +66,7 @@ class HomePageState extends State<HomePage> {
 
   Widget getHomeDrawer(BuildContext context, HomeState state) {
     if (state is LoadedHomeState) {
-      return HomeDrawerWidget(countries: state.countries, config: state.config);
+      return HomeDrawerWidget(countries: state.countries);
     } else {
       return Container();
     }
@@ -91,7 +91,6 @@ class HomePageState extends State<HomePage> {
           child: HomeWidget(
             data: state.data,
             countries: state.countries,
-            config: state.config,
           ),
         ),
       );

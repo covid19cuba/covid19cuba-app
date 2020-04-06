@@ -1,16 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:preferences/preferences.dart';
 
-import '../../utils/constants.dart';
-import 'package:covid19cuba/src/models/configuration.dart';
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 
 class SettingsPage extends StatefulWidget {
   final WorldTotalsModel countries;
-  final ConfigurationModel config;
-  SettingsPage({Key key, this.countries, this.config}) : super(key: key) {
-    assert(config != null);
+
+  SettingsPage({Key key, this.countries}) : super(key: key) {
     assert(countries != null);
   }
 
@@ -19,7 +16,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class SettingsPageState extends State<SettingsPage> {
-  SettingsPageState();
   List<String> getCountriesList() {
     var list = widget.countries.countries.keys
         .where((c) => c != Constants.countryCuba)
@@ -50,13 +46,11 @@ class SettingsPageState extends State<SettingsPage> {
         DropdownPreference(
           'País a comparar',
           Constants.prefCompareCountry,
-          defaultVal: widget.config.compareCountry,
+          defaultVal: Constants.defaultCompareCountry,
           values: getCountriesList(),
-          displayValues: getCountriesList().map((value) => WorldTotalsModel.prettyCountry(value)).toList(),
-          onChange: (newValue) {
-            print('save data settings: ' + newValue);
-            widget.config.saveCountry(newValue);
-          },
+          displayValues: getCountriesList()
+              .map((value) => WorldTotalsModel.prettyCountry(value))
+              .toList(),
         ),
       ]),
     );
