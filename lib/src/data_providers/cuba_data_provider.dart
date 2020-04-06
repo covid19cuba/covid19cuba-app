@@ -13,7 +13,7 @@ const urlCubaDataIO =
 
 Future<DataModel> getCubaData() async {
   var mode = PrefService.getInt(Constants.prefConnectionMode) ??
-      Constants.ConnectionModeMerge;
+      Constants.ConnectionModeInternet;
   switch (mode) {
     case Constants.ConnectionModeIntranet:
       return await getCubaDataFrom(urlCubaDataCU);
