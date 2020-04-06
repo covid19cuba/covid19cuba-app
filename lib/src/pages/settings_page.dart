@@ -52,6 +52,32 @@ class SettingsPageState extends State<SettingsPage> {
               .map((value) => WorldTotalsModel.prettyCountry(value))
               .toList(),
         ),
+        DropdownPreference(
+          'Intervalo de actualización',
+          Constants.prefSetUpTasksMinutes,
+          defaultVal: Constants.setUpTasksMinutesDefault,
+          values: [15, 30, 60],
+           displayValues: ["15 minutos", "30 minutos", "1 hora"],
+        ),
+        PreferenceTitle(
+          'Proveedor de datos',
+          style: TextStyle(
+            color: Constants.primaryColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        RadioPreference(
+          'Nacional',
+          'cu',
+          Constants.prefDataProvider,
+          isDefault: true,
+        ),
+        RadioPreference(
+          'Github',
+          'io',
+          Constants.prefDataProvider,
+        ),
       ]),
     );
   }
