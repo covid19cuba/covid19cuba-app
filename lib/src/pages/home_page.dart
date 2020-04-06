@@ -66,7 +66,7 @@ class HomePageState extends State<HomePage> {
 
   Widget getHomeDrawer(BuildContext context, HomeState state) {
     if (state is LoadedHomeState) {
-      return HomeDrawerWidget(countries: state.countries);
+      return HomeDrawerWidget(data: state.data);
     } else {
       return Container();
     }
@@ -88,10 +88,7 @@ class HomePageState extends State<HomePage> {
             );
             return refreshCompleter.future;
           },
-          child: HomeWidget(
-            data: state.data,
-            countries: state.countries,
-          ),
+          child: HomeWidget(data: state.data),
         ),
       );
     }
