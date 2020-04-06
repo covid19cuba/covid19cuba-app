@@ -11,9 +11,9 @@ import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
-  final WorldTotalsModel countries;
+  final DataModel data;
 
-  HomeDrawerWidget({this.countries}) : assert(countries != null);
+  HomeDrawerWidget({this.data}) : assert(data != null);
 
   @override
   _HomeDrawerWidgetState createState() => _HomeDrawerWidgetState();
@@ -337,7 +337,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SettingsPage(countries: widget.countries),
+            builder: (context) => SettingsPage(data: widget.data),
           ),
         );
       },

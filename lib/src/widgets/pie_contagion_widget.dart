@@ -11,9 +11,7 @@ class PieContagionWidget extends StatefulWidget {
   List<Palette> colorPalettes;
 
   PieContagionWidget({this.data}) : assert(data != null) {
-    colorPalettes = charts.MaterialPalette.getOrderedPalettes(
-      data.contagions.keys.length,
-    );
+    colorPalettes = charts.MaterialPalette.getOrderedPalettes(4);
   }
 
   @override
@@ -48,16 +46,17 @@ class PieContagionWidgetState extends State<PieContagionWidget> {
           height: 300,
           child: charts.PieChart(
             [
-              charts.Series<String, String>(
+              charts.Series<Item, String>(
                 id: 'Casos por Modo de Contagio',
                 colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
-                domainFn: (item, _) =>
-                    widget.data.contagionsPretty[item] ??
-                    (item != null && item.length > 0
-                        ? item[0].toUpperCase() + item.substring(1)
-                        : item),
-                measureFn: (item, _) => widget.data.contagions[item],
-                data: widget.data.contagions.keys.toList(),
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.value,
+                data: [
+                  widget.data.casesByModeOfContagion.imported,
+                  widget.data.casesByModeOfContagion.inserted,
+                  widget.data.casesByModeOfContagion.autochthonous,
+                  widget.data.casesByModeOfContagion.unknown,
+                ],
               ),
             ],
             animate: false,

@@ -36,32 +36,32 @@ class TestEvolutionWidget extends StatelessWidget {
           height: 350,
           child: charts.BarChart(
             [
-              charts.Series<List<dynamic>, String>(
-                id: 'Negativos',
+              charts.Series<int, String>(
+                id: data.testsByDays.negative.name,
                 seriesCategory: 'A',
                 colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-                domainFn: (item, _) =>
-                    '${(item[0] as DateTime).day}/${(item[0] as DateTime).month}',
-                measureFn: (item, _) => item[2],
-                data: data.tests,
+                domainFn: (_, i) =>
+                    data.testsByDays.date.values[i].toStrShort(),
+                measureFn: (item, _) => item,
+                data: data.testsByDays.negative.values,
               ),
-              charts.Series<List<dynamic>, String>(
-                id: 'Positivos',
+              charts.Series<int, String>(
+                id: data.testsByDays.positive.name,
                 seriesCategory: 'A',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (item, _) =>
-                    '${(item[0] as DateTime).day}/${(item[0] as DateTime).month}',
-                measureFn: (item, _) => item[1],
-                data: data.tests,
+                domainFn: (_, i) =>
+                    data.testsByDays.date.values[i].toStrShort(),
+                measureFn: (item, _) => item,
+                data: data.testsByDays.positive.values,
               ),
-              charts.Series<List<dynamic>, String>(
-                id: 'Total',
+              charts.Series<int, String>(
+                id: data.testsByDays.total.name,
                 seriesCategory: 'B',
                 colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (item, _) =>
-                    '${(item[0] as DateTime).day}/${(item[0] as DateTime).month}',
-                measureFn: (item, _) => item[3],
-                data: data.tests,
+                domainFn: (_, i) =>
+                    data.testsByDays.date.values[i].toStrShort(),
+                measureFn: (item, _) => item,
+                data: data.testsByDays.total.values,
               ),
             ],
             animate: false,
@@ -109,7 +109,8 @@ class TestEvolutionWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Esta información se reporta desde ${dateTimeToJson(data.tests[0][0])}',
+              'Esta información se reporta desde el '
+              '${data.testsByDays.date.values[0].toStrPlus()}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

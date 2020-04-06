@@ -37,18 +37,22 @@ class EvolutionRecoveredWidget extends StatelessWidget {
           child: charts.TimeSeriesChart(
             [
               charts.Series<int, DateTime>(
-                id: 'Altas en el día',
+                id: data.evolutionOfRecoveredByDays.daily.name,
                 colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-                domainFn: (_, i) => data.days[i].date,
+                domainFn: (_, i) => dateTimeFromJson(
+                  data.evolutionOfRecoveredByDays.date.values[i].toStr(),
+                ),
                 measureFn: (item, _) => item,
-                data: data.recovered,
+                data: data.evolutionOfRecoveredByDays.daily.values,
               ),
               charts.Series<int, DateTime>(
-                id: 'Altas acumuladas',
+                id: data.evolutionOfRecoveredByDays.accumulated.name,
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => data.days[i].date,
+                domainFn: (_, i) => dateTimeFromJson(
+                  data.evolutionOfRecoveredByDays.date.values[i].toStr(),
+                ),
                 measureFn: (item, _) => item,
-                data: data.accumulatedRecovered,
+                data: data.evolutionOfRecoveredByDays.accumulated.values,
               ),
             ],
             animate: false,

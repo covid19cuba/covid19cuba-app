@@ -5,10 +5,10 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class SettingsPage extends StatefulWidget {
-  final WorldTotalsModel countries;
+  final DataModel data;
 
-  SettingsPage({Key key, this.countries}) : super(key: key) {
-    assert(countries != null);
+  SettingsPage({Key key, this.data}) : super(key: key) {
+    assert(data != null);
   }
 
   @override
@@ -17,11 +17,11 @@ class SettingsPage extends StatefulWidget {
 
 class SettingsPageState extends State<SettingsPage> {
   List<String> getCountriesList() {
-    var list = widget.countries.countries.keys
+    var list = widget.data.comparisonOfAccumulatedCases.countries.keys
         .where((c) => c != Constants.countryCuba)
         .toList();
-    list.sort((a, b) => WorldTotalsModel.prettyCountry(a)
-        .compareTo(WorldTotalsModel.prettyCountry(b)));
+    list.sort((a, b) =>
+        DataModel.prettyCountry(a).compareTo(DataModel.prettyCountry(b)));
     return list;
   }
 
@@ -49,7 +49,7 @@ class SettingsPageState extends State<SettingsPage> {
           defaultVal: Constants.defaultCompareCountry,
           values: getCountriesList(),
           displayValues: getCountriesList()
-              .map((value) => WorldTotalsModel.prettyCountry(value))
+              .map((value) => DataModel.prettyCountry(value))
               .toList(),
         ),
       ]),

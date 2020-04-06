@@ -1,3 +1,4 @@
+/*
 import 'dart:math';
 
 import 'package:covid19cuba/src/models/models.dart';
@@ -46,3 +47,4 @@ List<LocalNotification> getApplicationNotifications() {
   }
   return notifications;
 }
+*/
