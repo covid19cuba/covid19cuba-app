@@ -2,40 +2,32 @@ import 'dart:math';
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:preferences/preference_service.dart';
+import 'package:preferences/preferences.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
 class ComparisonWidget extends StatefulWidget {
   final DataModel data;
-  final WorldTotalsModel countries;
 
-  const ComparisonWidget({this.data, this.countries})
-      : assert(data != null),
-        assert(countries != null);
+  const ComparisonWidget({this.data}) : assert(data != null);
 
   @override
-  ComparisonWidgetState createState() =>
-      ComparisonWidgetState(data: data, countries: countries);
+  ComparisonWidgetState createState() => ComparisonWidgetState(data: data);
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
   String selectedCountry = Constants.defaultCompareCountry;
   final DataModel data;
 
-  ComparisonWidgetState({this.data, this.countries})
-      : assert(data != null),
-        assert(countries != null);
-
-  final WorldTotalsModel countries;
+  ComparisonWidgetState({this.data}) : assert(data != null);
 
   List<String> getCountriesList() {
-    var list = countries.countries.keys
+    var list = data.comparisonOfAccumulatedCases.countries.keys
         .where((c) => c != Constants.countryCuba)
         .toList();
-    list.sort((a, b) => WorldTotalsModel.prettyCountry(a)
-        .compareTo(WorldTotalsModel.prettyCountry(b)));
+    list.sort((a, b) =>
+        DataModel.prettyCountry(a).compareTo(DataModel.prettyCountry(b)));
     return list;
   }
 
@@ -88,9 +80,12 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     behaviors.addAll([
       charts.RangeAnnotation([
         charts.LineAnnotationSegment(
-          data.days.length - 1,
+          data.comparisonOfAccumulatedCases.countries[Constants.countryCuba]
+                  .length -
+              1,
           charts.RangeAnnotationAxisType.domain,
-          startLabel: 'Día ${data.days.length}',
+          startLabel:
+              'Día ${data.comparisonOfAccumulatedCases.countries[Constants.countryCuba].length}',
         )
       ])
     ]);
@@ -100,18 +95,19 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   List<charts.Series<int, int>> getSeries() {
     return [
       charts.Series<int, int>(
-        id: WorldTotalsModel.prettyCountry(selectedCountry),
+        id: DataModel.prettyCountry(selectedCountry),
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: countries.countries[selectedCountry],
+        data: data.comparisonOfAccumulatedCases.countries[selectedCountry],
       ),
       charts.Series<int, int>(
         id: Constants.countryCuba,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: data.accumulated,
+        data:
+            data.comparisonOfAccumulatedCases.countries[Constants.countryCuba],
       ),
     ];
   }
@@ -119,28 +115,36 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   List<charts.Series<int, int>> getZoomSeries() {
     return [
       charts.Series<int, int>(
-        id: WorldTotalsModel.prettyCountry(selectedCountry),
+        id: DataModel.prettyCountry(selectedCountry),
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: countries.countries[selectedCountry].sublist(
-            0,
-            min(data.accumulated.length,
-                countries.countries[selectedCountry].length)),
+        data: data.comparisonOfAccumulatedCases.countries[selectedCountry]
+            .take(
+              min(
+                data.comparisonOfAccumulatedCases.countries[selectedCountry]
+                    .length,
+                data.comparisonOfAccumulatedCases
+                    .countries[Constants.countryCuba].length,
+              ),
+            )
+            .toList(),
       ),
       charts.Series<int, int>(
         id: Constants.countryCuba,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: data.accumulated,
+        data:
+            data.comparisonOfAccumulatedCases.countries[Constants.countryCuba],
       ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    selectedCountry = PrefService.getString(Constants.prefCompareCountry);
+    selectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
+        Constants.defaultCompareCountry;
     return Column(
       children: <Widget>[
         Container(
@@ -182,7 +186,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
               getCountriesList().map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(WorldTotalsModel.prettyCountry(value)),
+              child: Text(DataModel.prettyCountry(value)),
             );
           }).toList(),
         ),
@@ -212,11 +216,14 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             animate: false,
             domainAxis: charts.NumericAxisSpec(
               viewport: charts.NumericExtents(
-                  1,
-                  max(
-                    countries.countries[selectedCountry].length,
-                    data.days.length,
-                  )),
+                1,
+                max(
+                  data.comparisonOfAccumulatedCases.countries[selectedCountry]
+                      .length,
+                  data.comparisonOfAccumulatedCases
+                      .countries[Constants.countryCuba].length,
+                ),
+              ),
             ),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
@@ -251,7 +258,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             getZoomSeries(),
             animate: false,
             domainAxis: charts.NumericAxisSpec(
-              viewport: charts.NumericExtents(1, data.days.length),
+              viewport: charts.NumericExtents(
+                  1,
+                  data.comparisonOfAccumulatedCases
+                      .countries[Constants.countryCuba].length),
             ),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
@@ -271,7 +281,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           child: Center(
             child: Text(
               'Datos de los países tomados de\ngithub.com/pomber/covid19\ny '
-              'actualizado el ${dateTimeToJson(countries.dateTime)}',
+              'actualizado el '
+              '${data.comparisonOfAccumulatedCases.updated.toStrPlus()}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

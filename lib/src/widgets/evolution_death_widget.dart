@@ -37,18 +37,22 @@ class EvolutionDeathWidget extends StatelessWidget {
           child: charts.TimeSeriesChart(
             [
               charts.Series<int, DateTime>(
-                id: 'Muertes en el día',
+                id: data.evolutionOfDeathsByDays.daily.name,
                 colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-                domainFn: (_, i) => data.days[i].date,
+                domainFn: (_, i) => dateTimeFromJson(
+                  data.evolutionOfDeathsByDays.date.values[i].toStr(),
+                ),
                 measureFn: (item, _) => item,
-                data: data.death,
+                data: data.evolutionOfDeathsByDays.daily.values,
               ),
               charts.Series<int, DateTime>(
-                id: 'Muertes acumuladas',
+                id: data.evolutionOfDeathsByDays.accumulated.name,
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => data.days[i].date,
+                domainFn: (_, i) => dateTimeFromJson(
+                  data.evolutionOfDeathsByDays.date.values[i].toStr(),
+                ),
                 measureFn: (item, _) => item,
-                data: data.accumulatedDeath,
+                data: data.evolutionOfDeathsByDays.accumulated.values,
               ),
             ],
             animate: false,

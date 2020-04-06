@@ -6,11 +6,8 @@ import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class HomeWidget extends StatelessWidget {
   final DataModel data;
-  final WorldTotalsModel countries;
 
-  const HomeWidget({this.data, this.countries})
-      : assert(data != null),
-        assert(countries != null);
+  const HomeWidget({this.data}) : assert(data != null);
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +113,7 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: ComparisonWidget(
-              data: data,
-              countries: countries,
-            ),
+            child: ComparisonWidget(data: data),
           ),
         ),
         Container(padding: EdgeInsets.all(5)),

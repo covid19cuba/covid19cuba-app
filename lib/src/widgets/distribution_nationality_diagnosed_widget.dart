@@ -38,12 +38,12 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
           height: 250,
           child: charts.BarChart(
             [
-              charts.Series<String, String>(
+              charts.Series<ItemCode, String>(
                 id: 'Diagnosticados',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (item, _) => item.toUpperCase(),
-                measureFn: (item, _) => data.countries[item],
-                data: data.countries.keys.toList().where((x) => x != 'cu').toList(),
+                domainFn: (item, _) => item.code,
+                measureFn: (item, _) => item.value,
+                data: data.distributionByNationalityOfForeignCases,
               ),
             ],
             animate: false,

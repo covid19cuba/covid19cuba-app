@@ -8,24 +8,22 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/data_model.dart';
 
-//const showMunicipalities = "\$('#map-pro').hide();\$('#map-num').show();";
-//const showProvinces = "\$('#map-mun').hide();\$('#map-pro').show();";
-
 const showMunicipalities = "covidData";
 const showProvinces = "covidData2";
 
-
 class WebViewKeepAlive extends StatefulWidget {
   final DataModel data;
-  final String jscommand;
-  WebViewKeepAlive({this.data, this.jscommand});
+  final String jsCommand;
+
+  WebViewKeepAlive({this.data, this.jsCommand});
 
   @override
-  _WebViewKeepAlive createState() => _WebViewKeepAlive();
+  WebViewKeepAliveState createState() => WebViewKeepAliveState();
 }
 
-class _WebViewKeepAlive extends State<WebViewKeepAlive> with AutomaticKeepAliveClientMixin {
-  WebView _webView;
+class WebViewKeepAliveState extends State<WebViewKeepAlive>
+    with AutomaticKeepAliveClientMixin {
+  WebView webView;
   WebViewController controller;
   String mapData = "{}";
 
@@ -35,68 +33,58 @@ class _WebViewKeepAlive extends State<WebViewKeepAlive> with AutomaticKeepAliveC
   @override
   void initState() {
     super.initState();
-     _webView = WebView(
-            initialUrl: 'assets/map.html',
-            javascriptMode: JavascriptMode.unrestricted,
-            onPageFinished: (_) {
-              //mapData = jsonEncode(widget.data.cases.toJson());
-              mapData = jsonEncode(widget.data.mapData);
-              //print(mapData);
-              controller
-                  .evaluateJavascript(widget.jscommand+'($mapData)')
-                  .whenComplete(
-                () {
-                  //controller.evaluateJavascript(widget.jscommand);
-                },
-              );
-            },
-            gestureRecognizers: Set()
-              ..add(
-                Factory<PanGestureRecognizer>(
-                  () => PanGestureRecognizer(),
-                ),
-              )
-              ..add(
-                Factory<VerticalDragGestureRecognizer>(
-                  () => VerticalDragGestureRecognizer(),
-                ),
-              )
-              ..add(
-                Factory<HorizontalDragGestureRecognizer>(
-                  () => HorizontalDragGestureRecognizer(),
-                ),
-              )
-              ..add(
-                Factory<ScaleGestureRecognizer>(
-                  () => ScaleGestureRecognizer(),
-                ),
-              ),
-            onWebViewCreated: (WebViewController webViewController) {
-              controller = webViewController;
-            },
-          );
+    webView = WebView(
+      initialUrl: 'assets/map.html',
+      javascriptMode: JavascriptMode.unrestricted,
+      onPageFinished: (_) {
+        mapData = jsonEncode(widget.data.mapData);
+        controller
+            .evaluateJavascript(widget.jsCommand + '($mapData)')
+            .whenComplete(() {});
+      },
+      gestureRecognizers: Set()
+        ..add(
+          Factory<PanGestureRecognizer>(
+            () => PanGestureRecognizer(),
+          ),
+        )
+        ..add(
+          Factory<VerticalDragGestureRecognizer>(
+            () => VerticalDragGestureRecognizer(),
+          ),
+        )
+        ..add(
+          Factory<HorizontalDragGestureRecognizer>(
+            () => HorizontalDragGestureRecognizer(),
+          ),
+        )
+        ..add(
+          Factory<ScaleGestureRecognizer>(
+            () => ScaleGestureRecognizer(),
+          ),
+        ),
+      onWebViewCreated: (WebViewController webViewController) {
+        controller = webViewController;
+      },
+    );
   }
+
   @override
   void dispose() {
     super.dispose();
-    _webView = null;
+    webView = null;
   }
 
   @override
   Widget build(BuildContext context) {
-      super.build(context);
-      return Container(
-          height: 250,
-          margin: EdgeInsets.only(
-            left: 0,
-            right: 0,
-            top: 0,
-          ),
-      child: _webView,
+    super.build(context);
+    return Container(
+      height: 250,
+      margin: EdgeInsets.only(left: 0, right: 0, top: 0),
+      child: webView,
     );
   }
 }
-
 
 class MapWebViewWidget extends StatefulWidget {
   final DataModel data;
@@ -130,7 +118,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
             ),
           ),
         ),
-        WebViewKeepAlive(data: widget.data, jscommand: showMunicipalities),
+        WebViewKeepAlive(data: widget.data, jsCommand: showMunicipalities),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
@@ -145,7 +133,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
             ),
           ),
         ),
-        WebViewKeepAlive(data: widget.data, jscommand: showProvinces),
+        WebViewKeepAlive(data: widget.data, jsCommand: showProvinces),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
           child: Center(

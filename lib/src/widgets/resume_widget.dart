@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/data_model.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 
 class ResumeWidget extends StatelessWidget {
   final DataModel data;
@@ -9,26 +10,6 @@ class ResumeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var months = [
-      'enero',
-      'febrero',
-      'marzo',
-      'abril',
-      'mayo',
-      'junio',
-      'agosto',
-      'septiembre',
-      'octubre',
-      'noviembre',
-      'diciembre',
-    ];
-    var features = <String, int>{
-      'Diagnosticados': data.numberOfDiagnosed,
-      'Activos': data.numberOfActive,
-      'Recuperados': data.numberOfRecovered,
-      'Evacuados': data.numberOfEvacuees,
-      'Muertes': data.numberOfDeaths,
-    };
     var borderSide = BorderSide(
       color: Colors.white,
       width: 2,
@@ -52,7 +33,7 @@ class ResumeWidget extends StatelessWidget {
                     margin: EdgeInsets.all(15),
                     child: Center(
                       child: Text(
-                        'Actualización del ${data.update.day} de ${months[data.update.month - 1]} del ${data.update.year}',
+                        'Actualización del ${data.updated.toStrPlus()}',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -71,7 +52,7 @@ class ResumeWidget extends StatelessWidget {
             horizontalInside: borderSide,
             bottom: borderSide,
           ),
-          children: features.keys.map((key) {
+          children: data.resume.map((item) {
             return TableRow(
               children: [
                 TableCell(
@@ -79,7 +60,7 @@ class ResumeWidget extends StatelessWidget {
                     margin: EdgeInsets.all(10),
                     child: Center(
                       child: Text(
-                        key,
+                        item.name,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -93,7 +74,7 @@ class ResumeWidget extends StatelessWidget {
                     margin: EdgeInsets.all(10),
                     child: Center(
                       child: Text(
-                        '${features[key]}',
+                        item.value.toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

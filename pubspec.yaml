@@ -4,7 +4,7 @@ description: Mobile application of Covid19 Cuba Data project implemented with Fl
 version: 0.3.1+6
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:

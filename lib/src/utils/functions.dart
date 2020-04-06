@@ -6,9 +6,15 @@ DateTime dateTimeFromJson(String dateTime) {
   if (dateTime == null) {
     return null;
   }
-  var year = int.parse(dateTime.split('/')[0]);
-  var month = int.parse(dateTime.split('/')[1]);
-  var day = int.parse(dateTime.split('/')[2]);
+  var split = dateTime.split('/');
+  if (split.length <= 2) {
+    var month = int.parse(split[0]);
+    var day = int.parse(split[1]);
+    return DateTime(0, month, day);
+  }
+  var year = int.parse(split[0]);
+  var month = int.parse(split[1]);
+  var day = int.parse(split[2]);
   return DateTime(year, month, day);
 }
 
@@ -16,5 +22,51 @@ String dateTimeToJson(DateTime dateTime) {
   if (dateTime == null) {
     return null;
   }
+  if (dateTime.year == 0) {
+    return '${dateTime.month}/${dateTime.day}';
+  }
   return '${dateTime.year}/${dateTime.month}/${dateTime.day}';
+}
+
+List<DateTime> dateTimeListFromJson(List<dynamic> x) {
+  var result = List<DateTime>();
+  for (var i in x) {
+    result.add(dateTimeFromJson(i as String));
+  }
+  return result;
+}
+
+List<dynamic> dateTimeListToJson(List<DateTime> x) {
+  var result = List<String>();
+  for (var i in x) {
+    result.add(dateTimeToJson(i));
+  }
+  return result;
+}
+
+extension DateTimeToString on DateTime {
+  String toStr() {
+    return dateTimeToJson(this);
+  }
+
+  String toStrShort() {
+    return '${this.day}/${this.month}';
+  }
+
+  String toStrPlus() {
+    var months = [
+      'enero',
+      'febrero',
+      'marzo',
+      'abril',
+      'mayo',
+      'junio',
+      'agosto',
+      'septiembre',
+      'octubre',
+      'noviembre',
+      'diciembre',
+    ];
+    return '${this.day} de ${months[this.month - 1]} del ${this.year}';
+  }
 }
