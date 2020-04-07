@@ -20,7 +20,13 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   String selectedCountry = Constants.defaultCompareCountry;
   final DataModel data;
 
-  ComparisonWidgetState({this.data}) : assert(data != null);
+  ComparisonWidgetState({this.data}) {
+    assert(data != null);
+    if (getCountriesList().indexOf(selectedCountry) == -1) {
+      selectedCountry = Constants.defaultCompareCountry;
+      PrefService.setString(Constants.prefCompareCountry, selectedCountry);
+    }
+  }
 
   List<String> getCountriesList() {
     var list = data.comparisonOfAccumulatedCases.countries.keys
