@@ -41,7 +41,7 @@ Future<DataModel> getCubaDataFrom(String url) async {
   }
   DataModel result;
   try {
-    var json = jsonDecode(resp.body);
+    var json = jsonDecode(utf8.decode(resp.bodyBytes));
     result = DataModel.fromJson(json);
   } catch (e) {
     log(e.toString());
