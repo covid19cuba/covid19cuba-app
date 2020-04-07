@@ -58,7 +58,7 @@ Future<DataModel> getCubaDataFrom(String url) async {
 
 Future<DataModel> getCubaDataFromCache() async {
   try {
-    var data = PrefService.getString('data');
+    var data = PrefService.getString(Constants.prefData);
     if (data == null) {
       return null;
     }
@@ -72,7 +72,7 @@ Future<DataModel> getCubaDataFromCache() async {
 Future<void> setCubaDataToCache(DataModel data) async {
   try {
     String result = jsonEncode(data.toJson());
-    PrefService.setString('data', result);
+    PrefService.setString(Constants.prefData, result);
   } catch (e) {
     log(e.toString());
   }
