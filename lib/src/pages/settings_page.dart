@@ -56,7 +56,6 @@ class SettingsPageState extends State<SettingsPage> {
           desc: 'Mayor velocidad y estabilidad de conexión. '
               'Bueno para los usuarios que esten fuera de Cuba o aquellos '
               'que prefieren calidad de la conexión.',
-          isDefault: true,
         ),
         RadioPreference<int>(
           'Conectarse a un servidor de Cuba y si da error a uno externo a Cuba',
@@ -65,6 +64,7 @@ class SettingsPageState extends State<SettingsPage> {
           desc: 'Opción recomendada para los usuario de Cuba. Permite '
               'ahorrar y si algo falla en el servidor ubicado en Cuba '
               'utilizar el externo a Cuba como respaldo.',
+          isDefault: true,
         ),
       ]),
     );
