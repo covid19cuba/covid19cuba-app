@@ -6,20 +6,15 @@ import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
-  final DataModel data;
-
-  HomeDrawerWidget({this.data}) : assert(data != null);
-
   @override
-  _HomeDrawerWidgetState createState() => _HomeDrawerWidgetState();
+  HomeDrawerWidgetState createState() => HomeDrawerWidgetState();
 }
 
-class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
+class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
   String appName = '';
   String version = '';
 
@@ -337,7 +332,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SettingsPage(data: widget.data),
+            builder: (context) => SettingsPage(),
           ),
         );
       },

@@ -18,7 +18,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
 
   void onIntroEnd(context) {
     PrefService.setBool(Constants.prefIsOnBoarding, true);
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (_) => HomePage()),
     );
   }
