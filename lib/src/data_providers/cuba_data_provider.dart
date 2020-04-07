@@ -49,7 +49,7 @@ Future<DataModel> getCubaDataFrom(String url) async {
   }
   try {
     int time = (DateTime.now().millisecondsSinceEpoch / 1000).round() - 1;
-    PrefService.setInt('last_data_update', time);
+    PrefService.setInt(Constants.prefLastDataUpdate, time);
   } catch (e) {
     log(e.toString());
   }

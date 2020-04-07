@@ -18,6 +18,7 @@ class Constants {
   static const String prefConnectionMode = 'connectionMode';
   static const String prefLastDataUpdate = 'lastDataUpdate';
   static const String prefSetUpTasksMinutes = 'setUpTasksMinutes';
+  static const String prefVersionCode = 'versionCode';
   static const String prefData = 'data';
 
   //Connection Modes
