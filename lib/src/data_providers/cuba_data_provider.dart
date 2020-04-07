@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart';
+import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
@@ -50,6 +51,9 @@ Future<DataModel> getCubaDataFrom(String url) async {
   try {
     int time = (DateTime.now().millisecondsSinceEpoch / 1000).round() - 1;
     PrefService.setInt(Constants.prefLastDataUpdate, time);
+    var packageInfo = await PackageInfo.fromPlatform();
+    var versionCode = int.parse(packageInfo.buildNumber);
+    PrefService.setInt(Constants.prefVersionCode, versionCode);
   } catch (e) {
     log(e.toString());
   }
@@ -58,6 +62,12 @@ Future<DataModel> getCubaDataFrom(String url) async {
 
 Future<DataModel> getCubaDataFromCache() async {
   try {
+    var packageInfo = await PackageInfo.fromPlatform();
+    var versionCodeNow = int.parse(packageInfo.buildNumber);
+    var versionCodeOld = PrefService.getInt(Constants.prefVersionCode);
+    if (versionCodeNow != versionCodeOld) {
+      return null;
+    }
     var data = PrefService.getString(Constants.prefData);
     if (data == null) {
       return null;
