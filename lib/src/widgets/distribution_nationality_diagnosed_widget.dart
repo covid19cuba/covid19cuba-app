@@ -22,8 +22,7 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Distribución por nacionalidad de '
-              'los casos extranjeros diagnosticados',
+              'Distribución por nacionalidad de casos extranjeros',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

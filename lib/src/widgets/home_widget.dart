@@ -116,6 +116,14 @@ class HomeWidget extends StatelessWidget {
             child: ComparisonWidget(data: data),
           ),
         ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: Container(
+              child: Top20CountriesWidget(data: data),
+            ),
+          ),
+        ),
         Container(padding: EdgeInsets.all(5)),
       ],
     );

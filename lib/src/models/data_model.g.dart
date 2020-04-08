@@ -49,7 +49,8 @@ DataModel _$DataModelFromJson(Map<String, dynamic> json) {
     ..comparisonOfAccumulatedCases = json['comparison_of_accumulated_cases'] == null ? null : ComparisonOfAccumulatedCases.fromJson(json['comparison_of_accumulated_cases'] as Map<String, dynamic>)
     ..mapData = json['map_data'] as Map<String, dynamic>
     ..updated = dateTimeFromJson(json['updated'] as String)
-    ..note = json['note'] as String;
+    ..note = json['note'] as String
+    ..top20AccumulatedCountries = (json['top_20_accumulated_countries'] as List)?.map((e) => e == null ? null : Item.fromJson(e as Map<String, dynamic>))?.toList();
 }
 
 Map<String, dynamic> _$DataModelToJson(DataModel instance) => <String, dynamic>{
@@ -71,4 +72,5 @@ Map<String, dynamic> _$DataModelToJson(DataModel instance) => <String, dynamic>{
       'map_data': instance.mapData,
       'updated': dateTimeToJson(instance.updated),
       'note': instance.note,
+      'top_20_accumulated_countries': instance.top20AccumulatedCountries,
     };

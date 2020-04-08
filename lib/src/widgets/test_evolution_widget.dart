@@ -21,7 +21,7 @@ class TestEvolutionWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Tests por días',
+              'Tests (PCR) por días',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -73,7 +73,7 @@ class TestEvolutionWidget extends StatelessWidget {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Tests por días',
+                'Tests en el día',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
