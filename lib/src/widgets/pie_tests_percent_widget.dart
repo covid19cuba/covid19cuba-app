@@ -31,7 +31,7 @@ class PieTestsPercentWidgetState extends State<PieTestsPercentWidget> {
           ),
           child: Center(
             child: Text(
-              'Relación de tests realizados',
+              'Relación de tests (PCR) realizados',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
