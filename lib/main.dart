@@ -16,9 +16,16 @@ void main() async {
 
   await NotificationManager.initialize();
 
-  await setUpTasks();
+  /*int setUpTasksMinutes;
+  try {
+    setUpTasksMinutes = PrefService.getInt(Constants.prefSetUpTasksMinutes);
+  } catch (e) {
+    log(e.toString());
+    setUpTasksMinutes = Constants.setUpTasksMinutesDefault;
+  }
+  await setUpTasks(setUpTasksMinutes);
 
-  await setUpClapsTime();
+  await setUpClapsTime();*/
 
   // TODO: Bug in advice notifications, meanwhile they should be disabled
   /*var notifications = getApplicationNotifications();

@@ -36,27 +36,32 @@ class EvolutionCasesWidget extends StatelessWidget {
           height: 400,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<DayModel, DateTime>(
-                id: 'Casos en el día',
+              charts.Series<int, DateTime>(
+                id: data.evolutionOfCasesByDays.daily.name,
                 colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-                domainFn: (item, _) => item.date,
-                measureFn: (item, _) =>
-                    item.diagnosed != null ? item.diagnosed.length : 0,
-                data: data.days,
+                domainFn: (_, i) => dateTimeFromJson(
+                  data.evolutionOfCasesByDays.date.values[i].toStr(),
+                ),
+                measureFn: (item, _) => item,
+                data: data.evolutionOfCasesByDays.daily.values,
               ),
               charts.Series<int, DateTime>(
-                id: 'Casos activos',
+                id: data.evolutionOfCasesByDays.active.name,
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => data.days[i].date,
+                domainFn: (_, i) => dateTimeFromJson(
+                  data.evolutionOfCasesByDays.date.values[i].toStr(),
+                ),
                 measureFn: (item, _) => item,
-                data: data.actives,
+                data: data.evolutionOfCasesByDays.active.values,
               ),
               charts.Series<int, DateTime>(
-                id: 'Casos acumulados',
+                id: data.evolutionOfCasesByDays.accumulated.name,
                 colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (_, i) => data.days[i].date,
+                domainFn: (_, i) => dateTimeFromJson(
+                  data.evolutionOfCasesByDays.date.values[i].toStr(),
+                ),
                 measureFn: (item, _) => item,
-                data: data.accumulated,
+                data: data.evolutionOfCasesByDays.accumulated.values,
               ),
             ],
             animate: false,
