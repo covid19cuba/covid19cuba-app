@@ -22,7 +22,7 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Distribución por rangos etarios de los casos diagnosticados',
+              'Distribución por rangos etarios',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

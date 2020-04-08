@@ -58,6 +58,9 @@ class DataModel {
   @JsonKey(name: 'note')
   String note;
 
+  @JsonKey(name: 'top_20_accumulated_countries')
+  List<Item> top20AccumulatedCountries;
+
   DataModel();
 
   static String prettyCountry(String country) {
