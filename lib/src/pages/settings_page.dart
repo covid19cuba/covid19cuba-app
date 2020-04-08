@@ -50,21 +50,20 @@ class SettingsPageState extends State<SettingsPage> {
               'Bueno para los usuarios de Cuba que quieran ahorrar.',
         ),
         RadioPreference<int>(
-          'Conectarse a un servidor de GitHub fuera de Cuba',
+          'Conectarse a un servidor fuera de Cuba',
           Constants.ConnectionModeInternet,
           Constants.prefConnectionMode,
           desc: 'Mayor velocidad y estabilidad de conexión. '
-              'Bueno para los usuarios que esten fuera de Cuba o aquellos '
-              'que prefieren calidad de la conexión.',
-          isDefault: true,
+              'Bueno para los usuarios que estén fuera de Cuba o aquellos '
+              'que prefieran la calidad de la conexión.',
         ),
         RadioPreference<int>(
-          'Conectarse a un servidor de Cuba y si da error a uno externo a Cuba',
+          'Conectarse a un servidor ubicado en Cuba y si da error a uno externo',
           Constants.ConnectionModeMerge,
           Constants.prefConnectionMode,
-          desc: 'Opción recomendada para los usuario de Cuba. Permite '
-              'ahorrar y si algo falla en el servidor ubicado en Cuba '
-              'utilizar el externo a Cuba como respaldo.',
+          desc: 'Opción recomendada para los usuarios de Cuba. Permite '
+              'ahorrar y a la vez tener una estabilidad del servicio buena.',
+          isDefault: true,
         ),
       ]),
     );

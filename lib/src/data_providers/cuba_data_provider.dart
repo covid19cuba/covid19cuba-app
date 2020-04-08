@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart';
+import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
@@ -13,7 +14,7 @@ const urlCubaDataIO =
 
 Future<DataModel> getCubaData() async {
   var mode = PrefService.getInt(Constants.prefConnectionMode) ??
-      Constants.ConnectionModeInternet;
+      Constants.ConnectionModeMerge;
   switch (mode) {
     case Constants.ConnectionModeIntranet:
       return await getCubaDataFrom(urlCubaDataCU);
@@ -41,7 +42,7 @@ Future<DataModel> getCubaDataFrom(String url) async {
   }
   DataModel result;
   try {
-    var json = jsonDecode(resp.body);
+    var json = jsonDecode(utf8.decode(resp.bodyBytes));
     result = DataModel.fromJson(json);
   } catch (e) {
     log(e.toString());
@@ -49,7 +50,10 @@ Future<DataModel> getCubaDataFrom(String url) async {
   }
   try {
     int time = (DateTime.now().millisecondsSinceEpoch / 1000).round() - 1;
-    PrefService.setInt('last_data_update', time);
+    PrefService.setInt(Constants.prefLastDataUpdate, time);
+    var packageInfo = await PackageInfo.fromPlatform();
+    var versionCode = int.parse(packageInfo.buildNumber);
+    PrefService.setInt(Constants.prefVersionCode, versionCode);
   } catch (e) {
     log(e.toString());
   }
@@ -58,7 +62,13 @@ Future<DataModel> getCubaDataFrom(String url) async {
 
 Future<DataModel> getCubaDataFromCache() async {
   try {
-    var data = PrefService.getString('data');
+    var packageInfo = await PackageInfo.fromPlatform();
+    var versionCodeNow = int.parse(packageInfo.buildNumber);
+    var versionCodeOld = PrefService.getInt(Constants.prefVersionCode) ?? 0;
+    if (versionCodeNow != versionCodeOld) {
+      return null;
+    }
+    var data = PrefService.getString(Constants.prefData);
     if (data == null) {
       return null;
     }
@@ -72,7 +82,7 @@ Future<DataModel> getCubaDataFromCache() async {
 Future<void> setCubaDataToCache(DataModel data) async {
   try {
     String result = jsonEncode(data.toJson());
-    PrefService.setString('data', result);
+    PrefService.setString(Constants.prefData, result);
   } catch (e) {
     log(e.toString());
   }

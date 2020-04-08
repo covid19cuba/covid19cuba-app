@@ -1,5 +1,23 @@
 # Covid19 Cuba Data Mobile Application Changelog
 
+## [0.4.0] - April 7, 2020
+
+### Added
+
+* Charts with deaths and recovered data.
+* Settings page
+* Option for mode of connection
+* Remember entity selected for comparison with Cuba
+
+### Changed
+
+* Change data of few charts
+
+### Fixed
+
+* Fix problem with encoding
+* Fix table of provinces and municipalities
+
 ## [0.3.1] - April 4, 2020 
 
 ### Changed
