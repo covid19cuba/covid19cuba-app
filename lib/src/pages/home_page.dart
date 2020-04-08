@@ -28,7 +28,6 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     try {
-      throw Exception();
       return BlocProvider(
         create: (context) => HomeBloc(),
         child: BlocListener<HomeBloc, HomeState>(
