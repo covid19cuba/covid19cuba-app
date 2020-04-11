@@ -1,20 +1,38 @@
+import 'dart:math';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
-import 'dart:math';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
-class CurvesEvolutionWidget extends StatelessWidget {
+class CurvesEvolutionWidget extends StatefulWidget {
   final DataModel data;
-  var colorGen=RandomColor(0); // random color generator with seed 0, for deterministic behaivor
 
   CurvesEvolutionWidget({this.data}) : assert(data != null);
 
+  @override
+  CurvesEvolutionWidgetState createState() => CurvesEvolutionWidgetState(
+        data: data,
+      );
+}
+
+class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
+  final DataModel data;
+  var colors = List<charts.Color>();
+  var colorGen = RandomColor(0);
+
+  CurvesEvolutionWidgetState({this.data}) {
+    assert(data != null);
+    colors = data.curvesEvolution.entries.map((x) {
+      return colorGen.randomChartColor();
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var index = 0;
     return Column(
       children: <Widget>[
         Container(
@@ -43,11 +61,16 @@ class CurvesEvolutionWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'El gráfico muestra a partir de 30 casos, en escala logarítmica y agrupados cada siete días, los casos nuevos por el total de casos confirmados de cada país. De esta manera, los países mientras siguen una línea recta están en un crecimeinto exponencial y cuando se desvían de la recta comienzan a salir del comportamiento exponencial. ',
+              'El gráfico muestra a partir de 30 casos, en escala logarítmica '
+              'y agrupados cada siete días, los casos nuevos por el total '
+              'de casos confirmados de cada país. De esta manera, los países '
+              'mientras siguen una línea recta están en un crecimeinto '
+              'exponencial y cuando se desvían de la recta comienzan a salir '
+              'del comportamiento exponencial. ',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.normal,
                 fontSize: 12,
               ),
             ),
@@ -55,48 +78,44 @@ class CurvesEvolutionWidget extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 300,
+          height: 750,
           child: charts.LineChart(
-            data.curvesEvolution.entries.map((item){
+            data.curvesEvolution.entries.map((item) {
+              var localIndex = index++;
               return charts.Series<double, double>(
-                id: item.key,
-                colorFn: (_, __) => colorGen.randomChartColor(),
+                id: DataModel.prettyCountry(item.key),
+                colorFn: (_, __) => colors[localIndex],
                 domainFn: (_, i) => item.value['cummulative_sum'][i],
                 measureFn: (item, _) => item,
                 data: List<double>.from(item.value['weeks']),
-                domainLowerBoundFn: (_, __) => 1.4771212547196624
+                domainLowerBoundFn: (_, __) => 1.4771212547196624,
               );
-            }).toList().sublist(0,6).toList(), // esta con una sublista xq
-            //hay q defnir q hacer ya q no caben todos los paises en la leyenda
+            }).toList(),
             animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
-              radiusPx: 3.0, // reduce the radious of the points
-              strokeWidthPx: 1.5, //reduce the width of the line
+              radiusPx: 3.0,
+              strokeWidthPx: 1.5,
             ),
             behaviors: [
-              //charts.PanAndZoomBehavior(), // zoom con dos dedos a la gráfica
               charts.ChartTitle(
                 'Casos confirmados (log scale)',
                 behaviorPosition: charts.BehaviorPosition.bottom,
-                titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
+                titleStyleSpec: charts.TextStyleSpec(fontSize: 8),
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
                 'Casos nuevos (log scale)',
                 behaviorPosition: charts.BehaviorPosition.start,
-                titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
+                titleStyleSpec: charts.TextStyleSpec(fontSize: 8),
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.SeriesLegend(
                 position: charts.BehaviorPosition.bottom,
-                desiredMaxColumns: 1,
-                showMeasures: true,
-                horizontalFirst: false,
-                desiredMaxRows: 3,
+                desiredMaxColumns: 2,
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:
@@ -106,9 +125,34 @@ class CurvesEvolutionWidget extends StatelessWidget {
               ),
             ],
             domainAxis: charts.NumericAxisSpec(
-              // limitar el eje x entre 1.4<log10(30) y lon10 del país con mayor total + 0.1
-              viewport: charts.NumericExtents(1.45,
-                log(data.curvesEvolution.values.reduce((curr, next) => curr['total'] > next['total']? curr: next)['total'])/ln10+0.1)
+              viewport: charts.NumericExtents(
+                  1.45,
+                  log(data.curvesEvolution.values.reduce((curr, next) {
+                            return curr['total'] > next['total'] ? curr : next;
+                          })['total']) /
+                          ln10 +
+                      0.1),
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: 20,
+          ),
+          child: Center(
+            child: Text(
+              'Datos de los países tomados '
+              'de\ngithub.com/pomber/covid19\ny '
+              'actualizado el '
+              '${data.comparisonOfAccumulatedCases.updated.toStrPlus()}',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 12,
+              ),
             ),
           ),
         ),
