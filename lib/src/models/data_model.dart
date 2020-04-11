@@ -52,6 +52,9 @@ class DataModel {
   @JsonKey(name: 'map_data')
   Map<String, dynamic> mapData;
 
+  @JsonKey(name: 'curves_evolution')
+  Map<String, dynamic> curvesEvolution;
+
   @JsonKey(name: 'updated', fromJson: dateTimeFromJson, toJson: dateTimeToJson)
   DateTime updated;
 
