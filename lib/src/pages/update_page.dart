@@ -79,7 +79,7 @@ class UpdatePage extends StatelessWidget {
                 type: GFButtonType.outline2x,
                 borderSide: BorderSide(width: 1.0, color: Colors.white),
                 fullWidthButton: true,
-                onPressed: () => exit(0),
+                onPressed: () => Navigator.of(context).pop(),
               ),
             ),
           ],
