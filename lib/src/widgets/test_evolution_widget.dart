@@ -21,7 +21,7 @@ class TestEvolutionWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Tests por días',
+              'Tests (PCR) por días',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -40,8 +40,7 @@ class TestEvolutionWidget extends StatelessWidget {
                 id: data.testsByDays.negative.name,
                 seriesCategory: 'A',
                 colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-                domainFn: (_, i) =>
-                    data.testsByDays.date.values[i].toStrShort(),
+                domainFn: (_, i) => '${i + 1}',
                 measureFn: (item, _) => item,
                 data: data.testsByDays.negative.values,
               ),
@@ -49,8 +48,7 @@ class TestEvolutionWidget extends StatelessWidget {
                 id: data.testsByDays.positive.name,
                 seriesCategory: 'A',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) =>
-                    data.testsByDays.date.values[i].toStrShort(),
+                domainFn: (_, i) => '${i + 1}',
                 measureFn: (item, _) => item,
                 data: data.testsByDays.positive.values,
               ),
@@ -58,8 +56,7 @@ class TestEvolutionWidget extends StatelessWidget {
                 id: data.testsByDays.total.name,
                 seriesCategory: 'B',
                 colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (_, i) =>
-                    data.testsByDays.date.values[i].toStrShort(),
+                domainFn: (_, i) => '${i + 1}',
                 measureFn: (item, _) => item,
                 data: data.testsByDays.total.values,
               ),
@@ -69,14 +66,14 @@ class TestEvolutionWidget extends StatelessWidget {
             defaultInteractions: true,
             behaviors: [
               charts.ChartTitle(
-                'Días',
+                'Número de días',
                 behaviorPosition: charts.BehaviorPosition.bottom,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Tests por días',
+                'Tests en el día',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:

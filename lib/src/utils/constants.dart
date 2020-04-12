@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Constants {
-  static const String appName = 'Covid19 Cuba Data (Alpha)';
+  static const String appName = 'Covid19 Cuba Data (Beta)';
   static const String appLogo = 'assets/images/logo.png';
   static const String diseaseName = 'Covid-19';
   static const Color primaryColor = Color.fromARGB(255, 28, 19, 64);
@@ -18,6 +18,8 @@ class Constants {
   static const String prefConnectionMode = 'connectionMode';
   static const String prefLastDataUpdate = 'lastDataUpdate';
   static const String prefSetUpTasksMinutes = 'setUpTasksMinutes';
+  static const String prefVersionCode = 'versionCode';
+  static const String prefData = 'data';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;

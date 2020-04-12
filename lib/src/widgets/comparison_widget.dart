@@ -20,7 +20,13 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   String selectedCountry = Constants.defaultCompareCountry;
   final DataModel data;
 
-  ComparisonWidgetState({this.data}) : assert(data != null);
+  ComparisonWidgetState({this.data}) {
+    assert(data != null);
+    if (getCountriesList().indexOf(selectedCountry) == -1) {
+      selectedCountry = Constants.defaultCompareCountry;
+      PrefService.setString(Constants.prefCompareCountry, selectedCountry);
+    }
+  }
 
   List<String> getCountriesList() {
     var list = data.comparisonOfAccumulatedCases.countries.keys
@@ -280,7 +286,9 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Datos de los países tomados de\ngithub.com/pomber/covid19\ny '
+              'Solo se muestran los países en los que se detectó el primero '
+              'caso antes que Cuba.\n\nDatos de los países tomados '
+              'de\ngithub.com/pomber/covid19\ny '
               'actualizado el '
               '${data.comparisonOfAccumulatedCases.updated.toStrPlus()}',
               textAlign: TextAlign.center,

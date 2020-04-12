@@ -155,6 +155,7 @@ class TableData extends StatelessWidget {
                       child: Text(
                         'TOP${topData.length} $title '
                         '${infoToShow == 'municipality' ? "Afectados" : "Afectadas"}',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Constants.primaryColor,
                           fontWeight: FontWeight.bold,
