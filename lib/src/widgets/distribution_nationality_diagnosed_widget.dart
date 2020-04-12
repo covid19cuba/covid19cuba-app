@@ -5,13 +5,18 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class DistributionNationalityDiagnosedWidget extends StatelessWidget {
-  final DataModel data;
+  final List<ItemCode> distributionByNationalityOfForeignCases;
 
-  const DistributionNationalityDiagnosedWidget({this.data})
-      : assert(data != null);
+  const DistributionNationalityDiagnosedWidget(
+      {this.distributionByNationalityOfForeignCases})
+      : assert(distributionByNationalityOfForeignCases != null);
 
   @override
   Widget build(BuildContext context) {
+    if (distributionByNationalityOfForeignCases == null ||
+        distributionByNationalityOfForeignCases.length == 0) {
+      return Container();
+    }
     return Column(
       children: <Widget>[
         Container(
@@ -42,7 +47,7 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
                 domainFn: (item, _) => item.code,
                 measureFn: (item, _) => item.value,
-                data: data.distributionByNationalityOfForeignCases,
+                data: distributionByNationalityOfForeignCases,
               ),
             ],
             animate: false,

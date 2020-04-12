@@ -7,7 +7,7 @@ class Constants {
   static const String diseaseName = 'Covid-19';
   static const Color primaryColor = Color.fromARGB(255, 28, 19, 64);
   static const int notificationMinutesRange = 1440;
-    static const int setUpTasksMinutesDefault = 15;
+  static const int setUpTasksMinutesDefault = 15;
 
   static const String defaultCompareCountry = 'Hungary';
   static const String countryCuba = 'Cuba';
@@ -32,4 +32,23 @@ class Constants {
   static const int clapsNotification = -3;
 
   static Time clapsTime = Time(20, 55, 00);
+
+  static const provinceAbbreviations = <String, String>{
+    'pri': 'Pinar del Río',
+    'art': 'Artemisa',
+    'lha': 'La Habana',
+    'may': 'Mayabeque',
+    'mat': 'Matanzas',
+    'cfg': 'Cienfuegos',
+    'vcl': 'Villa Clara',
+    'ssp': 'Sancti Spíritus',
+    'cav': 'Ciego de Ávila',
+    'cam': 'Camagüey',
+    'ltu': 'Las Tunas',
+    'hol': 'Holguín',
+    'gra': 'Granma',
+    'stg': 'Santiago de Cuba',
+    'gtm': 'Guantánamo',
+    'ijv': 'Isla de la Juventud',
+  };
 }

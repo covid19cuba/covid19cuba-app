@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getflutter/getflutter.dart';
 
-import 'package:covid19cuba/src/blocs/blocs.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class ErrorWidget extends StatelessWidget {
   final String errorMessage;
+  final VoidCallback onPressed;
+  final VoidCallback onPressedCache;
   final bool cache;
 
-  const ErrorWidget({@required this.errorMessage, @required this.cache});
+  const ErrorWidget({
+    @required this.errorMessage,
+    @required this.onPressed,
+    @required this.onPressedCache,
+    @required this.cache,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +62,7 @@ class ErrorWidget extends StatelessWidget {
             shape: GFButtonShape.pills,
             type: GFButtonType.outline2x,
             fullWidthButton: true,
-            onPressed: () {
-              BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
-            },
+            onPressed: onPressed,
           ),
         ),
         cache
@@ -73,11 +76,7 @@ class ErrorWidget extends StatelessWidget {
                   shape: GFButtonShape.pills,
                   type: GFButtonType.outline2x,
                   fullWidthButton: true,
-                  onPressed: () {
-                    BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent(
-                      showNotification: false,
-                    ));
-                  },
+                  onPressed: onPressedCache,
                 ),
               )
             : Container(),

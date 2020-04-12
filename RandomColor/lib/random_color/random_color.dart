@@ -69,7 +69,8 @@ class RandomColor {
 
     hue = colorHue.returnHue(_random);
     saturation = colorSaturation.returnSaturation(_random);
-    brightness = const ColorBrightness.custom(Range(45, 55)).returnBrightness(_random);
+    brightness =
+        const ColorBrightness.custom(Range(45, 55)).returnBrightness(_random);
 
     /// Middle color
     final Color _baseColor = _getColor(hue, saturation, brightness);
@@ -82,7 +83,8 @@ class RandomColor {
       return _getColor(hue, saturation, brightness - (darkerShade * 5));
     }
 
-    final MaterialColor _finishedColor = MaterialColor(_baseColor.value, <int, Color>{
+    final MaterialColor _finishedColor =
+        MaterialColor(_baseColor.value, <int, Color>{
       50: _getLighterColor(5),
       100: _getLighterColor(4),
       200: _getLighterColor(3),
@@ -108,10 +110,12 @@ class RandomColor {
 
     hue = colorHue.returnHue(_random);
     saturation = colorSaturation.returnSaturation(_random);
-    brightness = const ColorBrightness.custom(Range(45, 55)).returnBrightness(_random);
+    brightness =
+        const ColorBrightness.custom(Range(45, 55)).returnBrightness(_random);
 
     /// Middle color
-    final ChartColor.Color _baseColor = _getChartColor(hue, saturation, brightness);
+    final ChartColor.Color _baseColor =
+        _getChartColor(hue, saturation, brightness);
 
     ChartColor.Color _getLighterColor(int lighterShade) {
       return _getChartColor(hue, saturation, brightness + (lighterShade * 5));
@@ -121,9 +125,10 @@ class RandomColor {
       return _getChartColor(hue, saturation, brightness - (darkerShade * 5));
     }
 
-    final ChartColor.Color _finishedColor = ChartColor.Color.fromOther(color: _baseColor,
-                                                                      darker: _getDarkerColor(4),
-                                                                      lighter: _getLighterColor(4));
+    final ChartColor.Color _finishedColor = ChartColor.Color.fromOther(
+        color: _baseColor,
+        darker: _getDarkerColor(4),
+        lighter: _getLighterColor(4));
 
     return _finishedColor;
   }
@@ -142,7 +147,10 @@ class RandomColor {
 
     for (int i = 0; i < count; i++) {
       colors.add(randomColor(
-          colorHue: colorHue, colorSaturation: colorSaturation, colorBrightness: colorBrightness, debug: debug));
+          colorHue: colorHue,
+          colorSaturation: colorSaturation,
+          colorBrightness: colorBrightness,
+          debug: debug));
     }
 
     return colors;
@@ -164,8 +172,8 @@ class RandomColor {
     final double v = brightness / 100;
 
     final Color _color = HSLColor.fromAHSL(1.0, hue.toDouble(), s, v).toColor();
-    final ChartColor.Color _chartColor = ChartColor.Color(r: _color.red, g: _color.green,
-                                                          b: _color.blue, a: _color.alpha);
+    final ChartColor.Color _chartColor = ChartColor.Color(
+        r: _color.red, g: _color.green, b: _color.blue, a: _color.alpha);
 
     return _chartColor;
   }
