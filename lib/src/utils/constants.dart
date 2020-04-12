@@ -32,4 +32,7 @@ class Constants {
   static const int clapsNotification = -3;
 
   static Time clapsTime = Time(20, 55, 00);
+
+  static const String apklisUrl = "https://www.apklis.cu/application/club.postdata.covid19cuba";
+  static const String githubUrl = "https://github.com/covid19cuba/covid19cuba-app/releases/latest/download/app.apk";
 }
