@@ -35,4 +35,7 @@ class Constants {
 
   static const String apklisUrl = "https://www.apklis.cu/application/club.postdata.covid19cuba";
   static const String githubUrl = "https://github.com/covid19cuba/covid19cuba-app/releases/latest/download/app.apk";
+
+  static const String apklisBanner = "assets/images/apklis.png";
+  static const String githubBanner = "assets/images/github.png";
 }
