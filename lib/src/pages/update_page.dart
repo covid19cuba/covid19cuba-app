@@ -1,4 +1,5 @@
 import 'package:covid19cuba/src/pages/pages.dart';
+import 'package:covid19cuba/src/widgets/touchable_url_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:preferences/preferences.dart';
@@ -12,7 +13,7 @@ class UpdatePage extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
-          title: Text('Actualización'),
+          title: Text('Nueva Actualización'),
           centerTitle: true,
         ),
         body: Column(
@@ -25,45 +26,28 @@ class UpdatePage extends StatelessWidget {
                 right: 50,
               ),
               child: Text(
-                'Ya esta disponible una nueva actualización de nuestra aplicación. '
-                'Es posible adquirir nuestra nueva actualización desde la red nacional cubana'
-                ' con akplis o desde internet en Github.',
+                Constants.apkUpdateText,
                 style: TextStyle(
-                  fontStyle: FontStyle.italic,
+                  fontStyle: FontStyle.normal,
                 ),
+                textAlign: TextAlign.justify,
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(
-                left: 50,
-                right: 50,
-                top: 50,
-              ),
-              child: GestureDetector(
-                child: Image.asset("assets/images/apklis.png"),
-                onTap: () => GetUrl(context, Constants.apklisUrl),
-              ),
+            TouchableUrlImage(
+              Constants.apklisBanner,
+              Constants.apklisUrl,
+              leftMargin: 50,
+              rightMargin: 50,
+              topMargin: 30,
             ),
-            Container(
-              margin: EdgeInsets.only(
-                left: 50,
-                right: 50,
-                top: 20,
-              ),
-              child: GestureDetector(
-                child: Image.asset("assets/images/github.png"),
-                onTap: () => GetUrl(context, Constants.githubUrl),
-              ),
+            TouchableUrlImage(
+              Constants.githubBanner,
+              Constants.githubUrl,
+              leftMargin: 50,
+              rightMargin: 50,
+              topMargin: 20,
             ),
           ],
         ));
-  }
-}
-
-void GetUrl(BuildContext context, url) async {
-  if (await canLaunch(url)) {
-    launch(url);
-  } else {
-    log("Download url failed");
   }
 }
