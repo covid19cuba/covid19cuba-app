@@ -21,7 +21,7 @@ class EvolutionDeathWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Evolución de muertes por días',
+              'Evolución de fallecidos por días',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -69,7 +69,7 @@ class EvolutionDeathWidget extends StatelessWidget {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Muertes',
+                'Fallecidos',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
