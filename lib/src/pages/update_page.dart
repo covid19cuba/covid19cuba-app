@@ -1,9 +1,8 @@
-import 'package:covid19cuba/src/pages/pages.dart';
+import 'dart:io';
+
+import 'package:getflutter/getflutter.dart';
 import 'package:covid19cuba/src/widgets/touchable_url_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:preferences/preferences.dart';
-import 'dart:developer';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class UpdatePage extends StatelessWidget {
@@ -59,6 +58,29 @@ class UpdatePage extends StatelessWidget {
               leftMargin: 50,
               rightMargin: 50,
               topMargin: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: 50,
+                right: 50,
+                top: 30,
+              ),
+              child: GFButton(
+                text: "Salir",
+                textColor: Colors.white,
+                textStyle: TextStyle(
+                  fontStyle: FontStyle.normal,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+                color: Constants.primaryColor,
+                shape: GFButtonShape.pills,
+                type: GFButtonType.outline2x,
+                borderSide: BorderSide(width: 1.0, color: Colors.white),
+                fullWidthButton: true,
+                onPressed: () => exit(0),
+              ),
             ),
           ],
         ));
