@@ -5,9 +5,10 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
 class EvolutionRecoveredWidget extends StatelessWidget {
-  final DataModel data;
+  final EvolutionOfRecoveredByDays evolutionOfRecoveredByDays;
 
-  const EvolutionRecoveredWidget({this.data}) : assert(data != null);
+  const EvolutionRecoveredWidget({this.evolutionOfRecoveredByDays})
+      : assert(evolutionOfRecoveredByDays != null);
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +38,22 @@ class EvolutionRecoveredWidget extends StatelessWidget {
           child: charts.TimeSeriesChart(
             [
               charts.Series<int, DateTime>(
-                id: data.evolutionOfRecoveredByDays.daily.name,
+                id: evolutionOfRecoveredByDays.daily.name,
                 colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
                 domainFn: (_, i) => dateTimeFromJson(
-                  data.evolutionOfRecoveredByDays.date.values[i].toStr(),
+                  evolutionOfRecoveredByDays.date.values[i].toStr(),
                 ),
                 measureFn: (item, _) => item,
-                data: data.evolutionOfRecoveredByDays.daily.values,
+                data: evolutionOfRecoveredByDays.daily.values,
               ),
               charts.Series<int, DateTime>(
-                id: data.evolutionOfRecoveredByDays.accumulated.name,
+                id: evolutionOfRecoveredByDays.accumulated.name,
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
                 domainFn: (_, i) => dateTimeFromJson(
-                  data.evolutionOfRecoveredByDays.date.values[i].toStr(),
+                  evolutionOfRecoveredByDays.date.values[i].toStr(),
                 ),
                 measureFn: (item, _) => item,
-                data: data.evolutionOfRecoveredByDays.accumulated.values,
+                data: evolutionOfRecoveredByDays.accumulated.values,
               ),
             ],
             animate: false,

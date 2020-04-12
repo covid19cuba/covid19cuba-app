@@ -1,5 +1,7 @@
 import 'dart:developer' as dev;
+import 'dart:developer';
 
+import 'package:covid19cuba/src/pages/province_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
@@ -67,6 +69,25 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                   color: Colors.white,
                 ),
               ),
+            ),
+            Container(
+              height: 2,
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+            ),
+            createDrawerItem(
+              context,
+              icon: Icons.location_city,
+              text: 'Provincias',
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProvinceListPage(),
+                  ),
+                );
+              },
             ),
             Container(
               height: 2,

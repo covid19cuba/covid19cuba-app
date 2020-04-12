@@ -71,8 +71,8 @@ Map<String, dynamic> _$DataModelToJson(DataModel instance) => <String, dynamic>{
       'affected_municipalities': instance.affectedMunicipalities,
       'comparison_of_accumulated_cases': instance.comparisonOfAccumulatedCases,
       'map_data': instance.mapData,
+      'curves_evolution': instance.curvesEvolution,
       'updated': dateTimeToJson(instance.updated),
       'note': instance.note,
       'top_20_accumulated_countries': instance.top20AccumulatedCountries,
-      'curves_evolution': instance.curvesEvolution,
     };

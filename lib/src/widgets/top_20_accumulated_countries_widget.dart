@@ -1,12 +1,15 @@
+import 'package:covid19cuba/src/models/models.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/data_model.dart';
 
 class Top20CountriesWidget extends StatelessWidget {
-  final DataModel data;
+  final List<Item> top20AccumulatedCountries;
+  final DateTime updated;
 
-  const Top20CountriesWidget({this.data}) : assert(data != null);
+  const Top20CountriesWidget({this.top20AccumulatedCountries, this.updated})
+      : assert(top20AccumulatedCountries != null, updated != null);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +17,8 @@ class Top20CountriesWidget extends StatelessWidget {
       color: Constants.primaryColor,
       width: 1,
     );
-    if (data.top20AccumulatedCountries == null ||
-        data.top20AccumulatedCountries.length == 0) {
+    if (top20AccumulatedCountries == null ||
+        top20AccumulatedCountries.length == 0) {
       return Container();
     }
     Map<int, TableColumnWidth> col = {
@@ -98,7 +101,7 @@ class Top20CountriesWidget extends StatelessWidget {
                   ],
                 )
               ] +
-              data.top20AccumulatedCountries.map(
+              top20AccumulatedCountries.map(
                 (item) {
                   index += 1;
                   return TableRow(
@@ -159,7 +162,7 @@ class Top20CountriesWidget extends StatelessWidget {
               'Datos de los países tomados '
               'de\ngithub.com/pomber/covid19\ny '
               'actualizado el '
-              '${data.comparisonOfAccumulatedCases.updated.toStrPlus()}',
+              '${updated.toStrPlus()}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
