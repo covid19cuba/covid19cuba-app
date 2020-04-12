@@ -1,3 +1,7 @@
+import 'package:url_launcher/url_launcher.dart';
+import 'utils.dart';
+import 'dart:developer';
+
 int getInt(dynamic value) {
   return value is String ? int.parse(value) : value;
 }
@@ -68,5 +72,14 @@ extension DateTimeToString on DateTime {
       'diciembre',
     ];
     return '${this.day} de ${months[this.month - 1]} del ${this.year}';
+  }
+}
+
+void getUrl(url) async {
+  if (await canLaunch(url)) {
+    launch(url);
+  } else {
+    log("Download url failed");
+    throw InvalidSourceException("No se ha podido obtener la url");
   }
 }
