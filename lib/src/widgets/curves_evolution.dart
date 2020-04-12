@@ -17,6 +17,7 @@ class CurvesEvolutionWidget extends StatefulWidget {
   @override
   CurvesEvolutionWidgetState createState() => CurvesEvolutionWidgetState(
         curvesEvolution: curvesEvolution,
+        updated: updated,
       );
 }
 

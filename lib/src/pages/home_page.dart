@@ -98,6 +98,14 @@ class HomePageState extends State<HomePage> {
     if (state is ErrorHomeState) {
       return ew.ErrorWidget(
         errorMessage: state.errorMessage,
+        onPressed: () {
+          BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
+        },
+        onPressedCache: () {
+          BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent(
+            showNotification: false,
+          ));
+        },
         cache: state.cache,
       );
     }

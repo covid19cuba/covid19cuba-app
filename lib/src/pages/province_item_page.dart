@@ -88,7 +88,7 @@ class ProvinceItemPageState extends State<ProvinceItemPage> {
   Widget getBody(BuildContext context, ProvinceState state) {
     if (state is InitialProvinceState) {
       BlocProvider.of<ProvinceBloc>(context).add(
-        FetchProvinceEvent(
+        RefreshProvinceEvent(
           province: province,
         ),
       );
@@ -100,8 +100,8 @@ class ProvinceItemPageState extends State<ProvinceItemPage> {
       return Container(
         child: RefreshIndicator(
           onRefresh: () {
-            BlocProvider.of<HomeBloc>(context).add(
-              RefreshHomeEvent(),
+            BlocProvider.of<ProvinceBloc>(context).add(
+              RefreshProvinceEvent(province: province),
             );
             return refreshCompleter.future;
           },
@@ -112,6 +112,12 @@ class ProvinceItemPageState extends State<ProvinceItemPage> {
     if (state is ErrorProvinceState) {
       return ew.ErrorWidget(
         errorMessage: state.errorMessage,
+        onPressed: () {
+          BlocProvider.of<ProvinceBloc>(context).add(FetchProvinceEvent(
+            province: province,
+          ));
+        },
+        onPressedCache: () {},
         cache: false,
       );
     }

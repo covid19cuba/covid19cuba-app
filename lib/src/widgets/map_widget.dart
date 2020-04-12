@@ -117,7 +117,8 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
             ),
           ),
         ),
-        WebViewKeepAlive(mapData: widget.mapData, jsCommand: showMunicipalities),
+        WebViewKeepAlive(
+            mapData: widget.mapData, jsCommand: showMunicipalities),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(

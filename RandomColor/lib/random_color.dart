@@ -3,8 +3,8 @@ library random_color;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:charts_common/src/common/color.dart' as ChartColor;
-
 
 part 'random_color/color_info.dart';
 part 'random_color/name_that_color.dart';

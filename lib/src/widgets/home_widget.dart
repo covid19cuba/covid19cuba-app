@@ -111,7 +111,23 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              child: TableData(data: data, infoToShow: 'province'),
+              child: TableData(
+                title: 'TOP10 Provincias Afectadas',
+                subtitle: 'Provincias',
+                description: '% del total de casos',
+                keys: data.affectedProvinces
+                    .map(
+                      (x) => x.name,
+                    )
+                    .take(10)
+                    .toList(),
+                values: data.affectedProvinces
+                    .map(
+                      (x) => (x.value * 100 / x.total).toStringAsFixed(2) + '%',
+                    )
+                    .take(10)
+                    .toList(),
+              ),
             ),
           ),
         ),
@@ -119,7 +135,23 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              child: TableData(data: data, infoToShow: 'municipality'),
+              child: TableData(
+                title: 'TOP10 Municipios Afectados',
+                subtitle: 'Municipios',
+                description: '% del total de casos',
+                keys: data.affectedMunicipalities
+                    .map(
+                      (x) => '${x.name} (${x.province})',
+                    )
+                    .take(10)
+                    .toList(),
+                values: data.affectedMunicipalities
+                    .map(
+                      (x) => (x.value * 100 / x.total).toStringAsFixed(2) + '%',
+                    )
+                    .take(10)
+                    .toList(),
+              ),
             ),
           ),
         ),

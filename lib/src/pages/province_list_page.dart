@@ -49,8 +49,7 @@ class ProvinceListPageState extends State<ProvinceListPage> {
                 log(province);
                 if (province == null) {
                   Navigator.pop(context);
-                }
-                else {
+                } else {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
