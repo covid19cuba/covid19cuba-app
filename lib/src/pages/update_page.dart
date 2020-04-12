@@ -10,16 +10,28 @@ class UpdatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0,
-          title: Text('Nueva Actualización'),
-          centerTitle: true,
-        ),
+        backgroundColor: Constants.primaryColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                left: 50,
+                right: 50,
+                bottom: 20,
+              ),
+              child: Text(
+                "Nueva Actualización",
+                style: TextStyle(
+                  fontStyle: FontStyle.normal,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(
                 left: 50,
@@ -29,8 +41,9 @@ class UpdatePage extends StatelessWidget {
                 Constants.apkUpdateText,
                 style: TextStyle(
                   fontStyle: FontStyle.normal,
+                  color: Colors.white,
                 ),
-                textAlign: TextAlign.justify,
+                textAlign: TextAlign.center,
               ),
             ),
             TouchableUrlImage(
