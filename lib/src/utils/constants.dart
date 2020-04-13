@@ -7,7 +7,7 @@ class Constants {
   static const String diseaseName = 'Covid-19';
   static const Color primaryColor = Color.fromARGB(255, 28, 19, 64);
   static const int notificationMinutesRange = 1440;
-    static const int setUpTasksMinutesDefault = 15;
+  static const int setUpTasksMinutesDefault = 15;
 
   static const String defaultCompareCountry = 'Hungary';
   static const String countryCuba = 'Cuba';
@@ -32,4 +32,15 @@ class Constants {
   static const int clapsNotification = -3;
 
   static Time clapsTime = Time(20, 55, 00);
+
+  static const String apklisUrl =
+      "https://www.apklis.cu/application/club.postdata.covid19cuba";
+  static const String githubUrl =
+      "https://github.com/covid19cuba/covid19cuba-app/releases/latest/download/app.apk";
+
+  static const String apklisBanner = "assets/images/apklis.png";
+  static const String githubBanner = "assets/images/github.png";
+
+  static const String apkUpdateText =
+      'Ya está disponible una nueva versión de Covid19 Cuba Data. ';
 }

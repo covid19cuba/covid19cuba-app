@@ -19,3 +19,4 @@ export 'tables_widget.dart';
 export 'test_evolution_widget.dart';
 export 'top_20_accumulated_countries_widget.dart';
 export 'curves_evolution.dart';
+export 'touchable_url_widget.dart';
