@@ -8,24 +8,29 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
 class CurvesEvolutionWidget extends StatefulWidget {
-  final DataModel data;
+  final Map<String, dynamic> curvesEvolution;
+  final DateTime updated;
 
-  CurvesEvolutionWidget({this.data}) : assert(data != null);
+  CurvesEvolutionWidget({this.curvesEvolution, this.updated})
+      : assert(curvesEvolution != null, updated != null);
 
   @override
   CurvesEvolutionWidgetState createState() => CurvesEvolutionWidgetState(
-        data: data,
+        curvesEvolution: curvesEvolution,
+        updated: updated,
       );
 }
 
 class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
-  final DataModel data;
+  final Map<String, dynamic> curvesEvolution;
+  final DateTime updated;
   var colors = List<charts.Color>();
   var colorGen = RandomColor(0);
 
-  CurvesEvolutionWidgetState({this.data}) {
-    assert(data != null);
-    colors = data.curvesEvolution.entries.map((x) {
+  CurvesEvolutionWidgetState({this.curvesEvolution, this.updated}) {
+    assert(curvesEvolution != null);
+    assert(updated != null);
+    colors = curvesEvolution.entries.map((x) {
       return colorGen.randomChartColor();
     }).toList();
   }
@@ -80,7 +85,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
           padding: EdgeInsets.all(10),
           height: 750,
           child: charts.LineChart(
-            data.curvesEvolution.entries.map((item) {
+            curvesEvolution.entries.map((item) {
               var localIndex = index++;
               return charts.Series<double, double>(
                 id: DataModel.prettyCountry(item.key),
@@ -127,7 +132,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
             domainAxis: charts.NumericAxisSpec(
               viewport: charts.NumericExtents(
                   1.45,
-                  log(data.curvesEvolution.values.reduce((curr, next) {
+                  log(curvesEvolution.values.reduce((curr, next) {
                             return curr['total'] > next['total'] ? curr : next;
                           })['total']) /
                           ln10 +
@@ -147,7 +152,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
               'Datos de los países tomados '
               'de\ngithub.com/pomber/covid19\ny '
               'actualizado el '
-              '${data.comparisonOfAccumulatedCases.updated.toStrPlus()}',
+              '${updated.toStrPlus()}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

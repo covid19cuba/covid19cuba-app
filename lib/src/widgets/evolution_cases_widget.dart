@@ -5,9 +5,10 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
 class EvolutionCasesWidget extends StatelessWidget {
-  final DataModel data;
+  final EvolutionOfCasesByDays evolutionOfCasesByDays;
 
-  const EvolutionCasesWidget({this.data}) : assert(data != null);
+  const EvolutionCasesWidget({this.evolutionOfCasesByDays})
+      : assert(evolutionOfCasesByDays != null);
 
   @override
   Widget build(BuildContext context) {
@@ -36,34 +37,43 @@ class EvolutionCasesWidget extends StatelessWidget {
           height: 400,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<int, DateTime>(
-                id: data.evolutionOfCasesByDays.daily.name,
-                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-                domainFn: (_, i) => dateTimeFromJson(
-                  data.evolutionOfCasesByDays.date.values[i].toStr(),
-                ),
-                measureFn: (item, _) => item,
-                data: data.evolutionOfCasesByDays.daily.values,
-              ),
-              charts.Series<int, DateTime>(
-                id: data.evolutionOfCasesByDays.active.name,
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => dateTimeFromJson(
-                  data.evolutionOfCasesByDays.date.values[i].toStr(),
-                ),
-                measureFn: (item, _) => item,
-                data: data.evolutionOfCasesByDays.active.values,
-              ),
-              charts.Series<int, DateTime>(
-                id: data.evolutionOfCasesByDays.accumulated.name,
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (_, i) => dateTimeFromJson(
-                  data.evolutionOfCasesByDays.date.values[i].toStr(),
-                ),
-                measureFn: (item, _) => item,
-                data: data.evolutionOfCasesByDays.accumulated.values,
-              ),
-            ],
+                  charts.Series<int, DateTime>(
+                    id: evolutionOfCasesByDays.daily.name,
+                    colorFn: (_, __) =>
+                        charts.MaterialPalette.purple.shadeDefault,
+                    domainFn: (_, i) => dateTimeFromJson(
+                      evolutionOfCasesByDays.date.values[i].toStr(),
+                    ),
+                    measureFn: (item, _) => item,
+                    data: evolutionOfCasesByDays.daily.values,
+                  )
+                ] +
+                (evolutionOfCasesByDays.active != null
+                    ? [
+                        charts.Series<int, DateTime>(
+                          id: evolutionOfCasesByDays.active.name,
+                          colorFn: (_, __) =>
+                              charts.MaterialPalette.red.shadeDefault,
+                          domainFn: (_, i) => dateTimeFromJson(
+                            evolutionOfCasesByDays.date.values[i].toStr(),
+                          ),
+                          measureFn: (item, _) => item,
+                          data: evolutionOfCasesByDays.active.values,
+                        ),
+                      ]
+                    : []) +
+                [
+                  charts.Series<int, DateTime>(
+                    id: evolutionOfCasesByDays.accumulated.name,
+                    colorFn: (_, __) =>
+                        charts.MaterialPalette.blue.shadeDefault,
+                    domainFn: (_, i) => dateTimeFromJson(
+                      evolutionOfCasesByDays.date.values[i].toStr(),
+                    ),
+                    measureFn: (item, _) => item,
+                    data: evolutionOfCasesByDays.accumulated.values,
+                  ),
+                ],
             animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(

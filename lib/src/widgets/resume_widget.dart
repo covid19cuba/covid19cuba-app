@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:covid19cuba/src/models/data_model.dart';
+import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class ResumeWidget extends StatelessWidget {
-  final DataModel data;
+  final List<Item> resume;
+  final DateTime updated;
 
-  const ResumeWidget({this.data}) : assert(data != null);
+  const ResumeWidget({
+    this.resume,
+    this.updated,
+  }) : assert(resume != null, updated != null);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class ResumeWidget extends StatelessWidget {
                     margin: EdgeInsets.all(15),
                     child: Center(
                       child: Text(
-                        'Actualización del ${data.updated.toStrPlus()}',
+                        'Actualización del ${updated.toStrPlus()}',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -52,7 +56,7 @@ class ResumeWidget extends StatelessWidget {
             horizontalInside: borderSide,
             bottom: borderSide,
           ),
-          children: data.resume.map((item) {
+          children: resume.map((item) {
             return TableRow(
               children: [
                 TableCell(
