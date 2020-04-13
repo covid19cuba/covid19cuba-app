@@ -10,6 +10,10 @@ import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:preferences/preference_service.dart';
 
 class UpdatePage extends StatelessWidget {
+  final bool first;
+
+  UpdatePage({this.first = true});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,17 +148,21 @@ class UpdatePage extends StatelessWidget {
                   try {
                     var state = await getStateData();
                     if (state != null) {
-                      PrefService.setInt(Constants.prefVersionLastSkip, state.version);
+                      PrefService.setInt(
+                          Constants.prefVersionLastSkip, state.version);
                     }
-                  }
-                  catch (e) {
+                  } catch (e) {
                     log(e.toString());
                   }
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (_) => HomePage(),
-                    ),
-                  );
+                  if (first) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (_) => HomePage(),
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ),
