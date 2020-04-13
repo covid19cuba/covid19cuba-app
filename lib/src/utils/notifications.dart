@@ -3,31 +3,38 @@ import 'dart:developer';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:demoji/demoji.dart';
 
-import 'package:covid19cuba/src/data_providers/data_providers.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 void appTask(String taskId, [bool headless = false]) async {
-  InfoUpdate currentInfo;
+  List<bool> currentInfo;
   try {
-    currentInfo = await isInfoUpdated();
+    currentInfo = await StateModel.check();
   } catch (e) {
     log(e.toString());
   }
   if (currentInfo != null && timeToShowNotifications()) {
-    if (currentInfo.needUpdate) {
-      if (headless) {
-        await NotificationManager.initialize();
-      }
+    if (headless) {
+      await NotificationManager.initialize();
+    }
+    if (currentInfo[1]) {
       NotificationManager.show(
         title: 'Nueva Información!',
         body: 'Los datos se han actualizado. '
             'Póngase al día. Toque para revisar.',
-        id: -1,
+        id: Constants.infoUpdateNotification,
+      );
+    }
+    if (currentInfo[0] && currentInfo[2]) {
+      NotificationManager.show(
+        title: 'Actualización!',
+        body: 'Covid19 Cuba Data posee una nueva versión. '
+            'No te pierdas las nuevas características.',
+        id: Constants.appUpdateNotification,
       );
     }
   } else {
-    log('Null info recieved');
+    log('Null info recieved during foreground / background task');
   }
   BackgroundFetch.finish(taskId);
 }
@@ -66,7 +73,8 @@ Future<void> setUpClapsTime() async {
   );
 }
 
-bool timeToShowNotifications(){
+bool timeToShowNotifications() {
   DateTime moment = DateTime.now();
-  return moment.hour < Constants.startSilentIime && moment.hour > Constants.endSilentTime;
+  return moment.hour < Constants.startSilentIime &&
+      moment.hour > Constants.endSilentTime;
 }
