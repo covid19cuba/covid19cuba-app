@@ -87,17 +87,18 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 );
               },
             ),
-            Container(
+            /*Container(
               height: 2,
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
+            ),*/
             linksDrawerItem(),
-            Container(
+            /*Container(
               height: 2,
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
+            ),*/
+            updateDrawerItem(),
             sharerDrawerItem(),
             settingsDrawerItem(),
             Container(
@@ -232,13 +233,24 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
 
   Widget linksDrawerItem() {
     return ExpansionTile(
-      initiallyExpanded: true,
-      title: Text(
-        'Enlaces de Interés',
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
+      initiallyExpanded: false,
+      title: Row(
+        children: <Widget>[
+          Icon(
+            Icons.link,
+            color: Colors.white,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: Text(
+              'Enlaces de Interés',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        ],
       ),
       children: <Widget>[
         createDrawerItem(
@@ -322,6 +334,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           },
         ),
       ],
+    );
+  }
+
+  Widget updateDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.update,
+      text: 'Actualizar',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UpdatePage(first: false),
+          ),
+        );
+      },
     );
   }
 

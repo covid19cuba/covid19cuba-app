@@ -23,6 +23,8 @@ class Constants {
   static const String prefSetUpTasksMinutes = 'setUpTasksMinutes';
   static const String prefVersionCode = 'versionCode';
   static const String prefData = 'data';
+  static const String prefCacheHash = 'cacheHash';
+  static const String prefVersionLastSkip = 'versionLastSkip';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
@@ -35,6 +37,9 @@ class Constants {
   static const int clapsNotification = -3;
 
   static Time clapsTime = Time(20, 55, 00);
+
+  static const int startSilentIime = 22;
+  static const int endSilentTime = 9;
 
   static const String apklisUrl =
       "https://www.apklis.cu/application/club.postdata.covid19cuba";

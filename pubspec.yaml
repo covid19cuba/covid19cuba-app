@@ -31,6 +31,7 @@ dependencies:
   demoji: ^1.0.1
   random_color:
     path: ./RandomColor
+  crypto: ^2.1.4
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
