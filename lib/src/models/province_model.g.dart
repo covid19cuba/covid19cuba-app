@@ -41,7 +41,9 @@ ProvinceModel _$ProvinceModelFromJson(Map<String, dynamic> json) {
             ? null
             : ItemMunicipality.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..updated = dateTimeFromJson(json['updated'] as String);
+    ..updated = dateTimeFromJson(json['updated'] as String)
+    ..dpa_code = json['dpa_province_code'] as String
+    ..mapData = json['map_data'] as Map<String, dynamic>;
 }
 
 Map<String, dynamic> _$ProvinceModelToJson(ProvinceModel instance) =>
@@ -56,4 +58,6 @@ Map<String, dynamic> _$ProvinceModelToJson(ProvinceModel instance) =>
           instance.distributionByNationalityOfForeignCases,
       'affected_municipalities': instance.affectedMunicipalities,
       'updated': dateTimeToJson(instance.updated),
+      'dpa_province_code': instance.dpa_code,
+      'map_data': instance.mapData,
     };

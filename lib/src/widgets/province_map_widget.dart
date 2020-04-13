@@ -4,27 +4,29 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:covid19cuba/src/models/models.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 
 const showMunicipalities = "covidData";
 const showProvinces = "covidData2";
 
-class WebViewKeepAlive extends StatefulWidget {
+class ProvinceWebViewKeepAlive extends StatefulWidget {
   final Map<String, dynamic> mapData;
-  final String jsCommand;
+  final String provinceCode;
 
-  WebViewKeepAlive({this.mapData, this.jsCommand});
+  ProvinceWebViewKeepAlive({this.mapData, this.provinceCode});
 
   @override
-  WebViewKeepAliveState createState() => WebViewKeepAliveState();
+  ProvinceWebViewKeepAliveState createState() => ProvinceWebViewKeepAliveState();
 }
 
-class WebViewKeepAliveState extends State<WebViewKeepAlive>
+class ProvinceWebViewKeepAliveState extends State<ProvinceWebViewKeepAlive>
     with AutomaticKeepAliveClientMixin {
   WebView webView;
   WebViewController controller;
   String mapData = "{}";
+  String code = "";
 
   @override
   bool get wantKeepAlive => true;
@@ -33,12 +35,13 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
   void initState() {
     super.initState();
     webView = WebView(
-      initialUrl: 'assets/map.html',
+      initialUrl: 'assets/map2.html',
       javascriptMode: JavascriptMode.unrestricted,
       onPageFinished: (_) {
         mapData = jsonEncode(widget.mapData);
+        code = widget.provinceCode;
         controller
-            .evaluateJavascript(widget.jsCommand + '($mapData)')
+            .evaluateJavascript('covidData3($mapData,\"$code\")')
             .whenComplete(() {});
       },
       gestureRecognizers: Set()
@@ -85,16 +88,16 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
   }
 }
 
-class MapWebViewWidget extends StatefulWidget {
-  final Map<String, dynamic> mapData;
+class ProvinceMapWebViewWidget extends StatefulWidget {
+  final ProvinceModel data;
 
-  MapWebViewWidget({this.mapData}) : assert(mapData != null);
+  ProvinceMapWebViewWidget({this.data}) : assert(data != null);
 
   @override
-  MapWebViewWidgetState createState() => MapWebViewWidgetState();
+  ProvinceMapWebViewWidgetState createState() => ProvinceMapWebViewWidgetState();
 }
 
-class MapWebViewWidgetState extends State<MapWebViewWidget> {
+class ProvinceMapWebViewWidgetState extends State<ProvinceMapWebViewWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -114,37 +117,9 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
             ),
           ),
         ),
-        WebViewKeepAlive(
-            mapData: widget.mapData, jsCommand: showMunicipalities),
-        Container(
-          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Center(
-            child: Text(
-              'Distribución por Provincias',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-          ),
-        ),
-        WebViewKeepAlive(mapData: widget.mapData, jsCommand: showProvinces),
-        Container(
-          margin: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-          child: Center(
-            child: Text(
-              'El cuadrado representa aquellos que por distintas razones '
-              'no tengan localización conocida.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 10,
-              ),
-            ),
-          ),
-        ),
+        ProvinceWebViewKeepAlive(
+            mapData: widget.data.mapData, provinceCode: widget.data.dpa_code),
+
       ],
     );
   }

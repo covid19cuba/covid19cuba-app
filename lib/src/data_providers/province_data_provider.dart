@@ -15,7 +15,7 @@ Future<ProvinceModel> getProvinceData(String province) async {
       'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/provinces/$province/all.json';
   var mode = PrefService.getInt(Constants.prefConnectionMode) ??
       Constants.ConnectionModeMerge;
-  switch (mode) {
+  /*switch (mode) {
     case Constants.ConnectionModeIntranet:
       return await getProvinceDataFrom(urlCubaDataCU);
     case Constants.ConnectionModeInternet:
@@ -25,10 +25,10 @@ Future<ProvinceModel> getProvinceData(String province) async {
       try {
         return await getProvinceDataFrom(urlCubaDataCU);
       } catch (e) {
-        log(e.toString());
+        log(e.toString());*/
         return await getProvinceDataFrom(urlCubaDataIO);
-      }
-  }
+      //}
+  //}
 }
 
 Future<ProvinceModel> getProvinceDataFrom(String url) async {

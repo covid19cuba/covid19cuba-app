@@ -34,6 +34,13 @@ class ProvinceModel {
   @JsonKey(name: 'updated', fromJson: dateTimeFromJson, toJson: dateTimeToJson)
   DateTime updated;
 
+  @JsonKey(name: 'dpa_province_code')
+  String dpa_code;
+
+  @JsonKey(name: 'map_data')
+  Map<String, dynamic> mapData;
+
+
   ProvinceModel();
 
   factory ProvinceModel.fromJson(Map<String, dynamic> json) =>

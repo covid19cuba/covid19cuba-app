@@ -1,3 +1,4 @@
+import 'package:covid19cuba/src/widgets/province_map_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -16,6 +17,12 @@ class ProvinceWidget extends StatelessWidget {
         Container(
           color: Constants.primaryColor,
           child: ResumeWidget(resume: data.resume, updated: data.updated),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: ProvinceMapWebViewWidget(data: data),
+          ),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
