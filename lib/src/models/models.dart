@@ -1,6 +1,8 @@
 export 'cases_by_mode_of_contagion.dart';
 export 'cases_by_nationality.dart';
 export 'cases_by_sex.dart';
+export 'changelog_item.dart';
+export 'changelog_model.dart';
 export 'comparison_of_accumulated_cases.dart';
 export 'evolution_of_cases_by_days.dart';
 export 'data_model.dart';
