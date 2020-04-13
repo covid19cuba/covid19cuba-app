@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:package_info/package_info.dart';
 import 'package:preferences/preference_service.dart';
 
 class UpdatePage extends StatefulWidget {
@@ -23,6 +24,7 @@ class UpdatePageState extends State<UpdatePage> {
   bool loading = true;
   bool success = false;
   bool error = false;
+  String version;
 
   UpdatePageState() {
     StateModel.check().then((stateList) {
@@ -47,6 +49,9 @@ class UpdatePageState extends State<UpdatePage> {
           });
         }
       }
+    });
+    PackageInfo.fromPlatform().then((x) {
+      version = x.version;
     });
   }
 
@@ -231,6 +236,24 @@ class UpdatePageState extends State<UpdatePage> {
                 child: Image.asset(Constants.appLogo),
                 padding: EdgeInsets.all(20),
                 width: 200,
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  left: 50,
+                  right: 50,
+                  bottom: 20,
+                  top: 20,
+                ),
+                child: Text(
+                  'Versión: $version',
+                  style: TextStyle(
+                    fontStyle: FontStyle.normal,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(

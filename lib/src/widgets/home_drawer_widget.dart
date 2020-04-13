@@ -394,7 +394,13 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 10, color: Colors.white),
       ),
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => ChangelogPage(),
+          ),
+        );
+      },
     );
   }
 }
