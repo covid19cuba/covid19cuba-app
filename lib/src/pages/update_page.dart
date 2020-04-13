@@ -21,7 +21,7 @@ class UpdatePage extends StatelessWidget {
                 bottom: 20,
               ),
               child: Text(
-                "Nueva Actualización",
+                "Actualización",
                 style: TextStyle(
                   fontStyle: FontStyle.normal,
                   color: Colors.white,
@@ -45,19 +45,53 @@ class UpdatePage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
+            Container(
+              margin: EdgeInsets.only(
+                left: 50,
+                right: 50,
+                top: 30,
+              ),
+              child: Text(
+                "Desde la red nacional cubana",
+                style: TextStyle(
+                  fontStyle: FontStyle.normal,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
             TouchableUrlImage(
               Constants.apklisBanner,
               Constants.apklisUrl,
               leftMargin: 50,
               rightMargin: 50,
-              topMargin: 30,
+              topMargin: 5,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: 50,
+                right: 50,
+                top: 20,
+              ),
+              child: Text(
+                "Desde Internet",
+                style: TextStyle(
+                  fontStyle: FontStyle.normal,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
             TouchableUrlImage(
               Constants.githubBanner,
               Constants.githubUrl,
               leftMargin: 50,
               rightMargin: 50,
-              topMargin: 20,
+              topMargin: 5,
             ),
             Container(
               margin: EdgeInsets.only(
@@ -66,13 +100,36 @@ class UpdatePage extends StatelessWidget {
                 top: 30,
               ),
               child: GFButton(
-                text: "Salir",
+                text: "CAMBIOS REALIZADOS",
                 textColor: Colors.white,
                 textStyle: TextStyle(
                   fontStyle: FontStyle.normal,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 18,
+                ),
+                color: Constants.primaryColor,
+                shape: GFButtonShape.pills,
+                type: GFButtonType.outline2x,
+                borderSide: BorderSide(width: 1.0, color: Colors.white),
+                fullWidthButton: true,
+                //onPressed: , //TODO: Add onPressed function
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: 50,
+                right: 50,
+                top: 5,
+              ),
+              child: GFButton(
+                text: "SALIR",
+                textColor: Colors.white,
+                textStyle: TextStyle(
+                  fontStyle: FontStyle.normal,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
                 ),
                 color: Constants.primaryColor,
                 shape: GFButtonShape.pills,

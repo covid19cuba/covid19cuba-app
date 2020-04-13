@@ -42,7 +42,5 @@ class Constants {
   static const String githubBanner = "assets/images/github.png";
 
   static const String apkUpdateText =
-      'Ya está disponible una nueva versión de nuestra aplicación. '
-      'Es posible adquirir nuestra nueva actualización desde la red nacional cubana'
-      ' con Akplis o desde internet con Github.';
+      'Ya está disponible una nueva versión de Covid19 Cuba Data. ';
 }
