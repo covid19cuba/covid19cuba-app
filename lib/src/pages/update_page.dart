@@ -1,9 +1,13 @@
-import 'dart:io';
+import 'dart:developer';
 
+import 'package:covid19cuba/src/data_providers/data_providers.dart';
 import 'package:getflutter/getflutter.dart';
-import 'package:covid19cuba/src/widgets/touchable_url_widget.dart';
 import 'package:flutter/material.dart';
+
+import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:preferences/preference_service.dart';
 
 class UpdatePage extends StatelessWidget {
   @override
@@ -113,7 +117,7 @@ class UpdatePage extends StatelessWidget {
                 type: GFButtonType.outline2x,
                 borderSide: BorderSide(width: 1.0, color: Colors.white),
                 fullWidthButton: true,
-                //onPressed: , //TODO: Add onPressed function
+                onPressed: () {},
               ),
             ),
             Container(
@@ -136,7 +140,22 @@ class UpdatePage extends StatelessWidget {
                 type: GFButtonType.outline2x,
                 borderSide: BorderSide(width: 1.0, color: Colors.white),
                 fullWidthButton: true,
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () async {
+                  try {
+                    var state = await getStateData();
+                    if (state != null) {
+                      PrefService.setInt(Constants.prefVersionLastSkip, state.version);
+                    }
+                  }
+                  catch (e) {
+                    log(e.toString());
+                  }
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (_) => HomePage(),
+                    ),
+                  );
+                },
               ),
             ),
           ],

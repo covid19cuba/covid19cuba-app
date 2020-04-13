@@ -9,6 +9,10 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import '../utils/constants.dart';
 
 class OnBoardingPage extends StatefulWidget {
+  final bool update;
+
+  const OnBoardingPage(this.update) : assert(update != null);
+
   @override
   OnBoardingPageState createState() => OnBoardingPageState();
 }
@@ -19,7 +23,9 @@ class OnBoardingPageState extends State<OnBoardingPage> {
   void onIntroEnd(context) {
     PrefService.setBool(Constants.prefIsOnBoarding, true);
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => HomePage()),
+      MaterialPageRoute(
+        builder: (_) => widget.update ? UpdatePage() : HomePage(),
+      ),
     );
   }
 
