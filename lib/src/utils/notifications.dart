@@ -14,7 +14,7 @@ void appTask(String taskId, [bool headless = false]) async {
   } catch (e) {
     log(e.toString());
   }
-  if (currentInfo != null) {
+  if (currentInfo != null && timeToShowNotifications()) {
     if (currentInfo.needUpdate) {
       if (headless) {
         await NotificationManager.initialize();
@@ -38,6 +38,9 @@ void appHeadlessTask(String taskId) async {
 
 Future<void> setUpTasks([int minutes = Constants.setUpTasksMinutesDefault]) async {
   await TaskManager.initialize(minutes, appTask);
+}
+
+Future<void> setUpBackgroundTasks() async {
   await TaskManager.setHeadlessTask(appHeadlessTask);
 }
 
@@ -60,4 +63,9 @@ Future<void> setUpClapsTime() async {
             claps,
     notificationTime: Constants.clapsTime,
   );
+}
+
+bool timeToShowNotifications(){
+  DateTime moment = DateTime.now();
+  return moment.hour < Constants.startSilentIime && moment.hour > Constants.endSilentTime;
 }

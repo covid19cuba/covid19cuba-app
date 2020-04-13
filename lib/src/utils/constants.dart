@@ -32,4 +32,7 @@ class Constants {
   static const int clapsNotification = -3;
 
   static Time clapsTime = Time(20, 55, 00);
+
+  static const int startSilentIime = 22;
+  static const int endSilentTime = 9;
 }
