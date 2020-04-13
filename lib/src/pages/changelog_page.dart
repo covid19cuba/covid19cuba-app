@@ -132,6 +132,7 @@ class ChangelogPageState extends State<ChangelogPage>
               var added = Container(
                 margin: EdgeInsets.only(top: 10),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: item.added.map((x) {
                     return Container(
                       margin: EdgeInsets.symmetric(horizontal: 10),
@@ -161,6 +162,7 @@ class ChangelogPageState extends State<ChangelogPage>
               var changed = Container(
                 margin: EdgeInsets.only(top: 10),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: item.changed.map((x) {
                     return Container(
                       margin: EdgeInsets.symmetric(horizontal: 10),
@@ -190,6 +192,7 @@ class ChangelogPageState extends State<ChangelogPage>
               var fixed = Container(
                 margin: EdgeInsets.only(top: 10),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: item.fixed.map((x) {
                     return Container(
                       margin: EdgeInsets.symmetric(horizontal: 10),
@@ -219,6 +222,7 @@ class ChangelogPageState extends State<ChangelogPage>
               var deleted = Container(
                 margin: EdgeInsets.only(top: 10),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: item.deleted.map((x) {
                     return Container(
                       margin: EdgeInsets.symmetric(horizontal: 10),
