@@ -2,11 +2,16 @@ import 'dart:developer';
 
 import 'package:background_fetch/background_fetch.dart';
 import 'package:demoji/demoji.dart';
-
+import 'package:preferences/preferences.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 void appTask(String taskId, [bool headless = false]) async {
+  if (headless) {
+    await NotificationManager.initialize();
+    await PrefService.init();
+  }
+
   List<bool> currentInfo;
   try {
     currentInfo = await StateModel.check();
@@ -14,9 +19,7 @@ void appTask(String taskId, [bool headless = false]) async {
     log(e.toString());
   }
   if (currentInfo != null && timeToShowNotifications()) {
-    if (headless) {
-      await NotificationManager.initialize();
-    }
+
     if (currentInfo[1]) {
       NotificationManager.show(
         title: 'Nueva Información!',

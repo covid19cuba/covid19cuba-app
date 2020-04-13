@@ -17,6 +17,8 @@ void main() async {
 
   await NotificationManager.initialize();
 
+  await NotificationManager.cancelAll();
+
   var update = await checkUpdate();
 
   await setUpTasks();
