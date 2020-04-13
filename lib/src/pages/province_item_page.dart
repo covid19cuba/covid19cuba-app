@@ -24,10 +24,13 @@ class ProvinceItemPage extends StatefulWidget {
   }
 }
 
-class ProvinceItemPageState extends State<ProvinceItemPage> {
+class ProvinceItemPageState extends State<ProvinceItemPage>
+    with TickerProviderStateMixin {
   final String province;
 
   Completer<void> refreshCompleter;
+  AnimationController fadeController;
+  Animation<double> fadeAnimation;
 
   ProvinceItemPageState({this.province}) : assert(province != null);
 
@@ -35,6 +38,14 @@ class ProvinceItemPageState extends State<ProvinceItemPage> {
   void initState() {
     super.initState();
     refreshCompleter = Completer<void>();
+    fadeController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+    fadeAnimation = CurvedAnimation(
+      parent: fadeController,
+      curve: Curves.easeIn,
+    );
   }
 
   @override
@@ -53,7 +64,10 @@ class ProvinceItemPageState extends State<ProvinceItemPage> {
             builder: (context, state) {
               return Scaffold(
                 appBar: getAppBar(context, state),
-                body: getBody(context, state),
+                body: FadeTransition(
+                  opacity: fadeAnimation,
+                  child: getBody(context, state),
+                ),
               );
             },
           ),
@@ -86,6 +100,8 @@ class ProvinceItemPageState extends State<ProvinceItemPage> {
   }
 
   Widget getBody(BuildContext context, ProvinceState state) {
+    fadeController.reset();
+    fadeController.forward();
     if (state is InitialProvinceState) {
       BlocProvider.of<ProvinceBloc>(context).add(
         RefreshProvinceEvent(
