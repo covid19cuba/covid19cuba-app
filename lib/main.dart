@@ -17,7 +17,11 @@ void main() async {
 
   await NotificationManager.initialize();
 
+  await NotificationManager.cancelAll();
+
   var update = await checkUpdate();
+
+  await setUpTasks();
 
   /*int setUpTasksMinutes;
   try {
@@ -26,6 +30,7 @@ void main() async {
     log(e.toString());
     setUpTasksMinutes = Constants.setUpTasksMinutesDefault;
   }
+
   await setUpTasks(setUpTasksMinutes);
 
   await setUpClapsTime();*/
@@ -41,7 +46,9 @@ void main() async {
     ),
   );*/
 
-  return runApp(App(update));
+  runApp(App(update));
+
+  await setUpBackgroundTasks();
 }
 
 class SimpleBlocDelegate extends BlocDelegate {
