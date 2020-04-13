@@ -36,7 +36,8 @@ void appHeadlessTask(String taskId) async {
   return appTask(taskId, true);
 }
 
-Future<void> setUpTasks([int minutes = Constants.setUpTasksMinutesDefault]) async {
+Future<void> setUpTasks(
+    [int minutes = Constants.setUpTasksMinutesDefault]) async {
   await TaskManager.initialize(minutes, appTask);
 }
 

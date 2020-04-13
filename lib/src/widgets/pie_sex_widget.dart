@@ -7,10 +7,10 @@ import 'package:covid19cuba/src/models/models.dart';
 
 // ignore: must_be_immutable
 class PieSexWidget extends StatefulWidget {
-  final DataModel data;
+  final CasesBySex casesBySex;
   List<Palette> colorPalettes;
 
-  PieSexWidget({this.data}) : assert(data != null) {
+  PieSexWidget({this.casesBySex}) : assert(casesBySex != null) {
     colorPalettes = charts.MaterialPalette.getOrderedPalettes(3);
   }
 
@@ -52,9 +52,9 @@ class PieSexWidgetState extends State<PieSexWidget> {
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: [
-                  widget.data.casesBySex.men,
-                  widget.data.casesBySex.women,
-                  widget.data.casesBySex.unknown,
+                  widget.casesBySex.men,
+                  widget.casesBySex.women,
+                  widget.casesBySex.unknown,
                 ],
               ),
             ],

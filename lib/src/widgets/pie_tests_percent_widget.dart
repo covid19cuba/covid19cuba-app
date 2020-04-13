@@ -7,10 +7,11 @@ import 'package:covid19cuba/src/models/models.dart';
 
 // ignore: must_be_immutable
 class PieTestsPercentWidget extends StatefulWidget {
-  final DataModel data;
+  final ListOfTestsPerformed listOfTestsPerformed;
   List<Palette> colorPalettes;
 
-  PieTestsPercentWidget({this.data}) : assert(data != null) {
+  PieTestsPercentWidget({this.listOfTestsPerformed})
+      : assert(listOfTestsPerformed != null) {
     colorPalettes = charts.MaterialPalette.getOrderedPalettes(2);
   }
 
@@ -56,10 +57,10 @@ class PieTestsPercentWidgetState extends State<PieTestsPercentWidget> {
                     measureFn: (item, _) =>
                         item.value *
                         100 /
-                        widget.data.listOfTestsPerformed.total.value,
+                        widget.listOfTestsPerformed.total.value,
                     data: [
-                      widget.data.listOfTestsPerformed.positive,
-                      widget.data.listOfTestsPerformed.negative
+                      widget.listOfTestsPerformed.positive,
+                      widget.listOfTestsPerformed.negative
                     ],
                   ),
                 ],
@@ -82,7 +83,7 @@ class PieTestsPercentWidgetState extends State<PieTestsPercentWidget> {
               Container(
                 margin: EdgeInsets.only(bottom: 70),
                 child: Text(
-                  '${widget.data.listOfTestsPerformed.total.value} '
+                  '${widget.listOfTestsPerformed.total.value} '
                   'tests',
                   style: TextStyle(
                     color: Constants.primaryColor,

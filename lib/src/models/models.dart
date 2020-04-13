@@ -16,4 +16,6 @@ export 'item_province.dart';
 export 'item_string_list.dart';
 export 'list_of_tests_performed.dart';
 export 'news_model.dart';
+export 'province_model.dart';
+export 'state_model.dart';
 export 'tests_by_days.dart';

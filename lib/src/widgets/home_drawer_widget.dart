@@ -1,4 +1,4 @@
-import 'dart:developer' as dev;
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -73,6 +73,25 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
             ),
+            createDrawerItem(
+              context,
+              icon: Icons.location_city,
+              text: 'Provincias',
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProvinceListPage(),
+                  ),
+                );
+              },
+            ),
+            Container(
+              height: 2,
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+            ),
             linksDrawerItem(),
             Container(
               height: 2,
@@ -105,7 +124,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  dev.log('Could not launch $url');
+                  log('Could not launch $url');
                 }
               },
             ),
@@ -128,7 +147,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  dev.log('Could not launch $url');
+                  log('Could not launch $url');
                 }
               },
             ),
@@ -151,7 +170,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  dev.log('Could not launch $url');
+                  log('Could not launch $url');
                 }
               },
             ),
@@ -213,7 +232,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
 
   Widget linksDrawerItem() {
     return ExpansionTile(
-      initiallyExpanded: true,
+      initiallyExpanded: false,
       title: Text(
         'Enlaces de Interés',
         style: TextStyle(
@@ -232,7 +251,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -245,7 +264,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -258,7 +277,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -271,7 +290,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -284,7 +303,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -298,7 +317,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
