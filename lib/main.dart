@@ -16,6 +16,8 @@ void main() async {
 
   await NotificationManager.initialize();
 
+  await setUpTasks();
+
   /*int setUpTasksMinutes;
   try {
     setUpTasksMinutes = PrefService.getInt(Constants.prefSetUpTasksMinutes);
@@ -23,6 +25,7 @@ void main() async {
     log(e.toString());
     setUpTasksMinutes = Constants.setUpTasksMinutesDefault;
   }
+
   await setUpTasks(setUpTasksMinutes);
 
   await setUpClapsTime();*/
@@ -38,7 +41,9 @@ void main() async {
     ),
   );*/
 
-  return runApp(App());
+  runApp(App());
+
+  await setUpBackgroundTasks();
 }
 
 class SimpleBlocDelegate extends BlocDelegate {
