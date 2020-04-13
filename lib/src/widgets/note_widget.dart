@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:covid19cuba/src/models/models.dart';
-
 class NoteWidget extends StatelessWidget {
-  final DataModel data;
+  final String note;
 
-  NoteWidget({this.data}) : assert(data != null);
+  NoteWidget({this.note});
 
   @override
   Widget build(BuildContext context) {
-    if (data.note == null || data.note.isEmpty) {
+    if (note == null || note.isEmpty) {
       return Container();
     }
     return Container(
       margin: EdgeInsets.all(10),
       child: Text(
-        data.note,
+        note,
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

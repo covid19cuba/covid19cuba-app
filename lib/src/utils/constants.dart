@@ -12,6 +12,9 @@ class Constants {
   static const String defaultCompareCountry = 'Hungary';
   static const String countryCuba = 'Cuba';
 
+  static const showMunicipalities = "covidData";
+  static const showProvinces = "covidData2";
+
   //Shared preferences
   static const String prefIsOnBoarding = 'isOnBoarding';
   static const String prefCompareCountry = 'compareCountry';
@@ -42,5 +45,24 @@ class Constants {
   static const String githubBanner = "assets/images/github.png";
 
   static const String apkUpdateText =
-      'Ya está disponible una nueva versión de Covid19 Cuba Data. ';
+      'Ya está disponible una nueva versión de Covid19 Cuba Data.';
+
+  static const provinceAbbreviations = <String, String>{
+    'pri': 'Pinar del Río',
+    'art': 'Artemisa',
+    'lha': 'La Habana',
+    'may': 'Mayabeque',
+    'mat': 'Matanzas',
+    'cfg': 'Cienfuegos',
+    'vcl': 'Villa Clara',
+    'ssp': 'Sancti Spíritus',
+    'cav': 'Ciego de Ávila',
+    'cam': 'Camagüey',
+    'ltu': 'Las Tunas',
+    'hol': 'Holguín',
+    'gra': 'Granma',
+    'stg': 'Santiago de Cuba',
+    'gtm': 'Guantánamo',
+    'ijv': 'Isla de la Juventud',
+  };
 }

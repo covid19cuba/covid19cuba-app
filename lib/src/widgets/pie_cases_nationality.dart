@@ -7,10 +7,12 @@ import 'package:covid19cuba/src/models/models.dart';
 
 // ignore: must_be_immutable
 class PieCasesNationalityWidget extends StatefulWidget {
-  final DataModel data;
+  final CasesByNationality casesByNationality;
+
   List<Palette> colorPalettes;
 
-  PieCasesNationalityWidget({this.data}) : assert(data != null) {
+  PieCasesNationalityWidget({this.casesByNationality})
+      : assert(casesByNationality != null) {
     colorPalettes = charts.MaterialPalette.getOrderedPalettes(3);
   }
 
@@ -53,9 +55,9 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: [
-                  widget.data.casesByNationality.foreign,
-                  widget.data.casesByNationality.cubans,
-                  widget.data.casesByNationality.unknown
+                  widget.casesByNationality.foreign,
+                  widget.casesByNationality.cubans,
+                  widget.casesByNationality.unknown
                 ],
               ),
             ],

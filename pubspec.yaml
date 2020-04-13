@@ -52,6 +52,8 @@ flutter:
     - assets/municipios.geojson
     - assets/js/geojsondata.js
     - assets/map.html
+    - assets/map2.html
+    - assets/js/municipios.js
 
 flutter_native_splash:
   image: assets/images/icon.jpg

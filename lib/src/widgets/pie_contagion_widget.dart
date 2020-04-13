@@ -7,10 +7,11 @@ import 'package:covid19cuba/src/models/models.dart';
 
 // ignore: must_be_immutable
 class PieContagionWidget extends StatefulWidget {
-  final DataModel data;
+  final CasesByModeOfContagion casesByModeOfContagion;
   List<Palette> colorPalettes;
 
-  PieContagionWidget({this.data}) : assert(data != null) {
+  PieContagionWidget({this.casesByModeOfContagion})
+      : assert(casesByModeOfContagion != null) {
     colorPalettes = charts.MaterialPalette.getOrderedPalettes(4);
   }
 
@@ -52,10 +53,10 @@ class PieContagionWidgetState extends State<PieContagionWidget> {
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: [
-                  widget.data.casesByModeOfContagion.imported,
-                  widget.data.casesByModeOfContagion.inserted,
-                  widget.data.casesByModeOfContagion.autochthonous,
-                  widget.data.casesByModeOfContagion.unknown,
+                  widget.casesByModeOfContagion.imported,
+                  widget.casesByModeOfContagion.inserted,
+                  widget.casesByModeOfContagion.autochthonous,
+                  widget.casesByModeOfContagion.unknown,
                 ],
               ),
             ],
