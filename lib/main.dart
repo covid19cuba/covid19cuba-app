@@ -44,7 +44,7 @@ void main() async {
     ),
   );*/
 
-  runApp(App());
+  runApp(App(update));
 
   await setUpBackgroundTasks();
 }
