@@ -7,7 +7,6 @@ import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/pages/pages.dart';
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
@@ -343,34 +342,14 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
       context,
       icon: Icons.update,
       text: 'Actualizar',
-      onTap: () async {
+      onTap: () {
         Navigator.of(context).pop();
-        var stateList = await StateModel.check();
-        if (stateList == null) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'No se ha podido comprobar si hay actualización nueva. '
-                'Intentelo más tarde.',
-              ),
-            ),
-          );
-        } else {
-          if (stateList[0]) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => UpdatePage(first: false),
-              ),
-            );
-          } else {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Tiene la última versión de la aplicación.'),
-              ),
-            );
-          }
-        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UpdatePage(first: false),
+          ),
+        );
       },
     );
   }
