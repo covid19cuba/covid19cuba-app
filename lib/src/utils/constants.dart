@@ -12,6 +12,9 @@ class Constants {
   static const String defaultCompareCountry = 'Hungary';
   static const String countryCuba = 'Cuba';
 
+  static const showMunicipalities = "covidData";
+  static const showProvinces = "covidData2";
+
   //Shared preferences
   static const String prefIsOnBoarding = 'isOnBoarding';
   static const String prefCompareCountry = 'compareCountry';

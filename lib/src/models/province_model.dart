@@ -35,7 +35,7 @@ class ProvinceModel {
   DateTime updated;
 
   @JsonKey(name: 'dpa_province_code')
-  String dpa_code;
+  String provinceCode;
 
   @JsonKey(name: 'map_data')
   Map<String, dynamic> mapData;

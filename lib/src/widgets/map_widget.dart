@@ -7,9 +7,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 
-const showMunicipalities = "covidData";
-const showProvinces = "covidData2";
-
 class WebViewKeepAlive extends StatefulWidget {
   final Map<String, dynamic> mapData;
   final String jsCommand;
@@ -95,7 +92,6 @@ class MapWebViewWidget extends StatefulWidget {
 }
 
 class MapWebViewWidgetState extends State<MapWebViewWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -115,7 +111,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
           ),
         ),
         WebViewKeepAlive(
-            mapData: widget.mapData, jsCommand: showMunicipalities),
+            mapData: widget.mapData, jsCommand: Constants.showMunicipalities),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
@@ -130,7 +126,10 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
             ),
           ),
         ),
-        WebViewKeepAlive(mapData: widget.mapData, jsCommand: showProvinces),
+        WebViewKeepAlive(
+          mapData: widget.mapData,
+          jsCommand: Constants.showProvinces,
+        ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
           child: Center(

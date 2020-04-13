@@ -4,21 +4,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-
-const showMunicipalities = "covidData";
-const showProvinces = "covidData2";
 
 class ProvinceWebViewKeepAlive extends StatefulWidget {
   final Map<String, dynamic> mapData;
   final String provinceCode;
 
-  ProvinceWebViewKeepAlive({this.mapData, this.provinceCode});
+  ProvinceWebViewKeepAlive({this.mapData, this.provinceCode})
+      : assert(mapData != null, provinceCode != null);
 
   @override
-  ProvinceWebViewKeepAliveState createState() => ProvinceWebViewKeepAliveState();
+  ProvinceWebViewKeepAliveState createState() =>
+      ProvinceWebViewKeepAliveState();
 }
 
 class ProvinceWebViewKeepAliveState extends State<ProvinceWebViewKeepAlive>
@@ -89,16 +87,18 @@ class ProvinceWebViewKeepAliveState extends State<ProvinceWebViewKeepAlive>
 }
 
 class ProvinceMapWebViewWidget extends StatefulWidget {
-  final ProvinceModel data;
+  final Map<String, dynamic> mapData;
+  final String provinceCode;
 
-  ProvinceMapWebViewWidget({this.data}) : assert(data != null);
+  ProvinceMapWebViewWidget({this.mapData, this.provinceCode})
+      : assert(mapData != null, provinceCode != null);
 
   @override
-  ProvinceMapWebViewWidgetState createState() => ProvinceMapWebViewWidgetState();
+  ProvinceMapWebViewWidgetState createState() =>
+      ProvinceMapWebViewWidgetState();
 }
 
 class ProvinceMapWebViewWidgetState extends State<ProvinceMapWebViewWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -118,8 +118,9 @@ class ProvinceMapWebViewWidgetState extends State<ProvinceMapWebViewWidget> {
           ),
         ),
         ProvinceWebViewKeepAlive(
-            mapData: widget.data.mapData, provinceCode: widget.data.dpa_code),
-
+          mapData: widget.mapData,
+          provinceCode: widget.provinceCode,
+        ),
       ],
     );
   }
