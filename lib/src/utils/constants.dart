@@ -23,6 +23,8 @@ class Constants {
   static const String prefSetUpTasksMinutes = 'setUpTasksMinutes';
   static const String prefVersionCode = 'versionCode';
   static const String prefData = 'data';
+  static const String prefCacheHash = 'cacheHash';
+  static const String prefVersionLastSkip = 'versionLastSkip';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;

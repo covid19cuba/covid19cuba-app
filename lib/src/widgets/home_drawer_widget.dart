@@ -232,7 +232,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
 
   Widget linksDrawerItem() {
     return ExpansionTile(
-      initiallyExpanded: true,
+      initiallyExpanded: false,
       title: Text(
         'Enlaces de Interés',
         style: TextStyle(

@@ -77,7 +77,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           color: Colors.white,
           onPressed: () {
             BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
-            log('onPressed refresh button');
           },
         ),
       ],

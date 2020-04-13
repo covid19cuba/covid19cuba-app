@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 
@@ -46,11 +44,10 @@ class ProvinceListPageState extends State<ProvinceListPage> {
               setState(() {
                 var province =
                     Constants.provinceAbbreviations.keys.toList()[index];
-                log(province);
                 if (province == null) {
                   Navigator.pop(context);
                 } else {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ProvinceItemPage(
