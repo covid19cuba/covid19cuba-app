@@ -19,22 +19,27 @@ void appTask(String taskId, [bool headless = false]) async {
     log(e.toString());
   }
   if (currentInfo != null && timeToShowNotifications()) {
-
     if (currentInfo[1]) {
-      NotificationManager.show(
-        title: 'Nueva Información!',
-        body: 'Los datos se han actualizado. '
-            'Póngase al día. Toque para revisar.',
-        id: Constants.infoUpdateNotification,
-      );
+      if (PrefService.getBool(Constants.prefFirstCacheNotification) ?? true) {
+        PrefService.setBool(Constants.prefFirstCacheNotification, false);
+        NotificationManager.show(
+          title: 'Nueva Información!',
+          body: 'Los datos se han actualizado. '
+              'Póngase al día. Toque para revisar.',
+          id: Constants.infoUpdateNotification,
+        );
+      }
     }
     if (currentInfo[0] && currentInfo[2]) {
-      NotificationManager.show(
-        title: 'Actualización!',
-        body: 'Covid19 Cuba Data posee una nueva versión. '
-            'No te pierdas las nuevas características.',
-        id: Constants.appUpdateNotification,
-      );
+      if (PrefService.getBool(Constants.prefFirstVersionNotification) ?? true) {
+        PrefService.setBool(Constants.prefFirstVersionNotification, false);
+        NotificationManager.show(
+          title: 'Actualización!',
+          body: 'Covid19 Cuba Data posee una nueva versión. '
+              'No te pierdas las nuevas características.',
+          id: Constants.appUpdateNotification,
+        );
+      }
     }
   } else {
     log('Null info recieved during foreground / background task');
