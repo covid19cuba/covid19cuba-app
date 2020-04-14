@@ -25,6 +25,8 @@ class Constants {
   static const String prefData = 'data';
   static const String prefCacheHash = 'cacheHash';
   static const String prefVersionLastSkip = 'versionLastSkip';
+  static const String prefFirstCacheNotification = 'firstCacheNotification';
+  static const String prefFirstVersionNotification = 'firstVersionNotification';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
