@@ -284,8 +284,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Solo se muestran los países en los que se detectó el primero '
-              'caso antes que Cuba.\n\nDatos de los países tomados '
+              'Datos de los países tomados '
               'de\ngithub.com/pomber/covid19\ny '
               'actualizado el '
               '${comparisonOfAccumulatedCases.updated.toStrPlus()}',
