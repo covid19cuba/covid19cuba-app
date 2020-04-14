@@ -297,6 +297,10 @@ class UpdatePageState extends State<UpdatePage> {
                   borderSide: BorderSide(width: 1.0, color: Colors.white),
                   fullWidthButton: true,
                   onPressed: () {
+                    PrefService.setBool(
+                      Constants.prefFirstVersionNotification,
+                      true,
+                    );
                     if (widget.first) {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
