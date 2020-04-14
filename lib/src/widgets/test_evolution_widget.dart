@@ -5,9 +5,9 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class TestEvolutionWidget extends StatelessWidget {
-  final DataModel data;
+  final TestsByDays testsByDays;
 
-  const TestEvolutionWidget({this.data}) : assert(data != null);
+  const TestEvolutionWidget({this.testsByDays}) : assert(testsByDays != null);
 
   @override
   Widget build(BuildContext context) {
@@ -37,28 +37,28 @@ class TestEvolutionWidget extends StatelessWidget {
           child: charts.BarChart(
             [
               charts.Series<int, String>(
-                id: data.testsByDays.negative.name,
+                id: testsByDays.negative.name,
                 seriesCategory: 'A',
                 colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
                 domainFn: (_, i) => '${i + 1}',
                 measureFn: (item, _) => item,
-                data: data.testsByDays.negative.values,
+                data: testsByDays.negative.values,
               ),
               charts.Series<int, String>(
-                id: data.testsByDays.positive.name,
+                id: testsByDays.positive.name,
                 seriesCategory: 'A',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
                 domainFn: (_, i) => '${i + 1}',
                 measureFn: (item, _) => item,
-                data: data.testsByDays.positive.values,
+                data: testsByDays.positive.values,
               ),
               charts.Series<int, String>(
-                id: data.testsByDays.total.name,
+                id: testsByDays.total.name,
                 seriesCategory: 'B',
                 colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
                 domainFn: (_, i) => '${i + 1}',
                 measureFn: (item, _) => item,
-                data: data.testsByDays.total.values,
+                data: testsByDays.total.values,
               ),
             ],
             animate: false,
@@ -107,7 +107,7 @@ class TestEvolutionWidget extends StatelessWidget {
           child: Center(
             child: Text(
               'Esta información se reporta desde el '
-              '${data.testsByDays.date.values[0].toStrPlus()}',
+              '${testsByDays.date.values[0].toStrPlus()}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

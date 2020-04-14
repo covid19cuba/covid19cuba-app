@@ -5,9 +5,10 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
 class EvolutionDeathWidget extends StatelessWidget {
-  final DataModel data;
+  final EvolutionOfDeathsByDays evolutionOfDeathsByDays;
 
-  const EvolutionDeathWidget({this.data}) : assert(data != null);
+  const EvolutionDeathWidget({this.evolutionOfDeathsByDays})
+      : assert(evolutionOfDeathsByDays != null);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class EvolutionDeathWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Evolución de muertes por días',
+              'Evolución de fallecidos por días',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -37,22 +38,22 @@ class EvolutionDeathWidget extends StatelessWidget {
           child: charts.TimeSeriesChart(
             [
               charts.Series<int, DateTime>(
-                id: data.evolutionOfDeathsByDays.daily.name,
+                id: evolutionOfDeathsByDays.daily.name,
                 colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
                 domainFn: (_, i) => dateTimeFromJson(
-                  data.evolutionOfDeathsByDays.date.values[i].toStr(),
+                  evolutionOfDeathsByDays.date.values[i].toStr(),
                 ),
                 measureFn: (item, _) => item,
-                data: data.evolutionOfDeathsByDays.daily.values,
+                data: evolutionOfDeathsByDays.daily.values,
               ),
               charts.Series<int, DateTime>(
-                id: data.evolutionOfDeathsByDays.accumulated.name,
+                id: evolutionOfDeathsByDays.accumulated.name,
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
                 domainFn: (_, i) => dateTimeFromJson(
-                  data.evolutionOfDeathsByDays.date.values[i].toStr(),
+                  evolutionOfDeathsByDays.date.values[i].toStr(),
                 ),
                 measureFn: (item, _) => item,
-                data: data.evolutionOfDeathsByDays.accumulated.values,
+                data: evolutionOfDeathsByDays.accumulated.values,
               ),
             ],
             animate: false,
@@ -69,7 +70,7 @@ class EvolutionDeathWidget extends StatelessWidget {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Muertes',
+                'Fallecidos',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:

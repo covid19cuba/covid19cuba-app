@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:crypto/crypto.dart';
 import 'package:http/http.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
@@ -13,6 +14,18 @@ const urlCubaDataIO =
     'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/all.json';
 
 Future<DataModel> getCubaData() async {
+  var stateList = await StateModel.check();
+  var cache = true;
+  if (stateList != null) {
+    cache = stateList[1];
+  }
+  if (!cache) {
+    var data = await getCubaDataFromCache();
+    if (data != null) {
+      log('Data obtained from cache.');
+      return data;
+    }
+  }
   var mode = PrefService.getInt(Constants.prefConnectionMode) ??
       Constants.ConnectionModeMerge;
   switch (mode) {
@@ -42,7 +55,11 @@ Future<DataModel> getCubaDataFrom(String url) async {
   }
   DataModel result;
   try {
-    var json = jsonDecode(utf8.decode(resp.bodyBytes));
+    var text = utf8.decode(resp.bodyBytes);
+    var bytes = utf8.encode(text);
+    var digest = sha1.convert(bytes);
+    PrefService.setString(Constants.prefCacheHash, digest.toString());
+    var json = jsonDecode(text);
     result = DataModel.fromJson(json);
   } catch (e) {
     log(e.toString());

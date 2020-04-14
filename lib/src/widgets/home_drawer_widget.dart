@@ -1,4 +1,4 @@
-import 'dart:developer' as dev;
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -73,12 +73,32 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
             ),
-            linksDrawerItem(),
-            Container(
+            createDrawerItem(
+              context,
+              icon: Icons.location_city,
+              text: 'Provincias',
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProvinceListPage(),
+                  ),
+                );
+              },
+            ),
+            /*Container(
               height: 2,
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
+            ),*/
+            linksDrawerItem(),
+            /*Container(
+              height: 2,
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+            ),*/
+            updateDrawerItem(),
             sharerDrawerItem(),
             settingsDrawerItem(),
             Container(
@@ -105,7 +125,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  dev.log('Could not launch $url');
+                  log('Could not launch $url');
                 }
               },
             ),
@@ -128,7 +148,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  dev.log('Could not launch $url');
+                  log('Could not launch $url');
                 }
               },
             ),
@@ -151,7 +171,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  dev.log('Could not launch $url');
+                  log('Could not launch $url');
                 }
               },
             ),
@@ -213,13 +233,24 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
 
   Widget linksDrawerItem() {
     return ExpansionTile(
-      initiallyExpanded: true,
-      title: Text(
-        'Enlaces de Interés',
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
+      initiallyExpanded: false,
+      title: Row(
+        children: <Widget>[
+          Icon(
+            Icons.link,
+            color: Colors.white,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: Text(
+              'Enlaces de Interés',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        ],
       ),
       children: <Widget>[
         createDrawerItem(
@@ -232,7 +263,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -245,7 +276,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -258,7 +289,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -271,7 +302,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -284,7 +315,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -298,11 +329,28 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
       ],
+    );
+  }
+
+  Widget updateDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.update,
+      text: 'Actualizar',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UpdatePage(first: false),
+          ),
+        );
+      },
     );
   }
 
@@ -346,7 +394,13 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 10, color: Colors.white),
       ),
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => ChangelogPage(),
+          ),
+        );
+      },
     );
   }
 }

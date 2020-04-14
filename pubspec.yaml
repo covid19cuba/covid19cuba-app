@@ -1,7 +1,7 @@
 name: covid19cuba
 description: Mobile application of Covid19 Cuba Data project implemented with Flutter.
 
-version: 0.4.0+7
+version: 0.5.0+8
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -29,6 +29,9 @@ dependencies:
   font_awesome_flutter: ^8.5.0
   share: ^0.6.3+5
   demoji: ^1.0.1
+  random_color:
+    path: ./RandomColor
+  crypto: ^2.1.4
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
@@ -50,6 +53,8 @@ flutter:
     - assets/municipios.geojson
     - assets/js/geojsondata.js
     - assets/map.html
+    - assets/map2.html
+    - assets/js/municipios.js
 
 flutter_native_splash:
   image: assets/images/icon.jpg
