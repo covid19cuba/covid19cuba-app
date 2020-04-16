@@ -62,6 +62,7 @@ Future<DataModel> getCubaDataFrom(String url) async {
     var json = jsonDecode(text);
     result = DataModel.fromJson(json);
     PrefService.setBool(Constants.prefFirstCacheNotification, true);
+    PrefService.setBool(Constants.prefFirstModificationNotification, true);
   } catch (e) {
     log(e.toString());
     throw ParseException('Parse error');
