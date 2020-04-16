@@ -4,6 +4,7 @@ export 'cases_by_sex.dart';
 export 'changelog_item.dart';
 export 'changelog_model.dart';
 export 'comparison_of_accumulated_cases.dart';
+export 'comparison_of_accumulated_cases_item.dart';
 export 'evolution_of_cases_by_days.dart';
 export 'data_model.dart';
 export 'evolution_of_deaths_by_days.dart';
