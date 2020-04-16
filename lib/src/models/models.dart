@@ -13,6 +13,7 @@ export 'info_update_model.dart';
 export 'item.dart';
 export 'item_code.dart';
 export 'item_date_list.dart';
+export 'item_extended.dart';
 export 'item_list.dart';
 export 'item_municipality.dart';
 export 'item_province.dart';

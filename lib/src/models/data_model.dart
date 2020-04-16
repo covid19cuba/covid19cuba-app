@@ -62,7 +62,7 @@ class DataModel {
   String note;
 
   @JsonKey(name: 'top_20_accumulated_countries')
-  List<Item> top20AccumulatedCountries;
+  List<ItemExtended> top20AccumulatedCountries;
 
   DataModel();
 

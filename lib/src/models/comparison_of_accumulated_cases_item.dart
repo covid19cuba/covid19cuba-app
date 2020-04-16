@@ -1,7 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:covid19cuba/src/utils/utils.dart';
-
 part 'comparison_of_accumulated_cases_item.g.dart';
 
 @JsonSerializable()
