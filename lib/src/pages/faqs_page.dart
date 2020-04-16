@@ -5,7 +5,28 @@ import 'package:covid19cuba/src/utils/utils.dart';
 class FaqsPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return null;
+    return Scaffold(
+      backgroundColor: Constants.primaryColor,
+      body: Center(
+        child: ListView(
+          children: faqs(),
+        ),
+      ),
+    );
   }
+
+  List<Widget> faqs(){
+    List<Widget> result = [];
+    for(var faq in Constants.faqs){
+      result.add(
+        GFAccordion(
+          title: faq[0],
+          content: faq[1],
+        )
+      );
+    }
+    return result;
+  }
+
+
 }
