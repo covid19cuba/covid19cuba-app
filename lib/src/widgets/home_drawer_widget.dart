@@ -101,6 +101,20 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 );
               },
             ),
+            createDrawerItem(
+              context,
+              icon: Icons.assignment,
+              text: 'Pesquisador Virtual',
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WebViewPage(),
+                  ),
+                );
+              },
+            ),
             /*Container(
               height: 2,
               color: Colors.white,
