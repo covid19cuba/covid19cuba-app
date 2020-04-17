@@ -52,15 +52,15 @@ class ProvinceItemPageState extends State<ProvinceItemPage>
   Widget build(BuildContext context) {
     try {
       return BlocProvider(
-        create: (context) => ProvinceBloc(),
-        child: BlocListener<ProvinceBloc, ProvinceState>(
+        create: (context) => HomeBloc(),
+        child: BlocListener<HomeBloc, HomeState>(
           listener: (context, state) {
-            if (state is LoadedProvinceState) {
+            if (state is LoadedHomeState) {
               refreshCompleter?.complete();
               refreshCompleter = Completer();
             }
           },
-          child: BlocBuilder<ProvinceBloc, ProvinceState>(
+          child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               return Scaffold(
                 appBar: getAppBar(context, state),
@@ -79,7 +79,7 @@ class ProvinceItemPageState extends State<ProvinceItemPage>
     }
   }
 
-  Widget getAppBar(BuildContext context, ProvinceState state) {
+  Widget getAppBar(BuildContext context, HomeState state) {
     return AppBar(
       centerTitle: true,
       title: Text(Constants.provinceAbbreviations[province]),
@@ -88,53 +88,49 @@ class ProvinceItemPageState extends State<ProvinceItemPage>
           icon: Icon(Icons.refresh),
           color: Colors.white,
           onPressed: () {
-            BlocProvider.of<ProvinceBloc>(context).add(
-              FetchProvinceEvent(
-                province: province,
-              ),
-            );
+            BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
           },
         ),
       ],
     );
   }
 
-  Widget getBody(BuildContext context, ProvinceState state) {
+  Widget getBody(BuildContext context, HomeState state) {
     fadeController.reset();
     fadeController.forward();
-    if (state is InitialProvinceState) {
-      BlocProvider.of<ProvinceBloc>(context).add(
-        RefreshProvinceEvent(
-          province: province,
-        ),
+    if (state is InitialHomeState) {
+      BlocProvider.of<HomeBloc>(context).add(
+        LoadHomeEvent(showNotification: false),
       );
     }
-    if (state is LoadingProvinceState) {
+    if (state is LoadingHomeState) {
       return LoadingWidget();
     }
-    if (state is LoadedProvinceState) {
+    if (state is LoadedHomeState) {
       return Container(
         child: RefreshIndicator(
           onRefresh: () {
-            BlocProvider.of<ProvinceBloc>(context).add(
-              RefreshProvinceEvent(province: province),
+            BlocProvider.of<HomeBloc>(context).add(
+              RefreshHomeEvent(),
             );
             return refreshCompleter.future;
           },
-          child: ProvinceWidget(data: state.data),
+          child: ProvinceWidget(data: state.data.provinces[province].all),
         ),
       );
     }
-    if (state is ErrorProvinceState) {
+    if (state is ErrorHomeState) {
       return ew.ErrorWidget(
         errorMessage: state.errorMessage,
         onPressed: () {
-          BlocProvider.of<ProvinceBloc>(context).add(FetchProvinceEvent(
-            province: province,
+          BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
+        },
+        onPressedCache: () {
+          BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent(
+            showNotification: false,
           ));
         },
-        onPressedCache: () {},
-        cache: false,
+        cache: state.cache,
       );
     }
     return Container();

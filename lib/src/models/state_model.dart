@@ -12,6 +12,7 @@ part 'state_model.g.dart';
 @JsonSerializable()
 class StateModel {
   int version;
+  @JsonKey(name: 'data')
   String cache;
   int days;
 
@@ -29,13 +30,13 @@ class StateModel {
       var cacheOld = PrefService.getString(Constants.prefCacheHash) ?? "";
       var version = versionNew > versionOld;
       var cache = cacheNew != cacheOld;
-      var datachange = state.days > _days;
+      var dataChange = state.days > _days;
       var versionSkip = PrefService.getInt(Constants.prefVersionLastSkip) ?? 0;
       return List<bool>()
         ..add(version)
         ..add(cache)
         ..add(versionNew > versionSkip)
-        ..add(datachange);
+        ..add(dataChange);
     } catch (e) {
       log(e.toString());
       return null;
