@@ -1,3 +1,4 @@
+import 'package:covid19cuba/src/utils/constants.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
@@ -13,6 +14,15 @@ class DataModel {
   Map<String, ProvincesModel> provinces;
 
   DataModel();
+
+  MunicipalitiesModel getMunicipality(String code) {
+    if (code == '40.01') {
+      return provinces['ijv'].municipalities[code];
+    }
+    var prov = code.split('.')[0];
+    var abbr = Constants.provincesCodes[prov];
+    return provinces[abbr].municipalities[code];
+  }
 
   static String prettyCountry(String country) {
     var dict = <String, String>{

@@ -20,6 +20,8 @@ export 'item_municipality.dart';
 export 'item_province.dart';
 export 'item_string_list.dart';
 export 'list_of_tests_performed.dart';
+export 'municipality_model.dart';
+export 'municipalities_model.dart';
 export 'news_model.dart';
 export 'province_model.dart';
 export 'provinces_model.dart';

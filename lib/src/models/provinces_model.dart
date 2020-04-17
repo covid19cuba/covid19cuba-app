@@ -7,6 +7,7 @@ part 'provinces_model.g.dart';
 @JsonSerializable()
 class ProvincesModel {
   ProvinceModel all;
+  Map<String, MunicipalitiesModel> municipalities;
 
   ProvincesModel();
 
