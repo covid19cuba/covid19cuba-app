@@ -10,6 +10,7 @@ export 'home_drawer_widget.dart';
 export 'home_widget.dart';
 export 'loading_widget.dart';
 export 'map_widget.dart';
+export 'municipality_widget.dart';
 export 'note_widget.dart';
 export 'pie_cases_nationality.dart';
 export 'pie_contagion_widget.dart';

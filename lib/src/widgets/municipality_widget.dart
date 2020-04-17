@@ -1,14 +1,13 @@
-import 'package:covid19cuba/src/widgets/province_map_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class ProvinceWidget extends StatelessWidget {
-  final ProvinceModel data;
+class MunicipalityWidget extends StatelessWidget {
+  final MunicipalityModel data;
 
-  const ProvinceWidget({this.data}) : assert(data != null);
+  const MunicipalityWidget({this.data}) : assert(data != null);
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +17,6 @@ class ProvinceWidget extends StatelessWidget {
               color: Constants.primaryColor,
               child: ResumeWidget(resume: data.resume, updated: data.updated),
             ),
-            Container(
-              margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-              child: Card(
-                child: ProvinceMapWebViewWidget(
-                  mapData: data.mapData,
-                  provinceCode: data.provinceCode,
-                ),
-              ),
-            )
           ] +
           (data.resume.map((a) => a.value).reduce((a, b) => a + b) == 0
               ? []
@@ -75,31 +65,6 @@ class ProvinceWidget extends StatelessWidget {
                       child: DistributionNationalityDiagnosedWidget(
                         distributionByNationalityOfForeignCases:
                             data.distributionByNationalityOfForeignCases,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-                    child: Card(
-                      child: Container(
-                        child: TableData(
-                          title: 'Municipios Afectados',
-                          subtitle: 'Municipios',
-                          description: '% del total de casos',
-                          keys: data.affectedMunicipalities
-                              .map(
-                                (x) => x.name,
-                              )
-                              .toList(),
-                          values: data.affectedMunicipalities
-                              .map(
-                                (x) =>
-                                    (x.value * 100 / x.total)
-                                        .toStringAsFixed(2) +
-                                    '%',
-                              )
-                              .toList(),
-                        ),
                       ),
                     ),
                   ),
