@@ -20,14 +20,27 @@ void appTask(String taskId, [bool headless = false]) async {
   }
   if (currentInfo != null && timeToShowNotifications()) {
     if (currentInfo[1]) {
-      if (PrefService.getBool(Constants.prefFirstCacheNotification) ?? true) {
-        PrefService.setBool(Constants.prefFirstCacheNotification, false);
-        NotificationManager.show(
-          title: 'Nueva Información!',
-          body: 'Los datos se han actualizado. '
-              'Póngase al día. Toque para revisar.',
-          id: Constants.infoUpdateNotification,
-        );
+      if (currentInfo[3]){
+        if (PrefService.getBool(Constants.prefFirstCacheNotification) ?? true) {
+          PrefService.setBool(Constants.prefFirstCacheNotification, false);
+          NotificationManager.show(
+            title: 'Nueva Información!',
+            body: 'Los datos del parte diario se han actualizado. '
+                'Póngase al día. Toque para revisar.',
+            id: Constants.infoUpdateNotification,
+          );
+        }
+      }
+      else{
+        if (PrefService.getBool(Constants.prefFirstModificationNotification) ?? true) {
+          PrefService.setBool(Constants.prefFirstModificationNotification, false);
+          NotificationManager.show(
+            title: 'Cambios Realizados!',
+            body: 'Los datos se han actualizado. '
+                'Hemos mejorado los datos dispoibles. Toque para revisar.',
+            id: Constants.infoUpdateNotification,
+          );
+        }
       }
     }
     if (currentInfo[0] && currentInfo[2]) {

@@ -13,12 +13,14 @@ part 'state_model.g.dart';
 class StateModel {
   int version;
   String cache;
+  int days;
 
   StateModel();
 
   static Future<List<bool>> check() async {
     try {
       var state = await getStateData();
+      var _days = getDayFromCache();
       var cacheNew = state.cache;
       var versionNew = state.version;
       var packageInfo = await PackageInfo.fromPlatform();
@@ -27,11 +29,13 @@ class StateModel {
       var cacheOld = PrefService.getString(Constants.prefCacheHash) ?? "";
       var version = versionNew > versionOld;
       var cache = cacheNew != cacheOld;
+      var datachange = state.days > _days;
       var versionSkip = PrefService.getInt(Constants.prefVersionLastSkip) ?? 0;
       return List<bool>()
         ..add(version)
         ..add(cache)
-        ..add(versionNew > versionSkip);
+        ..add(versionNew > versionSkip)
+        ..add(datachange);
     } catch (e) {
       log(e.toString());
       return null;
