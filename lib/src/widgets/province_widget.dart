@@ -108,21 +108,29 @@ class ProvinceWidgetState extends State<ProvinceWidget> {
                       child: Container(
                         child: TableData(
                           title: 'Municipios Afectados',
-                          subtitle: 'Municipios',
-                          description: '% del total de casos',
-                          keys: provinceData.affectedMunicipalities
-                              .map(
-                                (x) => x.name,
-                              )
-                              .toList(),
-                          values: provinceData.affectedMunicipalities
-                              .map(
-                                (x) =>
-                                    (x.value * 100 / x.total)
-                                        .toStringAsFixed(2) +
-                                    '%',
-                              )
-                              .toList(),
+                          headers: [
+                            'Municipios',
+                            'Casos',
+                            '% del total',
+                          ],
+                          values: [
+                            provinceData.affectedMunicipalities
+                                .map(
+                                  (x) => x.name,
+                                )
+                                .toList(),
+                            provinceData.affectedMunicipalities
+                                .map((x) => x.value.toString())
+                                .toList(),
+                            provinceData.affectedMunicipalities
+                                .map(
+                                  (x) =>
+                                      (x.value * 100 / x.total)
+                                          .toStringAsFixed(2) +
+                                      '%',
+                                )
+                                .toList(),
+                          ],
                         ),
                       ),
                     ),
