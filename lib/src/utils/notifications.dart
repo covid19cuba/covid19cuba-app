@@ -73,7 +73,7 @@ Future<void> setUpBackgroundTasks() async {
   await TaskManager.setHeadlessTask(appHeadlessTask);
 }
 
-Future<void> setUpClapsTime() async {
+Future<void> showClaps() async {
   String claps = Demoji.clap +
       Demoji.clap +
       Demoji.clap +
@@ -83,14 +83,13 @@ Future<void> setUpClapsTime() async {
       Demoji.clap +
       Demoji.clap;
 
-  await NotificationManager.showDailyAtTime(
+  await NotificationManager.show(
     id: Constants.clapsNotification,
     title: 'Tiempo de aplausos!!!!!' + claps,
     body:
         'Ya casi son las 9 de la noche. Súmate a los aplausos por quienes trabajan por la salud y seguridad de todos. \n' +
             claps +
             claps,
-    notificationTime: Constants.clapsTime,
   );
 }
 
@@ -98,4 +97,12 @@ bool timeToShowNotifications() {
   DateTime moment = DateTime.now();
   return moment.hour < Constants.startSilentIime &&
       moment.hour > Constants.endSilentTime;
+}
+
+bool clapsTime() {
+  DateTime date = DateTime.now();
+
+  return date.hour >= Constants.startClapsHour &&
+      date.minute >= Constants.startClapsMinute &&
+      date.hour <= Constants.stopClapsHour;
 }
