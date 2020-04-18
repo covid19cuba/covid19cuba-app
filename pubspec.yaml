@@ -32,6 +32,7 @@ dependencies:
   random_color:
     path: ./RandomColor
   crypto: ^2.1.4
+  country_pickers: ^1.2.0
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
