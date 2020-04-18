@@ -334,7 +334,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   Widget _buildDialogItem(Country country) => Row(
         children: <Widget>[
           CountryPickerUtils.getDefaultFlagImage(country),
-          //SizedBox(width: 8.0),
+          SizedBox(width: 8.0),
           Flexible(
               child: Text(DataModel.prettyCountry(
                   DataModel.countries()[country.isoCode]))),
