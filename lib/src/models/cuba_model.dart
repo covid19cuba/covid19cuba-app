@@ -40,6 +40,9 @@ class CubaModel {
   @JsonKey(name: 'tests_by_days')
   TestsByDays testsByDays;
 
+  @JsonKey(name: 'tests_positive_percent')
+  TestsPositivePercent testsPositivePercent;
+
   @JsonKey(name: 'affected_provinces')
   List<ItemProvince> affectedProvinces;
 
