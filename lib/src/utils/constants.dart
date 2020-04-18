@@ -94,6 +94,25 @@ class Constants {
     '40.01': 'ijv',
   };
 
+  static const provincesAbbreviationsCodes = <String, String>{
+    'pri': '21',
+    'art': '22',
+    'lha': '23',
+    'may': '24',
+    'mat': '25',
+    'vcl': '26',
+    'cfg': '27',
+    'ssp': '28',
+    'cav': '29',
+    'cam': '30',
+    'ltu': '31',
+    'hol': '32',
+    'gra': '33',
+    'stg': '34',
+    'gtm': '35',
+    'ijv': '40.01',
+  };
+
   static const municipalitiesNames = <String, String>{
     '21.01': 'Pinar del Río - Sandino',
     '21.02': 'Pinar del Río - Mantua',

@@ -115,7 +115,7 @@ class ProvinceItemPageState extends State<ProvinceItemPage>
             );
             return refreshCompleter.future;
           },
-          child: ProvinceWidget(data: state.data.provinces[province].all),
+          child: ProvinceWidget(data: state.data, province: province),
         ),
       );
     }

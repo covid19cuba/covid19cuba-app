@@ -1,14 +1,32 @@
-import 'package:covid19cuba/src/widgets/province_map_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class ProvinceWidget extends StatelessWidget {
-  final ProvinceModel data;
+class ProvinceWidget extends StatefulWidget {
+  final DataModel data;
+  final String province;
 
-  const ProvinceWidget({this.data}) : assert(data != null);
+  ProvinceWidget({this.data, this.province})
+      : assert(data != null, province != null);
+
+  @override
+  ProvinceWidgetState createState() => ProvinceWidgetState(
+        data: data,
+        province: province,
+      );
+}
+
+class ProvinceWidgetState extends State<ProvinceWidget> {
+  final DataModel data;
+  final String province;
+  ProvinceModel provinceData;
+
+  ProvinceWidgetState({this.data, this.province}) {
+    assert(data != null, province != null);
+    provinceData = data.provinces[province].all;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,32 +34,36 @@ class ProvinceWidget extends StatelessWidget {
       children: <Widget>[
             Container(
               color: Constants.primaryColor,
-              child: ResumeWidget(resume: data.resume, updated: data.updated),
+              child: ResumeWidget(
+                resume: provinceData.resume,
+                updated: provinceData.updated,
+              ),
             ),
             Container(
               margin: EdgeInsets.only(left: 5, right: 5, top: 5),
               child: Card(
                 child: ProvinceMapWebViewWidget(
-                  mapData: data.mapData,
-                  provinceCode: data.provinceCode,
+                  mapData: provinceData.mapData,
+                  provinceCode: provinceData.provinceCode,
                 ),
               ),
             )
           ] +
-          (data.resume.map((a) => a.value).reduce((a, b) => a + b) == 0
+          (provinceData.resume.map((a) => a.value).reduce((a, b) => a + b) == 0
               ? []
               : <Widget>[
                   Container(
                     margin: EdgeInsets.only(left: 5, right: 5, top: 5),
                     child: Card(
-                      child: PieSexWidget(casesBySex: data.casesBySex),
+                      child: PieSexWidget(casesBySex: provinceData.casesBySex),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: 5, right: 5, top: 5),
                     child: Card(
                       child: PieContagionWidget(
-                        casesByModeOfContagion: data.casesByModeOfContagion,
+                        casesByModeOfContagion:
+                            provinceData.casesByModeOfContagion,
                       ),
                     ),
                   ),
@@ -49,7 +71,8 @@ class ProvinceWidget extends StatelessWidget {
                     margin: EdgeInsets.only(left: 5, right: 5, top: 5),
                     child: Card(
                       child: EvolutionCasesWidget(
-                        evolutionOfCasesByDays: data.evolutionOfCasesByDays,
+                        evolutionOfCasesByDays:
+                            provinceData.evolutionOfCasesByDays,
                       ),
                     ),
                   ),
@@ -57,7 +80,8 @@ class ProvinceWidget extends StatelessWidget {
                     margin: EdgeInsets.only(left: 5, right: 5, top: 5),
                     child: Card(
                       child: DistributionAgeGroupsDiagnosedWidget(
-                        distributionByAgeRanges: data.distributionByAgeRanges,
+                        distributionByAgeRanges:
+                            provinceData.distributionByAgeRanges,
                       ),
                     ),
                   ),
@@ -65,7 +89,7 @@ class ProvinceWidget extends StatelessWidget {
                     margin: EdgeInsets.only(left: 5, right: 5, top: 5),
                     child: Card(
                       child: PieCasesNationalityWidget(
-                        casesByNationality: data.casesByNationality,
+                        casesByNationality: provinceData.casesByNationality,
                       ),
                     ),
                   ),
@@ -73,8 +97,8 @@ class ProvinceWidget extends StatelessWidget {
                     margin: EdgeInsets.only(left: 5, right: 5, top: 5),
                     child: Card(
                       child: DistributionNationalityDiagnosedWidget(
-                        distributionByNationalityOfForeignCases:
-                            data.distributionByNationalityOfForeignCases,
+                        distributionByNationalityOfForeignCases: provinceData
+                            .distributionByNationalityOfForeignCases,
                       ),
                     ),
                   ),
@@ -86,12 +110,12 @@ class ProvinceWidget extends StatelessWidget {
                           title: 'Municipios Afectados',
                           subtitle: 'Municipios',
                           description: '% del total de casos',
-                          keys: data.affectedMunicipalities
+                          keys: provinceData.affectedMunicipalities
                               .map(
                                 (x) => x.name,
                               )
                               .toList(),
-                          values: data.affectedMunicipalities
+                          values: provinceData.affectedMunicipalities
                               .map(
                                 (x) =>
                                     (x.value * 100 / x.total)
@@ -100,6 +124,15 @@ class ProvinceWidget extends StatelessWidget {
                               )
                               .toList(),
                         ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+                    child: Card(
+                      child: MunicipalitiesComparisonWidget(
+                        data: data,
+                        province: province,
                       ),
                     ),
                   ),
