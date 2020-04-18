@@ -18,9 +18,22 @@ void appTask(String taskId, [bool headless = false]) async {
   } catch (e) {
     log(e.toString());
   }
-  if (currentInfo != null && timeToShowNotifications()) {
-    if (currentInfo[1]) {
-      if (currentInfo[3]){
+
+  if (clapsTime()) {
+    await showClaps();
+  } else if (currentInfo != null && timeToShowNotifications()) {
+    bool upgrade =
+        PrefService.getBool(Constants.prefFirstVersionNotification) ?? true;
+    if (currentInfo[0] && currentInfo[2] && upgrade) {
+      PrefService.setBool(Constants.prefFirstVersionNotification, false);
+      NotificationManager.show(
+        title: 'Actualización!',
+        body: 'Covid19 Cuba Data posee una nueva versión. '
+            'No te pierdas las nuevas características.',
+        id: Constants.appUpdateNotification,
+      );
+    } else if (currentInfo[1]) {
+      if (currentInfo[3]) {
         if (PrefService.getBool(Constants.prefFirstCacheNotification) ?? true) {
           PrefService.setBool(Constants.prefFirstCacheNotification, false);
           NotificationManager.show(
@@ -30,10 +43,11 @@ void appTask(String taskId, [bool headless = false]) async {
             id: Constants.infoUpdateNotification,
           );
         }
-      }
-      else{
-        if (PrefService.getBool(Constants.prefFirstModificationNotification) ?? true) {
-          PrefService.setBool(Constants.prefFirstModificationNotification, false);
+      } else {
+        if (PrefService.getBool(Constants.prefFirstModificationNotification) ??
+            true) {
+          PrefService.setBool(
+              Constants.prefFirstModificationNotification, false);
           NotificationManager.show(
             title: 'Cambios Realizados!',
             body: 'Los datos se han actualizado. '
@@ -41,17 +55,6 @@ void appTask(String taskId, [bool headless = false]) async {
             id: Constants.infoUpdateNotification,
           );
         }
-      }
-    }
-    if (currentInfo[0] && currentInfo[2]) {
-      if (PrefService.getBool(Constants.prefFirstVersionNotification) ?? true) {
-        PrefService.setBool(Constants.prefFirstVersionNotification, false);
-        NotificationManager.show(
-          title: 'Actualización!',
-          body: 'Covid19 Cuba Data posee una nueva versión. '
-              'No te pierdas las nuevas características.',
-          id: Constants.appUpdateNotification,
-        );
       }
     }
   } else {
