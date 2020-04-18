@@ -2,32 +2,60 @@ import 'dart:developer';
 
 import 'package:background_fetch/background_fetch.dart';
 import 'package:demoji/demoji.dart';
-
-import 'package:covid19cuba/src/data_providers/data_providers.dart';
+import 'package:preferences/preferences.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 void appTask(String taskId, [bool headless = false]) async {
-  InfoUpdate currentInfo;
+  if (headless) {
+    await NotificationManager.initialize();
+    await PrefService.init();
+  }
+
+  List<bool> currentInfo;
   try {
-    currentInfo = await isInfoUpdated();
+    currentInfo = await StateModel.check();
   } catch (e) {
     log(e.toString());
   }
-  if (currentInfo != null) {
-    if (currentInfo.needUpdate) {
-      if (headless) {
-        await NotificationManager.initialize();
+  if (currentInfo != null && timeToShowNotifications()) {
+    if (currentInfo[1]) {
+      if (currentInfo[3]){
+        if (PrefService.getBool(Constants.prefFirstCacheNotification) ?? true) {
+          PrefService.setBool(Constants.prefFirstCacheNotification, false);
+          NotificationManager.show(
+            title: 'Nueva Información!',
+            body: 'Los datos del parte diario se han actualizado. '
+                'Póngase al día. Toque para revisar.',
+            id: Constants.infoUpdateNotification,
+          );
+        }
       }
-      NotificationManager.show(
-        title: 'Nueva Información!',
-        body: 'Los datos se han actualizado. '
-            'Póngase al día. Toque para revisar.',
-        id: -1,
-      );
+      else{
+        if (PrefService.getBool(Constants.prefFirstModificationNotification) ?? true) {
+          PrefService.setBool(Constants.prefFirstModificationNotification, false);
+          NotificationManager.show(
+            title: 'Cambios Realizados!',
+            body: 'Los datos se han actualizado. '
+                'Hemos mejorado los datos dispoibles. Toque para revisar.',
+            id: Constants.infoUpdateNotification,
+          );
+        }
+      }
+    }
+    if (currentInfo[0] && currentInfo[2]) {
+      if (PrefService.getBool(Constants.prefFirstVersionNotification) ?? true) {
+        PrefService.setBool(Constants.prefFirstVersionNotification, false);
+        NotificationManager.show(
+          title: 'Actualización!',
+          body: 'Covid19 Cuba Data posee una nueva versión. '
+              'No te pierdas las nuevas características.',
+          id: Constants.appUpdateNotification,
+        );
+      }
     }
   } else {
-    log('Null info recieved');
+    log('Null info recieved during foreground / background task');
   }
   BackgroundFetch.finish(taskId);
 }
@@ -36,8 +64,12 @@ void appHeadlessTask(String taskId) async {
   return appTask(taskId, true);
 }
 
-Future<void> setUpTasks([int minutes = Constants.setUpTasksMinutesDefault]) async {
+Future<void> setUpTasks(
+    [int minutes = Constants.setUpTasksMinutesDefault]) async {
   await TaskManager.initialize(minutes, appTask);
+}
+
+Future<void> setUpBackgroundTasks() async {
   await TaskManager.setHeadlessTask(appHeadlessTask);
 }
 
@@ -60,4 +92,10 @@ Future<void> setUpClapsTime() async {
             claps,
     notificationTime: Constants.clapsTime,
   );
+}
+
+bool timeToShowNotifications() {
+  DateTime moment = DateTime.now();
+  return moment.hour < Constants.startSilentIime &&
+      moment.hour > Constants.endSilentTime;
 }

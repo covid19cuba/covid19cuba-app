@@ -6,16 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/data_model.dart';
-
-const showMunicipalities = "covidData";
-const showProvinces = "covidData2";
 
 class WebViewKeepAlive extends StatefulWidget {
-  final DataModel data;
+  final Map<String, dynamic> mapData;
   final String jsCommand;
 
-  WebViewKeepAlive({this.data, this.jsCommand});
+  WebViewKeepAlive({this.mapData, this.jsCommand});
 
   @override
   WebViewKeepAliveState createState() => WebViewKeepAliveState();
@@ -37,7 +33,7 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
       initialUrl: 'assets/map.html',
       javascriptMode: JavascriptMode.unrestricted,
       onPageFinished: (_) {
-        mapData = jsonEncode(widget.data.mapData);
+        mapData = jsonEncode(widget.mapData);
         controller
             .evaluateJavascript(widget.jsCommand + '($mapData)')
             .whenComplete(() {});
@@ -87,19 +83,15 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
 }
 
 class MapWebViewWidget extends StatefulWidget {
-  final DataModel data;
+  final Map<String, dynamic> mapData;
 
-  MapWebViewWidget({this.data}) : assert(data != null);
+  MapWebViewWidget({this.mapData}) : assert(mapData != null);
 
   @override
   MapWebViewWidgetState createState() => MapWebViewWidgetState();
 }
 
 class MapWebViewWidgetState extends State<MapWebViewWidget> {
-  String mapData = "{}";
-  WebViewController contMunicipalities;
-  WebViewController contProvinces;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -118,7 +110,8 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
             ),
           ),
         ),
-        WebViewKeepAlive(data: widget.data, jsCommand: showMunicipalities),
+        WebViewKeepAlive(
+            mapData: widget.mapData, jsCommand: Constants.showMunicipalities),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
@@ -133,7 +126,10 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
             ),
           ),
         ),
-        WebViewKeepAlive(data: widget.data, jsCommand: showProvinces),
+        WebViewKeepAlive(
+          mapData: widget.mapData,
+          jsCommand: Constants.showProvinces,
+        ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
           child: Center(

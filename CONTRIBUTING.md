@@ -53,5 +53,5 @@ and actively welcome your pull requests:
 1. Make sure your code lints.
 1. Issue that pull request!
 
-### Any contributions you make will be under the MIT License
-When you submit code changes, your submissions are understood to be under the same [MIT](LICENSE) that covers the project.
+### Any contributions you make will be under the Creative Commons Zero v1.0 Universal
+When you submit code changes, your submissions are understood to be under the same [CC0-1.0](LICENSE) that covers the project.

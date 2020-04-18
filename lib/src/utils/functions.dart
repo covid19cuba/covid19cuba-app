@@ -1,3 +1,10 @@
+import 'dart:convert';
+
+import 'package:url_launcher/url_launcher.dart';
+import 'package:preferences/preference_service.dart';
+import 'utils.dart';
+import 'dart:developer';
+
 int getInt(dynamic value) {
   return value is String ? int.parse(value) : value;
 }
@@ -69,4 +76,22 @@ extension DateTimeToString on DateTime {
     ];
     return '${this.day} de ${months[this.month - 1]} del ${this.year}';
   }
+}
+
+void getUrl(url) async {
+  if (await canLaunch(url)) {
+    launch(url);
+  } else {
+    log("Download url failed");
+    throw InvalidSourceException("No se ha podido obtener la url");
+  }
+}
+
+int getDayFromCache() {
+  var data = PrefService.getString(Constants.prefData);
+  if (data != null){
+    var json = jsonDecode(data);
+    return json['evolution_of_cases_by_days']['accumulated']['values'].length;
+  }
+  return -1;
 }

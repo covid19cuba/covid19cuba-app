@@ -1,4 +1,4 @@
-import 'dart:developer' as dev;
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,20 +6,15 @@ import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
-  final DataModel data;
-
-  HomeDrawerWidget({this.data}) : assert(data != null);
-
   @override
-  _HomeDrawerWidgetState createState() => _HomeDrawerWidgetState();
+  HomeDrawerWidgetState createState() => HomeDrawerWidgetState();
 }
 
-class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
+class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
   String appName = '';
   String version = '';
 
@@ -78,14 +73,49 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
             ),
-            linksDrawerItem(),
-            Container(
+            createDrawerItem(
+              context,
+              icon: Icons.location_city,
+              text: 'Provincias',
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProvinceListPage(),
+                  ),
+                );
+              },
+            ),
+            createDrawerItem(
+              context,
+              icon: Icons.location_city,
+              text: 'Municipios',
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MunicipalityListPage(),
+                  ),
+                );
+              },
+            ),
+            /*Container(
               height: 2,
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
+            ),*/
+            linksDrawerItem(),
+            /*Container(
+              height: 2,
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+            ),*/
+            updateDrawerItem(),
             sharerDrawerItem(),
             settingsDrawerItem(),
+            faqsDrawerItem(),
             Container(
               height: 2,
               color: Colors.white,
@@ -110,7 +140,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  dev.log('Could not launch $url');
+                  log('Could not launch $url');
                 }
               },
             ),
@@ -133,7 +163,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  dev.log('Could not launch $url');
+                  log('Could not launch $url');
                 }
               },
             ),
@@ -156,7 +186,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
-                  dev.log('Could not launch $url');
+                  log('Could not launch $url');
                 }
               },
             ),
@@ -218,13 +248,24 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
 
   Widget linksDrawerItem() {
     return ExpansionTile(
-      initiallyExpanded: true,
-      title: Text(
-        'Enlaces de Interés',
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
+      initiallyExpanded: false,
+      title: Row(
+        children: <Widget>[
+          Icon(
+            Icons.link,
+            color: Colors.white,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: Text(
+              'Enlaces de Interés',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        ],
       ),
       children: <Widget>[
         createDrawerItem(
@@ -237,7 +278,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -250,7 +291,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -263,7 +304,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -276,7 +317,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -289,7 +330,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
@@ -303,11 +344,28 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             if (await canLaunch(url)) {
               await launch(url);
             } else {
-              dev.log('Could not launch $url');
+              log('Could not launch $url');
             }
           },
         ),
       ],
+    );
+  }
+
+  Widget updateDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.update,
+      text: 'Actualizar',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UpdatePage(first: false),
+          ),
+        );
+      },
     );
   }
 
@@ -337,7 +395,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SettingsPage(data: widget.data),
+            builder: (context) => SettingsPage(),
           ),
         );
       },
@@ -351,7 +409,30 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 10, color: Colors.white),
       ),
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => ChangelogPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget faqsDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.question_answer,
+      text: 'Preguntas Frecuentes',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FaqsPage(),
+          ),
+        );
+      },
     );
   }
 }

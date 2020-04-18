@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/data_model.dart';
 
 class TableData extends StatelessWidget {
-  final DataModel data;
+  final String title;
+  final String subtitle;
+  final String description;
+  final List<String> keys;
+  final List<String> values;
 
-  final String infoToShow;
+  const TableData({
+    this.title,
+    this.subtitle,
+    this.description,
+    this.keys,
+    this.values,
+  })  : assert(title != null),
+        assert(subtitle != null),
+        assert(description != null),
+        assert(keys != null),
+        assert(values != null);
 
-  const TableData({this.data, this.infoToShow})
-      : assert(data != null),
-        assert(infoToShow != null);
-
-  List<TableRow> getTableMunicipality() {
-    var topData = data.affectedMunicipalities?.take(10)?.toList();
-    if (topData == null || topData.length == 0) {
-      return null;
-    }
+  List<TableRow> getTable() {
     var index = 0;
-    return topData.map(
+    return keys.map(
       (item) {
         index += 1;
         return TableRow(
@@ -40,7 +45,7 @@ class TableData extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 margin: EdgeInsets.all(10),
                 child: Text(
-                  '${item.name} (${item.province})',
+                  '${keys[index - 1]}',
                   style: TextStyle(
                     color: Constants.primaryColor,
                     fontWeight: FontWeight.normal,
@@ -53,63 +58,7 @@ class TableData extends StatelessWidget {
                 margin: EdgeInsets.all(10),
                 child: Center(
                   child: Text(
-                    (item.value * 100 / item.total).toStringAsFixed(2) + '%',
-                    style: TextStyle(
-                      color: Constants.primaryColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    ).toList();
-  }
-
-  List<TableRow> getTableProvince() {
-    var topData = data.affectedProvinces?.take(10)?.toList();
-    if (topData == null || topData.length == 0) {
-      return null;
-    }
-    var index = 0;
-    return topData.map(
-      (item) {
-        index += 1;
-        return TableRow(
-          children: [
-            TableCell(
-              child: Container(
-                margin: EdgeInsets.all(10),
-                child: Text(
-                  '$index',
-                  style: TextStyle(
-                    color: Constants.primaryColor,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
-            ),
-            TableCell(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.all(10),
-                child: Text(
-                  '${item.name}',
-                  style: TextStyle(
-                    color: Constants.primaryColor,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
-            ),
-            TableCell(
-              child: Container(
-                margin: EdgeInsets.all(10),
-                child: Center(
-                  child: Text(
-                    (item.value * 100 / item.total).toStringAsFixed(2) + '%',
+                    '${values[index - 1]}',
                     style: TextStyle(
                       color: Constants.primaryColor,
                       fontWeight: FontWeight.normal,
@@ -130,10 +79,7 @@ class TableData extends StatelessWidget {
       color: Constants.primaryColor,
       width: 1,
     );
-    var title = infoToShow == 'municipality' ? 'Municipios' : 'Provincias';
-    var topData = infoToShow == 'municipality'
-        ? getTableMunicipality()
-        : getTableProvince();
+    var topData = getTable();
     if (topData == null || topData.length == 0) {
       return Container();
     }
@@ -153,8 +99,8 @@ class TableData extends StatelessWidget {
                     margin: EdgeInsets.all(15),
                     child: Center(
                       child: Text(
-                        'TOP${topData.length} $title '
-                        '${infoToShow == 'municipality' ? "Afectados" : "Afectadas"}',
+                        title,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Constants.primaryColor,
                           fontWeight: FontWeight.bold,
@@ -191,7 +137,7 @@ class TableData extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.all(10),
                         child: Text(
-                          title,
+                          subtitle,
                           style: TextStyle(
                             color: Constants.primaryColor,
                             fontWeight: FontWeight.bold,
@@ -204,7 +150,7 @@ class TableData extends StatelessWidget {
                         margin: EdgeInsets.all(10),
                         child: Center(
                           child: Text(
-                            '% del total de casos',
+                            description,
                             style: TextStyle(
                               color: Constants.primaryColor,
                               fontWeight: FontWeight.bold,

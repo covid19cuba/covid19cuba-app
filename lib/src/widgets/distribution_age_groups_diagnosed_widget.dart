@@ -5,10 +5,10 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
-  final DataModel data;
+  final List<ItemCode> distributionByAgeRanges;
 
-  const DistributionAgeGroupsDiagnosedWidget({this.data})
-      : assert(data != null);
+  const DistributionAgeGroupsDiagnosedWidget({this.distributionByAgeRanges})
+      : assert(distributionByAgeRanges != null);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Distribución por rangos etarios de los casos diagnosticados',
+              'Distribución por rangos etarios',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -42,7 +42,7 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
-                data: data.distributionByAgeRanges,
+                data: distributionByAgeRanges,
               ),
             ],
             animate: false,

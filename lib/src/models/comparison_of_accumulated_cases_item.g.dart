@@ -1,0 +1,27 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'comparison_of_accumulated_cases_item.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+ComparisonOfAccumulatedCasesItem _$ComparisonOfAccumulatedCasesItemFromJson(
+    Map<String, dynamic> json) {
+  return ComparisonOfAccumulatedCasesItem()
+    ..confirmed = (json['confirmed'] as List)?.map((e) => e as int)?.toList()
+    ..deaths = (json['deaths'] as List)?.map((e) => e as int)?.toList()
+    ..recovered = (json['recovered'] as List)?.map((e) => e as int)?.toList()
+    ..daily = (json['daily'] as List)?.map((e) => e as int)?.toList()
+    ..active = (json['active'] as List)?.map((e) => e as int)?.toList();
+}
+
+Map<String, dynamic> _$ComparisonOfAccumulatedCasesItemToJson(
+        ComparisonOfAccumulatedCasesItem instance) =>
+    <String, dynamic>{
+      'confirmed': instance.confirmed,
+      'deaths': instance.deaths,
+      'recovered': instance.recovered,
+      'daily': instance.daily,
+      'active': instance.active,
+    };

@@ -1,5 +1,40 @@
 # Covid19 Cuba Data Mobile Application Changelog
 
+## [0.5.0] - April 13, 2020
+
+### Added
+
+* Statistics by province accessing from the side menu.
+* Graph to compare the exponential behaviors of the epidemic in the 20 most affected countries with Cuba.
+* Screen to check if there is an application update.
+* Application update notifications.
+* Information update notifications.
+* New cache system to decrease data transfer over the network.
+* Animation when opening and reloading the screens.
+
+### Changed
+
+* Added all the countries in the comparison with Cuba.
+* Changes in the side menu.
+
+## [0.4.0] - April 7, 2020
+
+### Added
+
+* Charts with deaths and recovered data.
+* Settings page
+* Option for mode of connection
+* Remember entity selected for comparison with Cuba
+
+### Changed
+
+* Change data of few charts
+
+### Fixed
+
+* Fix problem with encoding
+* Fix table of provinces and municipalities
+
 ## [0.3.1] - April 4, 2020 
 
 ### Changed

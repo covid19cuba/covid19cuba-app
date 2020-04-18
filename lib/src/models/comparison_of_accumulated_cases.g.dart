@@ -9,8 +9,13 @@ part of 'comparison_of_accumulated_cases.dart';
 ComparisonOfAccumulatedCases _$ComparisonOfAccumulatedCasesFromJson(
     Map<String, dynamic> json) {
   return ComparisonOfAccumulatedCases()
-    ..countries = (json['countries'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(k, (e as List)?.map((e) => e as int)?.toList()),
+    ..countries = (json['countries_info'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(
+          k,
+          e == null
+              ? null
+              : ComparisonOfAccumulatedCasesItem.fromJson(
+                  e as Map<String, dynamic>)),
     )
     ..updated = dateTimeFromJson(json['updated'] as String);
 }
@@ -18,6 +23,6 @@ ComparisonOfAccumulatedCases _$ComparisonOfAccumulatedCasesFromJson(
 Map<String, dynamic> _$ComparisonOfAccumulatedCasesToJson(
         ComparisonOfAccumulatedCases instance) =>
     <String, dynamic>{
-      'countries': instance.countries,
+      'countries_info': instance.countries,
       'updated': dateTimeToJson(instance.updated),
     };

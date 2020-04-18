@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:covid19cuba/src/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:preferences/preference_service.dart';
@@ -16,16 +17,23 @@ void main() async {
 
   await NotificationManager.initialize();
 
-  int setUpTasksMinutes;
+  await NotificationManager.cancelAll();
+
+  var update = await checkUpdate();
+
+  await setUpTasks();
+
+  /*int setUpTasksMinutes;
   try {
     setUpTasksMinutes = PrefService.getInt(Constants.prefSetUpTasksMinutes);
   } catch (e) {
     log(e.toString());
     setUpTasksMinutes = Constants.setUpTasksMinutesDefault;
   }
+
   await setUpTasks(setUpTasksMinutes);
 
-  await setUpClapsTime();
+  await setUpClapsTime();*/
 
   // TODO: Bug in advice notifications, meanwhile they should be disabled
   /*var notifications = getApplicationNotifications();
@@ -38,7 +46,9 @@ void main() async {
     ),
   );*/
 
-  return runApp(App());
+  runApp(App(update));
+
+  await setUpBackgroundTasks();
 }
 
 class SimpleBlocDelegate extends BlocDelegate {
@@ -47,4 +57,16 @@ class SimpleBlocDelegate extends BlocDelegate {
     super.onTransition(bloc, transition);
     log(transition.toString());
   }
+}
+
+Future<bool> checkUpdate() async {
+  try {
+    var state = await StateModel.check();
+    if (state != null) {
+      return state[0] && state[2];
+    }
+  } catch (e) {
+    log(e.toString());
+  }
+  return false;
 }

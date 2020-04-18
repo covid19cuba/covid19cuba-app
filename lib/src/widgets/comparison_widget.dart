@@ -8,22 +8,38 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
 class ComparisonWidget extends StatefulWidget {
-  final DataModel data;
+  final ComparisonOfAccumulatedCases comparisonOfAccumulatedCases;
 
-  const ComparisonWidget({this.data}) : assert(data != null);
+  const ComparisonWidget({this.comparisonOfAccumulatedCases})
+      : assert(comparisonOfAccumulatedCases != null);
 
   @override
-  ComparisonWidgetState createState() => ComparisonWidgetState(data: data);
+  ComparisonWidgetState createState() => ComparisonWidgetState(
+      comparisonOfAccumulatedCases: comparisonOfAccumulatedCases);
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
   String selectedCountry = Constants.defaultCompareCountry;
-  final DataModel data;
+  String selectedOption = 'Confirmados';
 
-  ComparisonWidgetState({this.data}) : assert(data != null);
+  final List<String> options = List<String>()
+    ..add('Confirmados')
+    ..add('Activos')
+    ..add('Diarios')
+    ..add('Recuperados')
+    ..add('Fallecidos');
+  final ComparisonOfAccumulatedCases comparisonOfAccumulatedCases;
+
+  ComparisonWidgetState({this.comparisonOfAccumulatedCases}) {
+    assert(comparisonOfAccumulatedCases != null);
+    if (getCountriesList().indexOf(selectedCountry) == -1) {
+      selectedCountry = Constants.defaultCompareCountry;
+      PrefService.setString(Constants.prefCompareCountry, selectedCountry);
+    }
+  }
 
   List<String> getCountriesList() {
-    var list = data.comparisonOfAccumulatedCases.countries.keys
+    var list = comparisonOfAccumulatedCases.countries.keys
         .where((c) => c != Constants.countryCuba)
         .toList();
     list.sort((a, b) =>
@@ -75,17 +91,104 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ];
   }
 
+  charts.NumericAxisSpec getNumericAxisSpec() {
+    int lenCuba;
+    int lenForeign;
+    switch (selectedOption) {
+      case 'Confirmados':
+        lenCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].confirmed.length;
+        lenForeign = comparisonOfAccumulatedCases
+            .countries[selectedCountry].confirmed.length;
+        break;
+      case 'Activos':
+        lenCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].active.length;
+        lenForeign = comparisonOfAccumulatedCases
+            .countries[selectedCountry].active.length;
+        break;
+      case 'Diarios':
+        lenCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].daily.length;
+        lenForeign = comparisonOfAccumulatedCases
+            .countries[selectedCountry].daily.length;
+        break;
+      case 'Recuperados':
+        lenCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].recovered.length;
+        lenForeign = comparisonOfAccumulatedCases
+            .countries[selectedCountry].recovered.length;
+        break;
+      case 'Fallecidos':
+        lenCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].deaths.length;
+        lenForeign = comparisonOfAccumulatedCases
+            .countries[selectedCountry].deaths.length;
+        break;
+    }
+    return charts.NumericAxisSpec(
+      viewport: charts.NumericExtents(1, max(lenForeign, lenCuba)),
+    );
+  }
+
+  charts.NumericAxisSpec getNumericAxisSpecZoom() {
+    var length = 0;
+    switch (selectedOption) {
+      case 'Confirmados':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].confirmed.length;
+        break;
+      case 'Activos':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].active.length;
+        break;
+      case 'Diarios':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].daily.length;
+        break;
+      case 'Recuperados':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].recovered.length;
+        break;
+      case 'Fallecidos':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].deaths.length;
+        break;
+    }
+    return charts.NumericAxisSpec(viewport: charts.NumericExtents(1, length));
+  }
+
   List<charts.ChartBehavior> getSpecBehaviors() {
+    var length = 0;
+    switch (selectedOption) {
+      case 'Confirmados':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].confirmed.length;
+        break;
+      case 'Activos':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].active.length;
+        break;
+      case 'Diarios':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].daily.length;
+        break;
+      case 'Recuperados':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].recovered.length;
+        break;
+      case 'Fallecidos':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].deaths.length;
+        break;
+    }
     var behaviors = getBehaviors();
     behaviors.addAll([
       charts.RangeAnnotation([
         charts.LineAnnotationSegment(
-          data.comparisonOfAccumulatedCases.countries[Constants.countryCuba]
-                  .length -
-              1,
+          length - 1,
           charts.RangeAnnotationAxisType.domain,
-          startLabel:
-              'Día ${data.comparisonOfAccumulatedCases.countries[Constants.countryCuba].length}',
+          startLabel: 'Día $length',
         )
       ])
     ]);
@@ -93,40 +196,102 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   List<charts.Series<int, int>> getSeries() {
+    List<int> listCuba;
+    List<int> listForeign;
+    switch (selectedOption) {
+      case 'Confirmados':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].confirmed;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].confirmed;
+        break;
+      case 'Activos':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].active;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].active;
+        break;
+      case 'Diarios':
+        listCuba =
+            comparisonOfAccumulatedCases.countries[Constants.countryCuba].daily;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].daily;
+        break;
+      case 'Recuperados':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].recovered;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].recovered;
+        break;
+      case 'Fallecidos':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].deaths;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].deaths;
+        break;
+    }
     return [
       charts.Series<int, int>(
         id: DataModel.prettyCountry(selectedCountry),
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: data.comparisonOfAccumulatedCases.countries[selectedCountry],
+        data: listForeign,
       ),
       charts.Series<int, int>(
         id: Constants.countryCuba,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data:
-            data.comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+        data: listCuba,
       ),
     ];
   }
 
   List<charts.Series<int, int>> getZoomSeries() {
+    List<int> listCuba;
+    List<int> listForeign;
+    switch (selectedOption) {
+      case 'Confirmados':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].confirmed;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].confirmed;
+        break;
+      case 'Activos':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].active;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].active;
+        break;
+      case 'Diarios':
+        listCuba =
+            comparisonOfAccumulatedCases.countries[Constants.countryCuba].daily;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].daily;
+        break;
+      case 'Recuperados':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].recovered;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].recovered;
+        break;
+      case 'Fallecidos':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].deaths;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].deaths;
+        break;
+    }
     return [
       charts.Series<int, int>(
         id: DataModel.prettyCountry(selectedCountry),
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: data.comparisonOfAccumulatedCases.countries[selectedCountry]
+        data: listForeign
             .take(
-              min(
-                data.comparisonOfAccumulatedCases.countries[selectedCountry]
-                    .length,
-                data.comparisonOfAccumulatedCases
-                    .countries[Constants.countryCuba].length,
-              ),
+              min(listForeign.length, listCuba.length),
             )
             .toList(),
       ),
@@ -135,8 +300,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data:
-            data.comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+        data: listCuba,
       ),
     ];
   }
@@ -148,15 +312,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-          ),
+          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
             child: Text(
-              'Comparación de los casos acumulados '
-              'de ${Constants.countryCuba} con:',
+              'Comparación de ${Constants.countryCuba}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -166,29 +325,87 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             ),
           ),
         ),
-        DropdownButton<String>(
-          value: selectedCountry,
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Constants.primaryColor),
-          underline: Container(
-            height: 2,
-            color: Constants.primaryColor,
+        Container(
+          margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+          child: Center(
+            child: Text(
+              'con',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
           ),
-          onChanged: (String newValue) {
-            PrefService.setString(Constants.prefCompareCountry, newValue);
-            setState(() {
-              selectedCountry = newValue;
-            });
-          },
-          items:
-              getCountriesList().map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(DataModel.prettyCountry(value)),
-            );
-          }).toList(),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 50, right: 50),
+          child: DropdownButton<String>(
+            value: selectedCountry,
+            icon: Icon(Icons.arrow_downward),
+            iconSize: 24,
+            isExpanded: true,
+            elevation: 16,
+            style: TextStyle(color: Constants.primaryColor),
+            underline: Container(
+              height: 2,
+              color: Constants.primaryColor,
+            ),
+            onChanged: (String newValue) {
+              PrefService.setString(Constants.prefCompareCountry, newValue);
+              setState(() {
+                selectedCountry = newValue;
+              });
+            },
+            items: getCountriesList()
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(DataModel.prettyCountry(value)),
+              );
+            }).toList(),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+          child: Center(
+            child: Text(
+              'por',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 50, right: 50),
+          child: DropdownButton<String>(
+            value: selectedOption,
+            icon: Icon(Icons.arrow_downward),
+            iconSize: 24,
+            isExpanded: true,
+            elevation: 16,
+            style: TextStyle(color: Constants.primaryColor),
+            underline: Container(
+              height: 2,
+              color: Constants.primaryColor,
+            ),
+            onChanged: (String newValue) {
+              setState(() {
+                selectedOption = newValue;
+              });
+            },
+            items: options.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
         ),
         Container(
           margin: EdgeInsets.only(
@@ -214,17 +431,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           child: charts.LineChart(
             getSeries(),
             animate: false,
-            domainAxis: charts.NumericAxisSpec(
-              viewport: charts.NumericExtents(
-                1,
-                max(
-                  data.comparisonOfAccumulatedCases.countries[selectedCountry]
-                      .length,
-                  data.comparisonOfAccumulatedCases
-                      .countries[Constants.countryCuba].length,
-                ),
-              ),
-            ),
+            domainAxis: getNumericAxisSpec(),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
@@ -257,12 +464,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           child: charts.LineChart(
             getZoomSeries(),
             animate: false,
-            domainAxis: charts.NumericAxisSpec(
-              viewport: charts.NumericExtents(
-                  1,
-                  data.comparisonOfAccumulatedCases
-                      .countries[Constants.countryCuba].length),
-            ),
+            domainAxis: getNumericAxisSpecZoom(),
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includePoints: true,
@@ -280,9 +482,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Datos de los países tomados de\ngithub.com/pomber/covid19\ny '
+              'Datos de los países tomados '
+              'de\ngithub.com/pomber/covid19\ny '
               'actualizado el '
-              '${data.comparisonOfAccumulatedCases.updated.toStrPlus()}',
+              '${comparisonOfAccumulatedCases.updated.toStrPlus()}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
