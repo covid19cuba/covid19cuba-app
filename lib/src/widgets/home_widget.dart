@@ -111,6 +111,14 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
+            child: TestsPositivePercentWidget(
+              testsPositivePercent: data.all.testsPositivePercent,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
             child: Container(
               child: TableData(
                 title: 'TOP10 Provincias Afectadas',
