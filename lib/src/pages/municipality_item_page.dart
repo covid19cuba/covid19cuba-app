@@ -11,28 +11,28 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/error_widget.dart' as ew;
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class ProvinceItemPage extends StatefulWidget {
-  final String province;
+class MunicipalityItemPage extends StatefulWidget {
+  final String municipality;
 
-  ProvinceItemPage({this.province}) : assert(province != null);
+  MunicipalityItemPage({this.municipality}) : assert(municipality != null);
 
   @override
   State<StatefulWidget> createState() {
-    return ProvinceItemPageState(
-      province: province,
+    return MunicipalityItemPageState(
+      municipality: municipality,
     );
   }
 }
 
-class ProvinceItemPageState extends State<ProvinceItemPage>
+class MunicipalityItemPageState extends State<MunicipalityItemPage>
     with TickerProviderStateMixin {
-  final String province;
+  final String municipality;
 
   Completer<void> refreshCompleter;
   AnimationController fadeController;
   Animation<double> fadeAnimation;
 
-  ProvinceItemPageState({this.province}) : assert(province != null);
+  MunicipalityItemPageState({this.municipality}) : assert(municipality != null);
 
   @override
   void initState() {
@@ -82,7 +82,7 @@ class ProvinceItemPageState extends State<ProvinceItemPage>
   Widget getAppBar(BuildContext context, HomeState state) {
     return AppBar(
       centerTitle: true,
-      title: Text(Constants.provinceAbbreviations[province]),
+      title: Text(Constants.municipalitiesCodes[municipality]),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.refresh),
@@ -115,7 +115,9 @@ class ProvinceItemPageState extends State<ProvinceItemPage>
             );
             return refreshCompleter.future;
           },
-          child: ProvinceWidget(data: state.data.provinces[province].all),
+          child: MunicipalityWidget(
+            data: state.data.getMunicipality(municipality).all,
+          ),
         ),
       );
     }

@@ -73,7 +73,7 @@ covidData = function (data) {
 
     map_mun.addLayer(geojsonM);
     map_mun.fitBounds(geojsonM.getBounds());
-    map_mun.setMaxBounds(geojsonM.getBounds());
+    //map_mun.setMaxBounds(geojsonM.getBounds());
 
 }
 
@@ -127,7 +127,7 @@ covidData2 = function (data) {
 
     map_mun.addLayer(geojsonM);
     map_mun.fitBounds(geojsonM.getBounds());
-    map_mun.setMaxBounds(geojsonM.getBounds());
+    //map_mun.setMaxBounds(geojsonM.getBounds());
 }
 
 
@@ -204,5 +204,5 @@ covidData3 = function (data, province_id) {
 
         map_mun.addLayer(geojsonM);
         map_mun.fitBounds(geojsonM.getBounds());
-        map_mun.setMaxBounds(geojsonM.getBounds());
+        //map_mun.setMaxBounds(geojsonM.getBounds());
 }

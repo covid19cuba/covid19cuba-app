@@ -9,9 +9,9 @@ import 'package:preferences/preferences.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-const urlCubaDataCU = 'https://cusobu.nat.cu/covid/api/v1/all.json';
+const urlCubaDataCU = 'https://cusobu.nat.cu/covid/api/v1/full.json';
 const urlCubaDataIO =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/all.json';
+    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/full.json';
 
 Future<DataModel> getCubaData() async {
   var stateList = await StateModel.check();
@@ -62,6 +62,7 @@ Future<DataModel> getCubaDataFrom(String url) async {
     var json = jsonDecode(text);
     result = DataModel.fromJson(json);
     PrefService.setBool(Constants.prefFirstCacheNotification, true);
+    PrefService.setBool(Constants.prefFirstModificationNotification, true);
   } catch (e) {
     log(e.toString());
     throw ParseException('Parse error');

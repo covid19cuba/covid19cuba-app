@@ -64,6 +64,10 @@ class TestEvolutionWidget extends StatelessWidget {
             animate: false,
             barGroupingType: charts.BarGroupingType.groupedStacked,
             defaultInteractions: true,
+            domainAxis: new charts.OrdinalAxisSpec(
+              showAxisLine: true,
+              renderSpec: charts.NoneRenderSpec(),
+            ),
             behaviors: [
               charts.ChartTitle(
                 'Número de días',

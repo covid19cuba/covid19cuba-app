@@ -87,6 +87,20 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 );
               },
             ),
+            createDrawerItem(
+              context,
+              icon: Icons.location_city,
+              text: 'Municipios',
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MunicipalityListPage(),
+                  ),
+                );
+              },
+            ),
             /*Container(
               height: 2,
               color: Colors.white,
@@ -101,6 +115,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             updateDrawerItem(),
             sharerDrawerItem(),
             settingsDrawerItem(),
+            faqsDrawerItem(),
             Container(
               height: 2,
               color: Colors.white,
@@ -398,6 +413,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => ChangelogPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget faqsDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.question_answer,
+      text: 'Preguntas Frecuentes',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FaqsPage(),
           ),
         );
       },
