@@ -408,35 +408,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             onTap: _openCountryPickerDialog,
             title: _buildSelectedCountry(_selectedDialogCountry),
           ),
-        ),
-        // Container(
-        //   margin: EdgeInsets.only(left: 50, right: 50),
-        //   child: DropdownButton<String>(
-        //     value: selectedCountry,
-        //     icon: Icon(Icons.arrow_downward),
-        //     iconSize: 24,
-        //     isExpanded: true,
-        //     elevation: 16,
-        //     style: TextStyle(color: Constants.primaryColor),
-        //     underline: Container(
-        //       height: 2,
-        //       color: Constants.primaryColor,
-        //     ),
-        //     onChanged: (String newValue) {
-        //       PrefService.setString(Constants.prefCompareCountry, newValue);
-        //       setState(() {
-        //         selectedCountry = newValue;
-        //       });
-        //     },
-        //     items: getCountriesList()
-        //         .map<DropdownMenuItem<String>>((String value) {
-        //       return DropdownMenuItem<String>(
-        //         value: value,
-        //         child: Text(DataModel.prettyCountry(value)),
-        //       );
-        //     }).toList(),
-        //   ),
-        // ),
+        ),        
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
           child: Center(
