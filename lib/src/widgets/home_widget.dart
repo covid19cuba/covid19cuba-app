@@ -111,23 +111,39 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
+            child: TestsPositivePercentWidget(
+              testsPositivePercent: data.all.testsPositivePercent,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
             child: Container(
               child: TableData(
                 title: 'TOP10 Provincias Afectadas',
-                subtitle: 'Provincias',
-                description: '% del total de casos',
-                keys: data.all.affectedProvinces
-                    .map(
-                      (x) => x.name,
-                    )
-                    .take(10)
-                    .toList(),
-                values: data.all.affectedProvinces
-                    .map(
-                      (x) => (x.value * 100 / x.total).toStringAsFixed(2) + '%',
-                    )
-                    .take(10)
-                    .toList(),
+                headers: ['Provincias', 'Casos', '% del total'],
+                values: [
+                  data.all.affectedProvinces
+                      .map(
+                        (x) => x.name,
+                      )
+                      .take(10)
+                      .toList(),
+                  data.all.affectedProvinces
+                      .map(
+                        (x) => x.value.toString(),
+                      )
+                      .take(10)
+                      .toList(),
+                  data.all.affectedProvinces
+                      .map(
+                        (x) =>
+                            (x.value * 100 / x.total).toStringAsFixed(2) + '%',
+                      )
+                      .take(10)
+                      .toList(),
+                ],
               ),
             ),
           ),
@@ -138,20 +154,28 @@ class HomeWidget extends StatelessWidget {
             child: Container(
               child: TableData(
                 title: 'TOP10 Municipios Afectados',
-                subtitle: 'Municipios',
-                description: '% del total de casos',
-                keys: data.all.affectedMunicipalities
-                    .map(
-                      (x) => '${x.name} (${x.province})',
-                    )
-                    .take(10)
-                    .toList(),
-                values: data.all.affectedMunicipalities
-                    .map(
-                      (x) => (x.value * 100 / x.total).toStringAsFixed(2) + '%',
-                    )
-                    .take(10)
-                    .toList(),
+                headers: ['Municipios', 'Casos', '% del total'],
+                values: [
+                  data.all.affectedMunicipalities
+                      .map(
+                        (x) => '${x.name} (${x.province})',
+                      )
+                      .take(10)
+                      .toList(),
+                  data.all.affectedMunicipalities
+                      .map(
+                        (x) => x.value.toString(),
+                      )
+                      .take(10)
+                      .toList(),
+                  data.all.affectedMunicipalities
+                      .map(
+                        (x) =>
+                            (x.value * 100 / x.total).toStringAsFixed(2) + '%',
+                      )
+                      .take(10)
+                      .toList(),
+                ],
               ),
             ),
           ),
@@ -160,6 +184,12 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: ProvincesComparisonWidget(provinces: data.provinces),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: MunicipalitiesComparisonWidget(data: data),
           ),
         ),
         Container(
