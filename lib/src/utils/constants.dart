@@ -498,4 +498,75 @@ class Constants {
           'consulte nuestro links https://covid19cubadata.github.io/ o https://www.cusobu.nat.cu/covid/',
     ]
   ];
+
+  static const collaborators = <List<String>>[
+    [
+      'Saimi Reyes',
+      'Lore Ipsum',
+    ],
+    [
+      'Claudia Alemañy',
+      'Lore Ipsum',
+    ],
+    [
+      'Dariagna Steyners',
+      'Lore Ipsum',
+    ],
+    [
+      'Iramis Alonso',
+      'Lore Ipsum',
+    ],
+    [
+      'Ernesto Guerra',
+      'Lore Ipsum',
+    ],
+    [
+      'Norlan Capote Días',
+      'Lore Ipsum',
+    ],
+    [
+      'Sandy F. Pérez Matamoros',
+      'Lore Ipsum',
+    ],
+    [
+      'Gabriel Alejandro López López',
+      'Lore Ipsum',
+    ],
+    [
+      'Carlos César Caballero',
+      'Lore Ipsum',
+    ],
+    [
+      'Maikel Llamaret Heredia',
+      'Lore Ipsum',
+    ],
+    [
+      'Frank Sadan Naranjo Noda',
+      'Lore Ipsum',
+    ],
+    [
+      'Hian Cañizales Días',
+      'Lore Ipsum',
+    ],
+    [
+      'Yudivián Almeida',
+      'Lore Ipsum',
+    ],
+    [
+      'Luis Correa Leyva',
+      'Lore Ipsum',
+    ],
+    [
+      'Carlos Bermudez Porto',
+      'Lore Ipsum',
+    ],
+    [
+      'Roberto Marti Cedeño',
+      'Estudiante de Ciencia de la Computación en la Universidad de La Habana',
+    ],
+    [
+      'Leynier Gutiérrez González',
+      'Lore Ipsum',
+    ],
+  ];
 }
