@@ -8,19 +8,19 @@ function logx(base, x){
 var openIcon = new L.Icon({
 	iconUrl: 'images/marker-icon-2x-gold.png',
 	shadowUrl: 'images/marker-shadow.png',
-	iconSize: [25, 41],
-	iconAnchor: [12, 41],
+    iconSize: [15, 24],
+	iconAnchor: [7, 24],
 	popupAnchor: [1, -34],
-	shadowSize: [41, 41]
+	shadowSize: [24, 24]
 });
 
 var closeIcon = new L.Icon({
 	iconUrl: 'images/marker-icon-2x-green.png',
 	shadowUrl: 'images/marker-shadow.png',
-	iconSize: [25, 41],
-	iconAnchor: [12, 41],
+    iconSize: [15, 24],
+	iconAnchor: [7, 24],
 	popupAnchor: [1, -34],
-	shadowSize: [41, 41]
+	shadowSize: [24, 24]
 });
 
 var map_mun = L.map('map-mun', {
@@ -107,8 +107,9 @@ covidData = function (data, events) {
     }
 
     map_mun.addLayer(geojsonM);
+    let ratio = (geojsonM.getBounds().getNorthEast().lat - geojsonM.getBounds().getSouthWest().lat) * 0.08;
     map_mun.fitBounds(geojsonM.getBounds());
-    map_mun.setMaxBounds(geojsonM.getBounds());
+    map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
 
 }
 
@@ -161,8 +162,9 @@ covidData2 = function (data, events) {
     }
 
     map_mun.addLayer(geojsonM);
+    let ratio = (geojsonM.getBounds().getNorthEast().lat - geojsonM.getBounds().getSouthWest().lat) * 0.05;
     map_mun.fitBounds(geojsonM.getBounds());
-    map_mun.setMaxBounds(geojsonM.getBounds());
+    map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
 }
 
 
@@ -179,7 +181,7 @@ filterByProvince = function (province_id, data) {
     return ret;
 }
 
-covidData3 = function (data, province_id) {
+covidData3 = function (data, events, province_id) {
         var municipalitydata = JSON.parse(strGeoJson);
         var factor = 100;
         var muns = data.muns;
@@ -239,5 +241,5 @@ covidData3 = function (data, province_id) {
 
         map_mun.addLayer(geojsonM);
         map_mun.fitBounds(geojsonM.getBounds());
-        map_mun.setMaxBounds(geojsonM.getBounds());
+        //map_mun.setMaxBounds(geojsonM.getBounds());
 }

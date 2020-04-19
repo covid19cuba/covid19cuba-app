@@ -18,27 +18,43 @@ void appTask(String taskId, [bool headless = false]) async {
   } catch (e) {
     log(e.toString());
   }
-  if (currentInfo != null && timeToShowNotifications()) {
-    if (currentInfo[1]) {
-      if (PrefService.getBool(Constants.prefFirstCacheNotification) ?? true) {
-        PrefService.setBool(Constants.prefFirstCacheNotification, false);
-        NotificationManager.show(
-          title: 'Nueva Información!',
-          body: 'Los datos se han actualizado. '
-              'Póngase al día. Toque para revisar.',
-          id: Constants.infoUpdateNotification,
-        );
-      }
-    }
-    if (currentInfo[0] && currentInfo[2]) {
-      if (PrefService.getBool(Constants.prefFirstVersionNotification) ?? true) {
-        PrefService.setBool(Constants.prefFirstVersionNotification, false);
-        NotificationManager.show(
-          title: 'Actualización!',
-          body: 'Covid19 Cuba Data posee una nueva versión. '
-              'No te pierdas las nuevas características.',
-          id: Constants.appUpdateNotification,
-        );
+
+  if (clapsTime()) {
+    await showClaps();
+  } else if (currentInfo != null && timeToShowNotifications()) {
+    bool upgrade =
+        PrefService.getBool(Constants.prefFirstVersionNotification) ?? true;
+    if (currentInfo[0] && currentInfo[2] && upgrade) {
+      PrefService.setBool(Constants.prefFirstVersionNotification, false);
+      NotificationManager.show(
+        title: 'Actualización!',
+        body: 'Covid19 Cuba Data posee una nueva versión. '
+            'No te pierdas las nuevas características.',
+        id: Constants.appUpdateNotification,
+      );
+    } else if (currentInfo[1]) {
+      if (currentInfo[3]) {
+        if (PrefService.getBool(Constants.prefFirstCacheNotification) ?? true) {
+          PrefService.setBool(Constants.prefFirstCacheNotification, false);
+          NotificationManager.show(
+            title: 'Nueva Información!',
+            body: 'Los datos del parte diario se han actualizado. '
+                'Póngase al día. Toque para revisar.',
+            id: Constants.infoUpdateNotification,
+          );
+        }
+      } else {
+        if (PrefService.getBool(Constants.prefFirstModificationNotification) ??
+            true) {
+          PrefService.setBool(
+              Constants.prefFirstModificationNotification, false);
+          NotificationManager.show(
+            title: 'Cambios Realizados!',
+            body: 'Los datos se han actualizado. '
+                'Hemos mejorado los datos dispoibles. Toque para revisar.',
+            id: Constants.infoUpdateNotification,
+          );
+        }
       }
     }
   } else {
@@ -60,7 +76,7 @@ Future<void> setUpBackgroundTasks() async {
   await TaskManager.setHeadlessTask(appHeadlessTask);
 }
 
-Future<void> setUpClapsTime() async {
+Future<void> showClaps() async {
   String claps = Demoji.clap +
       Demoji.clap +
       Demoji.clap +
@@ -70,14 +86,13 @@ Future<void> setUpClapsTime() async {
       Demoji.clap +
       Demoji.clap;
 
-  await NotificationManager.showDailyAtTime(
+  await NotificationManager.show(
     id: Constants.clapsNotification,
     title: 'Tiempo de aplausos!!!!!' + claps,
     body:
         'Ya casi son las 9 de la noche. Súmate a los aplausos por quienes trabajan por la salud y seguridad de todos. \n' +
             claps +
             claps,
-    notificationTime: Constants.clapsTime,
   );
 }
 
@@ -85,4 +100,12 @@ bool timeToShowNotifications() {
   DateTime moment = DateTime.now();
   return moment.hour < Constants.startSilentIime &&
       moment.hour > Constants.endSilentTime;
+}
+
+bool clapsTime() {
+  DateTime date = DateTime.now();
+
+  return date.hour >= Constants.startClapsHour &&
+      date.minute >= Constants.startClapsMinute &&
+      date.hour <= Constants.stopClapsHour;
 }

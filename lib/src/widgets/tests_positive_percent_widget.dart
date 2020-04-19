@@ -1,13 +1,14 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/models/models.dart';
 
-class TestEvolutionWidget extends StatelessWidget {
-  final TestsByDays testsByDays;
+class TestsPositivePercentWidget extends StatelessWidget {
+  final TestsPositivePercent testsPositivePercent;
 
-  const TestEvolutionWidget({this.testsByDays}) : assert(testsByDays != null);
+  const TestsPositivePercentWidget({this.testsPositivePercent})
+      : assert(testsPositivePercent != null);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class TestEvolutionWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Tests (PCR) por días',
+              '% Tests Positivos con respecto a Total de Tests (PCR)',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -33,51 +34,43 @@ class TestEvolutionWidget extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 350,
-          child: charts.BarChart(
+          height: 300,
+          child: charts.TimeSeriesChart(
             [
-              charts.Series<int, String>(
-                id: testsByDays.negative.name,
-                seriesCategory: 'A',
-                colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-                domainFn: (_, i) => '${i + 1}',
+              charts.Series<double, DateTime>(
+                id: testsPositivePercent.daily.name,
+                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+                domainFn: (_, i) => dateTimeFromJson(
+                  testsPositivePercent.date.values[i].toStr(),
+                ),
                 measureFn: (item, _) => item,
-                data: testsByDays.negative.values,
+                data: testsPositivePercent.daily.values,
               ),
-              charts.Series<int, String>(
-                id: testsByDays.positive.name,
-                seriesCategory: 'A',
+              charts.Series<double, DateTime>(
+                id: testsPositivePercent.accumulated.name,
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => '${i + 1}',
+                domainFn: (_, i) => dateTimeFromJson(
+                  testsPositivePercent.date.values[i].toStr(),
+                ),
                 measureFn: (item, _) => item,
-                data: testsByDays.positive.values,
-              ),
-              charts.Series<int, String>(
-                id: testsByDays.total.name,
-                seriesCategory: 'B',
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (_, i) => '${i + 1}',
-                measureFn: (item, _) => item,
-                data: testsByDays.total.values,
+                data: testsPositivePercent.accumulated.values,
               ),
             ],
             animate: false,
-            barGroupingType: charts.BarGroupingType.groupedStacked,
             defaultInteractions: true,
-            domainAxis: new charts.OrdinalAxisSpec(
-              showAxisLine: true,
-              renderSpec: charts.NoneRenderSpec(),
+            defaultRenderer: charts.LineRendererConfig(
+              includePoints: true,
             ),
             behaviors: [
               charts.ChartTitle(
-                'Número de días',
+                'Fecha',
                 behaviorPosition: charts.BehaviorPosition.bottom,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Tests en el día',
+                'Por ciento (%)',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -87,10 +80,6 @@ class TestEvolutionWidget extends StatelessWidget {
                 position: charts.BehaviorPosition.bottom,
                 desiredMaxColumns: 1,
                 showMeasures: true,
-                measureFormatter: (num measure) {
-                  if (measure == null) return '';
-                  return measure.toInt().toString();
-                },
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:
@@ -111,7 +100,7 @@ class TestEvolutionWidget extends StatelessWidget {
           child: Center(
             child: Text(
               'Esta información se reporta desde el '
-              '${testsByDays.date.values[0].toStrPlus()}',
+              '${testsPositivePercent.date.values[0].toStrPlus()}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

@@ -9,10 +9,11 @@ import 'package:covid19cuba/src/utils/utils.dart';
 
 class ProvinceWebViewKeepAlive extends StatefulWidget {
   final Map<String, dynamic> mapData;
+  final Map<String, dynamic> eventsData;
   final String provinceCode;
 
-  ProvinceWebViewKeepAlive({this.mapData, this.provinceCode})
-      : assert(mapData != null, provinceCode != null);
+  ProvinceWebViewKeepAlive({this.mapData, this.eventsData, this.provinceCode})
+      : assert(mapData != null && eventsData!=null && provinceCode != null);
 
   @override
   ProvinceWebViewKeepAliveState createState() =>
@@ -25,6 +26,7 @@ class ProvinceWebViewKeepAliveState extends State<ProvinceWebViewKeepAlive>
   WebViewController controller;
   String mapData = "{}";
   String code = "";
+  String eventsData = "";
 
   @override
   bool get wantKeepAlive => true;
@@ -89,9 +91,10 @@ class ProvinceWebViewKeepAliveState extends State<ProvinceWebViewKeepAlive>
 class ProvinceMapWebViewWidget extends StatefulWidget {
   final Map<String, dynamic> mapData;
   final String provinceCode;
+  final Map<String, dynamic> eventsData;
 
-  ProvinceMapWebViewWidget({this.mapData, this.provinceCode})
-      : assert(mapData != null, provinceCode != null);
+  ProvinceMapWebViewWidget({this.mapData, this.eventsData, this.provinceCode})
+      : assert(mapData != null && eventsData != null && provinceCode != null);
 
   @override
   ProvinceMapWebViewWidgetState createState() =>
@@ -119,6 +122,7 @@ class ProvinceMapWebViewWidgetState extends State<ProvinceMapWebViewWidget> {
         ),
         ProvinceWebViewKeepAlive(
           mapData: widget.mapData,
+          eventsData: widget.eventsData,
           provinceCode: widget.provinceCode,
         ),
       ],

@@ -5,7 +5,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/data_model.dart';
 
 class Top20CountriesWidget extends StatelessWidget {
-  final List<Item> top20AccumulatedCountries;
+  final List<ItemExtended> top20AccumulatedCountries;
   final DateTime updated;
 
   const Top20CountriesWidget({this.top20AccumulatedCountries, this.updated})
@@ -61,12 +61,13 @@ class Top20CountriesWidget extends StatelessWidget {
                   children: [
                     TableCell(
                       child: Container(
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(5),
                         child: Text(
                           '#',
                           style: TextStyle(
                             color: Constants.primaryColor,
                             fontWeight: FontWeight.bold,
+                            fontSize: 11,
                           ),
                         ),
                       ),
@@ -74,25 +75,57 @@ class Top20CountriesWidget extends StatelessWidget {
                     TableCell(
                       child: Container(
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(5),
                         child: Text(
                           'País',
                           style: TextStyle(
                             color: Constants.primaryColor,
                             fontWeight: FontWeight.bold,
+                            fontSize: 11,
                           ),
                         ),
                       ),
                     ),
                     TableCell(
                       child: Container(
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(5),
                         child: Center(
                           child: Text(
-                            'Total de casos',
+                            'Casos',
                             style: TextStyle(
                               color: Constants.primaryColor,
                               fontWeight: FontWeight.bold,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        margin: EdgeInsets.all(5),
+                        child: Center(
+                          child: Text(
+                            'Recuperados',
+                            style: TextStyle(
+                              color: Constants.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        margin: EdgeInsets.all(5),
+                        child: Center(
+                          child: Text(
+                            'Fallecidos',
+                            style: TextStyle(
+                              color: Constants.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11,
                             ),
                           ),
                         ),
@@ -108,12 +141,13 @@ class Top20CountriesWidget extends StatelessWidget {
                     children: [
                       TableCell(
                         child: Container(
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.all(5),
                           child: Text(
                             '$index',
                             style: TextStyle(
                               color: Constants.primaryColor,
                               fontWeight: FontWeight.normal,
+                              fontSize: 11,
                             ),
                           ),
                         ),
@@ -121,25 +155,57 @@ class Top20CountriesWidget extends StatelessWidget {
                       TableCell(
                         child: Container(
                           alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.all(5),
                           child: Text(
                             '${DataModel.prettyCountry(item.name)}',
                             style: TextStyle(
                               color: Constants.primaryColor,
                               fontWeight: FontWeight.normal,
+                              fontSize: 11,
                             ),
                           ),
                         ),
                       ),
                       TableCell(
                         child: Container(
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.all(5),
                           child: Center(
                             child: Text(
-                              '${item.value}',
+                              '${item.confirmed}',
                               style: TextStyle(
                                 color: Constants.primaryColor,
                                 fontWeight: FontWeight.normal,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          child: Center(
+                            child: Text(
+                              '${item.recovered}',
+                              style: TextStyle(
+                                color: Constants.primaryColor,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          child: Center(
+                            child: Text(
+                              '${item.deaths}',
+                              style: TextStyle(
+                                color: Constants.primaryColor,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 11,
                               ),
                             ),
                           ),
