@@ -26,7 +26,7 @@ class ProvinceWebViewKeepAliveState extends State<ProvinceWebViewKeepAlive>
   WebViewController controller;
   String mapData = "{}";
   String code = "";
-  String eventsData = "";
+  String eventsData = "{}";
 
   @override
   bool get wantKeepAlive => true;
@@ -39,9 +39,10 @@ class ProvinceWebViewKeepAliveState extends State<ProvinceWebViewKeepAlive>
       javascriptMode: JavascriptMode.unrestricted,
       onPageFinished: (_) {
         mapData = jsonEncode(widget.mapData);
+        eventsData = jsonEncode(widget.eventsData);
         code = widget.provinceCode;
         controller
-            .evaluateJavascript('covidData3($mapData,\"$code\")')
+            .evaluateJavascript('covidData3($mapData,\"$code\", $eventsData)')
             .whenComplete(() {});
       },
       gestureRecognizers: Set()

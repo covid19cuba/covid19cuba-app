@@ -91,7 +91,6 @@ covidData = function (data, events) {
 
     for(var i in events){
         event = events[i];
-        console.log(event);
         if(event['lat']===0 && event['lon']===0){
             continue;
         }
@@ -181,7 +180,7 @@ filterByProvince = function (province_id, data) {
     return ret;
 }
 
-covidData3 = function (data, events, province_id) {
+covidData3 = function (data, province_id, events) {
         var municipalitydata = JSON.parse(strGeoJson);
         var factor = 100;
         var muns = data.muns;
@@ -239,7 +238,26 @@ covidData3 = function (data, events, province_id) {
             return '#D1D2D4';
         }
 
+        for(var i in events){
+            event = events[i];
+            if(event['dpacode_provincia']===province_id){
+
+                if(event['lat']===0 && event['lon']===0){
+                    continue;
+                }
+                if(event['abierto']===false){
+                    var marker = L.marker([event['lat'],event['lon']],{icon: closeIcon,
+                        title: event['identificador'], riseOnHover: true}).addTo(map_mun);
+                }else{
+                    var marker = L.marker([event['lat'],event['lon']],{icon: openIcon,
+                        title: event['identificador'], riseOnHover: true}).addTo(map_mun);
+                }
+                marker.bindPopup('<div class="small-content"><span class="bd">'+event['identificador']+'</span></div>');
+            }
+        }
+
         map_mun.addLayer(geojsonM);
+        let ratio = Math.abs(geojsonM.getBounds().getNorthEast().lat - geojsonM.getBounds().getSouthWest().lat) * 0.2;
         map_mun.fitBounds(geojsonM.getBounds());
-        //map_mun.setMaxBounds(geojsonM.getBounds());
+        map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
 }

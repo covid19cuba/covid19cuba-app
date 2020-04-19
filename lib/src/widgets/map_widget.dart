@@ -38,8 +38,6 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
       onPageFinished: (_) {
         mapData = jsonEncode(widget.mapData);
         eventsData = jsonEncode(widget.eventsData);
-        print(mapData);
-        print(eventsData);
         controller
             .evaluateJavascript(widget.jsCommand + '($mapData, $eventsData)')
             .whenComplete(() {});
