@@ -5,6 +5,24 @@ function logx(base, x){
     return Math.log10(x)/Math.log10(base);
 }
 
+var openIcon = new L.Icon({
+	iconUrl: 'images/marker-icon-2x-gold.png',
+	shadowUrl: 'images/marker-shadow.png',
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+	popupAnchor: [1, -34],
+	shadowSize: [41, 41]
+});
+
+var closeIcon = new L.Icon({
+	iconUrl: 'images/marker-icon-2x-green.png',
+	shadowUrl: 'images/marker-shadow.png',
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+	popupAnchor: [1, -34],
+	shadowSize: [41, 41]
+});
+
 var map_mun = L.map('map-mun', {
     center: [21.5, -79.371124],
     zoom: 15,
@@ -22,7 +40,7 @@ var map_mun = L.map('map-mun', {
 map_mun.zoomControl.setPosition('topright');
 geojsonM = null;
 
-covidData = function (data) {
+covidData = function (data, events) {
 
     var factor = 100;
     var muns = data.muns;
@@ -71,13 +89,30 @@ covidData = function (data) {
         return '#D1D2D4';
     }
 
+    for(var i in events){
+        event = events[i];
+        console.log(event);
+        if(event['lat']===0 && event['lon']===0){
+            continue;
+        }
+        if(event['abierto']===false){
+            var marker = L.marker([event['lat'],event['lon']],{icon: closeIcon,
+                title: event['identificador'], riseOnHover: true}).addTo(map_mun);
+        }else{
+            var marker = L.marker([event['lat'],event['lon']],{icon: openIcon,
+                title: event['identificador'], riseOnHover: true}).addTo(map_mun);
+        }
+        marker.bindPopup('<div class="small-content"><span class="bd">'+event['identificador']+'</span></div>');
+
+    }
+
     map_mun.addLayer(geojsonM);
     map_mun.fitBounds(geojsonM.getBounds());
     map_mun.setMaxBounds(geojsonM.getBounds());
 
 }
 
-covidData2 = function (data) {
+covidData2 = function (data, events) {
 
     var factor = 100;
     var pros = data.pros;

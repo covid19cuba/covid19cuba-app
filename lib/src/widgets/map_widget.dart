@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -9,9 +10,10 @@ import 'package:covid19cuba/src/utils/utils.dart';
 
 class WebViewKeepAlive extends StatefulWidget {
   final Map<String, dynamic> mapData;
+  final Map<String, dynamic> eventsData;
   final String jsCommand;
 
-  WebViewKeepAlive({this.mapData, this.jsCommand});
+  WebViewKeepAlive({this.mapData, this.eventsData, this.jsCommand});
 
   @override
   WebViewKeepAliveState createState() => WebViewKeepAliveState();
@@ -22,6 +24,7 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
   WebView webView;
   WebViewController controller;
   String mapData = "{}";
+  String eventsData = "{}";
 
   @override
   bool get wantKeepAlive => true;
@@ -34,8 +37,11 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
       javascriptMode: JavascriptMode.unrestricted,
       onPageFinished: (_) {
         mapData = jsonEncode(widget.mapData);
+        eventsData = jsonEncode(widget.eventsData);
+        print(mapData);
+        print(eventsData);
         controller
-            .evaluateJavascript(widget.jsCommand + '($mapData)')
+            .evaluateJavascript(widget.jsCommand + '($mapData, $eventsData)')
             .whenComplete(() {});
       },
       gestureRecognizers: Set()
@@ -84,8 +90,9 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
 
 class MapWebViewWidget extends StatefulWidget {
   final Map<String, dynamic> mapData;
+  final Map<String, dynamic> eventsData;
 
-  MapWebViewWidget({this.mapData}) : assert(mapData != null);
+  MapWebViewWidget({this.mapData, this.eventsData}) : assert(mapData != null);
 
   @override
   MapWebViewWidgetState createState() => MapWebViewWidgetState();
@@ -111,7 +118,9 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
           ),
         ),
         WebViewKeepAlive(
-            mapData: widget.mapData, jsCommand: Constants.showMunicipalities),
+            mapData: widget.mapData,
+            eventsData: widget.eventsData,
+            jsCommand: Constants.showMunicipalities),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
@@ -128,6 +137,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
         ),
         WebViewKeepAlive(
           mapData: widget.mapData,
+          eventsData: widget.eventsData,
           jsCommand: Constants.showProvinces,
         ),
         Container(
