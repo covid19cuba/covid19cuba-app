@@ -502,71 +502,93 @@ class Constants {
   static const collaborators = <List<String>>[
     [
       'Saimi Reyes',
-      'Lore Ipsum',
+      'Lic. en Periodismo, graduada de la Univ. de La Habana. Editora y Periodista de Postdata.club.',
+      '',
     ],
     [
       'Claudia Alemañy',
-      'Lore Ipsum',
+      'Lic. en Periodismo, graduada de la Univ. de La Habana. Periodista de Juventud Técnica.',
+      '',
     ],
     [
       'Dariagna Steyners',
-      'Lore Ipsum',
+      'Diseñadora, graduada del Instituto Superior de Diseño de la Univ. de La Habana. Diseñadora de Juventud Técnica.',
+      '',
     ],
     [
       'Iramis Alonso',
-      'Lore Ipsum',
+      'Lic. en Periodismo, graduada de la Univ. de La Habana. Directora y Periodista de Juventud Técnica.',
+      '',
     ],
     [
       'Ernesto Guerra',
-      'Lore Ipsum',
+      'Lic. en Periodismo, graduado de la Univ. de La Habana. Periodista de Postdata.club y Juventud Técnica.',
+      '',
     ],
     [
       'Norlan Capote Días',
-      'Lore Ipsum',
+      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias Informáticas. Scrum Máster.'
+          ' Analista y desarrollador senior de sistemas.',
+      'https://www.linkedin.com/in/norlancd',
     ],
     [
       'Sandy F. Pérez Matamoros',
-      'Lore Ipsum',
+      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias Informáticas. Cofundador de CUSOBU.',
+      'https://www.linkedin.com/in/sandy-p%C3%A9rez-25a00585',
     ],
     [
       'Gabriel Alejandro López López',
-      'Lore Ipsum',
+      'Ing. Informático, graduado de la Univ. de Cienfuegos. MSc. Administracion de negocios. CEO y fundador de Daxslab.',
+      'https://twitter.com/glpzzz',
     ],
     [
       'Carlos César Caballero',
-      'Lore Ipsum',
+      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias Informáticas. CTO y fundador de Daxslab.',
+      'https://www.linkedin.com/in/carlos-cesar-caballero-d%C3%ADaz-a76b24103',
     ],
     [
       'Maikel Llamaret Heredia',
-      'Lore Ipsum',
+      ' Lic. Bioquímica, graduado de la Univ. de La Habana. Estudiante de Ingeniería Informática en la Univ. de Oriente.'
+          'Fundador del Proyecto SWL-X.',
+      'mailto:llamaret@webmisolutions.com',
     ],
     [
       'Frank Sadan Naranjo Noda',
-      'Lore Ipsum',
+      'Lic. Matemática, graduado de la Univ. de La Habana. Investigador del departamento de Matemática Interdisciplinaria '
+          'del Instituto de Cibernética, Matemática y Física. Integrante del grupo de Inteligencia Artificial de la Univ. de La Habana.',
+      'mailto:fsadannn@gmail.com',
     ],
     [
-      'Hian Cañizales Días',
-      'Lore Ipsum',
+      'Hian Cañizares Días',
+      'Lic. Ciencia de la Computación, graduado de la Univ. de La Habana. Profesor de la Fac. Matemática y Computación de la Univ. de La Habana.'
+          'Integrante del grupo de Inteligencia Artificial de la Univ. de La Habana. ',
+      'mailto:hiancdtrsnm@gmail.com',
     ],
     [
       'Yudivián Almeida',
-      'Lore Ipsum',
+      'Lic. Ciencia de la Computación, graduado de la Univ. de La Habana. De. Ciencias Matemáticas. '
+          'Profesor de la Fac. Matemática y Computación de la Univ. de La Habana. Editor de Datos de Postdata.club.',
+      '',
     ],
     [
       'Luis Correa Leyva',
-      'Lore Ipsum',
+      'Estudiante de Ciencia de la Computación en la Univ. de Oriente.',
+      'https://github.com/correaleyval',
     ],
     [
       'Carlos Bermudez Porto',
-      'Lore Ipsum',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana.',
+      'https://www.linkedin.com/in/carlos-bermudez-porto-3078bb165',
     ],
     [
       'Roberto Marti Cedeño',
-      'Estudiante de Ciencia de la Computación en la Universidad de La Habana',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana.',
+      'mailto:roberto.marti@iris.uh.cu',
     ],
     [
       'Leynier Gutiérrez González',
-      'Lore Ipsum',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana.',
+      'https://leynier.github.io',
     ],
   ];
 }
