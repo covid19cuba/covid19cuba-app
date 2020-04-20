@@ -591,4 +591,27 @@ class Constants {
       'https://leynier.github.io',
     ],
   ];
+
+  static const replicas = <List<String>>[
+    [
+      'Cusobu',
+      'https://www.cusobu.nat.cu/covid',
+      'https://www.cusobu.nat.cu',
+    ],
+    [
+      'Federación de Radioaficionados de Cuba',
+      'http://covid19.frcuba.cu',
+      'https://www.frcuba.cu',
+    ],
+    [
+      'Proyecto SWL-X',
+      'http://covidcuba.swlx.info/',
+      'https://www.swlx.info/',
+    ],
+    [
+      'Joven Club',
+      'http://covid19.jovenclub.cu',
+      'https://www.jovenclub.cu',
+    ]
+  ];
 }
