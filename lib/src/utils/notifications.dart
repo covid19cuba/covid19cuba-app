@@ -51,7 +51,7 @@ void appTask(String taskId, [bool headless = false]) async {
           NotificationManager.show(
             title: 'Cambios Realizados!',
             body: 'Los datos se han actualizado. '
-                'Hemos mejorado los datos dispoibles. Toque para revisar.',
+                'Hemos mejorado los datos disponibles. Toque para revisar.',
             id: Constants.infoUpdateNotification,
           );
         }
