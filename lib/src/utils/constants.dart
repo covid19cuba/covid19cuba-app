@@ -539,7 +539,7 @@ class Constants {
     [
       'Gabriel Alejandro López López',
       'Ing. Informático, graduado de la Univ. de Cienfuegos. MSc. Administracion de negocios. CEO y fundador de Daxslab.',
-      'https://twitter.com/glpzzz',
+      'https://www.linkedin.com/in/glpzzz/',
     ],
     [
       'Carlos César Caballero',
@@ -573,7 +573,7 @@ class Constants {
     [
       'Luis Correa Leyva',
       'Estudiante de Ciencia de la Computación en la Univ. de Oriente.',
-      'https://github.com/correaleyval',
+      'https://correaleyval.github.io',
     ],
     [
       'Carlos Bermudez Porto',
