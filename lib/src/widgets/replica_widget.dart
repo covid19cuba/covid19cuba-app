@@ -53,9 +53,25 @@ class Replica extends StatelessWidget {
                 }
               },
             ),
-            Text("cortesía de"),
+            Text(
+              "cortesía de",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
             GestureDetector(
-              child: Text(this.collaboratorText),
+              child: Text(
+                this.collaboratorText,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
               onTap: () async {
                 if (await canLaunch(this.collaboratorUrl)) {
                   await launch(this.collaboratorUrl);
