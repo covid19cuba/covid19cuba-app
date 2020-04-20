@@ -107,5 +107,5 @@ bool clapsTime() {
 
   return date.hour >= Constants.startClapsHour &&
       date.minute >= Constants.startClapsMinute &&
-      date.hour <= Constants.stopClapsHour;
+      date.hour < Constants.stopClapsHour;
 }
