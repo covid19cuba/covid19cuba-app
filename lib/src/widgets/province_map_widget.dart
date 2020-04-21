@@ -13,7 +13,7 @@ class ProvinceWebViewKeepAlive extends StatefulWidget {
   final String provinceCode;
 
   ProvinceWebViewKeepAlive({this.mapData, this.eventsData, this.provinceCode})
-      : assert(mapData != null && eventsData!=null && provinceCode != null);
+      : assert(mapData != null && eventsData != null && provinceCode != null);
 
   @override
   ProvinceWebViewKeepAliveState createState() =>
@@ -125,6 +125,48 @@ class ProvinceMapWebViewWidgetState extends State<ProvinceMapWebViewWidget> {
           mapData: widget.mapData,
           eventsData: widget.eventsData,
           provinceCode: widget.provinceCode,
+        ),
+        Container(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Eventos de transmisión local activos',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 10,
+              ),
+            ),
+            Container(
+              child: Image.asset('assets/images/marker-icon-2x-gold.png'),
+              width: 15,
+              height: 15,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Eventos de transmisión local cerrados',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 10,
+              ),
+            ),
+            Container(
+              child: Image.asset('assets/images/marker-icon-2x-green.png'),
+              width: 15,
+              height: 15,
+            ),
+          ],
+        ),
+        Container(
+          height: 20,
         ),
       ],
     );
