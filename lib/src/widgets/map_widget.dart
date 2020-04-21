@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -116,9 +116,49 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
           ),
         ),
         WebViewKeepAlive(
-            mapData: widget.mapData,
-            eventsData: widget.eventsData,
-            jsCommand: Constants.showMunicipalities),
+          mapData: widget.mapData,
+          eventsData: widget.eventsData,
+          jsCommand: Constants.showMunicipalities,
+        ),
+        Container(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Eventos de transmisión local activos',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 10,
+              ),
+            ),
+            Container(
+              child: Image.asset('assets/images/marker-icon-2x-gold.png'),
+              width: 15,
+              height: 15,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Eventos de transmisión local cerrados',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 10,
+              ),
+            ),
+            Container(
+              child: Image.asset('assets/images/marker-icon-2x-green.png'),
+              width: 15,
+              height: 15,
+            ),
+          ],
+        ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(

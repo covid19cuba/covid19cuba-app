@@ -1,8 +1,11 @@
-import 'package:covid19cuba/src/models/models.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/data_model.dart';
+import 'package:covid19cuba/src/models/models.dart';
 
 class Top20CountriesWidget extends StatelessWidget {
   final List<ItemExtended> top20AccumulatedCountries;
@@ -224,19 +227,31 @@ class Top20CountriesWidget extends StatelessWidget {
             bottom: 20,
           ),
           child: Center(
-            child: Text(
-              'Datos de los países tomados '
-              'de\ngithub.com/pomber/covid19\ny '
-              'actualizado el '
-              '${updated.toStrPlus()}',
+            child: Linkify(
+              text: 'Datos de los países tomados '
+                  'de\nhttps://github.com/pomber/covid19\ny '
+                  'actualizado el '
+                  '${updated.toStrPlus()}',
+              options: LinkifyOptions(humanize: true),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
                 fontSize: 12,
               ),
+              linkStyle: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 12,
+              ),
+              onOpen: (link) async {
+                if (await canLaunch(link.url)) {
+                  await launch(link.url);
+                } else {
+                  log('Could not launch $link');
+                }
+              },
             ),
           ),
-        )
+        ),
       ],
     );
   }

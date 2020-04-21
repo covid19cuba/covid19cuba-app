@@ -42,7 +42,7 @@ class Replica extends StatelessWidget {
               linkStyle: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: 16,
               ),
               options: LinkifyOptions(humanize: true),
               onOpen: (link) async {
@@ -54,12 +54,12 @@ class Replica extends StatelessWidget {
               },
             ),
             Text(
-              "cortesía de",
+              'cortesía de',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 12,
               ),
             ),
             GestureDetector(
@@ -69,7 +69,7 @@ class Replica extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 14,
                 ),
               ),
               onTap: () async {
