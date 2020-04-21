@@ -89,7 +89,7 @@ class DataModel {
       'Algeria': 'Argelia',
       'Benin': 'Benín',
       'Niger': 'Níger',
-      //'West Bank and Gaza': 'Cisjordania',
+      'West Bank and Gaza': 'Cisjordania',
       'Uganda': 'Uganda',
       'San Marino': 'San Marino',
       'Liberia': 'Liberia',
