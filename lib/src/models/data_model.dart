@@ -398,7 +398,7 @@ class DataModel {
       // "PM": "Saint Pierre and Miquelon",
       // "PN": "Pitcairn",
       // "PR": "Puerto Rico",
-      // "PS": "Palestine",
+      "PS": "West Bank and Gaza",//"Palestine",
       "PT": "Portugal",
       // "PW": "Palau",
       "PY": "Paraguay",
