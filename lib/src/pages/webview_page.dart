@@ -68,7 +68,9 @@ class WebViewPageState extends State<WebViewPage>
     super.build(context);
     return WillPopScope(
       onWillPop: () async {
-        if (controller != null && await controller.canGoBack()) {
+        if (controller != null &&
+            await controller.canGoBack() &&
+            await controller.currentUrl() != 'http://autopesquisa.sld.cu') {
           controller.goBack();
           return false;
         }
