@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
-import 'dart:developer';
 
 class ContainerizedText extends StatelessWidget {
   const ContainerizedText(

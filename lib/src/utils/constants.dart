@@ -594,7 +594,7 @@ class Constants {
 
   static const replicas = <List<String>>[
     [
-      'Cusobu',
+      'CUSOBU',
       'https://www.cusobu.nat.cu/covid',
       'https://www.cusobu.nat.cu',
     ],
@@ -605,8 +605,8 @@ class Constants {
     ],
     [
       'Proyecto SWL-X',
-      'http://covidcuba.swlx.info/',
-      'https://www.swlx.info/',
+      'http://covidcuba.swlx.info',
+      'https://www.swlx.info',
     ],
     [
       'Joven Club',
