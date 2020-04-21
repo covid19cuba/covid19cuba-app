@@ -42,7 +42,7 @@ class Replica extends StatelessWidget {
               linkStyle: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 18,
               ),
               options: LinkifyOptions(humanize: true),
               onOpen: (link) async {
@@ -59,7 +59,7 @@ class Replica extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 15,
               ),
             ),
             GestureDetector(
@@ -69,7 +69,7 @@ class Replica extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 18,
                 ),
               ),
               onTap: () async {

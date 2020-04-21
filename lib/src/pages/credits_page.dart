@@ -1,8 +1,8 @@
-import 'package:covid19cuba/src/widgets/presentation_widget.dart';
-import 'package:getflutter/getflutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CreditsPage extends StatelessWidget {
@@ -26,7 +26,7 @@ class CreditsPage extends StatelessWidget {
         child: Image.asset(Constants.appLogo),
         padding: EdgeInsets.all(5),
         margin: EdgeInsets.only(
-          top: 80,
+          top: 90,
           left: 110,
           right: 110,
         ),
@@ -34,46 +34,18 @@ class CreditsPage extends StatelessWidget {
     );
 
     result.add(
-      Container(
-        margin: EdgeInsets.only(
-          top: 50,
-          left: 50,
-          right: 50,
-          bottom: 20,
-        ),
-        child: Text(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-              ' tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, '
-              'quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-          style: TextStyle(
-            fontStyle: FontStyle.normal,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-
-    result.add(Container(
-      margin: EdgeInsets.only(
-        top: 50,
-        left: 50,
-        right: 50,
-        bottom: 20,
-      ),
-      child: Text(
-        'Nuestro Equipo :',
+      creditsText(
+        text: "Equipo de Desarrollo:",
+        topMargin: 70.0,
+        bottomMargin: 60.0,
         style: TextStyle(
           fontStyle: FontStyle.normal,
           color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
-        textAlign: TextAlign.center,
       ),
-    ));
+    );
 
     for (var collaborator in Constants.collaborators) {
       result.add(
@@ -86,9 +58,89 @@ class CreditsPage extends StatelessWidget {
     }
 
     result.add(
+      creditsText(
+        text: 'Colaboradores: ',
+        topMargin: 50.0,
+        style: TextStyle(
+          fontStyle: FontStyle.normal,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+    );
+
+    result.add(
+      LinkText(
+        "CUSOBU",
+        "https://www.cusobu.nat.cu",
+        topMargin: 20.0,
+      ),
+    );
+
+    result.add(
+      LinkText(
+        "Daxslab",
+        "https://www.daxslab.com",
+      ),
+    );
+
+    result.add(
+      LinkText(
+        "Proyecto SWL-X",
+        "https://www.swlx.info",
+      ),
+    );
+
+
+
+    result.add(
+      creditsText(
+        text: 'Réplicas de nuestro sitio web: ',
+        topMargin: 50.0,
+        style: TextStyle(
+          fontStyle: FontStyle.normal,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+    );
+
+    for (var replc in Constants.replicas) {
+      result.add(
+        Replica(
+          collaboratorText: replc[0],
+          url: replc[1],
+          collaboratorUrl: replc[2],
+          topMargin: 20,
+        ),
+      );
+    }
+
+    result.add(
+      creditsText(
+        text: 'Agradecimientos: ',
+        topMargin: 50.0,
+        style: TextStyle(
+          fontStyle: FontStyle.normal,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+    );
+
+
+    result.add(creditsText(
+      text: 'Muela aca',
+      topMargin: 20.0,
+    ));
+
+    result.add(
       GestureDetector(
         child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 40),
+          padding: EdgeInsets.only(left: 20, right: 20, top: 70),
           child: Text(
             'MatCom',
             textAlign: TextAlign.center,
@@ -211,8 +263,12 @@ Widget creditsText(
 
 Widget LinkText(
   String text,
-  String url,
-) {
+  String url, {
+  leftMargin: 50.0,
+  rightMargin: 50.0,
+  topMargin: 10.0,
+  bottomMargin: 30.0,
+}) {
   Text txt = Text(
     text,
     textAlign: TextAlign.center,
@@ -224,5 +280,12 @@ Widget LinkText(
     ),
   );
 
-  return TouchableUrlWidget(txt, url);
+  return TouchableUrlWidget(
+    txt,
+    url,
+    leftMargin: leftMargin,
+    rightMargin: rightMargin,
+    topMargin: topMargin,
+    bottomMargin: bottomMargin,
+  );
 }
