@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
+import 'package:preferences/preferences.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -58,21 +59,6 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                'Aplicación para conocer los reportes diarios, estadísticas, '
-                'etc respecto a la ${Constants.diseaseName} en Cuba.',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Container(
-              height: 2,
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
             createDrawerItem(
               context,
               icon: Icons.location_city,
@@ -101,17 +87,50 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 );
               },
             ),
-            /*Container(
-              height: 2,
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-            ),*/
+            createDrawerItem(
+              context,
+              icon: Icons.assignment,
+              text: 'Pesquisador Virtual',
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WebViewPage(),
+                  ),
+                );
+              },
+            ),
+            createDrawerItem(
+              context,
+              icon: Icons.table_chart,
+              text: 'Tabla de Casos',
+              onTap: () async {
+                const urlCU = 'https://www.cusobu.nat.cu/covid/casos.html';
+                const urlIO = 'https://covid19cubadata.github.io/casos.html';
+                String url;
+                var mode = PrefService.getInt(Constants.prefConnectionMode) ??
+                    Constants.ConnectionModeMerge;
+                switch (mode) {
+                  case Constants.ConnectionModeIntranet:
+                    url = urlCU;
+                    break;
+                  case Constants.ConnectionModeInternet:
+                    url = urlIO;
+                    break;
+                  case Constants.ConnectionModeMerge:
+                  default:
+                    url = urlCU;
+                    break;
+                }
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  log('Could not launch $url');
+                }
+              },
+            ),
             linksDrawerItem(),
-            /*Container(
-              height: 2,
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-            ),*/
             updateDrawerItem(),
             sharerDrawerItem(),
             settingsDrawerItem(),
@@ -119,96 +138,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             Container(
               height: 2,
               color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
-            GestureDetector(
-              child: Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 40),
-                child: Text(
-                  'MatCom',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              onTap: () async {
-                Navigator.pop(context);
-                const url = 'https://http://www.matcom.uh.cu';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
-            ),
-            GestureDetector(
-              child: Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: Text(
-                  'Postdata.club',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              onTap: () async {
-                Navigator.pop(context);
-                const url = 'https://www.postdata.club';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
-            ),
-            GestureDetector(
-              child: Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: Text(
-                  'Juventud Técnica',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              onTap: () async {
-                Navigator.pop(context);
-                const url = 'https://medium.com/juventud-técnica';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Copyright 2020',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Container(padding: EdgeInsets.all(2)),
-                  Icon(Icons.copyright, color: Colors.white),
-                ],
-              ),
-            ),
-            Container(
-              height: 2,
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10),
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
             ),
             versionAppDrawerItem()
           ],

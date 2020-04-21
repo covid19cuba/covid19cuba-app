@@ -44,10 +44,12 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
         (json['distribution_by_nationality_of_foreign_cases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
     ..listOfTestsPerformed = json['list_of_tests_performed'] == null ? null : ListOfTestsPerformed.fromJson(json['list_of_tests_performed'] as Map<String, dynamic>)
     ..testsByDays = json['tests_by_days'] == null ? null : TestsByDays.fromJson(json['tests_by_days'] as Map<String, dynamic>)
+    ..testsPositivePercent = json['tests_positive_percent'] == null ? null : TestsPositivePercent.fromJson(json['tests_positive_percent'] as Map<String, dynamic>)
     ..affectedProvinces = (json['affected_provinces'] as List)?.map((e) => e == null ? null : ItemProvince.fromJson(e as Map<String, dynamic>))?.toList()
     ..affectedMunicipalities = (json['affected_municipalities'] as List)?.map((e) => e == null ? null : ItemMunicipality.fromJson(e as Map<String, dynamic>))?.toList()
     ..comparisonOfAccumulatedCases = json['comparison_of_accumulated_cases'] == null ? null : ComparisonOfAccumulatedCases.fromJson(json['comparison_of_accumulated_cases'] as Map<String, dynamic>)
     ..mapData = json['map_data'] as Map<String, dynamic>
+    ..events = json['eventos'] as Map<String, dynamic>
     ..curvesEvolution = json['curves_evolution'] as Map<String, dynamic>
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..note = json['note'] as String
@@ -67,6 +69,7 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
           instance.distributionByNationalityOfForeignCases,
       'list_of_tests_performed': instance.listOfTestsPerformed,
       'tests_by_days': instance.testsByDays,
+      'tests_positive_percent': instance.testsPositivePercent,
       'affected_provinces': instance.affectedProvinces,
       'affected_municipalities': instance.affectedMunicipalities,
       'comparison_of_accumulated_cases': instance.comparisonOfAccumulatedCases,
@@ -75,4 +78,5 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'updated': dateTimeToJson(instance.updated),
       'note': instance.note,
       'top_20_accumulated_countries': instance.top20AccumulatedCountries,
+      'eventos': instance.events
     };

@@ -1,8 +1,13 @@
 import 'dart:math';
+import 'dart:developer' as dev;
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:preferences/preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
@@ -21,6 +26,8 @@ class ComparisonWidget extends StatefulWidget {
 class ComparisonWidgetState extends State<ComparisonWidget> {
   String selectedCountry = Constants.defaultCompareCountry;
   String selectedOption = 'Confirmados';
+  Country _selectedDialogCountry = CountryPickerUtils.getCountryByIsoCode(
+      DataModel.countryCode(Constants.defaultCompareCountry));
 
   final List<String> options = List<String>()
     ..add('Confirmados')
@@ -34,6 +41,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     assert(comparisonOfAccumulatedCases != null);
     if (getCountriesList().indexOf(selectedCountry) == -1) {
       selectedCountry = Constants.defaultCompareCountry;
+      _selectedDialogCountry = CountryPickerUtils.getCountryByIsoCode(
+          DataModel.countryCode(selectedCountry));
       PrefService.setString(Constants.prefCompareCountry, selectedCountry);
     }
   }
@@ -305,10 +314,68 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ];
   }
 
+  Widget _buildSelectedCountry(Country country) => Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              CountryPickerUtils.getDefaultFlagImage(country),
+              SizedBox(width: 8.0),
+              Expanded(
+                child: Text(DataModel.prettyCountry(
+                    DataModel.countries()[country.isoCode])),
+              ),
+              Icon(Icons.arrow_downward),
+            ],
+          ),
+          Container(
+            height: 2,
+            color: Constants.primaryColor.withOpacity(0.97),
+          ),
+        ],
+      );
+
+  Widget _buildDialogItem(Country country) => Row(
+        children: <Widget>[
+          CountryPickerUtils.getDefaultFlagImage(country),
+          SizedBox(width: 8.0),
+          Flexible(
+              child: Text(DataModel.prettyCountry(
+                  DataModel.countries()[country.isoCode]))),
+          // SizedBox(width: 8.0),
+        ],
+      );
+
+  void _openCountryPickerDialog() => showDialog(
+        context: context,
+        builder: (context) => Theme(
+            data: Theme.of(context).copyWith(primaryColor: Colors.pink),
+            child: CountryPickerDialog(
+                titlePadding: EdgeInsets.all(8.0),
+                semanticLabel: "País seleccionado " + selectedCountry,
+                searchCursorColor: Colors.pinkAccent,
+                searchInputDecoration: InputDecoration(hintText: 'Buscar...'),
+                searchEmptyView: Center(child: Text("No se encontró el país")),
+                isSearchable: true,
+                title: Text('Seleccione el país'),
+                onValuePicked: (Country country) {
+                  PrefService.setString(Constants.prefCompareCountry,
+                      DataModel.countries()[country.isoCode]);
+                  setState(() {
+                    selectedCountry = DataModel.countries()[country.isoCode];
+                    _selectedDialogCountry = country;
+                  });
+                },
+                itemFilter: (c) =>
+                    DataModel.countries().keys.contains(c.isoCode),
+                itemBuilder: _buildDialogItem)),
+      );
+
   @override
   Widget build(BuildContext context) {
     selectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
         Constants.defaultCompareCountry;
+    _selectedDialogCountry = CountryPickerUtils.getCountryByIsoCode(
+        DataModel.countryCode(selectedCountry));
     return Column(
       children: <Widget>[
         Container(
@@ -340,31 +407,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(left: 50, right: 50),
-          child: DropdownButton<String>(
-            value: selectedCountry,
-            icon: Icon(Icons.arrow_downward),
-            iconSize: 24,
-            isExpanded: true,
-            elevation: 16,
-            style: TextStyle(color: Constants.primaryColor),
-            underline: Container(
-              height: 2,
-              color: Constants.primaryColor,
-            ),
-            onChanged: (String newValue) {
-              PrefService.setString(Constants.prefCompareCountry, newValue);
-              setState(() {
-                selectedCountry = newValue;
-              });
-            },
-            items: getCountriesList()
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(DataModel.prettyCountry(value)),
-              );
-            }).toList(),
+          margin: EdgeInsets.only(left: 35, right: 35),
+          child: ListTile(
+            onTap: _openCountryPickerDialog,
+            title: _buildSelectedCountry(_selectedDialogCountry),
           ),
         ),
         Container(
@@ -481,16 +527,28 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             bottom: 20,
           ),
           child: Center(
-            child: Text(
-              'Datos de los países tomados '
-              'de\ngithub.com/pomber/covid19\ny '
-              'actualizado el '
-              '${comparisonOfAccumulatedCases.updated.toStrPlus()}',
+            child: Linkify(
+              text: 'Datos de los países tomados '
+                  'de\nhttps://github.com/pomber/covid19\ny '
+                  'actualizado el '
+                  '${comparisonOfAccumulatedCases.updated.toStrPlus()}',
+              options: LinkifyOptions(humanize: true),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
                 fontSize: 12,
               ),
+              linkStyle: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 12,
+              ),
+              onOpen: (link) async {
+                if (await canLaunch(link.url)) {
+                  await launch(link.url);
+                } else {
+                  dev.log('Could not launch $link');
+                }
+              },
             ),
           ),
         ),

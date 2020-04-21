@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Constants {
-  static const String appName = 'Covid19 Cuba Data (Beta)';
+  static const String appName = 'Covid19 Cuba Data';
   static const String appLogo = 'assets/images/logo.png';
   static const String diseaseName = 'Covid-19';
   static const Color primaryColor = Color.fromARGB(255, 28, 19, 64);
@@ -39,6 +39,11 @@ class Constants {
   static const int infoUpdateNotification = -1;
   static const int appUpdateNotification = -2;
   static const int clapsNotification = -3;
+
+  static const int startClapsHour = 20;
+  static const int startClapsMinute = 47;
+  static const int stopClapsHour = 21;
+  static const int stopClapsMinute = 2;
 
   static Time clapsTime = Time(20, 55, 00);
 
@@ -92,6 +97,25 @@ class Constants {
     '34': 'stg',
     '35': 'gtm',
     '40.01': 'ijv',
+  };
+
+  static const provincesAbbreviationsCodes = <String, String>{
+    'pri': '21',
+    'art': '22',
+    'lha': '23',
+    'may': '24',
+    'mat': '25',
+    'vcl': '26',
+    'cfg': '27',
+    'ssp': '28',
+    'cav': '29',
+    'cam': '30',
+    'ltu': '31',
+    'hol': '32',
+    'gra': '33',
+    'stg': '34',
+    'gtm': '35',
+    'ijv': '40.01',
   };
 
   static const municipalitiesNames = <String, String>{
@@ -438,40 +462,192 @@ class Constants {
 
   static const faqs = <List<String>>[
     [
-      'Presento un problema con la aplicación que debería hacer ?',
-      'Primero le aconsejamos que lea esta sección de la aplicación y si, su interrogante sigue sin aparecer, '
-          'le invitamos a que entre a nuestro canal y grupo de soporte https://t.me/covid19cubadata y https://t.me/covid19cubadatachat '
-          'respectivamente, para que nuestro equipo le de respuesta a sus preocupaciones.',
+      '¿Si presento problemas con la aplicación qué debería hacer?',
+      'Primero le aconsejamos que lea esta sección de la aplicación, y si '
+          'su interrogante sigue sin ser respondida, le invitamos a que '
+          'entre a nuestro canal y grupo de Telegram '
+          'https://t.me/covid19cubadata y https://t.me/covid19cubadatachat '
+          'respectivamente, para que nuestro equipo le de respuesta a sus '
+          'interrogantes.',
     ],
     [
-      'Recién se terminó el parte del MINSAP y no se han actualizado los datos. Cuando se hará ?',
-      'Todos nuestros datos son tomados a partir de las partes del Minsap por lo que, tras terminar la conferencia '
-          'nuestro aguerrido equipo de periodistas se toma la tarea de transcribir cada uno de los casos que surgieron en el día. '
-          'Una vez terminado este proceso y se actualicen los datos tenemos un sistema de notificaciones que le alertarán de algún '
-          'cambio en la información. Por ahora presentamos dos fuentes de notificaciones, la primera nuestro bot (asistente virtual) '
-          'presente en Telegram y la segunda esta aplicación (requiere tener instalada una versión superior a la v0.5.0 y tener un '
+      '¿Por qué si recién terminó el parte del Minsap no se han actualizado '
+          'los datos? ¿Cuándo se hará?',
+      'Todos nuestros datos son tomados a partir de los partes del Minsap '
+          'por lo que, tras terminar la conferencia nuestro equipo de '
+          'periodistas se toma la tarea de transcribir cada uno de los '
+          'casos que surgieron en el día. Una vez terminado este proceso '
+          'y se actualicen los datos tenemos un sistema de notificaciones '
+          'que le alertará de algún cambio en la información. Por ahora '
+          'presentamos dos fuentes de notificaciones, la primera nuestro '
+          'bot de Telegram y la segunda esta aplicación (requiere tener '
+          'instalada una versión superior a la v0.5.0 y tener un '
           'paquete de datos activo).',
     ],
     [
-      'La fecha de los datos que aparece en la aplicación tiene un día de atraso. Significa esto que no se han actualizado los datos?',
-      'No, los partes que se realizan diariamente por el Minsap contienen los casos registrados hasta las 11:59 pm de la noche anterior. '
-          'Por lo que la información que se considera actualizadacon respecto al parte tiene un día de atraso.'
+      'La fecha de los datos que aparece en la aplicación tiene un día de '
+          'atraso. ¿Significa esto qué no se han actualizado los datos?',
+      'No, los partes que se realizan diariamente por el Minsap contienen '
+          'los casos registrados hasta las 11:59 pm de la noche anterior. '
+          'Por lo que la información que se considera actualizada con '
+          'respecto al parte tiene un día de atraso.'
     ],
     [
-      'Es posible emplear la aplicación de conjunto con la bolsa nauta ?',
-      'No, desgraciadamente no se dentro de las posibilidades de nuestro equipo de que sea accedible la aplicación por la bolsa nauta. '
-          'Por lo que necesita estar conectado ya sea por wifi o por datos para poder consultar nuestra información.',
+      '¿Es posible emplear la aplicación de conjunto con la bolsa nauta?',
+      'No, desgraciadamente no está dentro de las posibilidades de nuestro '
+          'equipo de que sea accedible la aplicación por la bolsa nauta. '
+          'Por lo que necesita estar conectado ya sea por wifi o por datos '
+          'para poder consultar nuestra información.',
     ],
     [
-      'La aplicación consume datos nacionales ?',
-      'Si, aunque es posible seleccionar de cual fuente de datos prefiere obtener su información. Si prefiere que consuma primero de '
-          'fuentes nacionales y si, estas fallan consulta en internet (opción por defecto). Todas estas variantes son configurables y '
-          'las puede encontrar en su menú lateral en el apartado de opciones.',
+      '¿La aplicación consume datos nacionales?',
+      'Si, aunque es posible seleccionar de cual fuente de datos prefiere '
+          'obtener su información. Si prefiere que consuma primero de '
+          'fuentes nacionales y si, estas fallan consulta en internet '
+          '(opción por defecto). Todas estas variantes son configurables y '
+          'las puede encontrar en su menú lateral en el apartado de '
+          'Configuración.',
     ],
     [
-      'Es posible emplear los datos de los que disponen ?',
-      'Si, es posible emplear los datos que disponemos. Los tenemos disponibles tanto en formato JSON como CSV. para más información '
-          'consulte nuestro links https://covid19cubadata.github.io/ o https://www.cusobu.nat.cu/covid/',
+      '¿Es posible emplear los datos de los que dispone la aplicación?',
+      'Si, es posible emplear los datos que disponemos. Los tenemos '
+          'disponibles tanto en formato JSON como CSV. Para más información '
+          'consulte nuestro sitios web https://covid19cubadata.github.io o '
+          'https://www.cusobu.nat.cu/covid.',
+    ]
+  ];
+
+  static const collaborators = <List<String>>[
+    [
+      'Saimi Reyes',
+      'Lic. en Periodismo, graduada de la Univ. de La Habana. Editora y '
+          'Periodista de Postdata.club.',
+      '',
+    ],
+    [
+      'Claudia Alemañy',
+      'Lic. en Periodismo, graduada de la Univ. de La Habana. Periodista '
+          'de Juventud Técnica.',
+      '',
+    ],
+    [
+      'Dariagna Steyners',
+      'Diseñadora, graduada del Instituto Superior de Diseño de la Univ. de '
+          'La Habana. Diseñadora de Juventud Técnica.',
+      '',
+    ],
+    [
+      'Iramis Alonso',
+      'Lic. en Periodismo, graduada de la Univ. de La Habana. Directora y '
+          'Periodista de Juventud Técnica.',
+      '',
+    ],
+    [
+      'Ernesto Guerra',
+      'Lic. en Periodismo, graduado de la Univ. de La Habana. Periodista '
+          'de Postdata.club y Juventud Técnica.',
+      '',
+    ],
+    [
+      'Norlan Capote Díaz',
+      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias '
+          'Informáticas. Scrum Máster.'
+          ' Analista y desarrollador senior de sistemas.',
+      'https://www.linkedin.com/in/norlancd',
+    ],
+    [
+      'Sandy F. Pérez Matamoros',
+      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias '
+          'Informáticas. Cofundador de CUSOBU.',
+      'https://www.linkedin.com/in/sandy-p%C3%A9rez-25a00585',
+    ],
+    [
+      'Gabriel Alejandro López López',
+      'Ing. Informático, graduado de la Univ. de Cienfuegos. MSc. '
+          'Administracion de negocios. CEO y fundador de Daxslab.',
+      'https://www.linkedin.com/in/glpzzz/',
+    ],
+    [
+      'Carlos César Caballero',
+      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias '
+          'Informáticas. CTO y fundador de Daxslab.',
+      'https://www.linkedin.com/in/carlos-cesar-caballero-d%C3%ADaz-a76b24103',
+    ],
+    [
+      'Maikel Llamaret Heredia',
+      'Lic. Bioquímica, graduado de la Univ. de La Habana. Estudiante de '
+          'Ingeniería Informática en la Univ. de Oriente.'
+          'Fundador del Proyecto SWL-X.',
+      'mailto:llamaret@webmisolutions.com',
+    ],
+    [
+      'Frank Sadan Naranjo Noda',
+      'Lic. Matemática, graduado de la Univ. de La Habana. Investigador del '
+          'departamento de Matemática Interdisciplinaria del Instituto de '
+          'Cibernética, Matemática y Física. Integrante del grupo de IA de '
+          'la Univ. de La Habana.',
+      'mailto:fsadannn@gmail.com',
+    ],
+    [
+      'Hian Cañizares Díaz',
+      'Lic. Ciencia de la Computación, graduado de la Univ. de La Habana. '
+          'Profesor de la Fac. Matemática y Computación de la Univ. de '
+          'La Habana. Integrante del grupo de IA de la Univ. de La Habana.',
+      'mailto:hiancdtrsnm@gmail.com',
+    ],
+    [
+      'Yudivián Almeida',
+      'Lic. Ciencia de la Computación, graduado de la Univ. de La Habana '
+          'de Ciencias Matemáticas. Profesor de la Fac. Matemática y '
+          'Computación de la Univ. de La Habana. Editor de Datos de '
+          'Postdata.club.',
+      '',
+    ],
+    [
+      'Luis Correa Leyva',
+      'Estudiante de Ciencia de la Computación en la Univ. de Oriente.',
+      'https://correaleyval.github.io',
+    ],
+    [
+      'Carlos Bermudez Porto',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
+          'Alumno Ayudante de Programación.',
+      'https://www.linkedin.com/in/carlos-bermudez-porto-3078bb165',
+    ],
+    [
+      'Roberto Marti Cedeño',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana.',
+      'mailto:roberto.marti@iris.uh.cu',
+    ],
+    [
+      'Leynier Gutiérrez González',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
+          'Alumno Ayudante de Programación y Redes de Computadoras. '
+          'Desarrollador Full Stack.',
+      'https://leynier.github.io',
+    ],
+  ];
+
+  static const replicas = <List<String>>[
+    [
+      'CUSOBU',
+      'https://www.cusobu.nat.cu/covid',
+      'https://www.cusobu.nat.cu',
+    ],
+    [
+      'Federación de Radioaficionados de Cuba',
+      'http://covid19.frcuba.cu',
+      'https://www.frcuba.cu',
+    ],
+    [
+      'Proyecto SWL-X',
+      'http://covidcuba.swlx.info',
+      'https://www.swlx.info',
+    ],
+    [
+      'Joven Club',
+      'http://covid19.jovenclub.cu',
+      'https://www.jovenclub.cu',
     ]
   ];
 }

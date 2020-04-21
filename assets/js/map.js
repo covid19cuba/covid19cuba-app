@@ -5,6 +5,24 @@ function logx(base, x){
     return Math.log10(x)/Math.log10(base);
 }
 
+var openIcon = new L.Icon({
+	iconUrl: 'images/marker-icon-2x-gold.png',
+	shadowUrl: 'images/marker-shadow.png',
+    iconSize: [15, 24],
+	iconAnchor: [7, 24],
+	popupAnchor: [1, -34],
+	shadowSize: [24, 24]
+});
+
+var closeIcon = new L.Icon({
+	iconUrl: 'images/marker-icon-2x-green.png',
+	shadowUrl: 'images/marker-shadow.png',
+    iconSize: [15, 24],
+	iconAnchor: [7, 24],
+	popupAnchor: [1, -34],
+	shadowSize: [24, 24]
+});
+
 var map_mun = L.map('map-mun', {
     center: [21.5, -79.371124],
     zoom: 15,
@@ -22,7 +40,15 @@ var map_mun = L.map('map-mun', {
 map_mun.zoomControl.setPosition('topright');
 geojsonM = null;
 
-covidData = function (data) {
+function getMarkerProfile(title, pro, mun) {
+    var t = '';
+    t += '<div class="small-pname"><span class="bd">' + title + '</span></div>';
+    t += '<div class="small-content"><span class="bd">' + pro + '</span> - <span>' + mun + '</span></div>';
+    t += '<div class="small-plink">&nbsp;</div>';
+    return t;
+}
+
+covidData = function (data, events) {
 
     var factor = 100;
     var muns = data.muns;
@@ -71,13 +97,29 @@ covidData = function (data) {
         return '#D1D2D4';
     }
 
-    map_mun.addLayer(geojsonM);
-    map_mun.fitBounds(geojsonM.getBounds());
-    //map_mun.setMaxBounds(geojsonM.getBounds());
+    for(var i in events){
+        event = events[i];
+        if(event['lat']===0 && event['lon']===0){
+            continue;
+        }
+        if(event['abierto']===false){
+            var marker = L.marker([event['lat'],event['lon']],{icon: closeIcon,
+                title: event['identificador'], riseOnHover: true}).addTo(map_mun);
+        }else{
+            var marker = L.marker([event['lat'],event['lon']],{icon: openIcon,
+                title: event['identificador'], riseOnHover: true}).addTo(map_mun);
+        }
+        marker.bindPopup(getMarkerProfile(event['identificador'],event['provincia'],event['municipio']));
 
+    }
+
+    map_mun.addLayer(geojsonM);
+    let ratio = (geojsonM.getBounds().getNorthEast().lat - geojsonM.getBounds().getSouthWest().lat) * 0.08;
+    map_mun.fitBounds(geojsonM.getBounds());
+    //map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
 }
 
-covidData2 = function (data) {
+covidData2 = function (data, events) {
 
     var factor = 100;
     var pros = data.pros;
@@ -126,8 +168,9 @@ covidData2 = function (data) {
     }
 
     map_mun.addLayer(geojsonM);
+    let ratio = (geojsonM.getBounds().getNorthEast().lat - geojsonM.getBounds().getSouthWest().lat) * 0.05;
     map_mun.fitBounds(geojsonM.getBounds());
-    //map_mun.setMaxBounds(geojsonM.getBounds());
+    //map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
 }
 
 
@@ -144,7 +187,7 @@ filterByProvince = function (province_id, data) {
     return ret;
 }
 
-covidData3 = function (data, province_id) {
+covidData3 = function (data, province_id, events) {
         var municipalitydata = JSON.parse(strGeoJson);
         var factor = 100;
         var muns = data.muns;
@@ -202,7 +245,26 @@ covidData3 = function (data, province_id) {
             return '#D1D2D4';
         }
 
+        for(var i in events){
+            event = events[i];
+            if(event['dpacode_provincia']===province_id){
+
+                if(event['lat']===0 && event['lon']===0){
+                    continue;
+                }
+                if(event['abierto']===false){
+                    var marker = L.marker([event['lat'],event['lon']],{icon: closeIcon,
+                        title: event['identificador'], riseOnHover: true}).addTo(map_mun);
+                }else{
+                    var marker = L.marker([event['lat'],event['lon']],{icon: openIcon,
+                        title: event['identificador'], riseOnHover: true}).addTo(map_mun);
+                }
+                marker.bindPopup(getMarkerProfile(event['identificador'],event['provincia'],event['municipio']));
+            }
+        }
+
         map_mun.addLayer(geojsonM);
+        let ratio = Math.abs(geojsonM.getBounds().getNorthEast().lat - geojsonM.getBounds().getSouthWest().lat) * 0.2;
         map_mun.fitBounds(geojsonM.getBounds());
-        //map_mun.setMaxBounds(geojsonM.getBounds());
+        //map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
 }
