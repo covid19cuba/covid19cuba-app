@@ -184,3 +184,27 @@ class CreditsPage extends StatelessWidget {
     return result;
   }
 }
+
+Widget creditsText(
+    {@required text,
+    align = TextAlign.center,
+    style = const TextStyle(
+      fontStyle: FontStyle.normal,
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 18,
+    ),
+    leftMargin: 50.0,
+    rightMargin: 50.0,
+    topMargin: 0.0,
+    bottomMargin: 20.0}) {
+  return ContainerizedText(
+    text: text,
+    style: style,
+    align: align,
+    leftMargin: leftMargin,
+    rightMargin: rightMargin,
+    topMargin: topMargin,
+    bottomMargin: bottomMargin,
+  );
+}
