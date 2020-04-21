@@ -9,3 +9,4 @@ export 'province_list_page.dart';
 export 'settings_page.dart';
 export 'update_page.dart';
 export 'faqs_page.dart';
+export 'webview_page.dart';
