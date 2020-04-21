@@ -40,6 +40,14 @@ var map_mun = L.map('map-mun', {
 map_mun.zoomControl.setPosition('topright');
 geojsonM = null;
 
+function getMarkerProfile(title, pro, mun) {
+    var t = '';
+    t += '<div class="small-pname"><span class="bd">' + title + '</span></div>';
+    t += '<div class="small-content"><span class="bd">' + pro + '</span> - <span>' + mun + '</span></div>';
+    t += '<div class="small-plink">&nbsp;</div>';
+    return t;
+}
+
 covidData = function (data, events) {
 
     var factor = 100;
@@ -101,15 +109,14 @@ covidData = function (data, events) {
             var marker = L.marker([event['lat'],event['lon']],{icon: openIcon,
                 title: event['identificador'], riseOnHover: true}).addTo(map_mun);
         }
-        marker.bindPopup('<div class="small-content"><span class="bd">'+event['identificador']+'</span></div>');
+        marker.bindPopup(getMarkerProfile(event['identificador'],event['provincia'],event['municipio']));
 
     }
 
     map_mun.addLayer(geojsonM);
     let ratio = (geojsonM.getBounds().getNorthEast().lat - geojsonM.getBounds().getSouthWest().lat) * 0.08;
     map_mun.fitBounds(geojsonM.getBounds());
-    map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
-
+    //map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
 }
 
 covidData2 = function (data, events) {
@@ -163,7 +170,7 @@ covidData2 = function (data, events) {
     map_mun.addLayer(geojsonM);
     let ratio = (geojsonM.getBounds().getNorthEast().lat - geojsonM.getBounds().getSouthWest().lat) * 0.05;
     map_mun.fitBounds(geojsonM.getBounds());
-    map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
+    //map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
 }
 
 
@@ -252,12 +259,12 @@ covidData3 = function (data, province_id, events) {
                     var marker = L.marker([event['lat'],event['lon']],{icon: openIcon,
                         title: event['identificador'], riseOnHover: true}).addTo(map_mun);
                 }
-                marker.bindPopup('<div class="small-content"><span class="bd">'+event['identificador']+'</span></div>');
+                marker.bindPopup(getMarkerProfile(event['identificador'],event['provincia'],event['municipio']));
             }
         }
 
         map_mun.addLayer(geojsonM);
         let ratio = Math.abs(geojsonM.getBounds().getNorthEast().lat - geojsonM.getBounds().getSouthWest().lat) * 0.2;
         map_mun.fitBounds(geojsonM.getBounds());
-        map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
+        //map_mun.setMaxBounds(geojsonM.getBounds().pad(ratio));
 }
