@@ -208,3 +208,21 @@ Widget creditsText(
     bottomMargin: bottomMargin,
   );
 }
+
+Widget LinkText(
+  String text,
+  String url,
+) {
+  Text txt = Text(
+    text,
+    textAlign: TextAlign.center,
+    style: const TextStyle(
+      fontStyle: FontStyle.normal,
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 18,
+    ),
+  );
+
+  return TouchableUrlWidget(txt, url);
+}
