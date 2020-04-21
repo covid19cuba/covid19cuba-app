@@ -135,13 +135,12 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             sharerDrawerItem(),
             settingsDrawerItem(),
             faqsDrawerItem(),
-            creditsDrawerItem(),
             Container(
               height: 2,
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
             ),
-            versionAppDrawerItem(),
+            versionAppDrawerItem()
           ],
         ),
       ),
@@ -361,23 +360,6 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           context,
           MaterialPageRoute(
             builder: (context) => FaqsPage(),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget creditsDrawerItem() {
-    return createDrawerItem(
-      context,
-      icon: Icons.people,
-      text: 'Sobre Nosotros',
-      onTap: () {
-        Navigator.of(context).pop();
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CreditsPage(),
           ),
         );
       },
