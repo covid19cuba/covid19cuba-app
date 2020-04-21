@@ -1,7 +1,7 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:covid19cuba/src/utils/utils.dart';
 
 class PresentationCard extends StatelessWidget {
   const PresentationCard(
@@ -36,26 +36,40 @@ class PresentationCard extends StatelessWidget {
         child: Card(
           borderOnForeground: false,
           color: Constants.primaryColor,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          child: Row(
             children: <Widget>[
-              ListTile(
-                //leading: Icon(Icons),
-                title: Text(
-                  this.name,
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    ListTile(
+                      //leading: Icon(Icons),
+                      title: Text(
+                        name,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      subtitle: Text(
+                        description,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                subtitle: Text(
-                  this.description,
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+              Container(
+                margin: EdgeInsets.all(20),
+                child: Icon(
+                  Icons.keyboard_arrow_right,
+                  color: link == null || link == ''
+                      ? Colors.transparent
+                      : Colors.white,
                 ),
               ),
             ],
@@ -67,12 +81,10 @@ class PresentationCard extends StatelessWidget {
   }
 
   _launchURL() async {
-    if (this.link != '' && await canLaunch(this.link) ){
-      await launch(this.link);
-    }
-    else{
+    if (link != '' && await canLaunch(link)) {
+      await launch(link);
+    } else {
       print("empty link or url issue");
     }
   }
-
 }

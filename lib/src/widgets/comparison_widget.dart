@@ -1,10 +1,13 @@
 import 'dart:math';
+import 'dart:developer' as dev;
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:country_pickers/country.dart';
-import 'package:flutter/material.dart';
-import 'package:preferences/preferences.dart';
 import 'package:country_pickers/country_pickers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:preferences/preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
@@ -366,6 +369,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
                     DataModel.countries().keys.contains(c.isoCode),
                 itemBuilder: _buildDialogItem)),
       );
+
   @override
   Widget build(BuildContext context) {
     selectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
@@ -408,7 +412,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             onTap: _openCountryPickerDialog,
             title: _buildSelectedCountry(_selectedDialogCountry),
           ),
-        ),        
+        ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
           child: Center(
@@ -523,16 +527,28 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             bottom: 20,
           ),
           child: Center(
-            child: Text(
-              'Datos de los países tomados '
-              'de\ngithub.com/pomber/covid19\ny '
-              'actualizado el '
-              '${comparisonOfAccumulatedCases.updated.toStrPlus()}',
+            child: Linkify(
+              text: 'Datos de los países tomados '
+                  'de\nhttps://github.com/pomber/covid19\ny '
+                  'actualizado el '
+                  '${comparisonOfAccumulatedCases.updated.toStrPlus()}',
+              options: LinkifyOptions(humanize: true),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
                 fontSize: 12,
               ),
+              linkStyle: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 12,
+              ),
+              onOpen: (link) async {
+                if (await canLaunch(link.url)) {
+                  await launch(link.url);
+                } else {
+                  dev.log('Could not launch $link');
+                }
+              },
             ),
           ),
         ),

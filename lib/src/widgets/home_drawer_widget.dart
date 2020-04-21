@@ -53,7 +53,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 ),
               ),
             ),
-            Container(
+            /*Container(
               height: 2,
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
@@ -67,7 +67,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                   color: Colors.white,
                 ),
               ),
-            ),
+            ),*/
             Container(
               height: 2,
               color: Colors.white,
@@ -117,11 +117,6 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             settingsDrawerItem(),
             faqsDrawerItem(),
             creditsDrawerItem(),
-            Container(
-              height: 2,
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
             Container(
               height: 2,
               color: Colors.white,

@@ -1,14 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CreditsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        title: Text('Sobre Nosotros'),
+        centerTitle: true,
+      ),
       backgroundColor: Constants.primaryColor,
       body: Center(
         child: ListView(
@@ -26,28 +32,43 @@ class CreditsPage extends StatelessWidget {
         child: Image.asset(Constants.appLogo),
         padding: EdgeInsets.all(5),
         margin: EdgeInsets.only(
-          top: 90,
-          left: 110,
-          right: 110,
+          top: 50,
+          left: 150,
+          right: 150,
+        ),
+      ),
+    );
+
+    result.add(
+      Container(
+        margin: EdgeInsets.all(20),
+        child: Text(
+          'Aplicación para conocer los reportes diarios, estadísticas, '
+          'etc respecto a la ${Constants.diseaseName} en Cuba.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
     );
 
     result.add(
       creditsText(
-        text: "Equipo de Desarrollo:",
-        topMargin: 70.0,
-        bottomMargin: 60.0,
+        text: 'Equipo de Desarrollo',
+        topMargin: 30.0,
+        bottomMargin: 20.0,
         style: TextStyle(
-          fontStyle: FontStyle.normal,
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 18,
         ),
       ),
     );
 
-    for (var collaborator in Constants.collaborators) {
+    for (var collaborator in List<List<String>>()
+      ..addAll(Constants.collaborators)
+      ..sort((a, b) => a[0].compareTo(b[0]))) {
       result.add(
         PresentationCard(
           name: collaborator[0],
@@ -59,60 +80,65 @@ class CreditsPage extends StatelessWidget {
 
     result.add(
       creditsText(
-        text: 'Colaboradores: ',
+        text: 'Colaboradores',
         topMargin: 50.0,
         style: TextStyle(
-          fontStyle: FontStyle.normal,
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 18,
         ),
       ),
     );
 
-    result.add(
-      LinkText(
-        "CUSOBU",
-        "https://www.cusobu.nat.cu",
-        topMargin: 20.0,
-      ),
-    );
-
-    result.add(
-      LinkText(
-        "Daxslab",
-        "https://www.daxslab.com",
-      ),
-    );
-
-    result.add(
-      LinkText(
-        "Proyecto SWL-X",
-        "https://www.swlx.info",
-      ),
-    );
-
-
+    result.add(Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        linkText(
+          'CUSOBU',
+          'https://www.cusobu.nat.cu',
+          topMargin: 0.0,
+          rightMargin: 0.0,
+          bottomMargin: 0.0,
+          leftMargin: 0.0,
+        ),
+        linkText(
+          'Proyecto SWL-X',
+          'https://www.swlx.info',
+          topMargin: 0.0,
+          rightMargin: 0.0,
+          bottomMargin: 0.0,
+          leftMargin: 0.0,
+        ),
+        linkText(
+          'Daxslab',
+          'https://www.daxslab.com',
+          topMargin: 0.0,
+          rightMargin: 0.0,
+          bottomMargin: 0.0,
+          leftMargin: 0.0,
+        ),
+      ],
+    ));
 
     result.add(
       creditsText(
-        text: 'Réplicas de nuestro sitio web: ',
+        text: 'Réplicas de nuestro Sitio Web',
         topMargin: 50.0,
+        bottomMargin: 0.0,
         style: TextStyle(
-          fontStyle: FontStyle.normal,
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 18,
         ),
       ),
     );
 
-    for (var replc in Constants.replicas) {
+    for (var item in Constants.replicas) {
       result.add(
         Replica(
-          collaboratorText: replc[0],
-          url: replc[1],
-          collaboratorUrl: replc[2],
+          collaboratorText: item[0],
+          url: item[1],
+          collaboratorUrl: item[2],
           topMargin: 20,
         ),
       );
@@ -120,27 +146,37 @@ class CreditsPage extends StatelessWidget {
 
     result.add(
       creditsText(
-        text: 'Agradecimientos: ',
+        text: 'Agradecimientos',
         topMargin: 50.0,
+        bottomMargin: 0.0,
         style: TextStyle(
-          fontStyle: FontStyle.normal,
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 18,
         ),
       ),
     );
 
-
-    result.add(creditsText(
-      text: 'Muela aca',
-      topMargin: 20.0,
-    ));
+    result.add(
+      Container(
+        margin: EdgeInsets.all(20),
+        child: Text(
+          'El equipo de desarrollo de Covid19 Cuba Data agradece a todos '
+          'los que de una forma u otra ayudan a combatir la pandemia de la '
+          'Covid-19, en especial a los que arriesgan su vida luchando en '
+          'primera línea.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
 
     result.add(
       GestureDetector(
         child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 70),
+          padding: EdgeInsets.only(left: 20, right: 20, top: 50),
           child: Text(
             'MatCom',
             textAlign: TextAlign.center,
@@ -241,7 +277,6 @@ Widget creditsText(
     {@required text,
     align = TextAlign.center,
     style = const TextStyle(
-      fontStyle: FontStyle.normal,
       color: Colors.white,
       fontWeight: FontWeight.bold,
       fontSize: 18,
@@ -261,7 +296,7 @@ Widget creditsText(
   );
 }
 
-Widget LinkText(
+Widget linkText(
   String text,
   String url, {
   leftMargin: 50.0,
@@ -273,10 +308,9 @@ Widget LinkText(
     text,
     textAlign: TextAlign.center,
     style: const TextStyle(
-      fontStyle: FontStyle.normal,
       color: Colors.white,
       fontWeight: FontWeight.bold,
-      fontSize: 18,
+      fontSize: 14,
     ),
   );
 
