@@ -26,3 +26,6 @@ export 'test_evolution_widget.dart';
 export 'tests_positive_percent_widget.dart';
 export 'top_20_accumulated_countries_widget.dart';
 export 'touchable_url_widget.dart';
+export 'presentation_widget.dart';
+export 'replica_widget.dart';
+export 'containerized_text_widget.dart';

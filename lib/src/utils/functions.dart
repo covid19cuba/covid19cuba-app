@@ -82,8 +82,8 @@ void getUrl(url) async {
   if (await canLaunch(url)) {
     launch(url);
   } else {
-    log("Download url failed");
-    throw InvalidSourceException("No se ha podido obtener la url");
+    log("Url $url resolve failed");
+    //throw InvalidSourceException("No se ha podido obtener la url");
   }
 }
 

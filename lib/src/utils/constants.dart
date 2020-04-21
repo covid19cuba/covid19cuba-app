@@ -498,4 +498,120 @@ class Constants {
           'consulte nuestro links https://covid19cubadata.github.io/ o https://www.cusobu.nat.cu/covid/',
     ]
   ];
+
+  static const collaborators = <List<String>>[
+    [
+      'Saimi Reyes',
+      'Lic. en Periodismo, graduada de la Univ. de La Habana. Editora y Periodista de Postdata.club.',
+      '',
+    ],
+    [
+      'Claudia Alemañy',
+      'Lic. en Periodismo, graduada de la Univ. de La Habana. Periodista de Juventud Técnica.',
+      '',
+    ],
+    [
+      'Dariagna Steyners',
+      'Diseñadora, graduada del Instituto Superior de Diseño de la Univ. de La Habana. Diseñadora de Juventud Técnica.',
+      '',
+    ],
+    [
+      'Iramis Alonso',
+      'Lic. en Periodismo, graduada de la Univ. de La Habana. Directora y Periodista de Juventud Técnica.',
+      '',
+    ],
+    [
+      'Ernesto Guerra',
+      'Lic. en Periodismo, graduado de la Univ. de La Habana. Periodista de Postdata.club y Juventud Técnica.',
+      '',
+    ],
+    [
+      'Norlan Capote Días',
+      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias Informáticas. Scrum Máster.'
+          ' Analista y desarrollador senior de sistemas.',
+      'https://www.linkedin.com/in/norlancd',
+    ],
+    [
+      'Sandy F. Pérez Matamoros',
+      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias Informáticas. Cofundador de CUSOBU.',
+      'https://www.linkedin.com/in/sandy-p%C3%A9rez-25a00585',
+    ],
+    [
+      'Gabriel Alejandro López López',
+      'Ing. Informático, graduado de la Univ. de Cienfuegos. MSc. Administracion de negocios. CEO y fundador de Daxslab.',
+      'https://www.linkedin.com/in/glpzzz/',
+    ],
+    [
+      'Carlos César Caballero',
+      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias Informáticas. CTO y fundador de Daxslab.',
+      'https://www.linkedin.com/in/carlos-cesar-caballero-d%C3%ADaz-a76b24103',
+    ],
+    [
+      'Maikel Llamaret Heredia',
+      ' Lic. Bioquímica, graduado de la Univ. de La Habana. Estudiante de Ingeniería Informática en la Univ. de Oriente.'
+          'Fundador del Proyecto SWL-X.',
+      'mailto:llamaret@webmisolutions.com',
+    ],
+    [
+      'Frank Sadan Naranjo Noda',
+      'Lic. Matemática, graduado de la Univ. de La Habana. Investigador del departamento de Matemática Interdisciplinaria '
+          'del Instituto de Cibernética, Matemática y Física. Integrante del grupo de Inteligencia Artificial de la Univ. de La Habana.',
+      'mailto:fsadannn@gmail.com',
+    ],
+    [
+      'Hian Cañizares Días',
+      'Lic. Ciencia de la Computación, graduado de la Univ. de La Habana. Profesor de la Fac. Matemática y Computación de la Univ. de La Habana.'
+          'Integrante del grupo de Inteligencia Artificial de la Univ. de La Habana. ',
+      'mailto:hiancdtrsnm@gmail.com',
+    ],
+    [
+      'Yudivián Almeida',
+      'Lic. Ciencia de la Computación, graduado de la Univ. de La Habana. De. Ciencias Matemáticas. '
+          'Profesor de la Fac. Matemática y Computación de la Univ. de La Habana. Editor de Datos de Postdata.club.',
+      '',
+    ],
+    [
+      'Luis Correa Leyva',
+      'Estudiante de Ciencia de la Computación en la Univ. de Oriente.',
+      'https://correaleyval.github.io',
+    ],
+    [
+      'Carlos Bermudez Porto',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana.',
+      'https://www.linkedin.com/in/carlos-bermudez-porto-3078bb165',
+    ],
+    [
+      'Roberto Marti Cedeño',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana.',
+      'mailto:roberto.marti@iris.uh.cu',
+    ],
+    [
+      'Leynier Gutiérrez González',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana.',
+      'https://leynier.github.io',
+    ],
+  ];
+
+  static const replicas = <List<String>>[
+    [
+      'CUSOBU',
+      'https://www.cusobu.nat.cu/covid',
+      'https://www.cusobu.nat.cu',
+    ],
+    [
+      'Federación de Radioaficionados de Cuba',
+      'http://covid19.frcuba.cu',
+      'https://www.frcuba.cu',
+    ],
+    [
+      'Proyecto SWL-X',
+      'http://covidcuba.swlx.info',
+      'https://www.swlx.info',
+    ],
+    [
+      'Joven Club',
+      'http://covid19.jovenclub.cu',
+      'https://www.jovenclub.cu',
+    ]
+  ];
 }
