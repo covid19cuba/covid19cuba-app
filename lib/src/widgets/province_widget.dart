@@ -44,6 +44,7 @@ class ProvinceWidgetState extends State<ProvinceWidget> {
               child: Card(
                 child: ProvinceMapWebViewWidget(
                   mapData: provinceData.mapData,
+                  eventsData: data.all.events,
                   provinceCode: provinceData.provinceCode,
                 ),
               ),

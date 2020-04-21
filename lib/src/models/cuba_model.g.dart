@@ -49,6 +49,7 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..affectedMunicipalities = (json['affected_municipalities'] as List)?.map((e) => e == null ? null : ItemMunicipality.fromJson(e as Map<String, dynamic>))?.toList()
     ..comparisonOfAccumulatedCases = json['comparison_of_accumulated_cases'] == null ? null : ComparisonOfAccumulatedCases.fromJson(json['comparison_of_accumulated_cases'] as Map<String, dynamic>)
     ..mapData = json['map_data'] as Map<String, dynamic>
+    ..events = json['eventos'] as Map<String, dynamic>
     ..curvesEvolution = json['curves_evolution'] as Map<String, dynamic>
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..note = json['note'] as String
@@ -77,4 +78,5 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'updated': dateTimeToJson(instance.updated),
       'note': instance.note,
       'top_20_accumulated_countries': instance.top20AccumulatedCountries,
+      'eventos': instance.events
     };

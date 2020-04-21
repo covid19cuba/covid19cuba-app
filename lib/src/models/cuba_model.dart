@@ -55,6 +55,9 @@ class CubaModel {
   @JsonKey(name: 'map_data')
   Map<String, dynamic> mapData;
 
+  @JsonKey(name: 'eventos')
+  Map<String, dynamic> events;
+
   @JsonKey(name: 'curves_evolution')
   Map<String, dynamic> curvesEvolution;
 

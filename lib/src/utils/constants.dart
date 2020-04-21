@@ -41,7 +41,7 @@ class Constants {
   static const int clapsNotification = -3;
 
   static const int startClapsHour = 20;
-  static const int startClapsMinute = 47;
+  static const int startClapsMinute = 45;
   static const int stopClapsHour = 21;
   static const int stopClapsMinute = 2;
 
