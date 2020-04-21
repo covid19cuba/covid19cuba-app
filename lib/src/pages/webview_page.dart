@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +22,10 @@ class WebViewPageState extends State<WebViewPage>
   void initState() {
     super.initState();
     webView = WebView(
-      initialUrl: 'https://github.com',
+      initialUrl: 'http://autopesquisa.sld.cu',
       javascriptMode: JavascriptMode.unrestricted,
       navigationDelegate: (request) {
-        if (request.url.contains('github.com')) {
+        if (request.url.contains('autopesquisa.sld.cu')) {
           return NavigationDecision.navigate;
         }
         return NavigationDecision.prevent;
