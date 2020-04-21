@@ -53,7 +53,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 ),
               ),
             ),
-            Container(
+            /*Container(
               height: 2,
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10),
@@ -67,7 +67,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                   color: Colors.white,
                 ),
               ),
-            ),
+            ),*/
             Container(
               height: 2,
               color: Colors.white,
@@ -130,101 +130,13 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             sharerDrawerItem(),
             settingsDrawerItem(),
             faqsDrawerItem(),
+            creditsDrawerItem(),
             Container(
               height: 2,
               color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10),
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
             ),
-            GestureDetector(
-              child: Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 40),
-                child: Text(
-                  'MatCom',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              onTap: () async {
-                Navigator.pop(context);
-                const url = 'https://http://www.matcom.uh.cu';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
-            ),
-            GestureDetector(
-              child: Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: Text(
-                  'Postdata.club',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              onTap: () async {
-                Navigator.pop(context);
-                const url = 'https://www.postdata.club';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
-            ),
-            GestureDetector(
-              child: Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: Text(
-                  'Juventud Técnica',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              onTap: () async {
-                Navigator.pop(context);
-                const url = 'https://medium.com/juventud-técnica';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Copyright 2020',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Container(padding: EdgeInsets.all(2)),
-                  Icon(Icons.copyright, color: Colors.white),
-                ],
-              ),
-            ),
-            Container(
-              height: 2,
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
-            versionAppDrawerItem()
+            versionAppDrawerItem(),
           ],
         ),
       ),
@@ -444,6 +356,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           context,
           MaterialPageRoute(
             builder: (context) => FaqsPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget creditsDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.people,
+      text: 'Sobre Nosotros',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CreditsPage(),
           ),
         );
       },

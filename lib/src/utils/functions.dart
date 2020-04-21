@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:covid19cuba/src/models/models.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:preferences/preference_service.dart';
 import 'utils.dart';
@@ -82,16 +82,16 @@ void getUrl(url) async {
   if (await canLaunch(url)) {
     launch(url);
   } else {
-    log("Download url failed");
-    throw InvalidSourceException("No se ha podido obtener la url");
+    log("Url $url resolve failed");
+    //throw InvalidSourceException("No se ha podido obtener la url");
   }
 }
 
 int getDayFromCache() {
   var data = PrefService.getString(Constants.prefData);
   if (data != null){
-    var json = jsonDecode(data);
-    return json['evolution_of_cases_by_days']['accumulated']['values'].length;
+    DataModel dta = DataModel.fromJson(jsonDecode(data));
+    return dta.all.evolutionOfCasesByDays.accumulated.values.length;
   }
   return -1;
 }

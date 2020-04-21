@@ -40,6 +40,9 @@ class CubaModel {
   @JsonKey(name: 'tests_by_days')
   TestsByDays testsByDays;
 
+  @JsonKey(name: 'tests_positive_percent')
+  TestsPositivePercent testsPositivePercent;
+
   @JsonKey(name: 'affected_provinces')
   List<ItemProvince> affectedProvinces;
 
@@ -51,6 +54,9 @@ class CubaModel {
 
   @JsonKey(name: 'map_data')
   Map<String, dynamic> mapData;
+
+  @JsonKey(name: 'eventos')
+  Map<String, dynamic> events;
 
   @JsonKey(name: 'curves_evolution')
   Map<String, dynamic> curvesEvolution;
