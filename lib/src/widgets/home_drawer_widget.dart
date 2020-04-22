@@ -134,6 +134,20 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             updateDrawerItem(),
             sharerDrawerItem(),
             settingsDrawerItem(),
+            createDrawerItem(
+              context,
+              icon: Icons.live_help,
+              text: 'Consejos y Respuestas',
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TipsPage(),
+                  ),
+                );
+              },
+            ),
             faqsDrawerItem(),
             creditsDrawerItem(),
             Container(
