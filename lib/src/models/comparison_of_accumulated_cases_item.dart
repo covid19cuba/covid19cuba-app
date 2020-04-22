@@ -12,8 +12,10 @@ class ComparisonOfAccumulatedCasesItem {
 
   ComparisonOfAccumulatedCasesItem();
 
-  factory ComparisonOfAccumulatedCasesItem.fromJson(Map<String, dynamic> json) =>
+  factory ComparisonOfAccumulatedCasesItem.fromJson(
+          Map<String, dynamic> json) =>
       _$ComparisonOfAccumulatedCasesItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ComparisonOfAccumulatedCasesItemToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$ComparisonOfAccumulatedCasesItemToJson(this);
 }
