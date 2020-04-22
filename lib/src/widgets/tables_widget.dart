@@ -27,6 +27,7 @@ class TableData extends StatelessWidget {
             style: TextStyle(
               color: Constants.primaryColor,
               fontWeight: FontWeight.normal,
+              fontSize: 11,
             ),
           ),
         ),
@@ -41,6 +42,7 @@ class TableData extends StatelessWidget {
               style: TextStyle(
                 color: Constants.primaryColor,
                 fontWeight: FontWeight.normal,
+                fontSize: 11,
               ),
             ),
           ),
@@ -121,6 +123,7 @@ class TableData extends StatelessWidget {
                                   style: TextStyle(
                                     color: Constants.primaryColor,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 11,
                                   ),
                                 ),
                               ),
@@ -131,6 +134,7 @@ class TableData extends StatelessWidget {
               ] +
               topData,
         ),
+        Container(height: 10),
       ],
     );
   }
