@@ -12,7 +12,8 @@ class ItemExtended {
 
   ItemExtended();
 
-  factory ItemExtended.fromJson(Map<String, dynamic> json) => _$ItemExtendedFromJson(json);
+  factory ItemExtended.fromJson(Map<String, dynamic> json) =>
+      _$ItemExtendedFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemExtendedToJson(this);
 }

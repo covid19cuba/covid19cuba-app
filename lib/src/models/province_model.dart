@@ -40,7 +40,6 @@ class ProvinceModel {
   @JsonKey(name: 'map_data')
   Map<String, dynamic> mapData;
 
-
   ProvinceModel();
 
   factory ProvinceModel.fromJson(Map<String, dynamic> json) =>

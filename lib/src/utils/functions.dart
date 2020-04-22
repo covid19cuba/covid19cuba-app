@@ -89,7 +89,7 @@ void getUrl(url) async {
 
 int getDayFromCache() {
   var data = PrefService.getString(Constants.prefData);
-  if (data != null){
+  if (data != null) {
     DataModel dta = DataModel.fromJson(jsonDecode(data));
     return dta.all.evolutionOfCasesByDays.accumulated.values.length;
   }
