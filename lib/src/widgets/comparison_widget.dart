@@ -34,7 +34,9 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ..add('Activos')
     ..add('Diarios')
     ..add('Recuperados')
-    ..add('Fallecidos');
+    ..add('Fallecidos')
+    ..add('Stringency Index');
+
   final ComparisonOfAccumulatedCases comparisonOfAccumulatedCases;
 
   ComparisonWidgetState({this.comparisonOfAccumulatedCases}) {
@@ -69,6 +71,23 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ];
   }
 
+  String getLegend() {
+    String legend;
+    switch (selectedOption) {
+      case 'Confirmados':
+      case 'Activos':
+      case 'Diarios':
+      case 'Recuperados':
+      case 'Fallecidos':
+        legend = 'Casos';
+        break;
+      case 'Stringency Index':
+        legend = 'Valor del índice';
+        break;
+    }
+    return legend;
+  }
+
   List<charts.ChartBehavior> getBehaviors() {
     return [
       charts.ChartTitle(
@@ -78,7 +97,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
       ),
       charts.ChartTitle(
-        'Casos',
+        getLegend(),
         behaviorPosition: charts.BehaviorPosition.start,
         titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
         titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
@@ -134,6 +153,12 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         lenForeign = comparisonOfAccumulatedCases
             .countries[selectedCountry].deaths.length;
         break;
+      case 'Stringency Index':
+        lenCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].stringency.length;
+        lenForeign = comparisonOfAccumulatedCases
+            .countries[selectedCountry].stringency.length;
+        break;
     }
     return charts.NumericAxisSpec(
       viewport: charts.NumericExtents(1, max(lenForeign, lenCuba)),
@@ -163,6 +188,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         length = comparisonOfAccumulatedCases
             .countries[Constants.countryCuba].deaths.length;
         break;
+      case 'Stringency Index':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].stringency.length;
+        break;
     }
     return charts.NumericAxisSpec(viewport: charts.NumericExtents(1, length));
   }
@@ -190,6 +219,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         length = comparisonOfAccumulatedCases
             .countries[Constants.countryCuba].deaths.length;
         break;
+      case 'Stringency Index':
+        length = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].stringency.length;
+        break;
     }
     var behaviors = getBehaviors();
     behaviors.addAll([
@@ -204,9 +237,66 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     return behaviors;
   }
 
-  List<charts.Series<int, int>> getSeries() {
-    List<int> listCuba;
-    List<int> listForeign;
+  String getFooter() {
+    String footer;
+    switch (selectedOption) {
+      case 'Confirmados':
+      case 'Activos':
+      case 'Diarios':
+      case 'Recuperados':
+      case 'Fallecidos':
+        footer = 'Datos de los países tomados '
+            'de\nhttps://github.com/pomber/covid19\ny '
+            'actualizado el '
+            '${comparisonOfAccumulatedCases.updated.toStrPlus()}';
+        break;
+      case 'Stringency Index':
+        footer = 'El Oxford Stringency Index\n'
+            'https://www.bsg.ox.ac.uk/research/research-projects/'
+            'coronavirus-government-response-tracker\nevalúa las '
+            'intervenciones del estado en la epidemia.\nLos valores '
+            'se obtienen de\nhttps://covidtracker.'
+            'bsg.ox.ac.uk/about-api';
+        break;
+    }
+    return footer;
+  }
+
+  bool haveData() {
+    var length = 0;
+    switch (selectedOption) {
+      case 'Confirmados':
+        length = comparisonOfAccumulatedCases
+            .countries[selectedCountry].confirmed.length;
+        break;
+      case 'Activos':
+        length = comparisonOfAccumulatedCases
+            .countries[selectedCountry].active.length;
+        break;
+      case 'Diarios':
+        length = comparisonOfAccumulatedCases
+            .countries[selectedCountry].daily.length;
+        break;
+      case 'Recuperados':
+        length = comparisonOfAccumulatedCases
+            .countries[selectedCountry].recovered.length;
+        break;
+      case 'Fallecidos':
+        length = comparisonOfAccumulatedCases
+            .countries[selectedCountry].deaths.length;
+        break;
+      case 'Stringency Index':
+        length = comparisonOfAccumulatedCases
+            .countries[selectedCountry].stringency.length;
+        break;
+    }
+    log(length);
+    return length != 0;
+  }
+
+  List<charts.Series<dynamic, int>> getSeries() {
+    List<dynamic> listCuba;
+    List<dynamic> listForeign;
     switch (selectedOption) {
       case 'Confirmados':
         listCuba = comparisonOfAccumulatedCases
@@ -238,16 +328,22 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         listForeign =
             comparisonOfAccumulatedCases.countries[selectedCountry].deaths;
         break;
+      case 'Stringency Index':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].stringency;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].stringency;
+        break;
     }
     return [
-      charts.Series<int, int>(
+      charts.Series<dynamic, int>(
         id: DataModel.prettyCountry(selectedCountry),
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
         data: listForeign,
       ),
-      charts.Series<int, int>(
+      charts.Series<dynamic, int>(
         id: Constants.countryCuba,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
@@ -257,9 +353,9 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ];
   }
 
-  List<charts.Series<int, int>> getZoomSeries() {
-    List<int> listCuba;
-    List<int> listForeign;
+  List<charts.Series<dynamic, int>> getZoomSeries() {
+    List<dynamic> listCuba;
+    List<dynamic> listForeign;
     switch (selectedOption) {
       case 'Confirmados':
         listCuba = comparisonOfAccumulatedCases
@@ -291,9 +387,15 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         listForeign =
             comparisonOfAccumulatedCases.countries[selectedCountry].deaths;
         break;
+      case 'Stringency Index':
+        listCuba = comparisonOfAccumulatedCases
+            .countries[Constants.countryCuba].stringency;
+        listForeign =
+            comparisonOfAccumulatedCases.countries[selectedCountry].stringency;
+        break;
     }
     return [
-      charts.Series<int, int>(
+      charts.Series<dynamic, int>(
         id: DataModel.prettyCountry(selectedCountry),
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
@@ -304,7 +406,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             )
             .toList(),
       ),
-      charts.Series<int, int>(
+      charts.Series<dynamic, int>(
         id: Constants.countryCuba,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
@@ -321,8 +423,11 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
               CountryPickerUtils.getDefaultFlagImage(country),
               SizedBox(width: 8.0),
               Expanded(
-                child: Text(DataModel.prettyCountry(
-                    DataModel.countries()[country.isoCode])),
+                child: Text(
+                  DataModel.prettyCountry(
+                    DataModel.countries()[country.isoCode],
+                  ),
+                ),
               ),
               Icon(Icons.arrow_downward),
             ],
@@ -339,8 +444,12 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           CountryPickerUtils.getDefaultFlagImage(country),
           SizedBox(width: 8.0),
           Flexible(
-              child: Text(DataModel.prettyCountry(
-                  DataModel.countries()[country.isoCode]))),
+            child: Text(
+              DataModel.prettyCountry(
+                DataModel.countries()[country.isoCode],
+              ),
+            ),
+          ),
           // SizedBox(width: 8.0),
         ],
       );
@@ -351,10 +460,10 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             data: Theme.of(context).copyWith(primaryColor: Colors.pink),
             child: CountryPickerDialog(
                 titlePadding: EdgeInsets.all(8.0),
-                semanticLabel: "País seleccionado " + selectedCountry,
+                semanticLabel: 'País seleccionado ' + selectedCountry,
                 searchCursorColor: Colors.pinkAccent,
                 searchInputDecoration: InputDecoration(hintText: 'Buscar...'),
-                searchEmptyView: Center(child: Text("No se encontró el país")),
+                searchEmptyView: Center(child: Text('No se encontró el país')),
                 isSearchable: true,
                 title: Text('Seleccione el país'),
                 onValuePicked: (Country country) {
@@ -473,18 +582,28 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 250,
-          child: charts.LineChart(
-            getSeries(),
-            animate: false,
-            domainAxis: getNumericAxisSpec(),
-            defaultInteractions: true,
-            defaultRenderer: charts.LineRendererConfig(
-              includePoints: true,
-            ),
-            behaviors: getSpecBehaviors(),
-            selectionModels: getSelectionModels(),
-          ),
+          height: 300,
+          alignment: Alignment.center,
+          child: haveData()
+              ? charts.LineChart(
+                  getSeries(),
+                  animate: false,
+                  domainAxis: getNumericAxisSpec(),
+                  defaultInteractions: true,
+                  defaultRenderer: charts.LineRendererConfig(
+                    includePoints: true,
+                  ),
+                  behaviors: getSpecBehaviors(),
+                  selectionModels: getSelectionModels(),
+                )
+              : Text(
+                  'No hay datos del país seleccionado',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
         ),
         Container(
           margin: EdgeInsets.only(
@@ -506,18 +625,28 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 250,
-          child: charts.LineChart(
-            getZoomSeries(),
-            animate: false,
-            domainAxis: getNumericAxisSpecZoom(),
-            defaultInteractions: true,
-            defaultRenderer: charts.LineRendererConfig(
-              includePoints: true,
-            ),
-            behaviors: getBehaviors(),
-            selectionModels: getSelectionModels(),
-          ),
+          height: 300,
+          alignment: Alignment.center,
+          child: haveData()
+              ? charts.LineChart(
+                  getZoomSeries(),
+                  animate: false,
+                  domainAxis: getNumericAxisSpecZoom(),
+                  defaultInteractions: true,
+                  defaultRenderer: charts.LineRendererConfig(
+                    includePoints: true,
+                  ),
+                  behaviors: getBehaviors(),
+                  selectionModels: getSelectionModels(),
+                )
+              : Text(
+                  'No hay datos del país seleccionado',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
         ),
         Container(
           margin: EdgeInsets.only(
@@ -528,10 +657,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Linkify(
-              text: 'Datos de los países tomados '
-                  'de\nhttps://github.com/pomber/covid19\ny '
-                  'actualizado el '
-                  '${comparisonOfAccumulatedCases.updated.toStrPlus()}',
+              text: getFooter(),
               options: LinkifyOptions(humanize: true),
               textAlign: TextAlign.center,
               style: TextStyle(
