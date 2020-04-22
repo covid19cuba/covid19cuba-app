@@ -9,6 +9,7 @@ class ComparisonOfAccumulatedCasesItem {
   List<int> recovered;
   List<int> daily;
   List<int> active;
+  List<double> stringency;
 
   ComparisonOfAccumulatedCasesItem();
 
