@@ -464,7 +464,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
                 searchCursorColor: Colors.pinkAccent,
                 searchInputDecoration: InputDecoration(hintText: 'Buscar...'),
                 searchEmptyView: Center(child: Text('No se encontró el país')),
-                isSearchable: true,
+                isSearchable: false,
                 title: Text('Seleccione el país'),
                 onValuePicked: (Country country) {
                   PrefService.setString(Constants.prefCompareCountry,
@@ -515,14 +515,14 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             ),
           ),
         ),
-        /*Container(
+        Container(
           margin: EdgeInsets.only(left: 35, right: 35),
           child: ListTile(
             onTap: _openCountryPickerDialog,
             title: _buildSelectedCountry(_selectedDialogCountry),
           ),
-        ),*/
-        Container(
+        ),
+        /*Container(
           margin: EdgeInsets.only(left: 50, right: 50),
           child: DropdownButton<String>(
             value: selectedCountry,
@@ -549,7 +549,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
               );
             }).toList(),
           ),
-        ),
+        ),*/
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
           child: Center(
