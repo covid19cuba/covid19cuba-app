@@ -61,6 +61,9 @@ class CubaModel {
   @JsonKey(name: 'eventos')
   Map<String, dynamic> events;
 
+  @JsonKey(name: 'pesquisador')
+  PesquisadorModel pesquisador;
+
   @JsonKey(name: 'curves_evolution')
   Map<String, dynamic> curvesEvolution;
 

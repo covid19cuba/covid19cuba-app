@@ -25,6 +25,7 @@ export 'moment.dart';
 export 'municipality_model.dart';
 export 'municipalities_model.dart';
 export 'news_model.dart';
+export 'pesquisador_model.dart';
 export 'province_model.dart';
 export 'provinces_model.dart';
 export 'state_model.dart';

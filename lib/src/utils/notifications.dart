@@ -98,7 +98,7 @@ Future<void> showClaps() async {
 
 bool timeToShowNotifications() {
   DateTime moment = DateTime.now();
-  return moment.hour < Constants.startSilentIime &&
+  return moment.hour < Constants.startSilentTime &&
       moment.hour > Constants.endSilentTime;
 }
 
