@@ -48,6 +48,7 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..affectedProvinces = (json['affected_provinces'] as List)?.map((e) => e == null ? null : ItemProvince.fromJson(e as Map<String, dynamic>))?.toList()
     ..affectedMunicipalities = (json['affected_municipalities'] as List)?.map((e) => e == null ? null : ItemMunicipality.fromJson(e as Map<String, dynamic>))?.toList()
     ..comparisonOfAccumulatedCases = json['comparison_of_accumulated_cases'] == null ? null : ComparisonOfAccumulatedCases.fromJson(json['comparison_of_accumulated_cases'] as Map<String, dynamic>)
+    ..stringencyIndexCuba = json['stringency_index_cuba'] == null ? null : StringencyIndexCubaModel.fromJson(json['stringency_index_cuba'] as Map<String, dynamic>)
     ..mapData = json['map_data'] as Map<String, dynamic>
     ..events = json['eventos'] as Map<String, dynamic>
     ..curvesEvolution = json['curves_evolution'] as Map<String, dynamic>
@@ -73,6 +74,7 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'affected_provinces': instance.affectedProvinces,
       'affected_municipalities': instance.affectedMunicipalities,
       'comparison_of_accumulated_cases': instance.comparisonOfAccumulatedCases,
+      'stringency_index_cuba': instance.stringencyIndexCuba,
       'map_data': instance.mapData,
       'eventos': instance.events,
       'curves_evolution': instance.curvesEvolution,
