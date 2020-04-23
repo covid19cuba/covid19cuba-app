@@ -52,11 +52,17 @@ class CubaModel {
   @JsonKey(name: 'comparison_of_accumulated_cases')
   ComparisonOfAccumulatedCases comparisonOfAccumulatedCases;
 
+  @JsonKey(name: 'stringency_index_cuba')
+  StringencyIndexCubaModel stringencyIndexCuba;
+
   @JsonKey(name: 'map_data')
   Map<String, dynamic> mapData;
 
   @JsonKey(name: 'eventos')
   Map<String, dynamic> events;
+
+  @JsonKey(name: 'pesquisador')
+  PesquisadorModel pesquisador;
 
   @JsonKey(name: 'curves_evolution')
   Map<String, dynamic> curvesEvolution;

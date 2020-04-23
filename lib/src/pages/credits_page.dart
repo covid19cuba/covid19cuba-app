@@ -120,6 +120,37 @@ class CreditsPage extends StatelessWidget {
       ],
     ));
 
+    result.add(Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        linkText(
+          'Unión de Informáticos de Cuba',
+          'https://www.uic.cu',
+          topMargin: 15.0,
+          rightMargin: 0.0,
+          bottomMargin: 0.0,
+          leftMargin: 0.0,
+        ),
+        linkText(
+          'Universidad de Oriente',
+          'https://www.uo.edu.cu',
+          topMargin: 15.0,
+          rightMargin: 0.0,
+          bottomMargin: 0.0,
+          leftMargin: 0.0,
+        ),
+        linkText(
+          'Universidad de La Habana',
+          'http://www.uh.cu',
+          topMargin: 15.0,
+          rightMargin: 0.0,
+          bottomMargin: 0.0,
+          leftMargin: 0.0,
+        ),
+      ],
+    ));
+
     result.add(
       creditsText(
         text: 'Réplicas de nuestro Sitio Web',

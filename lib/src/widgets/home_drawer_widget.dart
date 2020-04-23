@@ -134,6 +134,20 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             updateDrawerItem(),
             sharerDrawerItem(),
             settingsDrawerItem(),
+            createDrawerItem(
+              context,
+              icon: Icons.live_help,
+              text: 'Consejos y Respuestas',
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TipsPage(),
+                  ),
+                );
+              },
+            ),
             faqsDrawerItem(),
             creditsDrawerItem(),
             Container(
@@ -306,12 +320,8 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
       icon: Icons.share,
       text: 'Compartir',
       onTap: () async {
-        Share.share(
-          'Yo uso $appName: la aplicación para conocer los reportes diarios, '
-          'estadísticas, etc respecto a la ${Constants.diseaseName} en Cuba.\n'
-          '\nDisponible en Apklis: https://www.apklis.cu/application/club.postdata.covid19cuba',
-          subject: '$appName',
-        );
+        var sharedContent = await getSharedContent();
+        Share.share(sharedContent, subject: '$appName');
       },
     );
   }
