@@ -120,6 +120,15 @@ class HomeWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
+            child: StringencyIndexCubaWidget(
+              evolutionOfCasesByDays: data.all.evolutionOfCasesByDays,
+              stringencyIndexCuba: data.all.stringencyIndexCuba,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
             child: Container(
               child: TableData(
                 title: 'Provincias Afectadas',
