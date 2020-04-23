@@ -4,73 +4,53 @@ import 'package:covid19cuba/src/utils/utils.dart';
 
 class TableData extends StatelessWidget {
   final String title;
-  final String subtitle;
-  final String description;
-  final List<String> keys;
-  final List<String> values;
+  final List<String> headers;
+  final List<List<String>> values;
 
   const TableData({
     this.title,
-    this.subtitle,
-    this.description,
-    this.keys,
+    this.headers,
     this.values,
   })  : assert(title != null),
-        assert(subtitle != null),
-        assert(description != null),
-        assert(keys != null),
+        assert(headers != null),
         assert(values != null);
 
   List<TableRow> getTable() {
-    var index = 0;
-    return keys.map(
-      (item) {
-        index += 1;
-        return TableRow(
-          children: [
-            TableCell(
-              child: Container(
-                margin: EdgeInsets.all(10),
-                child: Text(
-                  '$index',
-                  style: TextStyle(
-                    color: Constants.primaryColor,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
+    var tableRows = List<TableRow>();
+    for (var i = 0; i < values[0].length; ++i) {
+      var tableCells = List<TableCell>();
+      tableCells.add(TableCell(
+        child: Container(
+          margin: EdgeInsets.all(5),
+          child: Text(
+            '${i + 1}',
+            style: TextStyle(
+              color: Constants.primaryColor,
+              fontWeight: FontWeight.normal,
+              fontSize: 11,
+            ),
+          ),
+        ),
+      ));
+      for (var j = 0; j < values.length; ++j) {
+        tableCells.add(TableCell(
+          child: Container(
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.all(5),
+            child: Text(
+              '${values[j][i]}',
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontWeight: FontWeight.normal,
+                fontSize: 11,
               ),
             ),
-            TableCell(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.all(10),
-                child: Text(
-                  '${keys[index - 1]}',
-                  style: TextStyle(
-                    color: Constants.primaryColor,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
-            ),
-            TableCell(
-              child: Container(
-                margin: EdgeInsets.all(10),
-                child: Center(
-                  child: Text(
-                    '${values[index - 1]}',
-                    style: TextStyle(
-                      color: Constants.primaryColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    ).toList();
+          ),
+        ));
+      }
+      tableRows.add(TableRow(children: tableCells));
+    }
+    return tableRows;
   }
 
   @override
@@ -84,9 +64,8 @@ class TableData extends StatelessWidget {
       return Container();
     }
     Map<int, TableColumnWidth> col = {
-      0: FlexColumnWidth(0.3),
-      1: FlexColumnWidth(1),
-      2: FlexColumnWidth(1),
+      0: FlexColumnWidth(0.4),
+      1: FlexColumnWidth(2),
     };
     return Column(
       children: <Widget>[
@@ -120,50 +99,42 @@ class TableData extends StatelessWidget {
           children: [
                 TableRow(
                   children: [
-                    TableCell(
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        child: Text(
-                          '#',
-                          style: TextStyle(
-                            color: Constants.primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.all(10),
-                        child: Text(
-                          subtitle,
-                          style: TextStyle(
-                            color: Constants.primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        child: Center(
-                          child: Text(
-                            description,
-                            style: TextStyle(
-                              color: Constants.primaryColor,
-                              fontWeight: FontWeight.bold,
+                        TableCell(
+                          child: Container(
+                            margin: EdgeInsets.all(5),
+                            child: Text(
+                              '#',
+                              style: TextStyle(
+                                color: Constants.primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ],
+                      ] +
+                      headers
+                          .map(
+                            (x) => TableCell(
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                margin: EdgeInsets.all(5),
+                                child: Text(
+                                  x,
+                                  style: TextStyle(
+                                    color: Constants.primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
                 )
               ] +
               topData,
         ),
+        Container(height: 10),
       ],
     );
   }

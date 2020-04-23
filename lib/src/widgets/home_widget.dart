@@ -15,32 +15,34 @@ class HomeWidget extends StatelessWidget {
       children: <Widget>[
         Container(
           color: Constants.primaryColor,
-          child: ResumeWidget(resume: data.resume, updated: data.updated),
+          child:
+              ResumeWidget(resume: data.all.resume, updated: data.all.updated),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             color: Colors.red,
-            child: NoteWidget(note: data.note),
+            child: NoteWidget(note: data.all.note),
           ),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: MapWebViewWidget(mapData: data.mapData),
+            child: MapWebViewWidget(
+                mapData: data.all.mapData, eventsData: data.all.events),
           ),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: PieSexWidget(casesBySex: data.casesBySex),
+            child: PieSexWidget(casesBySex: data.all.casesBySex),
           ),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: PieContagionWidget(
-              casesByModeOfContagion: data.casesByModeOfContagion,
+              casesByModeOfContagion: data.all.casesByModeOfContagion,
             ),
           ),
         ),
@@ -48,7 +50,7 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: EvolutionCasesWidget(
-              evolutionOfCasesByDays: data.evolutionOfCasesByDays,
+              evolutionOfCasesByDays: data.all.evolutionOfCasesByDays,
             ),
           ),
         ),
@@ -56,7 +58,7 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: EvolutionRecoveredWidget(
-              evolutionOfRecoveredByDays: data.evolutionOfRecoveredByDays,
+              evolutionOfRecoveredByDays: data.all.evolutionOfRecoveredByDays,
             ),
           ),
         ),
@@ -64,7 +66,7 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: EvolutionDeathWidget(
-              evolutionOfDeathsByDays: data.evolutionOfDeathsByDays,
+              evolutionOfDeathsByDays: data.all.evolutionOfDeathsByDays,
             ),
           ),
         ),
@@ -72,7 +74,7 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: DistributionAgeGroupsDiagnosedWidget(
-              distributionByAgeRanges: data.distributionByAgeRanges,
+              distributionByAgeRanges: data.all.distributionByAgeRanges,
             ),
           ),
         ),
@@ -80,7 +82,7 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: PieCasesNationalityWidget(
-              casesByNationality: data.casesByNationality,
+              casesByNationality: data.all.casesByNationality,
             ),
           ),
         ),
@@ -89,7 +91,7 @@ class HomeWidget extends StatelessWidget {
           child: Card(
             child: DistributionNationalityDiagnosedWidget(
               distributionByNationalityOfForeignCases:
-                  data.distributionByNationalityOfForeignCases,
+                  data.all.distributionByNationalityOfForeignCases,
             ),
           ),
         ),
@@ -97,14 +99,31 @@ class HomeWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: PieTestsPercentWidget(
-              listOfTestsPerformed: data.listOfTestsPerformed,
+              listOfTestsPerformed: data.all.listOfTestsPerformed,
             ),
           ),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: TestEvolutionWidget(testsByDays: data.testsByDays),
+            child: TestEvolutionWidget(testsByDays: data.all.testsByDays),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: TestsPositivePercentWidget(
+              testsPositivePercent: data.all.testsPositivePercent,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: StringencyIndexCubaWidget(
+              evolutionOfCasesByDays: data.all.evolutionOfCasesByDays,
+              stringencyIndexCuba: data.all.stringencyIndexCuba,
+            ),
           ),
         ),
         Container(
@@ -112,21 +131,37 @@ class HomeWidget extends StatelessWidget {
           child: Card(
             child: Container(
               child: TableData(
-                title: 'TOP10 Provincias Afectadas',
-                subtitle: 'Provincias',
-                description: '% del total de casos',
-                keys: data.affectedProvinces
-                    .map(
-                      (x) => x.name,
-                    )
-                    .take(10)
-                    .toList(),
-                values: data.affectedProvinces
-                    .map(
-                      (x) => (x.value * 100 / x.total).toStringAsFixed(2) + '%',
-                    )
-                    .take(10)
-                    .toList(),
+                title: 'Provincias Afectadas',
+                headers: [
+                  'Provincias',
+                  'Casos',
+                  '% del total',
+                  'Tasa (por 100 mil hab.)',
+                ],
+                values: [
+                  data.all.affectedProvinces
+                      .map(
+                        (x) => x.name,
+                      )
+                      .toList(),
+                  data.all.affectedProvinces
+                      .map(
+                        (x) => x.value.toString(),
+                      )
+                      .toList(),
+                  data.all.affectedProvinces
+                      .map(
+                        (x) =>
+                            (x.value * 100 / x.total).toStringAsFixed(2) + '%',
+                      )
+                      .toList(),
+                  data.all.affectedProvinces
+                      .map(
+                        (x) => (x.value * 100000 / x.population)
+                            .toStringAsFixed(2),
+                      )
+                      .toList(),
+                ],
               ),
             ),
           ),
@@ -136,30 +171,51 @@ class HomeWidget extends StatelessWidget {
           child: Card(
             child: Container(
               child: TableData(
-                title: 'TOP10 Municipios Afectados',
-                subtitle: 'Municipios',
-                description: '% del total de casos',
-                keys: data.affectedMunicipalities
-                    .map(
-                      (x) => '${x.name} (${x.province})',
-                    )
-                    .take(10)
-                    .toList(),
-                values: data.affectedMunicipalities
-                    .map(
-                      (x) => (x.value * 100 / x.total).toStringAsFixed(2) + '%',
-                    )
-                    .take(10)
-                    .toList(),
+                title: 'TOP Municipios Afectados',
+                headers: ['Municipios', 'Casos', '% del total'],
+                values: [
+                  data.all.affectedMunicipalities
+                      .map(
+                        (x) => '${x.name} (${x.province})',
+                      )
+                      .take(10)
+                      .toList(),
+                  data.all.affectedMunicipalities
+                      .map(
+                        (x) => x.value.toString(),
+                      )
+                      .take(10)
+                      .toList(),
+                  data.all.affectedMunicipalities
+                      .map(
+                        (x) =>
+                            (x.value * 100 / x.total).toStringAsFixed(2) + '%',
+                      )
+                      .take(10)
+                      .toList(),
+                ],
               ),
             ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: ProvincesComparisonWidget(provinces: data.provinces),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: MunicipalitiesComparisonWidget(data: data),
           ),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: ComparisonWidget(
-              comparisonOfAccumulatedCases: data.comparisonOfAccumulatedCases,
+              comparisonOfAccumulatedCases:
+                  data.all.comparisonOfAccumulatedCases,
             ),
           ),
         ),
@@ -168,8 +224,8 @@ class HomeWidget extends StatelessWidget {
           child: Card(
             child: Container(
               child: Top20CountriesWidget(
-                top20AccumulatedCountries: data.top20AccumulatedCountries,
-                updated: data.comparisonOfAccumulatedCases.updated,
+                top20AccumulatedCountries: data.all.top20AccumulatedCountries,
+                updated: data.all.comparisonOfAccumulatedCases.updated,
               ),
             ),
           ),
@@ -179,8 +235,8 @@ class HomeWidget extends StatelessWidget {
           child: Card(
             child: Container(
               child: CurvesEvolutionWidget(
-                curvesEvolution: data.curvesEvolution,
-                updated: data.comparisonOfAccumulatedCases.updated,
+                curvesEvolution: data.all.curvesEvolution,
+                updated: data.all.comparisonOfAccumulatedCases.updated,
               ),
             ),
           ),

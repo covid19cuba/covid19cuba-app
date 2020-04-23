@@ -1,11 +1,14 @@
-import 'package:covid19cuba/src/models/models.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/data_model.dart';
+import 'package:covid19cuba/src/models/models.dart';
 
 class Top20CountriesWidget extends StatelessWidget {
-  final List<Item> top20AccumulatedCountries;
+  final List<ItemExtended> top20AccumulatedCountries;
   final DateTime updated;
 
   const Top20CountriesWidget({this.top20AccumulatedCountries, this.updated})
@@ -61,12 +64,13 @@ class Top20CountriesWidget extends StatelessWidget {
                   children: [
                     TableCell(
                       child: Container(
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(5),
                         child: Text(
                           '#',
                           style: TextStyle(
                             color: Constants.primaryColor,
                             fontWeight: FontWeight.bold,
+                            fontSize: 11,
                           ),
                         ),
                       ),
@@ -74,25 +78,57 @@ class Top20CountriesWidget extends StatelessWidget {
                     TableCell(
                       child: Container(
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(5),
                         child: Text(
                           'País',
                           style: TextStyle(
                             color: Constants.primaryColor,
                             fontWeight: FontWeight.bold,
+                            fontSize: 11,
                           ),
                         ),
                       ),
                     ),
                     TableCell(
                       child: Container(
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(5),
                         child: Center(
                           child: Text(
-                            'Total de casos',
+                            'Casos',
                             style: TextStyle(
                               color: Constants.primaryColor,
                               fontWeight: FontWeight.bold,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        margin: EdgeInsets.all(5),
+                        child: Center(
+                          child: Text(
+                            'Recuperados',
+                            style: TextStyle(
+                              color: Constants.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        margin: EdgeInsets.all(5),
+                        child: Center(
+                          child: Text(
+                            'Fallecidos',
+                            style: TextStyle(
+                              color: Constants.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11,
                             ),
                           ),
                         ),
@@ -108,12 +144,13 @@ class Top20CountriesWidget extends StatelessWidget {
                     children: [
                       TableCell(
                         child: Container(
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.all(5),
                           child: Text(
                             '$index',
                             style: TextStyle(
                               color: Constants.primaryColor,
                               fontWeight: FontWeight.normal,
+                              fontSize: 11,
                             ),
                           ),
                         ),
@@ -121,25 +158,57 @@ class Top20CountriesWidget extends StatelessWidget {
                       TableCell(
                         child: Container(
                           alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.all(5),
                           child: Text(
                             '${DataModel.prettyCountry(item.name)}',
                             style: TextStyle(
                               color: Constants.primaryColor,
                               fontWeight: FontWeight.normal,
+                              fontSize: 11,
                             ),
                           ),
                         ),
                       ),
                       TableCell(
                         child: Container(
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.all(5),
                           child: Center(
                             child: Text(
-                              '${item.value}',
+                              '${item.confirmed}',
                               style: TextStyle(
                                 color: Constants.primaryColor,
                                 fontWeight: FontWeight.normal,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          child: Center(
+                            child: Text(
+                              '${item.recovered}',
+                              style: TextStyle(
+                                color: Constants.primaryColor,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          child: Center(
+                            child: Text(
+                              '${item.deaths}',
+                              style: TextStyle(
+                                color: Constants.primaryColor,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 11,
                               ),
                             ),
                           ),
@@ -158,19 +227,31 @@ class Top20CountriesWidget extends StatelessWidget {
             bottom: 20,
           ),
           child: Center(
-            child: Text(
-              'Datos de los países tomados '
-              'de\ngithub.com/pomber/covid19\ny '
-              'actualizado el '
-              '${updated.toStrPlus()}',
+            child: Linkify(
+              text: 'Datos de los países tomados '
+                  'de\nhttps://github.com/pomber/covid19\ny '
+                  'actualizado el '
+                  '${updated.toStrPlus()}',
+              options: LinkifyOptions(humanize: true),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
                 fontSize: 12,
               ),
+              linkStyle: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 12,
+              ),
+              onOpen: (link) async {
+                if (await canLaunch(link.url)) {
+                  await launch(link.url);
+                } else {
+                  log('Could not launch $link');
+                }
+              },
             ),
           ),
-        )
+        ),
       ],
     );
   }

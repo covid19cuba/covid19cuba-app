@@ -162,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  country_pickers:
+    dependency: "direct main"
+    description:
+      name: country_pickers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   crypto:
     dependency: "direct main"
     description:
@@ -237,6 +244,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.4"
+  flutter_linkify:
+    dependency: "direct main"
+    description:
+      name: flutter_linkify
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -368,6 +382,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
+  linkify:
+    dependency: transitive
+    description:
+      name: linkify
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   logging:
     dependency: transitive
     description:

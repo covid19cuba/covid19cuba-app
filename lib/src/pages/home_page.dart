@@ -16,23 +16,13 @@ class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class HomePageState extends State<HomePage> {
   Completer<void> refreshCompleter;
-  AnimationController fadeController;
-  Animation<double> fadeAnimation;
 
   @override
   void initState() {
     super.initState();
     refreshCompleter = Completer<void>();
-    fadeController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-    fadeAnimation = CurvedAnimation(
-      parent: fadeController,
-      curve: Curves.easeIn,
-    );
   }
 
   @override
@@ -52,10 +42,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               return Scaffold(
                 appBar: getAppBar(context, state),
                 drawer: getHomeDrawer(context, state),
-                body: FadeTransition(
-                  opacity: fadeAnimation,
-                  child: getBody(context, state),
-                ),
+                body: getBody(context, state),
               );
             },
           ),
@@ -88,8 +75,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget getBody(BuildContext context, HomeState state) {
-    fadeController.reset();
-    fadeController.forward();
     if (state is InitialHomeState) {
       BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent());
     }
