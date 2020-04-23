@@ -29,6 +29,7 @@ class Constants {
   static const String prefFirstVersionNotification = 'firstVersionNotification';
   static const String prefFirstModificationNotification =
       'firstModificationNotification';
+  static const String prefPesquisador = 'prefPesquisador';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
@@ -47,8 +48,11 @@ class Constants {
 
   static Time clapsTime = Time(20, 55, 00);
 
-  static const int startSilentIime = 22;
+  static const int startSilentTime = 22;
   static const int endSilentTime = 9;
+
+  static const String defaultPesquisador =
+      """{'url': 'http://autopesquisa.sld.cu/','javascript': "document.querySelector('app-root').removeChild(document.querySelector('mat-toolbar'));",'contains': 'autopesquisa.sld.cu'}""";
 
   static const String apklisUrl =
       "https://www.apklis.cu/application/club.postdata.covid19cuba";
