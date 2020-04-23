@@ -685,17 +685,26 @@ class Constants {
           'https://www.cusobu.nat.cu/covid.',
     ],
     [
-      '¿ Es posible visualizar la pestaña de la autopesquisa virtual o la pestaña de la Tabla de Casos sin conexión ?',
-      'No, no es posible acceder la vista de la autopesquisa virtual ni a la vista de la Tabla de casos sin conexión. '
-          'Para porder acceder a la ventana de la autopesquisa es necesario tener algun tipo de conexión en el teléfono, ya sea datos,'
-          ' wifi o nauta hogar. En el caso de la Tabla de casos es necesario estar autenticado en nauta hogar, wifi etecsa, '
-          'tener algun paquete de datos, acceso a internet o a la red nacional cubana.',
+      '¿Es posible acceder a la vista del Pesquisador Virtual o la de la'
+          'Tabla de Casos sin conexión?',
+      'No, no es posible acceder la vista del Pesquisador Virtual ni a '
+          'la vista de la Tabla de Casos sin conexión.\n\n'
+          'Para porder acceder a la vista del Pesquisador Virtual es '
+          'necesario tener algun tipo de conexión en el teléfono, ya '
+          'sea datos, wifi o nauta hogar. En el caso de la Tabla de Casos '
+          'es necesario estar autenticado en nauta hogar, wifi Etecsa, '
+          'tener algun paquete de datos, acceso a internet o a la red '
+          'nacional cubana.',
     ],
     [
-      '¿ Es posible acceder a la pestaña de la autopesquisa virtual desde fuera de Cuba ?',
-      'No, esta funcionalidad es exclusiva para Cuba. No es posible acceder desde fuera del territorio nacional cubano. '
-          'Si se encuentra en suelo cubano y no puede acceder, le recomendamos que revise sus configuraciones de conexión. '
-          'Esta funcionalidad solo esta disponible si, además de estar en Cuba, obtiene nuestras informaciones de algún servidor nacional. '
+      '¿Es posible acceder a la vista del Pesquisador Virtual desde fuera '
+          'de Cuba?',
+      'No, esta funcionalidad es exclusiva para Cuba. No es posible acceder '
+          'desde fuera del territorio nacional cubano. Si se encuentra en '
+          'suelo cubano y no puede acceder, le recomendamos que revise sus '
+          'configuraciones de conexión.\n\n'
+          'Esta funcionalidad solo esta disponible si, además de estar en '
+          'Cuba, obtiene nuestras informaciones de algún servidor nacional. '
           '(1ra o 3ra opción de configuración).',
     ],
   ];
