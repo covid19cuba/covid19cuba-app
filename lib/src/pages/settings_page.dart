@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:getflutter/getflutter.dart';
 import 'package:preferences/preferences.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -64,6 +67,51 @@ class SettingsPageState extends State<SettingsPage> {
           desc: 'Opción recomendada para los usuarios de Cuba. Permite '
               'ahorrar y a la vez tener una estabilidad del servicio buena.',
           isDefault: true,
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+          child: GFButton(
+            text: 'Reiniciar estado de la Aplicación',
+            textColor: Colors.black,
+            textStyle: TextStyle(
+              color: Colors.black,
+            ),
+            color: Constants.primaryColor,
+            shape: GFButtonShape.pills,
+            type: GFButtonType.outline2x,
+            borderSide: BorderSide(width: 1.0, color: Colors.black),
+            fullWidthButton: true,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    title: Text('Confirme'),
+                    content: Text('Usted esta seguro o segura que desea '
+                        'reiniciar el estado de la aplicación.\n\n'
+                        'Esto hará que vuelva al estado de acabada de '
+                        'instalar.'),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text('Si'),
+                        onPressed: () {
+                          PrefService.clear();
+                          exit(0);
+                        },
+                      ),
+                      FlatButton(
+                        child: Text('No'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         ),
       ]),
     );

@@ -9,8 +9,8 @@ class Constants {
   static const int notificationMinutesRange = 1440;
   static const int setUpTasksMinutesDefault = 15;
 
-  static const String defaultCompareCountry = 'Hungary';
-  static const String countryCuba = 'Cuba';
+  static const String defaultCompareCountry = 'HUN';
+  static const String countryCuba = 'CUB';
 
   static const showMunicipalities = "covidData";
   static const showProvinces = "covidData2";
@@ -789,10 +789,9 @@ class Constants {
     ],
     [
       'Yudivián Almeida',
-      'Lic. Ciencia de la Computación, graduado de la Univ. de La Habana '
-          'de Ciencias Matemáticas. Profesor de la Fac. Matemática y '
-          'Computación de la Univ. de La Habana. Editor de Datos de '
-          'Postdata.club.',
+      'Lic. Ciencia de la Computación, Dr. Ciencias Matemáticas, Profesor de '
+          'la Fac. Matemática y Computación de la Univ. de La Habana, Editor '
+          'de Datos de Postdata.club',
       '',
     ],
     [
@@ -836,10 +835,10 @@ class Constants {
       'http://covidcuba.swlx.info',
       'https://www.swlx.info',
     ],
-    [
+    /*[
       'Joven Club',
       'http://covid19.jovenclub.cu',
       'https://www.jovenclub.cu',
-    ]
+    ],*/
   ];
 }
