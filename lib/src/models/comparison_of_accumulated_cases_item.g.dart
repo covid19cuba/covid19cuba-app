@@ -16,7 +16,8 @@ ComparisonOfAccumulatedCasesItem _$ComparisonOfAccumulatedCasesItemFromJson(
     ..active = (json['active'] as List)?.map((e) => e as int)?.toList()
     ..stringency = (json['stringency'] as List)
         ?.map((e) => (e as num)?.toDouble())
-        ?.toList();
+        ?.toList()
+    ..name = json['name'] as String;
 }
 
 Map<String, dynamic> _$ComparisonOfAccumulatedCasesItemToJson(
@@ -28,4 +29,5 @@ Map<String, dynamic> _$ComparisonOfAccumulatedCasesItemToJson(
       'daily': instance.daily,
       'active': instance.active,
       'stringency': instance.stringency,
+      'name': instance.name,
     };
