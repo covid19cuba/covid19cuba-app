@@ -456,7 +456,7 @@ class DataModel {
       "VE": "Venezuela", //"Venezuela, Bolivarian Republic of",
       // "VG": "Virgin Islands, British",
       // "VI": "Virgin Islands, U.S.",
-      "VN": "Viet Nam",
+      "VN": "Vietnam",
       // "VU": "Vanuatu",
       // "WF": "Wallis and Futuna Islands",
       "XK": "Kosovo",
