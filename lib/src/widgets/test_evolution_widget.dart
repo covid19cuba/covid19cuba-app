@@ -34,43 +34,31 @@ class TestEvolutionWidget extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(10),
           height: 350,
-          child: charts.BarChart(
+          child: charts.TimeSeriesChart(
             [
-              charts.Series<int, String>(
-                id: testsByDays.negative.name,
-                seriesCategory: 'A',
-                colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-                domainFn: (_, i) => '${i + 1}',
-                measureFn: (item, _) => item,
-                data: testsByDays.negative.values,
-              ),
-              charts.Series<int, String>(
+              charts.Series<int, DateTime>(
                 id: testsByDays.positive.name,
-                seriesCategory: 'A',
                 colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => '${i + 1}',
+                domainFn: (_, i) => testsByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsByDays.positive.values,
               ),
-              charts.Series<int, String>(
+              charts.Series<int, DateTime>(
                 id: testsByDays.total.name,
-                seriesCategory: 'B',
                 colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (_, i) => '${i + 1}',
+                domainFn: (_, i) => testsByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsByDays.total.values,
               ),
             ],
             animate: false,
-            barGroupingType: charts.BarGroupingType.groupedStacked,
             defaultInteractions: true,
-            domainAxis: new charts.OrdinalAxisSpec(
-              showAxisLine: true,
-              renderSpec: charts.NoneRenderSpec(),
+            defaultRenderer: charts.LineRendererConfig(
+              includePoints: true,
             ),
             behaviors: [
               charts.ChartTitle(
-                'Número de días',
+                'Fecha',
                 behaviorPosition: charts.BehaviorPosition.bottom,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
