@@ -57,7 +57,7 @@ class StringencyIndexCubaWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                stringencyIndexCuba.data.last.toString(),
+                stringencyIndexCuba.data.lastWhere((x) => x != null).toString(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.red,

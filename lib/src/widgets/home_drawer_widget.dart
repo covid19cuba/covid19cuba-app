@@ -61,6 +61,20 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             ),
             createDrawerItem(
               context,
+              icon: FontAwesomeIcons.globe,
+              text: 'Cuba en el Mundo',
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WorldPage(),
+                  ),
+                );
+              },
+            ),
+            createDrawerItem(
+              context,
               icon: Icons.location_city,
               text: 'Provincias',
               onTap: () async {
