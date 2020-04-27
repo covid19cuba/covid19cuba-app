@@ -4,7 +4,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 class TouchableUrlImage extends StatelessWidget {
   const TouchableUrlImage(
     this.asset,
-    this.url, {
+    this.onTap, {
     this.leftMargin: 0,
     this.rightMargin: 0,
     this.topMargin: 0,
@@ -12,7 +12,7 @@ class TouchableUrlImage extends StatelessWidget {
   });
 
   final String asset;
-  final String url;
+  final GestureTapCallback onTap;
   final double leftMargin;
   final double rightMargin;
   final double topMargin;
@@ -31,7 +31,7 @@ class TouchableUrlImage extends StatelessWidget {
       ),
       child: GestureDetector(
         child: Image.asset(asset),
-        onTap: () => getUrl(url),
+        onTap: onTap,
       ),
     );
   }

@@ -122,7 +122,12 @@ class UpdatePageState extends State<UpdatePage> {
               ),
               TouchableUrlImage(
                 Constants.apklisBanner,
-                Constants.apklisUrl,
+                () async {
+                  var packageInfo = await PackageInfo.fromPlatform();
+                  var apklisUrl =
+                      'https://archive.apklis.cu/application/apk/club.postdata.covid19cuba-v${packageInfo.buildNumber}.apk';
+                  getUrl(apklisUrl);
+                },
                 leftMargin: 50,
                 rightMargin: 50,
                 topMargin: 5,
@@ -146,7 +151,12 @@ class UpdatePageState extends State<UpdatePage> {
               ),
               TouchableUrlImage(
                 Constants.githubBanner,
-                Constants.githubUrl,
+                () async {
+                  var packageInfo = await PackageInfo.fromPlatform();
+                  var gitHubUrl =
+                      'https://github.com/covid19cuba/covid19cuba-app/releases/download/v${packageInfo.version}/app.apk';
+                  getUrl(gitHubUrl);
+                },
                 leftMargin: 50,
                 rightMargin: 50,
                 topMargin: 5,

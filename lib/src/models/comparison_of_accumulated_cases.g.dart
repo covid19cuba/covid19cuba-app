@@ -9,7 +9,7 @@ part of 'comparison_of_accumulated_cases.dart';
 ComparisonOfAccumulatedCases _$ComparisonOfAccumulatedCasesFromJson(
     Map<String, dynamic> json) {
   return ComparisonOfAccumulatedCases()
-    ..countries = (json['countries_info'] as Map<String, dynamic>)?.map(
+    ..countries = (json['data'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(
           k,
           e == null
@@ -23,6 +23,6 @@ ComparisonOfAccumulatedCases _$ComparisonOfAccumulatedCasesFromJson(
 Map<String, dynamic> _$ComparisonOfAccumulatedCasesToJson(
         ComparisonOfAccumulatedCases instance) =>
     <String, dynamic>{
-      'countries_info': instance.countries,
+      'data': instance.countries,
       'updated': dateTimeToJson(instance.updated),
     };

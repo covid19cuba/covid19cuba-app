@@ -160,7 +160,7 @@ class Top20CountriesWidget extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.all(5),
                           child: Text(
-                            '${DataModel.prettyCountry(item.name)}',
+                            item.name,
                             style: TextStyle(
                               color: Constants.primaryColor,
                               fontWeight: FontWeight.normal,

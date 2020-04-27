@@ -8,7 +8,6 @@ import 'package:random_color/random_color.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 class CurvesEvolutionWidget extends StatefulWidget {
   final Map<String, dynamic> curvesEvolution;
@@ -91,7 +90,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
             curvesEvolution.entries.map((item) {
               var localIndex = index++;
               return charts.Series<double, double>(
-                id: DataModel.prettyCountry(item.key),
+                id: item.key,
                 colorFn: (_, __) => colors[localIndex],
                 domainFn: (_, i) => item.value['cummulative_sum'][i],
                 measureFn: (item, _) => item,

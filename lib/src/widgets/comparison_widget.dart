@@ -2,8 +2,10 @@ import 'dart:math';
 import 'dart:developer' as dev;
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:country_pickers/countries.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:preferences/preferences.dart';
@@ -26,8 +28,6 @@ class ComparisonWidget extends StatefulWidget {
 class ComparisonWidgetState extends State<ComparisonWidget> {
   String selectedCountry = Constants.defaultCompareCountry;
   String selectedOption = 'Confirmados';
-  Country _selectedDialogCountry = CountryPickerUtils.getCountryByIsoCode(
-      DataModel.countryCode(Constants.defaultCompareCountry));
 
   final List<String> options = List<String>()
     ..add('Confirmados')
@@ -41,21 +41,13 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
 
   ComparisonWidgetState({this.comparisonOfAccumulatedCases}) {
     assert(comparisonOfAccumulatedCases != null);
-    if (getCountriesList().indexOf(selectedCountry) == -1) {
+    selectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
+        Constants.defaultCompareCountry;
+    if (!comparisonOfAccumulatedCases.countries.keys
+        .contains(selectedCountry)) {
       selectedCountry = Constants.defaultCompareCountry;
-      _selectedDialogCountry = CountryPickerUtils.getCountryByIsoCode(
-          DataModel.countryCode(selectedCountry));
       PrefService.setString(Constants.prefCompareCountry, selectedCountry);
     }
-  }
-
-  List<String> getCountriesList() {
-    var list = comparisonOfAccumulatedCases.countries.keys
-        .where((c) => c != Constants.countryCuba)
-        .toList();
-    list.sort((a, b) =>
-        DataModel.prettyCountry(a).compareTo(DataModel.prettyCountry(b)));
-    return list;
   }
 
   List<charts.SelectionModelConfig<num>> getSelectionModels() {
@@ -71,21 +63,46 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ];
   }
 
-  String getLegend() {
-    String legend;
+  String getChartTitle() {
     switch (selectedOption) {
       case 'Confirmados':
       case 'Activos':
       case 'Diarios':
       case 'Recuperados':
       case 'Fallecidos':
-        legend = 'Casos';
-        break;
+        return 'Casos';
       case 'Stringency Index':
-        legend = 'Valor del índice';
-        break;
+        return 'Valor del índice';
     }
-    return legend;
+    return '';
+  }
+
+  String getLegend() {
+    switch (selectedOption) {
+      case 'Confirmados':
+      case 'Activos':
+      case 'Diarios':
+      case 'Recuperados':
+      case 'Fallecidos':
+        return 'Casos';
+      case 'Stringency Index':
+        return '';
+    }
+    return '';
+  }
+
+  String getMeasure(num measure) {
+    switch (selectedOption) {
+      case 'Confirmados':
+      case 'Activos':
+      case 'Diarios':
+      case 'Recuperados':
+      case 'Fallecidos':
+        return measure.toInt().toString();
+      case 'Stringency Index':
+        return measure.toString();
+    }
+    return '';
   }
 
   List<charts.ChartBehavior> getBehaviors() {
@@ -97,7 +114,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
       ),
       charts.ChartTitle(
-        getLegend(),
+        getChartTitle(),
         behaviorPosition: charts.BehaviorPosition.start,
         titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
         titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
@@ -108,7 +125,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         showMeasures: true,
         measureFormatter: (num measure) {
           if (measure == null) return '';
-          return measure.toInt().toString() + ' Casos';
+          return '${getMeasure(measure)} ${getLegend()}';
         },
       ),
       charts.LinePointHighlighter(
@@ -290,7 +307,6 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             .countries[selectedCountry].stringency.length;
         break;
     }
-    log(length);
     return length != 0;
   }
 
@@ -337,14 +353,14 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     }
     return [
       charts.Series<dynamic, int>(
-        id: DataModel.prettyCountry(selectedCountry),
+        id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
         data: listForeign,
       ),
       charts.Series<dynamic, int>(
-        id: Constants.countryCuba,
+        id: comparisonOfAccumulatedCases.countries[Constants.countryCuba].name,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
@@ -396,7 +412,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     }
     return [
       charts.Series<dynamic, int>(
-        id: DataModel.prettyCountry(selectedCountry),
+        id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
@@ -407,7 +423,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             .toList(),
       ),
       charts.Series<dynamic, int>(
-        id: Constants.countryCuba,
+        id: comparisonOfAccumulatedCases.countries[Constants.countryCuba].name,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
@@ -416,17 +432,27 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ];
   }
 
-  Widget _buildSelectedCountry(Country country) => Column(
+  static Country getCountryByIso3Code(String iso3Code) {
+    try {
+      return countryList.firstWhere(
+        (country) => country.iso3Code.toLowerCase() == iso3Code.toLowerCase(),
+      );
+    } catch (error) {
+      throw Exception('The initialValue provided is not a supported iso code!');
+    }
+  }
+
+  Widget _buildSelectedCountry(String iso3code) => Column(
         children: <Widget>[
           Row(
             children: <Widget>[
-              CountryPickerUtils.getDefaultFlagImage(country),
+              CountryPickerUtils.getDefaultFlagImage(
+                getCountryByIso3Code(iso3code),
+              ),
               SizedBox(width: 8.0),
               Expanded(
                 child: Text(
-                  DataModel.prettyCountry(
-                    DataModel.countries()[country.isoCode],
-                  ),
+                  comparisonOfAccumulatedCases.countries[iso3code].name,
                 ),
               ),
               Icon(Icons.arrow_downward),
@@ -445,9 +471,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           SizedBox(width: 8.0),
           Flexible(
             child: Text(
-              DataModel.prettyCountry(
-                DataModel.countries()[country.isoCode],
-              ),
+              comparisonOfAccumulatedCases.countries[country.iso3Code].name,
             ),
           ),
           // SizedBox(width: 8.0),
@@ -457,41 +481,53 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   void _openCountryPickerDialog() => showDialog(
         context: context,
         builder: (context) => Theme(
-            data: Theme.of(context).copyWith(primaryColor: Colors.pink),
-            child: CountryPickerDialog(
-                titlePadding: EdgeInsets.all(8.0),
-                semanticLabel: 'País seleccionado ' + selectedCountry,
-                searchCursorColor: Colors.pinkAccent,
-                searchInputDecoration: InputDecoration(hintText: 'Buscar...'),
-                searchEmptyView: Center(child: Text('No se encontró el país')),
-                isSearchable: false,
-                title: Text('Seleccione el país'),
-                onValuePicked: (Country country) {
-                  PrefService.setString(Constants.prefCompareCountry,
-                      DataModel.countries()[country.isoCode]);
-                  setState(() {
-                    selectedCountry = DataModel.countries()[country.isoCode];
-                    _selectedDialogCountry = country;
-                  });
-                },
-                itemFilter: (c) =>
-                    DataModel.countries().keys.contains(c.isoCode),
-                itemBuilder: _buildDialogItem)),
+          data: Theme.of(context).copyWith(primaryColor: Colors.pink),
+          child: PlusCountryPickerDialog(
+            titlePadding: EdgeInsets.all(8.0),
+            semanticLabel: 'País seleccionado ' +
+                comparisonOfAccumulatedCases.countries[selectedCountry].name,
+            searchCursorColor: Colors.pinkAccent,
+            searchInputDecoration: InputDecoration(hintText: 'Buscar...'),
+            searchEmptyView: Center(child: Text('No se encontró el país')),
+            isSearchable: true,
+            title: Text('Seleccione el país'),
+            onValuePicked: (Country country) {
+              PrefService.setString(
+                Constants.prefCompareCountry,
+                country.iso3Code,
+              );
+              setState(() {
+                selectedCountry = country.iso3Code;
+              });
+            },
+            itemFilter: (c) => comparisonOfAccumulatedCases.countries.keys
+                .contains(c.iso3Code),
+            itemBuilder: _buildDialogItem,
+            sortComparator: (a, b) => comparisonOfAccumulatedCases
+                .countries[a.iso3Code].name
+                .compareTo(
+                    comparisonOfAccumulatedCases.countries[b.iso3Code].name),
+            searchFunction: (Country country, String value) {
+              return comparisonOfAccumulatedCases
+                  .countries[country.iso3Code].name
+                  .toLowerCase()
+                  .startsWith(value.toLowerCase());
+            },
+          ),
+        ),
       );
 
   @override
   Widget build(BuildContext context) {
     selectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
         Constants.defaultCompareCountry;
-    _selectedDialogCountry = CountryPickerUtils.getCountryByIsoCode(
-        DataModel.countryCode(selectedCountry));
     return Column(
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
             child: Text(
-              'Comparación de ${Constants.countryCuba}',
+              'Comparación de Cuba',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -519,37 +555,9 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           margin: EdgeInsets.only(left: 35, right: 35),
           child: ListTile(
             onTap: _openCountryPickerDialog,
-            title: _buildSelectedCountry(_selectedDialogCountry),
+            title: _buildSelectedCountry(selectedCountry),
           ),
         ),
-        /*Container(
-          margin: EdgeInsets.only(left: 50, right: 50),
-          child: DropdownButton<String>(
-            value: selectedCountry,
-            icon: Icon(Icons.arrow_downward),
-            iconSize: 24,
-            isExpanded: true,
-            elevation: 16,
-            style: TextStyle(color: Constants.primaryColor),
-            underline: Container(
-              height: 2,
-              color: Constants.primaryColor,
-            ),
-            onChanged: (String newValue) {
-              PrefService.setString(Constants.prefCompareCountry, newValue);
-              setState(() {
-                selectedCountry = newValue;
-              });
-            },
-            items: getCountriesList()
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(DataModel.prettyCountry(value)),
-              );
-            }).toList(),
-          ),
-        ),*/
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
           child: Center(

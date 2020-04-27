@@ -10,6 +10,7 @@ class ComparisonOfAccumulatedCasesItem {
   List<int> daily;
   List<int> active;
   List<double> stringency;
+  String name;
 
   ComparisonOfAccumulatedCasesItem();
 
