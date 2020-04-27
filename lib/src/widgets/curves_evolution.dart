@@ -123,6 +123,8 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
               charts.SeriesLegend(
                 position: charts.BehaviorPosition.bottom,
                 desiredMaxColumns: 2,
+                showMeasures: true,
+                measureFormatter: (num measure) => measure == null ? '' : '<-',
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:
