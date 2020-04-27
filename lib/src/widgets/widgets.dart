@@ -30,3 +30,4 @@ export 'test_evolution_widget.dart';
 export 'tests_positive_percent_widget.dart';
 export 'top_20_accumulated_countries_widget.dart';
 export 'touchable_url_widget.dart';
+export 'world_widget.dart';
