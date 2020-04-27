@@ -2,10 +2,8 @@ import 'dart:math';
 import 'dart:developer' as dev;
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:country_pickers/countries.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
-import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:preferences/preferences.dart';
@@ -432,22 +430,12 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ];
   }
 
-  static Country getCountryByIso3Code(String iso3Code) {
-    try {
-      return countryList.firstWhere(
-        (country) => country.iso3Code.toLowerCase() == iso3Code.toLowerCase(),
-      );
-    } catch (error) {
-      throw Exception('The initialValue provided is not a supported iso code!');
-    }
-  }
-
   Widget _buildSelectedCountry(String iso3code) => Column(
         children: <Widget>[
           Row(
             children: <Widget>[
               CountryPickerUtils.getDefaultFlagImage(
-                getCountryByIso3Code(iso3code),
+                CountryPickerUtils.getCountryByIso3Code(iso3code),
               ),
               SizedBox(width: 8.0),
               Expanded(
@@ -482,7 +470,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         context: context,
         builder: (context) => Theme(
           data: Theme.of(context).copyWith(primaryColor: Colors.pink),
-          child: PlusCountryPickerDialog(
+          child: CountryPickerDialog(
             titlePadding: EdgeInsets.all(8.0),
             semanticLabel: 'País seleccionado ' +
                 comparisonOfAccumulatedCases.countries[selectedCountry].name,
@@ -507,7 +495,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
                 .countries[a.iso3Code].name
                 .compareTo(
                     comparisonOfAccumulatedCases.countries[b.iso3Code].name),
-            searchFunction: (Country country, String value) {
+            searchFilter: (Country country, String value) {
               return comparisonOfAccumulatedCases
                   .countries[country.iso3Code].name
                   .toLowerCase()

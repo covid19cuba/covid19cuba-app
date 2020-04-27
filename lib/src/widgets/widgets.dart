@@ -18,7 +18,6 @@ export 'pie_cases_nationality.dart';
 export 'pie_contagion_widget.dart';
 export 'pie_sex_widget.dart';
 export 'pie_tests_percent_widget.dart';
-export 'plus_country_picker_dialog.dart';
 export 'presentation_widget.dart';
 export 'province_map_widget.dart';
 export 'province_widget.dart';
