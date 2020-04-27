@@ -4,13 +4,26 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:meta/meta.dart';
 
 class NotificationManager {
-  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  static AndroidInitializationSettings androidInitializationSettings;
-  static IOSInitializationSettings iOSInitializationSettings;
-  static AndroidNotificationDetails androidNotificationDetails;
-  static IOSNotificationDetails iOSNotificationDetails;
-  static NotificationDetails notificationDetails;
+  static FlutterLocalNotificationsPlugin plugin;
   static bool isInitialized;
+
+  static NotificationDetails getDetails(String text) {
+    var androidNotificationDetails = AndroidNotificationDetails(
+      'your channel id',
+      'your channel name',
+      'your channel description',
+      importance: Importance.Max,
+      priority: Priority.High,
+      styleInformation: BigTextStyleInformation(text),
+      ongoing: false,
+    );
+    var iOSNotificationDetails = IOSNotificationDetails();
+    var notificationDetails = NotificationDetails(
+      androidNotificationDetails,
+      iOSNotificationDetails,
+    );
+    return notificationDetails;
+  }
 
   static Future<bool> initialize({
     String androidDefaultIcon = 'mipmap/ic_launcher',
@@ -23,24 +36,10 @@ class NotificationManager {
     DidReceiveLocalNotificationCallback iOSOnDidReceiveLocalNotification,
     SelectNotificationCallback onSelectNotification,
   }) async {
-    androidNotificationDetails = AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
-      'your channel description',
-      importance: Importance.Max,
-      priority: Priority.High,
-      style: AndroidNotificationStyle.BigText,
-      ongoing: false,
-    );
-    iOSNotificationDetails = IOSNotificationDetails();
-    notificationDetails = NotificationDetails(
-      androidNotificationDetails,
-      iOSNotificationDetails,
-    );
-    androidInitializationSettings = AndroidInitializationSettings(
+    var androidInitializationSettings = AndroidInitializationSettings(
       androidDefaultIcon,
     );
-    iOSInitializationSettings = IOSInitializationSettings(
+    var iOSInitializationSettings = IOSInitializationSettings(
       requestAlertPermission: iOSRequestAlertPermission,
       requestSoundPermission: iOSRequestSoundPermission,
       requestBadgePermission: iOSRequestBadgePermission,
@@ -49,8 +48,8 @@ class NotificationManager {
       defaultPresentBadge: iOSDefaultPresentBadge,
       onDidReceiveLocalNotification: iOSOnDidReceiveLocalNotification,
     );
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    isInitialized = await flutterLocalNotificationsPlugin.initialize(
+    plugin = FlutterLocalNotificationsPlugin();
+    isInitialized = await plugin.initialize(
       InitializationSettings(
         androidInitializationSettings,
         iOSInitializationSettings,
@@ -71,11 +70,11 @@ class NotificationManager {
       log('Notification Manager not is initialized');
       return;
     }
-    await flutterLocalNotificationsPlugin.show(
+    await plugin.show(
       id,
       title,
       body,
-      notificationDetails ?? NotificationManager.notificationDetails,
+      notificationDetails ?? getDetails(body),
       payload: payload,
     );
   }
@@ -93,12 +92,12 @@ class NotificationManager {
       log('Notification Manager not is initialized');
       return;
     }
-    await flutterLocalNotificationsPlugin.schedule(
+    await plugin.schedule(
       id,
       title,
       body,
       scheduledDate,
-      notificationDetails ?? NotificationManager.notificationDetails,
+      notificationDetails ?? getDetails(body),
       payload: payload,
       androidAllowWhileIdle: androidAllowWhileIdle,
     );
@@ -116,12 +115,12 @@ class NotificationManager {
       log('Notification Manager not is initialized');
       return;
     }
-    await flutterLocalNotificationsPlugin.periodicallyShow(
+    await plugin.periodicallyShow(
       id,
       title,
       body,
       repeatInterval,
-      notificationDetails ?? NotificationManager.notificationDetails,
+      notificationDetails ?? getDetails(body),
       payload: payload,
     );
   }
@@ -138,12 +137,12 @@ class NotificationManager {
       log('Notification Manager not is initialized');
       return;
     }
-    await flutterLocalNotificationsPlugin.showDailyAtTime(
+    await plugin.showDailyAtTime(
       id,
       title,
       body,
       notificationTime,
-      notificationDetails ?? NotificationManager.notificationDetails,
+      notificationDetails ?? getDetails(body),
       payload: payload,
     );
   }
@@ -161,13 +160,13 @@ class NotificationManager {
       log('Notification Manager not is initialized');
       return;
     }
-    await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+    await plugin.showWeeklyAtDayAndTime(
       id,
       title,
       body,
       day,
       notificationTime,
-      notificationDetails ?? NotificationManager.notificationDetails,
+      notificationDetails ?? getDetails(body),
       payload: payload,
     );
   }
@@ -178,7 +177,7 @@ class NotificationManager {
       log('Notification Manager not is initialized');
       return null;
     }
-    return await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    return await plugin.pendingNotificationRequests();
   }
 
   static Future<bool> iOSRequestPermissions() async {
@@ -187,7 +186,7 @@ class NotificationManager {
       return false;
     }
     // If not platform is iOS return true
-    return await flutterLocalNotificationsPlugin
+    return await plugin
             .resolvePlatformSpecificImplementation<
                 IOSFlutterLocalNotificationsPlugin>()
             ?.requestPermissions(
@@ -203,7 +202,7 @@ class NotificationManager {
       log('Notification Manager not is initialized');
       return;
     }
-    await flutterLocalNotificationsPlugin.cancel(id);
+    await plugin.cancel(id);
   }
 
   static Future<void> cancelAll() async {
@@ -211,6 +210,6 @@ class NotificationManager {
       log('Notification Manager not is initialized');
       return;
     }
-    await flutterLocalNotificationsPlugin.cancelAll();
+    await plugin.cancelAll();
   }
 }
