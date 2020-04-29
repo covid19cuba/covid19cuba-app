@@ -10,6 +10,25 @@ class ProvinceListPage extends StatefulWidget {
 }
 
 class ProvinceListPageState extends State<ProvinceListPage> {
+  var controller = TextEditingController();
+  String filter;
+
+  @override
+  initState() {
+    controller.addListener(() {
+      setState(() {
+        filter = controller.text;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,55 +38,84 @@ class ProvinceListPageState extends State<ProvinceListPage> {
         centerTitle: true,
       ),
       drawer: HomeDrawerWidget(),
-      body: ListView.separated(
-        itemBuilder: (context, index) {
-          var p = 10.0;
-          return FlatButton(
-            child: Container(
-              padding: index == 0
-                  ? EdgeInsets.only(left: p, right: p, bottom: p, top: p * 2)
-                  : index == Constants.provinceAbbreviations.length - 1
-                      ? EdgeInsets.only(
-                          left: p,
-                          right: p,
-                          bottom: p * 2,
-                          top: p,
-                        )
-                      : EdgeInsets.all(p),
-              child: Text(
-                Constants.provinceAbbreviations.values.toList()[index],
-                style: TextStyle(
-                  color: Constants.primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+      body: Column(
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(
+              hintText: 'Buscar ...',
+              contentPadding: EdgeInsets.symmetric(horizontal: 20),
             ),
-            onPressed: () {
-              setState(() {
-                var province =
-                    Constants.provinceAbbreviations.keys.toList()[index];
-                if (province == null) {
-                  Navigator.pop(context);
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProvinceItemPage(
-                        province: province,
+            controller: controller,
+            autofocus: false,
+          ),
+          Expanded(
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                if (filter != null &&
+                    !Constants.provinceAbbreviations.values
+                        .toList()[index]
+                        .toLowerCase()
+                        .contains(filter.toLowerCase())) {
+                  return Container();
+                }
+                var p = 10.0;
+                return FlatButton(
+                  child: Container(
+                    padding: index == 0
+                        ? EdgeInsets.only(
+                            left: p, right: p, bottom: p, top: p * 2)
+                        : index == Constants.provinceAbbreviations.length - 1
+                            ? EdgeInsets.only(
+                                left: p,
+                                right: p,
+                                bottom: p * 2,
+                                top: p,
+                              )
+                            : EdgeInsets.all(p),
+                    child: Text(
+                      Constants.provinceAbbreviations.values.toList()[index],
+                      style: TextStyle(
+                        color: Constants.primaryColor,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  );
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      var province =
+                          Constants.provinceAbbreviations.keys.toList()[index];
+                      if (province == null) {
+                        Navigator.pop(context);
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProvinceItemPage(
+                              province: province,
+                            ),
+                          ),
+                        );
+                      }
+                    });
+                  },
+                );
+              },
+              separatorBuilder: (context, index) {
+                if (filter != null &&
+                    !Constants.provinceAbbreviations.values
+                        .toList()[index]
+                        .toLowerCase()
+                        .contains(filter.toLowerCase())) {
+                  return Container();
                 }
-              });
-            },
-          );
-        },
-        separatorBuilder: (context, index) {
-          return Divider(
-            color: Constants.primaryColor,
-          );
-        },
-        itemCount: Constants.provinceAbbreviations.length,
+                return Divider(
+                  color: Constants.primaryColor,
+                );
+              },
+              itemCount: Constants.provinceAbbreviations.length,
+            ),
+          )
+        ],
       ),
     );
   }
