@@ -44,7 +44,7 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
             [
               charts.Series<ItemCode, String>(
                 id: 'Diagnosticados',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.red,
                 domainFn: (item, _) => item.code,
                 measureFn: (item, _) => item.value,
                 data: distributionByNationalityOfForeignCases,

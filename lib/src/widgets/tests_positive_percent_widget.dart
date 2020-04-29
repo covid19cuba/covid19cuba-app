@@ -39,14 +39,14 @@ class TestsPositivePercentWidget extends StatelessWidget {
             [
               charts.Series<double, DateTime>(
                 id: testsPositivePercent.daily.name,
-                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+                colorFn: (_, __) => ChartColors.red,
                 domainFn: (_, i) => testsPositivePercent.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsPositivePercent.daily.values,
               ),
               charts.Series<double, DateTime>(
                 id: testsPositivePercent.accumulated.name,
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.purple,
                 domainFn: (_, i) => testsPositivePercent.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsPositivePercent.accumulated.values,
