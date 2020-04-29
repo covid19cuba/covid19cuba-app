@@ -4,10 +4,10 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class HomeWidget extends StatelessWidget {
+class CubaWidget extends StatelessWidget {
   final DataModel data;
 
-  const HomeWidget({this.data}) : assert(data != null);
+  const CubaWidget({this.data}) : assert(data != null);
 
   @override
   Widget build(BuildContext context) {
