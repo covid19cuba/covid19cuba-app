@@ -31,11 +31,10 @@ ProvinceModel _$ProvinceModelFromJson(Map<String, dynamic> json) {
         ? null
         : CasesByNationality.fromJson(
             json['cases_by_nationality'] as Map<String, dynamic>)
-    ..distributionByNationalityOfForeignCases =
-        (json['distribution_by_nationality_of_foreign_cases'] as List)
-            ?.map((e) =>
-                e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))
-            ?.toList()
+    ..distributionByNationalityOfForeignCases = (json['distribution_by_nationality_of_foreign_cases'] as List)
+        ?.map((e) =>
+            e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))
+        ?.toList()
     ..affectedMunicipalities = (json['affected_municipalities'] as List)
         ?.map((e) => e == null
             ? null
@@ -43,7 +42,10 @@ ProvinceModel _$ProvinceModelFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..provinceCode = json['dpa_province_code'] as String
-    ..mapData = json['map_data'] as Map<String, dynamic>;
+    ..mapData = json['map_data'] as Map<String, dynamic>
+    ..effectiveReproductiveNumber = json['effective_reproductive_number'] == null
+        ? null
+        : EffectiveReproductiveNumber.fromJson(json['effective_reproductive_number'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$ProvinceModelToJson(ProvinceModel instance) =>
@@ -60,4 +62,5 @@ Map<String, dynamic> _$ProvinceModelToJson(ProvinceModel instance) =>
       'updated': dateTimeToJson(instance.updated),
       'dpa_province_code': instance.provinceCode,
       'map_data': instance.mapData,
+      'effective_reproductive_number': instance.effectiveReproductiveNumber,
     };
