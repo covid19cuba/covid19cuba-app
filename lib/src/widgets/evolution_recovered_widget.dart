@@ -39,14 +39,14 @@ class EvolutionRecoveredWidget extends StatelessWidget {
             [
               charts.Series<int, DateTime>(
                 id: evolutionOfRecoveredByDays.daily.name,
-                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+                colorFn: (_, __) => ChartColors.blueDark,
                 domainFn: (_, i) => evolutionOfRecoveredByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: evolutionOfRecoveredByDays.daily.values,
               ),
               charts.Series<int, DateTime>(
                 id: evolutionOfRecoveredByDays.accumulated.name,
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.blueLight,
                 domainFn: (_, i) => evolutionOfRecoveredByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: evolutionOfRecoveredByDays.accumulated.values,

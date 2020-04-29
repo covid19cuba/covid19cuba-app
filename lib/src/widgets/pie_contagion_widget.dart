@@ -1,4 +1,3 @@
-import 'package:charts_common/src/common/palette.dart'; // ignore: implementation_imports
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
@@ -8,11 +7,16 @@ import 'package:covid19cuba/src/models/models.dart';
 // ignore: must_be_immutable
 class PieContagionWidget extends StatefulWidget {
   final CasesByModeOfContagion casesByModeOfContagion;
-  List<Palette> colorPalettes;
+  List<charts.Color> colorPalettes;
 
   PieContagionWidget({this.casesByModeOfContagion})
       : assert(casesByModeOfContagion != null) {
-    colorPalettes = charts.MaterialPalette.getOrderedPalettes(4);
+    colorPalettes = [
+      ChartColors.red,
+      ChartColors.purple,
+      ChartColors.green,
+      ChartColors.yellow,
+    ];
   }
 
   @override
@@ -49,12 +53,12 @@ class PieContagionWidgetState extends State<PieContagionWidget> {
             [
               charts.Series<Item, String>(
                 id: 'Casos por Modo de Contagio',
-                colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
+                colorFn: (_, i) => widget.colorPalettes[i],
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: [
-                  widget.casesByModeOfContagion.imported,
                   widget.casesByModeOfContagion.inserted,
+                  widget.casesByModeOfContagion.imported,
                   widget.casesByModeOfContagion.autochthonous,
                   widget.casesByModeOfContagion.unknown,
                 ],

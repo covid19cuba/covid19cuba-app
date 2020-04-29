@@ -80,14 +80,14 @@ class StringencyIndexCubaWidget extends StatelessWidget {
             [
               charts.Series<double, DateTime>(
                 id: 'Stringency',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.red,
                 domainFn: (_, i) => stringencyIndexCuba.days[i],
                 measureFn: (item, _) => item,
                 data: stringencyIndexCuba.data,
               ),
               charts.Series<int, DateTime>(
                 id: 'Confirmados',
-                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+                colorFn: (_, __) => ChartColors.purple,
                 domainFn: (_, i) => evolutionOfCasesByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: evolutionOfCasesByDays.accumulated.values,

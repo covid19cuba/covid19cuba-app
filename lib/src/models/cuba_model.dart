@@ -76,6 +76,9 @@ class CubaModel {
   @JsonKey(name: 'top_20_accumulated_countries')
   List<ItemExtended> top20AccumulatedCountries;
 
+  @JsonKey(name: 'effective_reproductive_number')
+  EffectiveReproductiveNumber effectiveReproductiveNumber;
+
   CubaModel();
 
   factory CubaModel.fromJson(Map<String, dynamic> json) =>

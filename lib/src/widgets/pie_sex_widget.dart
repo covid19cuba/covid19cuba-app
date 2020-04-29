@@ -1,4 +1,3 @@
-import 'package:charts_common/src/common/palette.dart'; // ignore: implementation_imports
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
@@ -8,10 +7,14 @@ import 'package:covid19cuba/src/models/models.dart';
 // ignore: must_be_immutable
 class PieSexWidget extends StatefulWidget {
   final CasesBySex casesBySex;
-  List<Palette> colorPalettes;
+  List<charts.Color> colorPalettes;
 
   PieSexWidget({this.casesBySex}) : assert(casesBySex != null) {
-    colorPalettes = charts.MaterialPalette.getOrderedPalettes(3);
+    colorPalettes = [
+      ChartColors.purple,
+      ChartColors.red,
+      ChartColors.green
+    ];
   }
 
   @override
@@ -48,7 +51,7 @@ class PieSexWidgetState extends State<PieSexWidget> {
             [
               charts.Series<Item, String>(
                 id: 'Casos por Sexo',
-                colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
+                colorFn: (_, i) => widget.colorPalettes[i],
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: [

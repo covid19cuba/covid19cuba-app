@@ -39,14 +39,14 @@ class EvolutionDeathWidget extends StatelessWidget {
             [
               charts.Series<int, DateTime>(
                 id: evolutionOfDeathsByDays.daily.name,
-                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+                colorFn: (_, __) => ChartColors.blueDark,
                 domainFn: (_, i) => evolutionOfDeathsByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: evolutionOfDeathsByDays.daily.values,
               ),
               charts.Series<int, DateTime>(
                 id: evolutionOfDeathsByDays.accumulated.name,
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.purple,
                 domainFn: (_, i) => evolutionOfDeathsByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: evolutionOfDeathsByDays.accumulated.values,
