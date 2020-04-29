@@ -104,6 +104,19 @@ class ProvinceWidgetState extends State<ProvinceWidget> {
                     ),
                   ),
                   Container(
+                    margin: provinceData.effectiveReproductiveNumber == null
+                        ? EdgeInsets.all(0)
+                        : EdgeInsets.only(left: 5, right: 5, top: 5),
+                    child: provinceData.effectiveReproductiveNumber == null
+                        ? Container()
+                        : Card(
+                            child: EffectiveReproductiveNumberWidget(
+                              effectiveReproductiveNumber:
+                                  provinceData.effectiveReproductiveNumber,
+                            ),
+                          ),
+                  ),
+                  Container(
                     margin: EdgeInsets.only(left: 5, right: 5, top: 5),
                     child: Card(
                       child: Container(
