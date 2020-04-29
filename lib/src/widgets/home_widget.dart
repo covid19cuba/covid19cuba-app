@@ -110,6 +110,19 @@ class HomeWidget extends StatelessWidget {
           ),
         ),
         Container(
+          margin: data.all.effectiveReproductiveNumber == null
+              ? EdgeInsets.all(0)
+              : EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: data.all.effectiveReproductiveNumber == null
+              ? Container()
+              : Card(
+                  child: EffectiveReproductiveNumberWidget(
+                    effectiveReproductiveNumber:
+                        data.all.effectiveReproductiveNumber,
+                  ),
+                ),
+        ),
+        Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: TestsPositivePercentWidget(
