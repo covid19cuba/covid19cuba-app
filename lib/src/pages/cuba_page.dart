@@ -11,12 +11,12 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/error_widget.dart' as ew;
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class WorldPage extends StatefulWidget {
+class CubaPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => WorldPageState();
+  State<StatefulWidget> createState() => CubaPageState();
 }
 
-class WorldPageState extends State<WorldPage> {
+class CubaPageState extends State<CubaPage> {
   Completer<void> refreshCompleter;
 
   @override
@@ -90,7 +90,7 @@ class WorldPageState extends State<WorldPage> {
             );
             return refreshCompleter.future;
           },
-          child: WorldWidget(data: state.data),
+          child: CubaWidget(data: state.data),
         ),
       );
     }
