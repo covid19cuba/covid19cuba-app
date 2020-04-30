@@ -38,14 +38,14 @@ class TestEvolutionWidget extends StatelessWidget {
             [
               charts.Series<int, DateTime>(
                 id: testsByDays.positive.name,
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.red,
                 domainFn: (_, i) => testsByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsByDays.positive.values,
               ),
               charts.Series<int, DateTime>(
                 id: testsByDays.total.name,
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                colorFn: (_, __) => ChartColors.green,
                 domainFn: (_, i) => testsByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsByDays.total.values,

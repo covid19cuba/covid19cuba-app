@@ -4,10 +4,10 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class HomeWidget extends StatelessWidget {
+class CubaWidget extends StatelessWidget {
   final DataModel data;
 
-  const HomeWidget({this.data}) : assert(data != null);
+  const CubaWidget({this.data}) : assert(data != null);
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +108,19 @@ class HomeWidget extends StatelessWidget {
           child: Card(
             child: TestEvolutionWidget(testsByDays: data.all.testsByDays),
           ),
+        ),
+        Container(
+          margin: data.all.effectiveReproductiveNumber == null
+              ? EdgeInsets.all(0)
+              : EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: data.all.effectiveReproductiveNumber == null
+              ? Container()
+              : Card(
+                  child: EffectiveReproductiveNumberWidget(
+                    effectiveReproductiveNumber:
+                        data.all.effectiveReproductiveNumber,
+                  ),
+                ),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),

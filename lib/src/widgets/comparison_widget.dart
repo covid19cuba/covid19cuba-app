@@ -352,14 +352,14 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     return [
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => ChartColors.blue,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
         data: listForeign,
       ),
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[Constants.countryCuba].name,
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
         data: listCuba,
@@ -411,7 +411,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     return [
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => ChartColors.blue,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
         data: listForeign
@@ -422,7 +422,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
       ),
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[Constants.countryCuba].name,
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
         data: listCuba,

@@ -40,136 +40,35 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         color: Constants.primaryColor,
         child: ListView(
           children: <Widget>[
-            DrawerHeader(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Container(
-                      child: Image.asset(Constants.appLogo),
-                      padding: EdgeInsets.all(5),
-                      width: 100,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              height: 2,
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
-            createDrawerItem(
-              context,
-              icon: FontAwesomeIcons.globe,
-              text: 'Cuba en el Mundo',
-              onTap: () async {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WorldPage(),
-                  ),
-                );
-              },
-            ),
-            createDrawerItem(
-              context,
-              icon: Icons.location_city,
-              text: 'Provincias',
-              onTap: () async {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProvinceListPage(),
-                  ),
-                );
-              },
-            ),
-            createDrawerItem(
-              context,
-              icon: Icons.location_city,
-              text: 'Municipios',
-              onTap: () async {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MunicipalityListPage(),
-                  ),
-                );
-              },
-            ),
-            createDrawerItem(
-              context,
-              icon: Icons.assignment,
-              text: 'Pesquisador Virtual',
-              onTap: () async {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WebViewPage(),
-                  ),
-                );
-              },
-            ),
-            createDrawerItem(
-              context,
-              icon: Icons.table_chart,
-              text: 'Tabla de Casos',
-              onTap: () async {
-                const urlCU = 'https://www.cusobu.nat.cu/covid/casos.html';
-                const urlIO = 'https://covid19cubadata.github.io/casos.html';
-                String url;
-                var mode = PrefService.getInt(Constants.prefConnectionMode) ??
-                    Constants.ConnectionModeMerge;
-                switch (mode) {
-                  case Constants.ConnectionModeIntranet:
-                    url = urlCU;
-                    break;
-                  case Constants.ConnectionModeInternet:
-                    url = urlIO;
-                    break;
-                  case Constants.ConnectionModeMerge:
-                  default:
-                    url = urlCU;
-                    break;
-                }
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
-            ),
+            header(),
+            separator(),
+            casesTableItem(),
             linksDrawerItem(),
             updateDrawerItem(),
             sharerDrawerItem(),
             settingsDrawerItem(),
-            createDrawerItem(
-              context,
-              icon: Icons.live_help,
-              text: 'Consejos y Respuestas',
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TipsPage(),
-                  ),
-                );
-              },
-            ),
+            tipsItem(),
             faqsDrawerItem(),
             creditsDrawerItem(),
-            Container(
-              height: 2,
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-            ),
+            separator(),
             versionAppDrawerItem(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget header() {
+    return DrawerHeader(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Container(
+              child: Image.asset(Constants.appLogo),
+              padding: EdgeInsets.all(5),
+              width: 100,
+            ),
           ],
         ),
       ),
@@ -202,6 +101,63 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         ],
       ),
       onTap: onTap,
+    );
+  }
+
+  Widget separator() {
+    return Container(
+      height: 2,
+      color: Colors.white,
+      margin: EdgeInsets.symmetric(horizontal: 10),
+    );
+  }
+
+  Widget tipsItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.live_help,
+      text: 'Consejos y Respuestas',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TipsPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget casesTableItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.table_chart,
+      text: 'Tabla de Casos',
+      onTap: () async {
+        const urlCU = 'https://www.cusobu.nat.cu/covid/casos.html';
+        const urlIO = 'https://covid19cubadata.github.io/casos.html';
+        String url;
+        var mode = PrefService.getInt(Constants.prefConnectionMode) ??
+            Constants.ConnectionModeMerge;
+        switch (mode) {
+          case Constants.ConnectionModeIntranet:
+            url = urlCU;
+            break;
+          case Constants.ConnectionModeInternet:
+            url = urlIO;
+            break;
+          case Constants.ConnectionModeMerge:
+          default:
+            url = urlCU;
+            break;
+        }
+        if (await canLaunch(url)) {
+          await launch(url);
+        } else {
+          log('Could not launch $url');
+        }
+      },
     );
   }
 

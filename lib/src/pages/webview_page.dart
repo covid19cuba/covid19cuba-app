@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class WebViewPageState extends State<WebViewPage>
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text('Pesquisador Virtual'),
+          title: Text(Constants.appName),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
@@ -103,14 +104,9 @@ class WebViewPageState extends State<WebViewPage>
                 }
               },
             ),
-            IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
           ],
         ),
+        drawer: HomeDrawerWidget(),
         body: webView,
       ),
     );
