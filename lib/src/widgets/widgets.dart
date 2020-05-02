@@ -28,6 +28,7 @@ export 'replica_widget.dart';
 export 'resume_widget.dart';
 export 'stringency_index_cuba_widget.dart';
 export 'tables_widget.dart';
+export 'test_behavior_comparison_widget.dart';
 export 'test_evolution_widget.dart';
 export 'tests_positive_percent_widget.dart';
 export 'top_20_accumulated_countries_widget.dart';
