@@ -57,7 +57,14 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..note = json['note'] as String
     ..top20AccumulatedCountries = (json['top_20_accumulated_countries'] as List)?.map((e) => e == null ? null : ItemExtended.fromJson(e as Map<String, dynamic>))?.toList()
-    ..effectiveReproductiveNumber = json['effective_reproductive_number'] == null ? null : EffectiveReproductiveNumber.fromJson(json['effective_reproductive_number'] as Map<String, dynamic>);
+    ..effectiveReproductiveNumber = json['effective_reproductive_number'] == null ? null : EffectiveReproductiveNumber.fromJson(json['effective_reproductive_number'] as Map<String, dynamic>)
+    ..testBehaviorComparison = (json['test_behavior_comparison'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(
+          k,
+          e == null
+              ? null
+              : TestBehaviorComparison.fromJson(e as Map<String, dynamic>)),
+    );
 }
 
 Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
@@ -87,4 +94,5 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'note': instance.note,
       'top_20_accumulated_countries': instance.top20AccumulatedCountries,
       'effective_reproductive_number': instance.effectiveReproductiveNumber,
+      'test_behavior_comparison': instance.testBehaviorComparison,
     };
