@@ -36,12 +36,13 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..casesByNationality = json['cases_by_nationality'] == null
+    ..distributionOfCases = json['distribution_of_cases'] == null
         ? null
-        : CasesByNationality.fromJson(
-            json['cases_by_nationality'] as Map<String, dynamic>)
-    ..distributionByNationalityOfForeignCases =
-        (json['distribution_by_nationality_of_foreign_cases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
+        : DistributionOfCases.fromJson(
+            json['distribution_of_cases'] as Map<String, dynamic>)
+    ..casesByNationality =
+        json['cases_by_nationality'] == null ? null : CasesByNationality.fromJson(json['cases_by_nationality'] as Map<String, dynamic>)
+    ..distributionByNationalityOfForeignCases = (json['distribution_by_nationality_of_foreign_cases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
     ..listOfTestsPerformed = json['list_of_tests_performed'] == null ? null : ListOfTestsPerformed.fromJson(json['list_of_tests_performed'] as Map<String, dynamic>)
     ..testsByDays = json['tests_by_days'] == null ? null : TestsByDays.fromJson(json['tests_by_days'] as Map<String, dynamic>)
     ..testsPositivePercent = json['tests_positive_percent'] == null ? null : TestsPositivePercent.fromJson(json['tests_positive_percent'] as Map<String, dynamic>)
@@ -67,6 +68,7 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'evolution_of_deaths_by_days': instance.evolutionOfDeathsByDays,
       'evolution_of_recovered_by_days': instance.evolutionOfRecoveredByDays,
       'distribution_by_age_ranges': instance.distributionByAgeRanges,
+      'distribution_of_cases': instance.distributionOfCases,
       'cases_by_nationality': instance.casesByNationality,
       'distribution_by_nationality_of_foreign_cases':
           instance.distributionByNationalityOfForeignCases,

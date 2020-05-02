@@ -28,6 +28,9 @@ class CubaModel {
   @JsonKey(name: 'distribution_by_age_ranges')
   List<ItemCode> distributionByAgeRanges;
 
+  @JsonKey(name: 'distribution_of_cases')
+  DistributionOfCases distributionOfCases;
+
   @JsonKey(name: 'cases_by_nationality')
   CasesByNationality casesByNationality;
 
