@@ -118,6 +118,14 @@ class CubaWidget extends StatelessWidget {
           ),
         ),
         Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: TestsPositivePercentWidget(
+              testsPositivePercent: data.all.testsPositivePercent,
+            ),
+          ),
+        ),
+        Container(
           margin: data.all.effectiveReproductiveNumber == null
               ? EdgeInsets.all(0)
               : EdgeInsets.only(left: 5, right: 5, top: 5),
@@ -129,14 +137,6 @@ class CubaWidget extends StatelessWidget {
                         data.all.effectiveReproductiveNumber,
                   ),
                 ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: TestsPositivePercentWidget(
-              testsPositivePercent: data.all.testsPositivePercent,
-            ),
-          ),
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
