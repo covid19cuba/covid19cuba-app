@@ -8,6 +8,7 @@ export 'comparison_of_accumulated_cases_item.dart';
 export 'cuba_model.dart';
 export 'evolution_of_cases_by_days.dart';
 export 'data_model.dart';
+export 'distribution_of_cases.dart';
 export 'effective_reproductive_number.dart';
 export 'evolution_of_deaths_by_days.dart';
 export 'evolution_of_recovered_by_days.dart';

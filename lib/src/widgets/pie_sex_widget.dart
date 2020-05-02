@@ -10,11 +10,7 @@ class PieSexWidget extends StatefulWidget {
   List<charts.Color> colorPalettes;
 
   PieSexWidget({this.casesBySex}) : assert(casesBySex != null) {
-    colorPalettes = [
-      ChartColors.purple,
-      ChartColors.red,
-      ChartColors.green
-    ];
+    colorPalettes = [ChartColors.purple, ChartColors.red, ChartColors.green];
   }
 
   @override

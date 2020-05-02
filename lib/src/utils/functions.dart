@@ -101,8 +101,10 @@ int getDayFromCache() {
 
 Future<String> getSharedContent() async {
   var packageInfo = await PackageInfo.fromPlatform();
-  var apklisUrl = 'https://archive.apklis.cu/application/apk/club.postdata.covid19cuba-v${packageInfo.buildNumber}.apk';
-  var gitHubUrl = 'https://github.com/covid19cuba/covid19cuba-app/releases/download/v${packageInfo.version}/app.apk';
+  var apklisUrl =
+      'https://archive.apklis.cu/application/apk/club.postdata.covid19cuba-v${packageInfo.buildNumber}.apk';
+  var gitHubUrl =
+      'https://github.com/covid19cuba/covid19cuba-app/releases/download/v${packageInfo.version}/app.apk';
   var sharedContent = """Covid19 Cuba Data
 
 Proyecto para conocer los reportes diarios, estadísticas, etc. respecto a la Covid-19 en Cuba.
