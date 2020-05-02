@@ -100,9 +100,9 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
               'El gráfico muestra a partir de 30 casos, en escala logarítmica '
               'y agrupados cada siete días, los casos nuevos por el total '
               'de casos confirmados de cada país. De esta manera, los países '
-              'mientras siguen una línea recta están en un crecimeinto '
+              'mientras siguen una línea recta están en un crecimiento '
               'exponencial y cuando se desvían de la recta comienzan a salir '
-              'del comportamiento exponencial. ',
+              'del comportamiento exponencial.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
