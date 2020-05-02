@@ -32,5 +32,6 @@ export 'province_model.dart';
 export 'provinces_model.dart';
 export 'state_model.dart';
 export 'stringency_index_cuba.dart';
+export 'test_behavior_comparison.dart';
 export 'tests_by_days.dart';
 export 'tests_positive_percent.dart';
