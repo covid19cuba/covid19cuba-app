@@ -3,6 +3,7 @@ export 'containerized_text_widget.dart';
 export 'curves_evolution.dart';
 export 'distribution_age_groups_diagnosed_widget.dart';
 export 'distribution_nationality_diagnosed_widget.dart';
+export 'distribution_of_cases_widget.dart';
 export 'effective_reproductive_number_widget.dart';
 export 'error_widget.dart';
 export 'evolution_cases_widget.dart';
