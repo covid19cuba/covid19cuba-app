@@ -92,7 +92,8 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
           ),
           child: Center(
             child: Linkify(
-              text: '${distributionByAgeRanges.last.name} representa edad desconocida',
+              text:
+                  '${distributionByAgeRanges.last.name} representa edad desconocida',
               options: LinkifyOptions(humanize: true),
               textAlign: TextAlign.center,
               style: TextStyle(

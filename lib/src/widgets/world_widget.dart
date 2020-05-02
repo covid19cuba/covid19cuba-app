@@ -40,8 +40,8 @@ class WorldWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              child: Top20CountriesWidget(
-                top20AccumulatedCountries: data.all.top20AccumulatedCountries,
+              child: CurvesEvolutionWidget(
+                curvesEvolution: data.all.curvesEvolution,
                 updated: data.all.comparisonOfAccumulatedCases.updated,
               ),
             ),
@@ -51,8 +51,8 @@ class WorldWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: Container(
-              child: CurvesEvolutionWidget(
-                curvesEvolution: data.all.curvesEvolution,
+              child: Top20CountriesWidget(
+                top20AccumulatedCountries: data.all.top20AccumulatedCountries,
                 updated: data.all.comparisonOfAccumulatedCases.updated,
               ),
             ),

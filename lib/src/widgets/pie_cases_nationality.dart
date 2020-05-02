@@ -12,11 +12,7 @@ class PieCasesNationalityWidget extends StatefulWidget {
 
   PieCasesNationalityWidget({this.casesByNationality})
       : assert(casesByNationality != null) {
-    colorPalettes = [
-      ChartColors.purple,
-      ChartColors.red,
-      ChartColors.green
-    ];
+    colorPalettes = [ChartColors.purple, ChartColors.red, ChartColors.green];
   }
 
   @override

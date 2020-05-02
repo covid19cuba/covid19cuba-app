@@ -49,6 +49,14 @@ class CubaWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
+            child: DistributionOfCasesWidget(
+              distributionOfCases: data.all.distributionOfCases,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
             child: EvolutionCasesWidget(
               evolutionOfCasesByDays: data.all.evolutionOfCasesByDays,
             ),
@@ -110,6 +118,14 @@ class CubaWidget extends StatelessWidget {
           ),
         ),
         Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: TestsPositivePercentWidget(
+              testsPositivePercent: data.all.testsPositivePercent,
+            ),
+          ),
+        ),
+        Container(
           margin: data.all.effectiveReproductiveNumber == null
               ? EdgeInsets.all(0)
               : EdgeInsets.only(left: 5, right: 5, top: 5),
@@ -125,16 +141,7 @@ class CubaWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: TestsPositivePercentWidget(
-              testsPositivePercent: data.all.testsPositivePercent,
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
             child: StringencyIndexCubaWidget(
-              evolutionOfCasesByDays: data.all.evolutionOfCasesByDays,
               stringencyIndexCuba: data.all.stringencyIndexCuba,
             ),
           ),

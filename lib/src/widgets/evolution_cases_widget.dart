@@ -49,8 +49,7 @@ class EvolutionCasesWidget extends StatelessWidget {
                     ? [
                         charts.Series<int, DateTime>(
                           id: evolutionOfCasesByDays.active.name,
-                          colorFn: (_, __) =>
-                              ChartColors.redDark,
+                          colorFn: (_, __) => ChartColors.redDark,
                           domainFn: (_, i) =>
                               evolutionOfCasesByDays.date.values[i],
                           measureFn: (item, _) => item,

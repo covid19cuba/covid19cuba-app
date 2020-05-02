@@ -10,6 +10,8 @@ class StringencyIndexCubaModel {
   @JsonKey(fromJson: dateTimeListFromJson, toJson: dateTimeListToJson)
   List<DateTime> days;
   List<double> data;
+  @JsonKey(name: 'data-legacy')
+  List<double> dataLegacy;
   List<MomentModel> moments;
 
   StringencyIndexCubaModel();
