@@ -142,7 +142,6 @@ class CubaWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: StringencyIndexCubaWidget(
-              evolutionOfCasesByDays: data.all.evolutionOfCasesByDays,
               stringencyIndexCuba: data.all.stringencyIndexCuba,
             ),
           ),
