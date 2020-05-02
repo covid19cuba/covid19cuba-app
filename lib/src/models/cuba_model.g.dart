@@ -53,7 +53,7 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..mapData = json['map_data'] as Map<String, dynamic>
     ..events = json['eventos'] as Map<String, dynamic>
     ..pesquisador = json['pesquisador'] == null ? null : PesquisadorModel.fromJson(json['pesquisador'] as Map<String, dynamic>)
-    ..curvesEvolution = json['curves_evolution'] as Map<String, dynamic>
+    ..curvesEvolution = json['curves_evolution_v2'] as Map<String, dynamic>
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..note = json['note'] as String
     ..top20AccumulatedCountries = (json['top_20_accumulated_countries'] as List)?.map((e) => e == null ? null : ItemExtended.fromJson(e as Map<String, dynamic>))?.toList()
@@ -82,7 +82,7 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'map_data': instance.mapData,
       'eventos': instance.events,
       'pesquisador': instance.pesquisador,
-      'curves_evolution': instance.curvesEvolution,
+      'curves_evolution_v2': instance.curvesEvolution,
       'updated': dateTimeToJson(instance.updated),
       'note': instance.note,
       'top_20_accumulated_countries': instance.top20AccumulatedCountries,

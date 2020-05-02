@@ -67,7 +67,7 @@ class CubaModel {
   @JsonKey(name: 'pesquisador')
   PesquisadorModel pesquisador;
 
-  @JsonKey(name: 'curves_evolution')
+  @JsonKey(name: 'curves_evolution_v2')
   Map<String, dynamic> curvesEvolution;
 
   @JsonKey(name: 'updated', fromJson: dateTimeFromJson, toJson: dateTimeToJson)
