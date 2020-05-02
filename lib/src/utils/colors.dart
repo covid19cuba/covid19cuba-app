@@ -11,4 +11,5 @@ class ChartColors {
   static var redDark = charts.Color.fromHex(code: '#B11116');
   static var pink = charts.Color.fromHex(code: '#D0797C');
   static var blueLight = charts.Color.fromHex(code: '#00AEEF');
+  static var grey = charts.Color.fromHex(code: '#808080');
 }
