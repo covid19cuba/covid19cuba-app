@@ -711,6 +711,19 @@ class Constants {
 
   static const collaborators = <List<String>>[
     [
+      'Luis Eduardo González',
+      'Ing. en Ciencias Informáticas. Graduado en la Universidad de '
+          'Ciencias Informáticas. Desarrollador de Software.',
+      'https://github.com/luiseduardoglez',
+    ],
+    [
+      'Ernesto Avila Domenech',
+      'Ing. en Ciencias Informáticas. Máster en Informática Aplicada en '
+          'la Univ. de Camagüey. Profesor Asistente en la Universidad de '
+          'Granma.',
+      'https://github.com/eadomenech',
+    ],
+    [
       'Saimi Reyes',
       'Lic. en Periodismo, graduada de la Univ. de La Habana. Editora y '
           'Periodista de Postdata.club.',
