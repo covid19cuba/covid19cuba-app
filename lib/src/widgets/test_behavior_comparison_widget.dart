@@ -13,16 +13,14 @@ import 'package:covid19cuba/src/utils/utils.dart';
 
 class TestBehaviorComparisonWidget extends StatefulWidget {
   final Map<String, TestBehaviorComparison> testBehaviorComparison;
-  final DateTime updated;
 
-  TestBehaviorComparisonWidget({this.testBehaviorComparison, this.updated})
-      : assert(testBehaviorComparison != null, updated != null);
+  TestBehaviorComparisonWidget({this.testBehaviorComparison})
+      : assert(testBehaviorComparison != null);
 
   @override
   TestBehaviorComparisonWidgetState createState() =>
       TestBehaviorComparisonWidgetState(
         testBehaviorComparison: testBehaviorComparison,
-        updated: updated,
       );
 }
 

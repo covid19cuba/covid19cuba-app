@@ -637,7 +637,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Comparación en el período de ${Constants.countryCuba}',
+              'Comparación en el período de Cuba',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
