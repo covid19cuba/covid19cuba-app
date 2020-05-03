@@ -23,29 +23,6 @@ void main() async {
 
   await setUpTasks();
 
-  /*int setUpTasksMinutes;
-  try {
-    setUpTasksMinutes = PrefService.getInt(Constants.prefSetUpTasksMinutes);
-  } catch (e) {
-    log(e.toString());
-    setUpTasksMinutes = Constants.setUpTasksMinutesDefault;
-  }
-
-  await setUpTasks(setUpTasksMinutes);
-
-  await setUpClapsTime();*/
-
-  // TODO: Bug in advice notifications, meanwhile they should be disabled
-  /*var notifications = getApplicationNotifications();
-  notifications.forEach(
-    (notification) => NotificationManager.schedule(
-      id: notification.id,
-      scheduledDate: notification.scheduledDate,
-      title: notification.title,
-      body: notification.body,
-    ),
-  );*/
-
   runApp(App(update));
 
   await setUpBackgroundTasks();
