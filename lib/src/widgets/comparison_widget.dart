@@ -61,23 +61,44 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ];
   }
 
-  String getChartTitle() => selectedOption == 'Stringency Index' ? 'Valor del índice' : 'Casos';
+  String getChartTitle() {
+    if (selectedOption == 'Stringency Index') {
+      return 'Valor del índice';
+    }
+    return 'Casos';
+  }
 
-  String getLegend() => selectedOption == 'Stringency Index' ? '' : 'Casos';
-  
-  String getMeasure(num measure) => selectedOption == 'Stringency Index' ? measure.toString() : measure.toInt();
-  
-  List<dynamic> _getCountryAttribute(ComparisonOfAccumulatedCasesItem country) {
+  String getLegend() {
+    if (selectedOption == 'Stringency Index') {
+      return '';
+    }
+    return 'Casos';
+  }
 
-    Map<String, List<dynamic>> countryAttributes = {'Confirmados'     : country.confirmed, 
-                                                    'Fallecidos'      : country.deaths, 
-                                                    'Recuperados'     : country.recovered, 
-                                                    'Diarios'         : country.daily, 
-                                                    'Activos'         : country.active,
-                                                    'Stringency Index': country.stringency,
-                                                  };
+  String getMeasure(num measure) {
+    if (selectedOption == 'Stringency Index') {
+      return measure.toString();
+    }
+    return measure.toInt().toString();
+  }
 
-    return countryAttributes[selectedOption];
+  List<dynamic> getCountryAttribute(ComparisonOfAccumulatedCasesItem country) {
+    switch (selectedOption) {
+      case 'Confirmados':
+        return country.confirmed;
+      case 'Fallecidos':
+        return country.deaths;
+      case 'Recuperados':
+        return country.recovered;
+      case 'Diarios':
+        return country.daily;
+      case 'Activos':
+        return country.active;
+      case 'Stringency Index':
+        return country.stringency;
+      default:
+        return country.confirmed;
+    }
   }
 
   List<charts.ChartBehavior> getBehaviors() {
@@ -112,24 +133,28 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   charts.NumericAxisSpec getNumericAxisSpec() {
-    int lenCuba    = _getCountryAttribute(comparisonOfAccumulatedCases.countries[Constants.countryCuba]).length;
-    int lenForeign = _getCountryAttribute(comparisonOfAccumulatedCases.countries[selectedCountry]).length;
-    
+    var lenCuba = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+    ).length;
+    var lenForeign = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[selectedCountry],
+    ).length;
     return charts.NumericAxisSpec(
       viewport: charts.NumericExtents(1, max(lenForeign, lenCuba)),
     );
   }
-  
-  charts.NumericAxisSpec getNumericAxisSpecZoom() {
 
-    var length = _getCountryAttribute(comparisonOfAccumulatedCases.countries[Constants.countryCuba]).length;
-    
+  charts.NumericAxisSpec getNumericAxisSpecZoom() {
+    var length = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+    ).length;
     return charts.NumericAxisSpec(viewport: charts.NumericExtents(1, length));
   }
 
   List<charts.ChartBehavior> getSpecBehaviors() {
-    var length = _getCountryAttribute(comparisonOfAccumulatedCases.countries[Constants.countryCuba]).length;
-    
+    var length = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+    ).length;
     var behaviors = getBehaviors();
     behaviors.addAll([
       charts.RangeAnnotation([
@@ -144,27 +169,33 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   String getFooter() {
-    if(selectedOption == 'Stringency Index')
-      return  'El Oxford Stringency Index\n'
-              'https://www.bsg.ox.ac.uk/research/research-projects/'
-              'coronavirus-government-response-tracker\nevalúa las '
-              'intervenciones del estado en la epidemia.\nLos valores '
-              'se obtienen de\nhttps://covidtracker.'
-              'bsg.ox.ac.uk/about-api';
-
-    return   'Datos de los países tomados '
-             'de\nhttps://github.com/pomber/covid19\ny '
-             'actualizado el '
-             '${comparisonOfAccumulatedCases.updated.toStrPlus()}';
+    if (selectedOption == 'Stringency Index') {
+      return 'El Oxford Stringency Index\n'
+          'https://www.bsg.ox.ac.uk/research/research-projects/'
+          'coronavirus-government-response-tracker\nevalúa las '
+          'intervenciones del estado en la epidemia.\nLos valores '
+          'se obtienen de\nhttps://covidtracker.'
+          'bsg.ox.ac.uk/about-api';
+    }
+    return 'Datos de los países tomados '
+        'de\nhttps://github.com/pomber/covid19\ny '
+        'actualizado el '
+        '${comparisonOfAccumulatedCases.updated.toStrPlus()}';
   }
 
+  bool haveData() {
+    var length = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[selectedCountry],
+    ).length;
+    return length != 0;
+  }
 
-  bool haveData() => _getCountryAttribute(comparisonOfAccumulatedCases.countries[selectedCountry]).length != 0;
-   
   List<charts.Series<dynamic, int>> getSeries() {
-    List<dynamic> listCuba    = _getCountryAttribute(comparisonOfAccumulatedCases.countries[Constants.countryCuba]);
-    List<dynamic> listForeign = _getCountryAttribute(comparisonOfAccumulatedCases.countries[selectedCountry]);
-    
+    List<dynamic> listCuba = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[Constants.countryCuba]);
+    List<dynamic> listForeign = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[selectedCountry]);
+
     return [
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
@@ -184,9 +215,11 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   List<charts.Series<dynamic, int>> getZoomSeries() {
-    List<dynamic> listCuba    = _getCountryAttribute(comparisonOfAccumulatedCases.countries[Constants.countryCuba]);
-    List<dynamic> listForeign = _getCountryAttribute(comparisonOfAccumulatedCases.countries[selectedCountry]);
-    
+    List<dynamic> listCuba = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[Constants.countryCuba]);
+    List<dynamic> listForeign = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[selectedCountry]);
+
     return [
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
