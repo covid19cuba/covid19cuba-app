@@ -62,45 +62,43 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   String getChartTitle() {
-    switch (selectedOption) {
-      case 'Confirmados':
-      case 'Activos':
-      case 'Diarios':
-      case 'Recuperados':
-      case 'Fallecidos':
-        return 'Casos';
-      case 'Stringency Index':
-        return 'Valor del índice';
+    if (selectedOption == 'Stringency Index') {
+      return 'Valor del índice';
     }
-    return '';
+    return 'Casos';
   }
 
   String getLegend() {
-    switch (selectedOption) {
-      case 'Confirmados':
-      case 'Activos':
-      case 'Diarios':
-      case 'Recuperados':
-      case 'Fallecidos':
-        return 'Casos';
-      case 'Stringency Index':
-        return '';
+    if (selectedOption == 'Stringency Index') {
+      return '';
     }
-    return '';
+    return 'Casos';
   }
 
   String getMeasure(num measure) {
+    if (selectedOption == 'Stringency Index') {
+      return measure.toString();
+    }
+    return measure.toInt().toString();
+  }
+
+  List<dynamic> getCountryAttribute(ComparisonOfAccumulatedCasesItem country) {
     switch (selectedOption) {
       case 'Confirmados':
-      case 'Activos':
-      case 'Diarios':
-      case 'Recuperados':
+        return country.confirmed;
       case 'Fallecidos':
-        return measure.toInt().toString();
+        return country.deaths;
+      case 'Recuperados':
+        return country.recovered;
+      case 'Diarios':
+        return country.daily;
+      case 'Activos':
+        return country.active;
       case 'Stringency Index':
-        return measure.toString();
+        return country.stringency;
+      default:
+        return country.confirmed;
     }
-    return '';
   }
 
   List<charts.ChartBehavior> getBehaviors() {
@@ -135,110 +133,28 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   charts.NumericAxisSpec getNumericAxisSpec() {
-    int lenCuba;
-    int lenForeign;
-    switch (selectedOption) {
-      case 'Confirmados':
-        lenCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].confirmed.length;
-        lenForeign = comparisonOfAccumulatedCases
-            .countries[selectedCountry].confirmed.length;
-        break;
-      case 'Activos':
-        lenCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].active.length;
-        lenForeign = comparisonOfAccumulatedCases
-            .countries[selectedCountry].active.length;
-        break;
-      case 'Diarios':
-        lenCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].daily.length;
-        lenForeign = comparisonOfAccumulatedCases
-            .countries[selectedCountry].daily.length;
-        break;
-      case 'Recuperados':
-        lenCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].recovered.length;
-        lenForeign = comparisonOfAccumulatedCases
-            .countries[selectedCountry].recovered.length;
-        break;
-      case 'Fallecidos':
-        lenCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].deaths.length;
-        lenForeign = comparisonOfAccumulatedCases
-            .countries[selectedCountry].deaths.length;
-        break;
-      case 'Stringency Index':
-        lenCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].stringency.length;
-        lenForeign = comparisonOfAccumulatedCases
-            .countries[selectedCountry].stringency.length;
-        break;
-    }
+    var lenCuba = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+    ).length;
+    var lenForeign = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[selectedCountry],
+    ).length;
     return charts.NumericAxisSpec(
       viewport: charts.NumericExtents(1, max(lenForeign, lenCuba)),
     );
   }
 
   charts.NumericAxisSpec getNumericAxisSpecZoom() {
-    var length = 0;
-    switch (selectedOption) {
-      case 'Confirmados':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].confirmed.length;
-        break;
-      case 'Activos':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].active.length;
-        break;
-      case 'Diarios':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].daily.length;
-        break;
-      case 'Recuperados':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].recovered.length;
-        break;
-      case 'Fallecidos':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].deaths.length;
-        break;
-      case 'Stringency Index':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].stringency.length;
-        break;
-    }
+    var length = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+    ).length;
     return charts.NumericAxisSpec(viewport: charts.NumericExtents(1, length));
   }
 
   List<charts.ChartBehavior> getSpecBehaviors() {
-    var length = 0;
-    switch (selectedOption) {
-      case 'Confirmados':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].confirmed.length;
-        break;
-      case 'Activos':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].active.length;
-        break;
-      case 'Diarios':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].daily.length;
-        break;
-      case 'Recuperados':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].recovered.length;
-        break;
-      case 'Fallecidos':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].deaths.length;
-        break;
-      case 'Stringency Index':
-        length = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].stringency.length;
-        break;
-    }
+    var length = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+    ).length;
     var behaviors = getBehaviors();
     behaviors.addAll([
       charts.RangeAnnotation([
@@ -253,102 +169,33 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   String getFooter() {
-    String footer;
-    switch (selectedOption) {
-      case 'Confirmados':
-      case 'Activos':
-      case 'Diarios':
-      case 'Recuperados':
-      case 'Fallecidos':
-        footer = 'Datos de los países tomados '
-            'de\nhttps://github.com/pomber/covid19\ny '
-            'actualizado el '
-            '${comparisonOfAccumulatedCases.updated.toStrPlus()}';
-        break;
-      case 'Stringency Index':
-        footer = 'El Oxford Stringency Index\n'
-            'https://www.bsg.ox.ac.uk/research/research-projects/'
-            'coronavirus-government-response-tracker\nevalúa las '
-            'intervenciones del estado en la epidemia.\nLos valores '
-            'se obtienen de\nhttps://covidtracker.'
-            'bsg.ox.ac.uk/about-api';
-        break;
+    if (selectedOption == 'Stringency Index') {
+      return 'El Oxford Stringency Index\n'
+          'https://www.bsg.ox.ac.uk/research/research-projects/'
+          'coronavirus-government-response-tracker\nevalúa las '
+          'intervenciones del estado en la epidemia.\nLos valores '
+          'se obtienen de\nhttps://covidtracker.'
+          'bsg.ox.ac.uk/about-api';
     }
-    return footer;
+    return 'Datos de los países tomados '
+        'de\nhttps://github.com/pomber/covid19\ny '
+        'actualizado el '
+        '${comparisonOfAccumulatedCases.updated.toStrPlus()}';
   }
 
   bool haveData() {
-    var length = 0;
-    switch (selectedOption) {
-      case 'Confirmados':
-        length = comparisonOfAccumulatedCases
-            .countries[selectedCountry].confirmed.length;
-        break;
-      case 'Activos':
-        length = comparisonOfAccumulatedCases
-            .countries[selectedCountry].active.length;
-        break;
-      case 'Diarios':
-        length = comparisonOfAccumulatedCases
-            .countries[selectedCountry].daily.length;
-        break;
-      case 'Recuperados':
-        length = comparisonOfAccumulatedCases
-            .countries[selectedCountry].recovered.length;
-        break;
-      case 'Fallecidos':
-        length = comparisonOfAccumulatedCases
-            .countries[selectedCountry].deaths.length;
-        break;
-      case 'Stringency Index':
-        length = comparisonOfAccumulatedCases
-            .countries[selectedCountry].stringency.length;
-        break;
-    }
+    var length = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[selectedCountry],
+    ).length;
     return length != 0;
   }
 
   List<charts.Series<dynamic, int>> getSeries() {
-    List<dynamic> listCuba;
-    List<dynamic> listForeign;
-    switch (selectedOption) {
-      case 'Confirmados':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].confirmed;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].confirmed;
-        break;
-      case 'Activos':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].active;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].active;
-        break;
-      case 'Diarios':
-        listCuba =
-            comparisonOfAccumulatedCases.countries[Constants.countryCuba].daily;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].daily;
-        break;
-      case 'Recuperados':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].recovered;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].recovered;
-        break;
-      case 'Fallecidos':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].deaths;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].deaths;
-        break;
-      case 'Stringency Index':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].stringency;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].stringency;
-        break;
-    }
+    List<dynamic> listCuba = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[Constants.countryCuba]);
+    List<dynamic> listForeign = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[selectedCountry]);
+
     return [
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
@@ -368,46 +215,11 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   List<charts.Series<dynamic, int>> getZoomSeries() {
-    List<dynamic> listCuba;
-    List<dynamic> listForeign;
-    switch (selectedOption) {
-      case 'Confirmados':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].confirmed;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].confirmed;
-        break;
-      case 'Activos':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].active;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].active;
-        break;
-      case 'Diarios':
-        listCuba =
-            comparisonOfAccumulatedCases.countries[Constants.countryCuba].daily;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].daily;
-        break;
-      case 'Recuperados':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].recovered;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].recovered;
-        break;
-      case 'Fallecidos':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].deaths;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].deaths;
-        break;
-      case 'Stringency Index':
-        listCuba = comparisonOfAccumulatedCases
-            .countries[Constants.countryCuba].stringency;
-        listForeign =
-            comparisonOfAccumulatedCases.countries[selectedCountry].stringency;
-        break;
-    }
+    List<dynamic> listCuba = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[Constants.countryCuba]);
+    List<dynamic> listForeign = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[selectedCountry]);
+
     return [
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
