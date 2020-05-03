@@ -482,7 +482,7 @@ class Constants {
           '- Dificultad para respirar (en casos graves)'
     ],
     [
-      'El COVID-19 se caracteriza por:',
+      'La COVID-19 se caracteriza por:',
       'Síntomas leves, como, dolor de garganta, tos y fiebre. La '
           'enfermedad puede ser más grave en algunas personas '
           'y provocar neumonía o dificultades respiratorias. Más raramente '
@@ -590,7 +590,7 @@ class Constants {
           'Evite tocarse los ojos, la boca o la nariz.'
     ],
     [
-      '¿El virus COVID-19 puede transmitirse en zonas con climas cálidos y '
+      '¿El virus que provoca la COVID-19 puede transmitirse en zonas con climas cálidos y '
           'húmedos?',
       'Las pruebas científicas obtenidas hasta ahora indican que el virus '
           'de la COVID-19 puede transmitirse en CUALQUIER ZONA, incluidas las '
