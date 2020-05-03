@@ -848,6 +848,11 @@ class Constants {
       'http://covidcuba.swlx.info',
       'https://www.swlx.info',
     ],
+    [
+      'Universidad de La Habana',
+      'https://covid19cubadata.uh.cu',
+      'http://www.uh.cu',
+    ],
     /*[
       'Joven Club',
       'http://covid19.jovenclub.cu',
