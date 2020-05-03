@@ -42,7 +42,6 @@ class WorldWidget extends StatelessWidget {
             child: Container(
               child: TestBehaviorComparisonWidget(
                 testBehaviorComparison: data.all.testBehaviorComparison,
-                updated: data.all.comparisonOfAccumulatedCases.updated,
               ),
             ),
           ),
