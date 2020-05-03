@@ -36,12 +36,13 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..casesByNationality = json['cases_by_nationality'] == null
+    ..distributionOfCases = json['distribution_of_cases'] == null
         ? null
-        : CasesByNationality.fromJson(
-            json['cases_by_nationality'] as Map<String, dynamic>)
-    ..distributionByNationalityOfForeignCases =
-        (json['distribution_by_nationality_of_foreign_cases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
+        : DistributionOfCases.fromJson(
+            json['distribution_of_cases'] as Map<String, dynamic>)
+    ..casesByNationality =
+        json['cases_by_nationality'] == null ? null : CasesByNationality.fromJson(json['cases_by_nationality'] as Map<String, dynamic>)
+    ..distributionByNationalityOfForeignCases = (json['distribution_by_nationality_of_foreign_cases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
     ..listOfTestsPerformed = json['list_of_tests_performed'] == null ? null : ListOfTestsPerformed.fromJson(json['list_of_tests_performed'] as Map<String, dynamic>)
     ..testsByDays = json['tests_by_days'] == null ? null : TestsByDays.fromJson(json['tests_by_days'] as Map<String, dynamic>)
     ..testsPositivePercent = json['tests_positive_percent'] == null ? null : TestsPositivePercent.fromJson(json['tests_positive_percent'] as Map<String, dynamic>)
@@ -52,10 +53,18 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..mapData = json['map_data'] as Map<String, dynamic>
     ..events = json['eventos'] as Map<String, dynamic>
     ..pesquisador = json['pesquisador'] == null ? null : PesquisadorModel.fromJson(json['pesquisador'] as Map<String, dynamic>)
-    ..curvesEvolution = json['curves_evolution'] as Map<String, dynamic>
+    ..curvesEvolution = json['curves_evolution_v2'] as Map<String, dynamic>
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..note = json['note'] as String
-    ..top20AccumulatedCountries = (json['top_20_accumulated_countries'] as List)?.map((e) => e == null ? null : ItemExtended.fromJson(e as Map<String, dynamic>))?.toList();
+    ..top20AccumulatedCountries = (json['top_20_accumulated_countries'] as List)?.map((e) => e == null ? null : ItemExtended.fromJson(e as Map<String, dynamic>))?.toList()
+    ..effectiveReproductiveNumber = json['effective_reproductive_number'] == null ? null : EffectiveReproductiveNumber.fromJson(json['effective_reproductive_number'] as Map<String, dynamic>)
+    ..testBehaviorComparison = (json['test_behavior_comparison'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(
+          k,
+          e == null
+              ? null
+              : TestBehaviorComparison.fromJson(e as Map<String, dynamic>)),
+    );
 }
 
 Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
@@ -66,6 +75,7 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'evolution_of_deaths_by_days': instance.evolutionOfDeathsByDays,
       'evolution_of_recovered_by_days': instance.evolutionOfRecoveredByDays,
       'distribution_by_age_ranges': instance.distributionByAgeRanges,
+      'distribution_of_cases': instance.distributionOfCases,
       'cases_by_nationality': instance.casesByNationality,
       'distribution_by_nationality_of_foreign_cases':
           instance.distributionByNationalityOfForeignCases,
@@ -79,8 +89,10 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'map_data': instance.mapData,
       'eventos': instance.events,
       'pesquisador': instance.pesquisador,
-      'curves_evolution': instance.curvesEvolution,
+      'curves_evolution_v2': instance.curvesEvolution,
       'updated': dateTimeToJson(instance.updated),
       'note': instance.note,
       'top_20_accumulated_countries': instance.top20AccumulatedCountries,
+      'effective_reproductive_number': instance.effectiveReproductiveNumber,
+      'test_behavior_comparison': instance.testBehaviorComparison,
     };

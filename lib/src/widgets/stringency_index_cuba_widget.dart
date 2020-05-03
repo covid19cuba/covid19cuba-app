@@ -10,13 +10,11 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StringencyIndexCubaWidget extends StatelessWidget {
-  final EvolutionOfCasesByDays evolutionOfCasesByDays;
   final StringencyIndexCubaModel stringencyIndexCuba;
 
   const StringencyIndexCubaWidget({
-    this.evolutionOfCasesByDays,
     this.stringencyIndexCuba,
-  }) : assert(evolutionOfCasesByDays != null);
+  }) : assert(stringencyIndexCuba != null);
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +44,23 @@ class StringencyIndexCubaWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
+          child: Text(
+            'El índice fue revisado y actualizado por Oxford y se '
+            'incorporaron nuevos criterios. Por tanto, en la gráfica '
+            'se mostrarán los valores de la versión actual (v2) y de '
+            'la versión previa (v1)',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Constants.primaryColor,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -57,7 +72,7 @@ class StringencyIndexCubaWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                stringencyIndexCuba.data.last.toString(),
+                stringencyIndexCuba.data.lastWhere((x) => x != null).toString(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.red,
@@ -79,22 +94,19 @@ class StringencyIndexCubaWidget extends StatelessWidget {
           child: charts.TimeSeriesChart(
             [
               charts.Series<double, DateTime>(
-                id: 'Stringency',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                id: 'Stringency actual (v2)',
+                colorFn: (_, __) => ChartColors.red,
                 domainFn: (_, i) => stringencyIndexCuba.days[i],
                 measureFn: (item, _) => item,
                 data: stringencyIndexCuba.data,
               ),
-              charts.Series<int, DateTime>(
-                id: 'Confirmados',
-                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-                domainFn: (_, i) => evolutionOfCasesByDays.date.values[i],
+              charts.Series<double, DateTime>(
+                id: 'Stringency previo (v1)',
+                colorFn: (_, __) => ChartColors.purple,
+                domainFn: (_, i) => stringencyIndexCuba.days[i],
                 measureFn: (item, _) => item,
-                data: evolutionOfCasesByDays.accumulated.values,
-              )..setAttribute(
-                  charts.measureAxisIdKey,
-                  'secondaryMeasureAxisId',
-                ),
+                data: stringencyIndexCuba.dataLegacy,
+              ),
             ],
             animate: false,
             defaultInteractions: true,
@@ -108,7 +120,7 @@ class StringencyIndexCubaWidget extends StatelessWidget {
                       (moment) => charts.LineAnnotationSegment(
                         moment.date,
                         charts.RangeAnnotationAxisType.domain,
-                        startLabel: moment.value,
+                        endLabel: moment.value,
                         color: charts.MaterialPalette.blue.shadeDefault,
                       ),
                     )
@@ -124,13 +136,6 @@ class StringencyIndexCubaWidget extends StatelessWidget {
               charts.ChartTitle(
                 'Valor del índice',
                 behaviorPosition: charts.BehaviorPosition.start,
-                titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
-                titleOutsideJustification:
-                    charts.OutsideJustification.middleDrawArea,
-              ),
-              charts.ChartTitle(
-                'Casos confirmados',
-                behaviorPosition: charts.BehaviorPosition.end,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea,

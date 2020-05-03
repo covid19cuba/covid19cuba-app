@@ -1,4 +1,3 @@
-import 'package:charts_common/src/common/palette.dart'; // ignore: implementation_imports
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
@@ -8,11 +7,14 @@ import 'package:covid19cuba/src/models/models.dart';
 // ignore: must_be_immutable
 class PieTestsPercentWidget extends StatefulWidget {
   final ListOfTestsPerformed listOfTestsPerformed;
-  List<Palette> colorPalettes;
+  List<charts.Color> colorPalettes;
 
   PieTestsPercentWidget({this.listOfTestsPerformed})
       : assert(listOfTestsPerformed != null) {
-    colorPalettes = charts.MaterialPalette.getOrderedPalettes(2);
+    colorPalettes = [
+      ChartColors.red,
+      ChartColors.purple,
+    ];
   }
 
   @override
@@ -52,7 +54,7 @@ class PieTestsPercentWidgetState extends State<PieTestsPercentWidget> {
                 [
                   charts.Series<Item, String>(
                     id: 'Relación de tests realizados',
-                    colorFn: (_, i) => widget.colorPalettes[i].shadeDefault,
+                    colorFn: (_, i) => widget.colorPalettes[i],
                     domainFn: (item, _) => item.name,
                     measureFn: (item, _) =>
                         item.value *

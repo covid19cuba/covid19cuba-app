@@ -4,7 +4,9 @@ import 'dart:developer' as dev;
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:getflutter/getflutter.dart';
 import 'package:random_color/random_color.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -28,6 +30,9 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
   final DateTime updated;
   var colors = List<charts.Color>();
   var colorGen = RandomColor(0);
+  List<DropdownMenuItem<String>> items;
+  List<int> selectedItems;
+  List<int> defaultItems;
 
   CurvesEvolutionWidgetState({this.curvesEvolution, this.updated}) {
     assert(curvesEvolution != null);
@@ -35,11 +40,35 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
     colors = curvesEvolution.entries.map((x) {
       return colorGen.randomChartColor();
     }).toList();
+    var items = curvesEvolution.entries.toList();
+    items = items..sort((a, b) => a.key.compareTo(b.key));
+    items = items.where((item) => item.key != 'Cuba').toList();
+    this.items = items.map((item) {
+      return DropdownMenuItem(
+        child: Text(item.key),
+        value: item.key,
+      );
+    }).toList();
+    var sorted = curvesEvolution.entries.toList();
+    sorted = sorted..sort((a, b) => b.value['ctotal'] - a.value['ctotal']);
+    sorted = sorted.where((item) => item.key != 'Cuba').take(20).toList();
+    defaultItems = List<int>();
+    for (var item in sorted) {
+      for (var i = 0; i < items.length; ++i) {
+        if (item.key == items[i].key) {
+          defaultItems.add(i);
+          break;
+        }
+      }
+    }
+    selectedItems = List<int>();
+    selectedItems.addAll(defaultItems);
   }
 
   @override
   Widget build(BuildContext context) {
     var index = 0;
+    var show = true;
     return Column(
       children: <Widget>[
         Container(
@@ -71,9 +100,9 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
               'El gráfico muestra a partir de 30 casos, en escala logarítmica '
               'y agrupados cada siete días, los casos nuevos por el total '
               'de casos confirmados de cada país. De esta manera, los países '
-              'mientras siguen una línea recta están en un crecimeinto '
+              'mientras siguen una línea recta están en un crecimiento '
               'exponencial y cuando se desvían de la recta comienzan a salir '
-              'del comportamiento exponencial. ',
+              'del comportamiento exponencial.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -87,17 +116,38 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
           padding: EdgeInsets.all(10),
           height: 750,
           child: charts.LineChart(
-            curvesEvolution.entries.map((item) {
-              var localIndex = index++;
-              return charts.Series<double, double>(
-                id: item.key,
-                colorFn: (_, __) => colors[localIndex],
-                domainFn: (_, i) => item.value['cummulative_sum'][i],
-                measureFn: (item, _) => item,
-                data: List<double>.from(item.value['weeks']),
-                domainLowerBoundFn: (_, __) => 1.4771212547196624,
-              );
-            }).toList(),
+            selectedItems.map((i) {
+                  var key = items[i].value;
+                  var value = curvesEvolution[key];
+                  var localIndex = index++;
+                  var list = List<double>();
+                  for (var x in value['weeks']) {
+                    if (x == null) {
+                      list.add(null);
+                    } else {
+                      list.add(double.parse(x.toString()));
+                    }
+                  }
+                  return charts.Series<double, double>(
+                    id: key,
+                    colorFn: (_, __) => colors[localIndex],
+                    domainFn: (_, i) => value['cummulative_sum'][i],
+                    measureFn: (item, _) => item,
+                    data: list,
+                    domainLowerBoundFn: (_, __) => 1.4771212547196624,
+                  );
+                }).toList() +
+                [
+                  charts.Series<double, double>(
+                    id: 'Cuba',
+                    colorFn: (_, __) => colors[index],
+                    domainFn: (_, i) =>
+                        curvesEvolution['Cuba']['cummulative_sum'][i],
+                    measureFn: (item, _) => item,
+                    data: List<double>.from(curvesEvolution['Cuba']['weeks']),
+                    domainLowerBoundFn: (_, __) => 1.4771212547196624,
+                  )
+                ],
             animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
@@ -123,6 +173,9 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
               charts.SeriesLegend(
                 position: charts.BehaviorPosition.bottom,
                 desiredMaxColumns: 2,
+                showMeasures: true,
+                cellPadding: EdgeInsets.symmetric(horizontal: 5),
+                measureFormatter: (num measure) => measure == null ? '' : '<-',
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:
@@ -140,6 +193,66 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
                           ln10 +
                       0.1),
             ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          child: SearchableDropdown.multiple(
+            items: items,
+            selectedItems: selectedItems,
+            selectedValueWidgetFn: (item) {
+              if (show) {
+                show = false;
+                return Text('Seleccionar países deseados');
+              }
+              return Container();
+            },
+            hint: Padding(
+              padding: EdgeInsets.all(3),
+              child: Text('Seleccione los países que desee'),
+            ),
+            searchHint: 'Seleccione los países que desee',
+            onChanged: (value) {
+              setState(() {
+                selectedItems = value;
+              });
+            },
+            closeButton: (sel) => 'Seleccionar',
+            doneButton: 'Guardar',
+            isExpanded: true,
+            isCaseSensitiveSearch: false,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          child: GFButton(
+            text: 'Seleccionar países iniciales',
+            textColor: Constants.primaryColor,
+            textStyle: TextStyle(
+              color: Constants.primaryColor,
+            ),
+            color: Constants.primaryColor,
+            shape: GFButtonShape.pills,
+            type: GFButtonType.outline2x,
+            borderSide: BorderSide(
+              width: 1.0,
+              color: Constants.primaryColor,
+            ),
+            fullWidthButton: true,
+            onPressed: () {
+              setState(() {
+                selectedItems.clear();
+                selectedItems.addAll(defaultItems);
+              });
+            },
           ),
         ),
         Container(

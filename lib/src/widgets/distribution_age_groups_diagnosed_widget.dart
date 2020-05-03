@@ -43,7 +43,7 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
             [
               charts.Series<ItemCode, String>(
                 id: 'Diagnosticados',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.red,
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: distributionByAgeRanges,
@@ -92,7 +92,8 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
           ),
           child: Center(
             child: Linkify(
-              text: '${distributionByAgeRanges.last.name} representa edad desconocida',
+              text:
+                  '${distributionByAgeRanges.last.name} representa edad desconocida',
               options: LinkifyOptions(humanize: true),
               textAlign: TextAlign.center,
               style: TextStyle(
