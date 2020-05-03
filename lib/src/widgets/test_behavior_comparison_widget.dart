@@ -40,7 +40,7 @@ class TestBehaviorComparisonWidgetState
       return colorGen.randomChartColor();
     }).toList();
     var items = testBehaviorComparison.entries.toList();
-    items = items..sort((a, b) => a.key.compareTo(b.key));
+    items = items..sort((a, b) => a.value.name.compareTo(b.value.name));
     items = items.where((item) => item.key != 'Cuba').toList();
     this.items = items.map((item) {
       return DropdownMenuItem(
