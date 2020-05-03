@@ -27,7 +27,6 @@ class TestBehaviorComparisonWidget extends StatefulWidget {
 class TestBehaviorComparisonWidgetState
     extends State<TestBehaviorComparisonWidget> {
   final Map<String, TestBehaviorComparison> testBehaviorComparison;
-  final DateTime updated;
   var colors = List<charts.Color>();
   var colorGen = RandomColor(0);
 
@@ -35,15 +34,13 @@ class TestBehaviorComparisonWidgetState
   List<int> selectedItems;
   List<int> defaultItems;
 
-  TestBehaviorComparisonWidgetState(
-      {this.testBehaviorComparison, this.updated}) {
+  TestBehaviorComparisonWidgetState({this.testBehaviorComparison}) {
     assert(testBehaviorComparison != null);
-    assert(updated != null);
     colors = testBehaviorComparison.entries.map((x) {
       return colorGen.randomChartColor();
     }).toList();
     var items = testBehaviorComparison.entries.toList();
-    items = items..sort((a, b) => a.key.compareTo(b.key));
+    items = items..sort((a, b) => a.value.name.compareTo(b.value.name));
     items = items.where((item) => item.key != 'Cuba').toList();
     this.items = items.map((item) {
       return DropdownMenuItem(
