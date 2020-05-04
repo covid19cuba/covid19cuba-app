@@ -1,9 +1,9 @@
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class TestsPositivePercentWidget extends StatelessWidget {
   final TestsPositivePercent testsPositivePercent;
@@ -38,10 +38,10 @@ class TestsPositivePercentWidget extends StatelessWidget {
                 ),
               ),
               InfoDialogWidget(
-                  title:
-                      '% Tests Positivos con respecto a Total de Tests (PCR)',
-                  text: 'Esta información se reporta desde el '
-                      '${testsPositivePercent.date.values[0].toStrPlus()}')
+                title: '% Tests Positivos con respecto a Total de Tests (PCR)',
+                text: 'Esta información se reporta desde el '
+                    '${testsPositivePercent.date.values[0].toStrPlus()}',
+              )
             ],
           ),
         ),

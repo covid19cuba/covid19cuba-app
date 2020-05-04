@@ -1,9 +1,9 @@
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class DistributionNationalityDiagnosedWidget extends StatelessWidget {
   final List<ItemCode> distributionByNationalityOfForeignCases;
@@ -49,8 +49,9 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
                 ),
               ),
               InfoDialogWidget(
-                  title: 'Distribución por nacionalidad de casos extranjeros',
-                  text: dialogText)
+                title: 'Distribución por nacionalidad de casos extranjeros',
+                text: dialogText,
+              )
             ],
           ),
         ),
