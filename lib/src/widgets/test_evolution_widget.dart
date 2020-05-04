@@ -1,9 +1,9 @@
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class TestEvolutionWidget extends StatelessWidget {
   final TestsByDays testsByDays;
@@ -37,9 +37,10 @@ class TestEvolutionWidget extends StatelessWidget {
                 ),
               ),
               InfoDialogWidget(
-                  title: 'Tests (PCR) por días',
-                  text: 'Esta información se reporta desde el '
-                      '${testsByDays.date.values[0].toStrPlus()}')
+                title: 'Tests (PCR) por días',
+                text: 'Esta información se reporta desde el '
+                    '${testsByDays.date.values[0].toStrPlus()}',
+              )
             ],
           ),
         ),

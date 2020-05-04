@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class StringencyIndexCubaWidget extends StatelessWidget {
   final StringencyIndexCubaModel stringencyIndexCuba;
@@ -40,17 +40,18 @@ class StringencyIndexCubaWidget extends StatelessWidget {
                 ),
               ),
               InfoDialogWidget(
-                  title: 'Oxford Stringency Index',
-                  text: 'El Oxford Stringency Index\n'
-                      'https://www.bsg.ox.ac.uk/research/research-projects/'
-                      'coronavirus-government-response-tracker\nevalúa las '
-                      'intervenciones del estado en la epidemia.\nLos valores '
-                      'se obtienen de\nhttps://covidtracker.'
-                      'bsg.ox.ac.uk/about-api\n\n\n'
-                      'El índice fue revisado y actualizado por Oxford y se '
-                      'incorporaron nuevos criterios. Por tanto, en la gráfica '
-                      'se mostrarán los valores de la versión actual (v2) y de '
-                      'la versión previa (v1)'),
+                title: 'Oxford Stringency Index',
+                text: 'El Oxford Stringency Index\n'
+                    'https://www.bsg.ox.ac.uk/research/research-projects/'
+                    'coronavirus-government-response-tracker\nevalúa las '
+                    'intervenciones del estado en la epidemia.\nLos valores '
+                    'se obtienen de\nhttps://covidtracker.'
+                    'bsg.ox.ac.uk/about-api\n\n\n'
+                    'El índice fue revisado y actualizado por Oxford y se '
+                    'incorporaron nuevos criterios. Por tanto, en la gráfica '
+                    'se mostrarán los valores de la versión actual (v2) y de '
+                    'la versión previa (v1)',
+              ),
             ],
           ),
         ),

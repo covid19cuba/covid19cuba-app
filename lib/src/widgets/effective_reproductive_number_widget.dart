@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class EffectiveReproductiveNumberWidget extends StatelessWidget {
   final EffectiveReproductiveNumber effectiveReproductiveNumber;
@@ -39,16 +39,16 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
                 ),
               ),
               InfoDialogWidget(
-                  title: title,
-                  text: title +
-                      '\n'
-                          'https://en.wikipedia.org/wiki/basic_reproduction_number\n'
-                          'se cálcula en base al método propuesto por Anne Cori\n'
-                          'https://cran.r-project.org/package=EpiEstim\n\n'
-                          'Es una colaboración del Investigador Waldemar Baldoquín '
-                          'del IPK y se actualizará periódicamente en base a sus '
-                          'cálculos. Los márgenes refieren al rango con 95% de '
-                          'confianza.')
+                title: title,
+                text: '$title\n'
+                    'https://en.wikipedia.org/wiki/basic_reproduction_number\n'
+                    'se cálcula en base al método propuesto por Anne Cori\n'
+                    'https://cran.r-project.org/package=EpiEstim\n\n'
+                    'Es una colaboración del Investigador Waldemar Baldoquín '
+                    'del IPK y se actualizará periódicamente en base a sus '
+                    'cálculos. Los márgenes refieren al rango con 95% de '
+                    'confianza.',
+              )
             ],
           ),
         ),

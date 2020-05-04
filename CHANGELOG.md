@@ -1,5 +1,15 @@
 # Covid19 Cuba Data Mobile Application Changelog
 
+## [0.7.1] - May 4, 2020
+
+### Added
+
+* Information button in top right of the charts.
+
+### Fixed
+
+* Links in update page.
+
 ## [0.7.0] - May 3, 2020
 
 ### Added
