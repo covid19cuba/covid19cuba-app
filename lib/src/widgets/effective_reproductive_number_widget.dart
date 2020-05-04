@@ -1,15 +1,13 @@
-import 'dart:developer';
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class EffectiveReproductiveNumberWidget extends StatelessWidget {
   final EffectiveReproductiveNumber effectiveReproductiveNumber;
+  static String title = 'Número Reproductivo Efectivo';
 
   const EffectiveReproductiveNumberWidget({this.effectiveReproductiveNumber})
       : assert(effectiveReproductiveNumber != null);
@@ -24,16 +22,34 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Número Reproductivo Efectivo',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                title: title,
+                text: '$title\n'
+                    'https://en.wikipedia.org/wiki/basic_reproduction_number\n'
+                    'se cálcula en base al método propuesto por Anne Cori\n'
+                    'https://cran.r-project.org/package=EpiEstim\n\n'
+                    'Es una colaboración del Investigador Waldemar Baldoquín '
+                    'del IPK y se actualizará periódicamente en base a sus '
+                    'cálculos. Los márgenes refieren al rango con 95% de '
+                    'confianza.',
+              )
+            ],
           ),
         ),
         Container(
@@ -78,7 +94,7 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Número Reproductivo Efectivo',
+                title,
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -103,43 +119,6 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
                 )
               ])
             ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Linkify(
-              text: 'El Número Reproductivo Efectivo\n'
-                  'https://en.wikipedia.org/wiki/basic_reproduction_number\n'
-                  'se cálcula en base al método propuesto por Anne Cori\n'
-                  'https://cran.r-project.org/package=EpiEstim\n\n'
-                  'Es una colaboración del Investigador Waldemar Baldoquín '
-                  'del IPK y se actualizará periódicamente en base a sus '
-                  'cálculos. Los márgenes refieren al rango con 95% de '
-                  'confianza.',
-              options: LinkifyOptions(humanize: true),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              linkStyle: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              onOpen: (link) async {
-                if (await canLaunch(link.url)) {
-                  await launch(link.url);
-                } else {
-                  log('Could not launch $link');
-                }
-              },
-            ),
           ),
         ),
       ],

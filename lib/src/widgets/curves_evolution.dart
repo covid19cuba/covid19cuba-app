@@ -1,15 +1,13 @@
 import 'dart:math';
-import 'dart:developer' as dev;
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:random_color/random_color.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class CurvesEvolutionWidget extends StatefulWidget {
   final Map<String, dynamic> curvesEvolution;
@@ -77,39 +75,37 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Evolución de la epidemia (paises seleccionados)',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Evolución de la epidemia (paises seleccionados)',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-          ),
-          child: Center(
-            child: Text(
-              'El gráfico muestra a partir de 30 casos, en escala logarítmica '
-              'y agrupados cada siete días, los casos nuevos por el total '
-              'de casos confirmados de cada país. De esta manera, los países '
-              'mientras siguen una línea recta están en un crecimiento '
-              'exponencial y cuando se desvían de la recta comienzan a salir '
-              'del comportamiento exponencial.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.normal,
-                fontSize: 12,
-              ),
-            ),
+              InfoDialogWidget(
+                title: 'Evolución de la epidemia (paises seleccionados)',
+                text: 'El gráfico muestra a partir de 30 casos, en escala '
+                    'logarítmica y agrupados cada siete días, los casos '
+                    'nuevos por el total de casos confirmados de cada país. '
+                    'De esta manera, los países mientras siguen una línea '
+                    'recta están en un crecimiento exponencial y cuando '
+                    'se desvían de la recta comienzan a salir '
+                    'del comportamiento exponencial.\n\n'
+                    'Datos de los países tomados '
+                    'de\nhttps://github.com/pomber/covid19\ny '
+                    'actualizado el '
+                    '${updated.toStrPlus()}',
+              )
+            ],
           ),
         ),
         Container(
@@ -232,6 +228,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
             left: 20,
             right: 20,
             top: 20,
+            bottom: 20,
           ),
           child: GFButton(
             text: 'Seleccionar países iniciales',
@@ -253,39 +250,6 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
                 selectedItems.addAll(defaultItems);
               });
             },
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Linkify(
-              text: 'Datos de los países tomados '
-                  'de\nhttps://github.com/pomber/covid19\ny '
-                  'actualizado el '
-                  '${updated.toStrPlus()}',
-              options: LinkifyOptions(humanize: true),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              linkStyle: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              onOpen: (link) async {
-                if (await canLaunch(link.url)) {
-                  await launch(link.url);
-                } else {
-                  dev.log('Could not launch $link');
-                }
-              },
-            ),
           ),
         ),
       ],
