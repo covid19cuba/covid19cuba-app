@@ -1,16 +1,14 @@
 import 'dart:math';
-import 'dart:developer' as dev;
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:preferences/preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class ComparisonWidget extends StatefulWidget {
   final ComparisonOfAccumulatedCases comparisonOfAccumulatedCases;
@@ -325,16 +323,27 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Center(
-            child: Text(
-              'Comparación de Cuba',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Comparación de Cuba',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                title: 'Comparación de Cuba',
+                text: getFooter(),
+              )
+            ],
           ),
         ),
         Container(
@@ -483,36 +492,6 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Linkify(
-              text: getFooter(),
-              options: LinkifyOptions(humanize: true),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              linkStyle: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              onOpen: (link) async {
-                if (await canLaunch(link.url)) {
-                  await launch(link.url);
-                } else {
-                  dev.log('Could not launch $link');
-                }
-              },
-            ),
-          ),
         ),
       ],
     );

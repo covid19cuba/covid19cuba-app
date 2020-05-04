@@ -1,15 +1,12 @@
-import 'dart:developer' as dev;
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:random_color/random_color.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class TestBehaviorComparisonWidget extends StatefulWidget {
   final Map<String, TestBehaviorComparison> testBehaviorComparison;
@@ -76,37 +73,36 @@ class TestBehaviorComparisonWidgetState
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Comparación respecto al comportamiento de los Tests realizados',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Comparación respecto al comportamiento de los Tests '
+                  'realizados',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-          ),
-          child: Center(
-            child: Text(
-              'El gráfico permite comparar a Cuba con distintos paises '
-              'respecto, a la vez, el porciento de detección de contagiados '
-              'en base al total de tests realizados y el número de tests '
-              'por millón de habitantes.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.normal,
-                fontSize: 12,
-              ),
-            ),
+              InfoDialogWidget(
+                title: 'Comparación respecto al comportamiento de los Tests '
+                    'realizados',
+                text: 'El gráfico permite comparar a Cuba con distintos paises '
+                    'respecto, a la vez, el porciento de detección de '
+                    'contagiados en base al total de tests realizados y el '
+                    'número de tests por millón de habitantes.\n\n'
+                    'Datos de los países tomados de Our World in Data.\n'
+                    'https://covid.ourworldindata.org/data/owid-covid-data.csv\n'
+                    'Los datos de Cuba se calculan a partir de la propia '
+                    'información que provee esta aplicación.',
+              )
+            ],
           ),
         ),
         Container(
@@ -200,6 +196,7 @@ class TestBehaviorComparisonWidgetState
             left: 20,
             right: 20,
             top: 20,
+            bottom: 20,
           ),
           child: GFButton(
             text: 'Seleccionar países iniciales',
@@ -221,39 +218,6 @@ class TestBehaviorComparisonWidgetState
                 selectedItems.addAll(defaultItems);
               });
             },
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Linkify(
-              text: 'Datos de los países tomados de Our World in Data.\n'
-                  'https://covid.ourworldindata.org/data/owid-covid-data.csv\n'
-                  'Los datos de Cuba se calculan a partir de la propia '
-                  'información que provee esta aplicación.',
-              options: LinkifyOptions(humanize: true),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              linkStyle: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              onOpen: (link) async {
-                if (await canLaunch(link.url)) {
-                  await launch(link.url);
-                } else {
-                  dev.log('Could not launch $link');
-                }
-              },
-            ),
           ),
         ),
       ],

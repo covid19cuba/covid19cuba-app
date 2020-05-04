@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class Top20CountriesWidget extends StatelessWidget {
   final List<ItemExtended> top20AccumulatedCountries;
@@ -32,124 +29,54 @@ class Top20CountriesWidget extends StatelessWidget {
     var index = 0;
     return Column(
       children: <Widget>[
-        Table(
-          children: [
-            TableRow(
-              children: [
-                TableCell(
-                  child: Container(
-                    margin: EdgeInsets.all(15),
-                    child: Center(
-                      child: Text(
-                        'Top 20 de países con más casos acumulados',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Constants.primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
+        Container(
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Top 20 de países con más casos acumulados',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              InfoDialogWidget(
+                title: 'Top 20 de países con más casos acumulados',
+                text: 'Datos de los países tomados '
+                    'de\nhttps://github.com/pomber/covid19\ny '
+                    'actualizado el '
+                    '${updated.toStrPlus()}',
+              )
+            ],
+          ),
         ),
-        Table(
-          columnWidths: col,
-          border: TableBorder(horizontalInside: borderSide),
-          children: [
-                TableRow(
-                  children: [
-                    TableCell(
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        child: Text(
-                          '#',
-                          style: TextStyle(
-                            color: Constants.primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.all(5),
-                        child: Text(
-                          'País',
-                          style: TextStyle(
-                            color: Constants.primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        child: Center(
-                          child: Text(
-                            'Casos',
-                            style: TextStyle(
-                              color: Constants.primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        child: Center(
-                          child: Text(
-                            'Recuperados',
-                            style: TextStyle(
-                              color: Constants.primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        child: Center(
-                          child: Text(
-                            'Fallecidos',
-                            style: TextStyle(
-                              color: Constants.primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ] +
-              top20AccumulatedCountries.map(
-                (item) {
-                  index += 1;
-                  return TableRow(
+        Container(
+          margin: EdgeInsets.only(bottom: 10),
+          child: Table(
+            columnWidths: col,
+            border: TableBorder(horizontalInside: borderSide),
+            children: [
+                  TableRow(
                     children: [
                       TableCell(
                         child: Container(
                           margin: EdgeInsets.all(5),
                           child: Text(
-                            '$index',
+                            '#',
                             style: TextStyle(
                               color: Constants.primaryColor,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                               fontSize: 11,
                             ),
                           ),
@@ -160,10 +87,10 @@ class Top20CountriesWidget extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.all(5),
                           child: Text(
-                            item.name,
+                            'País',
                             style: TextStyle(
                               color: Constants.primaryColor,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                               fontSize: 11,
                             ),
                           ),
@@ -174,10 +101,10 @@ class Top20CountriesWidget extends StatelessWidget {
                           margin: EdgeInsets.all(5),
                           child: Center(
                             child: Text(
-                              '${item.confirmed}',
+                              'Casos',
                               style: TextStyle(
                                 color: Constants.primaryColor,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 11,
                               ),
                             ),
@@ -189,10 +116,10 @@ class Top20CountriesWidget extends StatelessWidget {
                           margin: EdgeInsets.all(5),
                           child: Center(
                             child: Text(
-                              '${item.recovered}',
+                              'Recuperados',
                               style: TextStyle(
                                 color: Constants.primaryColor,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 11,
                               ),
                             ),
@@ -204,10 +131,10 @@ class Top20CountriesWidget extends StatelessWidget {
                           margin: EdgeInsets.all(5),
                           child: Center(
                             child: Text(
-                              '${item.deaths}',
+                              'Fallecidos',
                               style: TextStyle(
                                 color: Constants.primaryColor,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 11,
                               ),
                             ),
@@ -215,41 +142,89 @@ class Top20CountriesWidget extends StatelessWidget {
                         ),
                       ),
                     ],
-                  );
-                },
-              ).toList(),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Linkify(
-              text: 'Datos de los países tomados '
-                  'de\nhttps://github.com/pomber/covid19\ny '
-                  'actualizado el '
-                  '${updated.toStrPlus()}',
-              options: LinkifyOptions(humanize: true),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              linkStyle: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              onOpen: (link) async {
-                if (await canLaunch(link.url)) {
-                  await launch(link.url);
-                } else {
-                  log('Could not launch $link');
-                }
-              },
-            ),
+                  )
+                ] +
+                top20AccumulatedCountries.map(
+                  (item) {
+                    index += 1;
+                    return TableRow(
+                      children: [
+                        TableCell(
+                          child: Container(
+                            margin: EdgeInsets.all(5),
+                            child: Text(
+                              '$index',
+                              style: TextStyle(
+                                color: Constants.primaryColor,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            margin: EdgeInsets.all(5),
+                            child: Text(
+                              item.name,
+                              style: TextStyle(
+                                color: Constants.primaryColor,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            margin: EdgeInsets.all(5),
+                            child: Center(
+                              child: Text(
+                                '${item.confirmed}',
+                                style: TextStyle(
+                                  color: Constants.primaryColor,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            margin: EdgeInsets.all(5),
+                            child: Center(
+                              child: Text(
+                                '${item.recovered}',
+                                style: TextStyle(
+                                  color: Constants.primaryColor,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            margin: EdgeInsets.all(5),
+                            child: Center(
+                              child: Text(
+                                '${item.deaths}',
+                                style: TextStyle(
+                                  color: Constants.primaryColor,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ).toList(),
           ),
         ),
       ],

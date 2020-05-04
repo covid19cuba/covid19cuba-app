@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
   final List<ItemCode> distributionByAgeRanges;
@@ -24,16 +21,28 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Distribución por rangos etarios',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Distribución por rangos etarios',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                title: 'Distribución por rangos etarios',
+                text: '${distributionByAgeRanges.last.name} '
+                    'representa edad desconocida',
+              )
+            ],
           ),
         ),
         Container(
@@ -84,35 +93,8 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Linkify(
-              text:
-                  '${distributionByAgeRanges.last.name} representa edad desconocida',
-              options: LinkifyOptions(humanize: true),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              linkStyle: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              onOpen: (link) async {
-                if (await canLaunch(link.url)) {
-                  await launch(link.url);
-                } else {
-                  log('Could not launch $link');
-                }
-              },
-            ),
-          ),
+        SizedBox(
+          height: 5,
         )
       ],
     );

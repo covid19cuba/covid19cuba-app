@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:demoji/demoji.dart';
 import 'package:preferences/preferences.dart';
+import 'package:timezone/timezone.dart';
+import 'package:timezone/data/latest.dart' as tz;
+
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
@@ -90,7 +93,7 @@ Future<void> showClaps() async {
     id: Constants.clapsNotification,
     title: 'Tiempo de aplausos!!!!!' + claps,
     body:
-        'Ya casi son las 9 de la noche. Súmate a los aplausos por quienes trabajan por la salud y seguridad de todos. \n' +
+        'Ya casi es la hora de los aplausos. Súmate al agradecimiento para quienes trabajan por la salud y seguridad de todos. \n' +
             claps +
             claps,
   );
@@ -103,7 +106,10 @@ bool timeToShowNotifications() {
 }
 
 bool clapsTime() {
-  DateTime date = DateTime.now();
+  tz.initializeTimeZones();
+  final havana = getLocation('America/Havana');
+  final havanaTime = new TZDateTime.now(havana);
+  DateTime date = havanaTime;
 
   return date.hour >= Constants.startClapsHour &&
       date.minute >= Constants.startClapsMinute &&

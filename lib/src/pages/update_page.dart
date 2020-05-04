@@ -1,15 +1,15 @@
 import 'dart:developer';
 
-import 'package:covid19cuba/src/data_providers/data_providers.dart';
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
+import 'package:preferences/preference_service.dart';
 
+import 'package:covid19cuba/src/data_providers/data_providers.dart';
+import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
-import 'package:package_info/package_info.dart';
-import 'package:preferences/preference_service.dart';
 
 class UpdatePage extends StatefulWidget {
   final bool first;
@@ -123,9 +123,8 @@ class UpdatePageState extends State<UpdatePage> {
               TouchableUrlImage(
                 Constants.apklisBanner,
                 () async {
-                  var packageInfo = await PackageInfo.fromPlatform();
                   var apklisUrl =
-                      'https://archive.apklis.cu/application/apk/club.postdata.covid19cuba-v${packageInfo.buildNumber}.apk';
+                      'https://www.apklis.cu/application/club.postdata.covid19cuba';
                   getUrl(apklisUrl);
                 },
                 leftMargin: 50,
@@ -152,9 +151,8 @@ class UpdatePageState extends State<UpdatePage> {
               TouchableUrlImage(
                 Constants.githubBanner,
                 () async {
-                  var packageInfo = await PackageInfo.fromPlatform();
                   var gitHubUrl =
-                      'https://github.com/covid19cuba/covid19cuba-app/releases/download/v${packageInfo.version}/app.apk';
+                      'https://github.com/covid19cuba/covid19cuba-app/releases';
                   getUrl(gitHubUrl);
                 },
                 leftMargin: 50,
