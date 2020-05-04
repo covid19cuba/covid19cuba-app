@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
   final List<ItemCode> distributionByAgeRanges;
@@ -42,9 +38,10 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
                 ),
               ),
               InfoDialogWidget(
-                  title: 'Distribución por rangos etarios',
-                  text:
-                      '${distributionByAgeRanges.last.name} representa edad desconocida')
+                title: 'Distribución por rangos etarios',
+                text: '${distributionByAgeRanges.last.name} '
+                    'representa edad desconocida',
+              )
             ],
           ),
         ),

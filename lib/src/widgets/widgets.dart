@@ -11,6 +11,7 @@ export 'evolution_recovered_widget.dart';
 export 'evolution_death_widget.dart';
 export 'home_drawer_widget.dart';
 export 'cuba_widget.dart';
+export 'info_dialog_widget.dart';
 export 'loading_widget.dart';
 export 'map_widget.dart';
 export 'municipality_widget.dart';
