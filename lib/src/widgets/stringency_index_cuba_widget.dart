@@ -8,6 +8,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
 
 class StringencyIndexCubaWidget extends StatelessWidget {
   final StringencyIndexCubaModel stringencyIndexCuba;
@@ -26,33 +27,35 @@ class StringencyIndexCubaWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Evolución del Oxford Stringency Index para Cuba',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Flexible(
+                child: Text(
+                  'Evolución del Oxford Stringency Index para Cuba',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-          ),
-          child: Text(
-            'El índice fue revisado y actualizado por Oxford y se '
-            'incorporaron nuevos criterios. Por tanto, en la gráfica '
-            'se mostrarán los valores de la versión actual (v2) y de '
-            'la versión previa (v1)',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Constants.primaryColor,
-            ),
+              InfoDialogWidget(
+                  title: 'Oxford Stringency Index',
+                  text: 'El Oxford Stringency Index\n'
+                      'https://www.bsg.ox.ac.uk/research/research-projects/'
+                      'coronavirus-government-response-tracker\nevalúa las '
+                      'intervenciones del estado en la epidemia.\nLos valores '
+                      'se obtienen de\nhttps://covidtracker.'
+                      'bsg.ox.ac.uk/about-api\n\n\n'
+                      'El índice fue revisado y actualizado por Oxford y se '
+                      'incorporaron nuevos criterios. Por tanto, en la gráfica '
+                      'se mostrarán los valores de la versión actual (v2) y de '
+                      'la versión previa (v1)')
+            ],
           ),
         ),
         Container(
@@ -152,41 +155,6 @@ class StringencyIndexCubaWidget extends StatelessWidget {
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
             ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Linkify(
-              text: 'El Oxford Stringency Index\n'
-                  'https://www.bsg.ox.ac.uk/research/research-projects/'
-                  'coronavirus-government-response-tracker\nevalúa las '
-                  'intervenciones del estado en la epidemia.\nLos valores '
-                  'se obtienen de\nhttps://covidtracker.'
-                  'bsg.ox.ac.uk/about-api',
-              options: LinkifyOptions(humanize: true),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              linkStyle: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              onOpen: (link) async {
-                if (await canLaunch(link.url)) {
-                  await launch(link.url);
-                } else {
-                  log('Could not launch $link');
-                }
-              },
-            ),
           ),
         ),
       ],
