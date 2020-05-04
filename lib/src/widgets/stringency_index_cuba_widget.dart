@@ -1,22 +1,17 @@
-import 'dart:developer';
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class StringencyIndexCubaWidget extends StatelessWidget {
-  final EvolutionOfCasesByDays evolutionOfCasesByDays;
   final StringencyIndexCubaModel stringencyIndexCuba;
 
   const StringencyIndexCubaWidget({
-    this.evolutionOfCasesByDays,
     this.stringencyIndexCuba,
-  }) : assert(evolutionOfCasesByDays != null);
+  }) : assert(stringencyIndexCuba != null);
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +23,36 @@ class StringencyIndexCubaWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Evolución del Oxford Stringency Index para Cuba',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Evolución del Oxford Stringency Index para Cuba',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                title: 'Oxford Stringency Index',
+                text: 'El Oxford Stringency Index\n'
+                    'https://www.bsg.ox.ac.uk/research/research-projects/'
+                    'coronavirus-government-response-tracker\nevalúa las '
+                    'intervenciones del estado en la epidemia.\nLos valores '
+                    'se obtienen de\nhttps://covidtracker.'
+                    'bsg.ox.ac.uk/about-api\n\n\n'
+                    'El índice fue revisado y actualizado por Oxford y se '
+                    'incorporaron nuevos criterios. Por tanto, en la gráfica '
+                    'se mostrarán los valores de la versión actual (v2) y de '
+                    'la versión previa (v1)',
+              ),
+            ],
           ),
         ),
         Container(
@@ -79,22 +94,19 @@ class StringencyIndexCubaWidget extends StatelessWidget {
           child: charts.TimeSeriesChart(
             [
               charts.Series<double, DateTime>(
-                id: 'Stringency',
+                id: 'Stringency actual (v2)',
                 colorFn: (_, __) => ChartColors.red,
                 domainFn: (_, i) => stringencyIndexCuba.days[i],
                 measureFn: (item, _) => item,
                 data: stringencyIndexCuba.data,
               ),
-              charts.Series<int, DateTime>(
-                id: 'Confirmados',
+              charts.Series<double, DateTime>(
+                id: 'Stringency previo (v1)',
                 colorFn: (_, __) => ChartColors.purple,
-                domainFn: (_, i) => evolutionOfCasesByDays.date.values[i],
+                domainFn: (_, i) => stringencyIndexCuba.days[i],
                 measureFn: (item, _) => item,
-                data: evolutionOfCasesByDays.accumulated.values,
-              )..setAttribute(
-                  charts.measureAxisIdKey,
-                  'secondaryMeasureAxisId',
-                ),
+                data: stringencyIndexCuba.dataLegacy,
+              ),
             ],
             animate: false,
             defaultInteractions: true,
@@ -108,7 +120,7 @@ class StringencyIndexCubaWidget extends StatelessWidget {
                       (moment) => charts.LineAnnotationSegment(
                         moment.date,
                         charts.RangeAnnotationAxisType.domain,
-                        startLabel: moment.value,
+                        endLabel: moment.value,
                         color: charts.MaterialPalette.blue.shadeDefault,
                       ),
                     )
@@ -128,13 +140,6 @@ class StringencyIndexCubaWidget extends StatelessWidget {
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea,
               ),
-              charts.ChartTitle(
-                'Casos confirmados',
-                behaviorPosition: charts.BehaviorPosition.end,
-                titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
-                titleOutsideJustification:
-                    charts.OutsideJustification.middleDrawArea,
-              ),
               charts.SeriesLegend(
                 position: charts.BehaviorPosition.bottom,
                 desiredMaxColumns: 1,
@@ -147,41 +152,6 @@ class StringencyIndexCubaWidget extends StatelessWidget {
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
             ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Linkify(
-              text: 'El Oxford Stringency Index\n'
-                  'https://www.bsg.ox.ac.uk/research/research-projects/'
-                  'coronavirus-government-response-tracker\nevalúa las '
-                  'intervenciones del estado en la epidemia.\nLos valores '
-                  'se obtienen de\nhttps://covidtracker.'
-                  'bsg.ox.ac.uk/about-api',
-              options: LinkifyOptions(humanize: true),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              linkStyle: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-              onOpen: (link) async {
-                if (await canLaunch(link.url)) {
-                  await launch(link.url);
-                } else {
-                  log('Could not launch $link');
-                }
-              },
-            ),
           ),
         ),
       ],

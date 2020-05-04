@@ -482,7 +482,7 @@ class Constants {
           '- Dificultad para respirar (en casos graves)'
     ],
     [
-      'El COVID-19 se caracteriza por:',
+      'La COVID-19 se caracteriza por:',
       'Síntomas leves, como, dolor de garganta, tos y fiebre. La '
           'enfermedad puede ser más grave en algunas personas '
           'y provocar neumonía o dificultades respiratorias. Más raramente '
@@ -567,12 +567,7 @@ class Constants {
     ],
     [
       '¿Mi mascota me puede contagiar la COVID-19?',
-      'Aunque ha habido un caso de un perro infectado en Hong Kong, hasta '
-          'la fecha no hay pruebas de que un perro, un gato o cualquier mascota '
-          'pueda transmitir la COVID-19. La COVID-19 se propaga principalmente '
-          'a través de las gotículas producidas por una persona infectada al '
-          'toser, estornudar o hablar. Para protegerse a sí mismo, lávese las '
-          'manos a fondo frecuentemente.'
+      'Se han notificado casos en una pequeña cantidad de animales en el mundo infectados por el virus que causa la COVID-19, en su mayoría después de haber tenido contacto con una persona con COVID-19. Con base a la información limitada disponible hasta la fecha, el riesgo de que los animales transmitan la COVID-19 a las personas se considera bajo. Al parecer el virus que causa la COVID-19 puede propagarse de personas a animales en ciertas situaciones por lo que debe tratar a las mascotas como a otros familiares humanos, no deje que interactúen con personas o animales fuera del hogar. No permita que las mascotas interactúen con otras personas ni animales fuera del hogar. Mantenga a sus gatos dentro de la casa siempre que sea posible, para evitar que interactúen con otros animales o personas. Pasee a sus perros con correa, manteniendo una distancia de al menos 6 pies (2 metros) de otras personas y animales. Evite los parques para perros o los espacios públicos donde se reúnen grandes cantidades de personas y perros. Lávese las manos luego de estar con animales y manipular su comida, desechos o suministros. Practique buenos hábitos de higiene con su mascota y limpie sus desechos adecuadamente. Esta es una situación que cambia rápidamente y la información se actualizará a medida que esté disponible.'
     ],
     [
       '¿Cuánto tiempo sobrevive el virus en una superficie?',
@@ -590,7 +585,7 @@ class Constants {
           'Evite tocarse los ojos, la boca o la nariz.'
     ],
     [
-      '¿El virus COVID-19 puede transmitirse en zonas con climas cálidos y '
+      '¿El virus que provoca la COVID-19 puede transmitirse en zonas con climas cálidos y '
           'húmedos?',
       'Las pruebas científicas obtenidas hasta ahora indican que el virus '
           'de la COVID-19 puede transmitirse en CUALQUIER ZONA, incluidas las '
@@ -710,6 +705,19 @@ class Constants {
   ];
 
   static const collaborators = <List<String>>[
+    [
+      'Luis Eduardo González',
+      'Ing. en Ciencias Informáticas. Graduado en la Universidad de '
+          'Ciencias Informáticas. Desarrollador de Software.',
+      'https://github.com/luiseduardoglez',
+    ],
+    [
+      'Ernesto Avila Domenech',
+      'Ing. en Ciencias Informáticas. Máster en Informática Aplicada en '
+          'la Univ. de Camagüey. Profesor Asistente en la Universidad de '
+          'Granma.',
+      'https://github.com/eadomenech',
+    ],
     [
       'Saimi Reyes',
       'Lic. en Periodismo, graduada de la Univ. de La Habana. Editora y '
@@ -834,6 +842,11 @@ class Constants {
       'Proyecto SWL-X',
       'http://covidcuba.swlx.info',
       'https://www.swlx.info',
+    ],
+    [
+      'Universidad de La Habana',
+      'https://covid19cubadata.uh.cu',
+      'http://www.uh.cu',
     ],
     /*[
       'Joven Club',

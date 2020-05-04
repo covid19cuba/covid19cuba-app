@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class TestEvolutionWidget extends StatelessWidget {
   final TestsByDays testsByDays;
@@ -19,16 +20,28 @@ class TestEvolutionWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Tests (PCR) por días',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Tests (PCR) por días',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                title: 'Tests (PCR) por días',
+                text: 'Esta información se reporta desde el '
+                    '${testsByDays.date.values[0].toStrPlus()}',
+              )
+            ],
           ),
         ),
         Container(
@@ -89,25 +102,9 @@ class TestEvolutionWidget extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Text(
-              'Esta información se reporta desde el '
-              '${testsByDays.date.values[0].toStrPlus()}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ),
+        SizedBox(
+          height: 5,
+        )
       ],
     );
   }
