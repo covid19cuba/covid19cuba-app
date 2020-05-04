@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:covid19cuba/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:getflutter/getflutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InfoDialogWidget extends StatelessWidget {
@@ -15,10 +14,7 @@ class InfoDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: GFBadge(
-        child: Icon(Icons.info),
-        color: Colors.white,
-      ),
+      child: Icon(Icons.info),
       onTap: () {
         showDialog(
             context: context,

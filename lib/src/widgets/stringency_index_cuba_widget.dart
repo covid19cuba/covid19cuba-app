@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
 
 class StringencyIndexCubaWidget extends StatelessWidget {
@@ -31,7 +27,7 @@ class StringencyIndexCubaWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Flexible(
+              Expanded(
                 child: Text(
                   'Evolución del Oxford Stringency Index para Cuba',
                   textAlign: TextAlign.center,
@@ -54,7 +50,7 @@ class StringencyIndexCubaWidget extends StatelessWidget {
                       'El índice fue revisado y actualizado por Oxford y se '
                       'incorporaron nuevos criterios. Por tanto, en la gráfica '
                       'se mostrarán los valores de la versión actual (v2) y de '
-                      'la versión previa (v1)')
+                      'la versión previa (v1)'),
             ],
           ),
         ),

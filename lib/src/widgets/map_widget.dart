@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
 
 class WebViewKeepAlive extends StatefulWidget {
   final Map<String, dynamic> mapData;
@@ -161,16 +162,28 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
         ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Center(
-            child: Text(
-              'Distribución por Provincias',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Distribución por Provincias',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                  title: 'Distribución por Provincias',
+                  text:
+                      'El cuadrado representa aquellos que por distintas razones '
+                      'no tengan localización conocida.')
+            ],
           ),
         ),
         WebViewKeepAlive(

@@ -1,4 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/widgets/info_dialog_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -20,16 +21,28 @@ class TestsPositivePercentWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              '% Tests Positivos con respecto a Total de Tests (PCR)',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  '% Tests Positivos con respecto a Total de Tests (PCR)',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                  title:
+                      '% Tests Positivos con respecto a Total de Tests (PCR)',
+                  text: 'Esta información se reporta desde el '
+                      '${testsPositivePercent.date.values[0].toStrPlus()}')
+            ],
           ),
         ),
         Container(
@@ -86,25 +99,9 @@ class TestsPositivePercentWidget extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Text(
-              'Esta información se reporta desde el '
-              '${testsPositivePercent.date.values[0].toStrPlus()}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ),
+        SizedBox(
+          height: 5,
+        )
       ],
     );
   }

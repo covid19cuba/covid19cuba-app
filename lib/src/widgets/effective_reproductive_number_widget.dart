@@ -26,8 +26,7 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(),
-              Flexible(
+              Expanded(
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
