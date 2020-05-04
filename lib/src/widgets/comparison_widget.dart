@@ -235,11 +235,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: listCuba
-            .take(
-              min(listForeign.length, listCuba.length),
-            )
-            .toList(),
+        data: listCuba,
       ),
     ];
   }
