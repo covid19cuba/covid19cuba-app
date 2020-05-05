@@ -43,6 +43,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             header(),
             separator(),
             casesTableItem(),
+            infoItem(),
             tipsItem(),
             linksDrawerItem(),
             updateDrawerItem(),
@@ -123,6 +124,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           context,
           MaterialPageRoute(
             builder: (context) => TipsPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget infoItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.info,
+      text: 'Información',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InfoPage(),
           ),
         );
       },

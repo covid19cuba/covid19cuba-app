@@ -2,6 +2,8 @@ export 'changelog_page.dart';
 export 'credits_page.dart';
 export 'cuba_page.dart';
 export 'home_page.dart';
+export 'info_page.dart';
+export 'info_more_page.dart';
 export 'municipality_item_page.dart';
 export 'municipality_list_page.dart';
 export 'on_boarding_page.dart';

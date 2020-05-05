@@ -27,6 +27,7 @@ export 'province_widget.dart';
 export 'provinces_comparison_widget.dart';
 export 'replica_widget.dart';
 export 'resume_widget.dart';
+export 'small_card_widget.dart';
 export 'stringency_index_cuba_widget.dart';
 export 'tables_widget.dart';
 export 'test_behavior_comparison_widget.dart';
