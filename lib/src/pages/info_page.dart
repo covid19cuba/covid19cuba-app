@@ -1,15 +1,14 @@
-import 'dart:developer';
 
+import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:covid19cuba/src/utils/constants.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/widgets/info_header.dart';
-import 'package:getflutter/getflutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:covid19cuba/src/blocs/blocs.dart';
 
 class InfoPage extends StatefulWidget {
   @override
@@ -42,7 +41,24 @@ class _InfoPageState extends State<InfoPage> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.transparent,
       //backgroundColor: Colors.grey.shade300,
+      appBar: AppBar(
+       //backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(Constants.appName),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            color: Colors.white,
+            onPressed: () {
+              BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
+            },
+          ),
+        ],
+      ),
+      drawer: HomeDrawerWidget(),
       body: SingleChildScrollView(
         controller: controller,
         child: Column(

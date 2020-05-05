@@ -43,7 +43,6 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             header(),
             separator(),
             casesTableItem(),
-            infoItem(),
             tipsItem(),
             linksDrawerItem(),
             updateDrawerItem(),

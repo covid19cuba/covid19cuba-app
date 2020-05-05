@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,10 +41,13 @@ class CubaPageState extends State<CubaPage> {
           },
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              return Scaffold(
-                appBar: getAppBar(context, state),
-                drawer: getHomeDrawer(context, state),
-                body: getBody(context, state),
+              return new DefaultTabController(
+                length: 4,
+                child: new Scaffold(
+                  appBar: getAppBarTabs(context, state),
+                  drawer: getHomeDrawer(context, state),
+                  body: getBody(context, state),
+                ),
               );
             },
           ),
@@ -58,6 +63,33 @@ class CubaPageState extends State<CubaPage> {
     return AppBar(
       centerTitle: true,
       title: Text(Constants.appName),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.refresh),
+          color: Colors.white,
+          onPressed: () {
+            BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget getAppBarTabs(BuildContext context, HomeState state) {
+    return AppBar(
+      centerTitle: true,
+      title: Text(Constants.appName),
+      bottom: TabBar(
+        labelColor: Colors.white,
+        indicatorSize: TabBarIndicatorSize.tab,
+        indicatorWeight: 5.0,
+        tabs: [
+          new Tab(text: 'Mundo'),
+          new Tab(text: 'Cuba'),
+          new Tab(text: 'Provincias'),
+          new Tab(text: 'Municipios'),
+        ],
+      ),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.refresh),
@@ -90,7 +122,12 @@ class CubaPageState extends State<CubaPage> {
             );
             return refreshCompleter.future;
           },
-          child: CubaWidget(data: state.data),
+          child: TabBarView(children: [
+            WorldPage(),
+            CubaWidget(data: state.data),
+            ProvinceListPage(),
+            MunicipalityListPage(),
+          ]),
         ),
       );
     }

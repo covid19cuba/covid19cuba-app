@@ -11,36 +11,36 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  int currentTabIndex = 2;
+  int currentTabIndex = 0;
 
   static var pages = <Widget>[
-    WebViewPage(),
-    WorldPage(),
     CubaPage(),
-    ProvinceListPage(),
-    MunicipalityListPage(),
+    DataPage(),
+    NewsPage(),
+    WebViewPage(),
+    InfoPage()
   ];
 
   static const tabs = <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+      icon: Icon(Icons.data_usage),
+      title: Text('Estadísticas'),
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(FontAwesomeIcons.database),
+      title: Text('Datos'),
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(FontAwesomeIcons.solidNewspaper),
+      title: Text('Noticias'),
+    ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.notesMedical),
       title: Text('Pesquisa'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.globe),
-      title: Text('Mundo'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.home),
-      title: Text('Cuba'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.city),
-      title: Text('Provincias'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.building),
-      title: Text('Municipios'),
+      icon: Icon(FontAwesomeIcons.infoCircle),
+      title: Text('Información'),
     ),
   ];
 
