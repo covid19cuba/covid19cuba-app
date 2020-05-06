@@ -56,7 +56,7 @@ class _InfoHeaderState extends State<InfoHeader> {
                     top: 20 - widget.offset / 2,
                     left: 150,
                     child: Text(
-                      "${widget.textTop} \n${widget.textBottom}",
+                      "${widget.textTop}\n${widget.textBottom}",
                       style: Constants.kHeadingTextStyle.copyWith(
                         color: Colors.white,
                       ),

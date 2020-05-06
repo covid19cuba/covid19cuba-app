@@ -192,53 +192,53 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   List<charts.Series<dynamic, int>> getSeries() {
-    List<dynamic> listCuba = getCountryAttribute(
+    List<dynamic> firstList = getCountryAttribute(
         comparisonOfAccumulatedCases.countries[firstSelectedCountry]);
-    List<dynamic> listForeign = getCountryAttribute(
+    List<dynamic> secondList = getCountryAttribute(
         comparisonOfAccumulatedCases.countries[secondSelectedCountry]);
 
     return [
-      charts.Series<dynamic, int>(
-        id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
-        colorFn: (_, __) => ChartColors.blue,
-        domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: listForeign,
-      ),
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[firstSelectedCountry].name,
         colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: listCuba,
+        data: firstList,
+      ),
+      charts.Series<dynamic, int>(
+        id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
+        colorFn: (_, __) => ChartColors.blue,
+        domainFn: (_, i) => i,
+        measureFn: (item, _) => item,
+        data: secondList,
       ),
     ];
   }
 
   List<charts.Series<dynamic, int>> getZoomSeries() {
-    List<dynamic> listCuba = getCountryAttribute(
+    List<dynamic> firstList = getCountryAttribute(
         comparisonOfAccumulatedCases.countries[firstSelectedCountry]);
-    List<dynamic> listForeign = getCountryAttribute(
+    List<dynamic> secondList = getCountryAttribute(
         comparisonOfAccumulatedCases.countries[secondSelectedCountry]);
 
     return [
-      charts.Series<dynamic, int>(
-        id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
-        colorFn: (_, __) => ChartColors.blue,
-        domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: listForeign
-            .take(
-              min(listForeign.length, listCuba.length),
-            )
-            .toList(),
-      ),
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[firstSelectedCountry].name,
         colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: listCuba,
+        data: firstList,
+      ),
+      charts.Series<dynamic, int>(
+        id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
+        colorFn: (_, __) => ChartColors.blue,
+        domainFn: (_, i) => i,
+        measureFn: (item, _) => item,
+        data: secondList
+            .take(
+              min(secondList.length, firstList.length),
+            )
+            .toList(),
       ),
     ];
   }

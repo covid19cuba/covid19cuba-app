@@ -11,36 +11,36 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  int currentTabIndex = 0;
+  int currentTabIndex = 2;
 
   static var pages = <Widget>[
-    CubaPage(),
-    DataPage(),
-    NewsPage(),
     WebViewPage(),
-    InfoPage()
+    WorldPage(),
+    CubaPage(),
+    JTNewsPage(),
+    InfoPage(),
   ];
 
   static const tabs = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
-      icon: Icon(Icons.data_usage),
-      title: Text('Estadísticas'),
+      icon: Icon(FontAwesomeIcons.notesMedical),
+      title: Text('Pesquisa'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.database),
-      title: Text('Datos'),
+      icon: Icon(FontAwesomeIcons.globe),
+      title: Text('Mundo'),
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(FontAwesomeIcons.home),
+      title: Text('Cuba'),
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.solidNewspaper),
       title: Text('Noticias'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.notesMedical),
-      title: Text('Pesquisa'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.infoCircle),
-      title: Text('Información'),
+      icon: Icon(FontAwesomeIcons.solidQuestionCircle),
+      title: Text('Consejos'),
     ),
   ];
 
