@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:covid19cuba/src/utils/constants.dart';
@@ -20,18 +21,18 @@ class _InfoHeaderState extends State<InfoHeader> {
   @override
   Widget build(BuildContext context) {
     return ClipPath(
-      clipper: MyClipper(),
+      clipper: DiagonalPathClipperOne(),
       child: Container(
-        padding: EdgeInsets.only(left: 40, top: 40, right: 20),
-        height: 250,
+        padding: EdgeInsets.only(left: 40, top: 5, right: 20),
+        height: 170,
         width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
               Constants.primaryColor,
-              Constants.primaryColor.withOpacity(0.9),
+              Constants.primaryColor,
             ],
           ),
         ),
