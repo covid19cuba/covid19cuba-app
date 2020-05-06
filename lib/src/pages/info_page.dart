@@ -1,4 +1,3 @@
-
 import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +43,7 @@ class _InfoPageState extends State<InfoPage> {
       backgroundColor: Colors.transparent,
       //backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-       //backgroundColor: Colors.transparent,
+        //backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(Constants.appName),
         centerTitle: true,
@@ -91,8 +90,9 @@ class _InfoPageState extends State<InfoPage> {
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 5),
               child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(vertical: 5),
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,7 +141,8 @@ class _InfoPageState extends State<InfoPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("No salga de casa\nAsí detendremos a la Covid-19       ",
+                      Text(
+                          "No salga de casa\nAsí detendremos a la Covid-19       ",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -199,8 +200,9 @@ class _InfoPageState extends State<InfoPage> {
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 5),
               child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(vertical: 5),
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
