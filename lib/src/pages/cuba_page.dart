@@ -1,15 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/blocs/blocs.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/widgets/error_widget.dart' as ew;
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
@@ -42,8 +41,8 @@ class CubaPageState extends State<CubaPage> {
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               return new DefaultTabController(
-                length: 4,
-                child: new Scaffold(
+                length: 3,
+                child: Scaffold(
                   appBar: getAppBarTabs(context, state),
                   drawer: getHomeDrawer(context, state),
                   body: getBody(context, state),
@@ -84,10 +83,9 @@ class CubaPageState extends State<CubaPage> {
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorWeight: 5.0,
         tabs: [
-          new Tab(text: 'Mundo'),
-          new Tab(text: 'Cuba'),
-          new Tab(text: 'Provincias'),
-          new Tab(text: 'Municipios'),
+          Tab(text: 'Nacional'),
+          Tab(text: 'Provincial'),
+          Tab(text: 'Municipal'),
         ],
       ),
       actions: <Widget>[
@@ -123,7 +121,6 @@ class CubaPageState extends State<CubaPage> {
             return refreshCompleter.future;
           },
           child: TabBarView(children: [
-            WorldPage(),
             CubaWidget(data: state.data),
             ProvinceListPage(),
             MunicipalityListPage(),
