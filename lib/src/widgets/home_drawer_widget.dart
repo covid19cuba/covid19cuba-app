@@ -129,6 +129,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     );
   }
 
+  Widget infoItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.info,
+      text: 'Información',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InfoPage(),
+          ),
+        );
+      },
+    );
+  }
+
   Widget casesTableItem() {
     return createDrawerItem(
       context,

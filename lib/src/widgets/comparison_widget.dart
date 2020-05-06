@@ -22,8 +22,11 @@ class ComparisonWidget extends StatefulWidget {
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
-  String selectedCountry = Constants.defaultCompareCountry;
+  String firstSelectedCountry  = Constants.countryCuba;
+  String secondSelectedCountry = Constants.defaultCompareCountry;
   String selectedOption = 'Confirmados';
+  bool firstSelector = false;
+
 
   final List<String> options = List<String>()
     ..add('Confirmados')
@@ -37,12 +40,12 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
 
   ComparisonWidgetState({this.comparisonOfAccumulatedCases}) {
     assert(comparisonOfAccumulatedCases != null);
-    selectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
+    secondSelectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
         Constants.defaultCompareCountry;
     if (!comparisonOfAccumulatedCases.countries.keys
-        .contains(selectedCountry)) {
-      selectedCountry = Constants.defaultCompareCountry;
-      PrefService.setString(Constants.prefCompareCountry, selectedCountry);
+        .contains(secondSelectedCountry)) {
+      secondSelectedCountry = Constants.defaultCompareCountry;
+      PrefService.setString(Constants.prefCompareCountry, secondSelectedCountry);
     }
   }
 
@@ -131,27 +134,27 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
   }
 
   charts.NumericAxisSpec getNumericAxisSpec() {
-    var lenCuba = getCountryAttribute(
-      comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+    var firstLen = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[firstSelectedCountry],
     ).length;
-    var lenForeign = getCountryAttribute(
-      comparisonOfAccumulatedCases.countries[selectedCountry],
+    var secondLen = getCountryAttribute(
+      comparisonOfAccumulatedCases.countries[secondSelectedCountry],
     ).length;
     return charts.NumericAxisSpec(
-      viewport: charts.NumericExtents(1, max(lenForeign, lenCuba)),
+      viewport: charts.NumericExtents(1, max(secondLen, firstLen)),
     );
   }
 
   charts.NumericAxisSpec getNumericAxisSpecZoom() {
     var length = getCountryAttribute(
-      comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+      comparisonOfAccumulatedCases.countries[firstSelectedCountry],
     ).length;
     return charts.NumericAxisSpec(viewport: charts.NumericExtents(1, length));
   }
 
   List<charts.ChartBehavior> getSpecBehaviors() {
     var length = getCountryAttribute(
-      comparisonOfAccumulatedCases.countries[Constants.countryCuba],
+      comparisonOfAccumulatedCases.countries[firstSelectedCountry],
     ).length;
     var behaviors = getBehaviors();
     behaviors.addAll([
@@ -183,64 +186,64 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
 
   bool haveData() {
     var length = getCountryAttribute(
-      comparisonOfAccumulatedCases.countries[selectedCountry],
+      comparisonOfAccumulatedCases.countries[secondSelectedCountry],
     ).length;
     return length != 0;
   }
 
   List<charts.Series<dynamic, int>> getSeries() {
-    List<dynamic> listCuba = getCountryAttribute(
-        comparisonOfAccumulatedCases.countries[Constants.countryCuba]);
-    List<dynamic> listForeign = getCountryAttribute(
-        comparisonOfAccumulatedCases.countries[selectedCountry]);
+    List<dynamic> firstList = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[firstSelectedCountry]);
+    List<dynamic> secondList = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[secondSelectedCountry]);
 
     return [
       charts.Series<dynamic, int>(
-        id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
-        colorFn: (_, __) => ChartColors.blue,
-        domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: listForeign,
-      ),
-      charts.Series<dynamic, int>(
-        id: comparisonOfAccumulatedCases.countries[Constants.countryCuba].name,
+        id: comparisonOfAccumulatedCases.countries[firstSelectedCountry].name,
         colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: listCuba,
+        data: firstList,
+      ),
+      charts.Series<dynamic, int>(
+        id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
+        colorFn: (_, __) => ChartColors.blue,
+        domainFn: (_, i) => i,
+        measureFn: (item, _) => item,
+        data: secondList,
       ),
     ];
   }
 
   List<charts.Series<dynamic, int>> getZoomSeries() {
-    List<dynamic> listCuba = getCountryAttribute(
-        comparisonOfAccumulatedCases.countries[Constants.countryCuba]);
-    List<dynamic> listForeign = getCountryAttribute(
-        comparisonOfAccumulatedCases.countries[selectedCountry]);
+    List<dynamic> firstList = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[firstSelectedCountry]);
+    List<dynamic> secondList = getCountryAttribute(
+        comparisonOfAccumulatedCases.countries[secondSelectedCountry]);
 
     return [
       charts.Series<dynamic, int>(
-        id: comparisonOfAccumulatedCases.countries[selectedCountry].name,
-        colorFn: (_, __) => ChartColors.blue,
-        domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: listForeign
-            .take(
-              min(listForeign.length, listCuba.length),
-            )
-            .toList(),
-      ),
-      charts.Series<dynamic, int>(
-        id: comparisonOfAccumulatedCases.countries[Constants.countryCuba].name,
+        id: comparisonOfAccumulatedCases.countries[firstSelectedCountry].name,
         colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
         measureFn: (item, _) => item,
-        data: listCuba,
+        data: firstList,
+      ),
+      charts.Series<dynamic, int>(
+        id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
+        colorFn: (_, __) => ChartColors.blue,
+        domainFn: (_, i) => i,
+        measureFn: (item, _) => item,
+        data: secondList
+            .take(
+              min(secondList.length, firstList.length),
+            )
+            .toList(),
       ),
     ];
   }
 
-  Widget _buildSelectedCountry(String iso3code) => Column(
+  Widget _buildsecondSelectedCountry(String iso3code) => Column(
         children: <Widget>[
           Row(
             children: <Widget>[
@@ -283,7 +286,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           child: CountryPickerDialog(
             titlePadding: EdgeInsets.all(8.0),
             semanticLabel: 'País seleccionado ' +
-                comparisonOfAccumulatedCases.countries[selectedCountry].name,
+                comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
             searchCursorColor: Colors.pinkAccent,
             searchInputDecoration: InputDecoration(hintText: 'Buscar...'),
             searchEmptyView: Center(child: Text('No se encontró el país')),
@@ -295,7 +298,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
                 country.iso3Code,
               );
               setState(() {
-                selectedCountry = country.iso3Code;
+                firstSelector ? firstSelectedCountry = country.iso3Code :  secondSelectedCountry = country.iso3Code;
               });
             },
             itemFilter: (c) => comparisonOfAccumulatedCases.countries.keys
@@ -317,8 +320,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    selectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
-        Constants.defaultCompareCountry;
+    //secondSelectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
+    //    Constants.defaultCompareCountry;
     return Column(
       children: <Widget>[
         Container(
@@ -329,7 +332,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'Comparación de Cuba',
+                  'Comparación entre paises',
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   style: TextStyle(
@@ -340,10 +343,20 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
                 ),
               ),
               InfoDialogWidget(
-                title: 'Comparación de Cuba',
+                title: 'Comparación entre países',
                 text: getFooter(),
               )
             ],
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 35, right: 35),
+          child: ListTile(
+            onTap:((){
+              firstSelector = true;
+              _openCountryPickerDialog();
+            }),
+            title: _buildsecondSelectedCountry(firstSelectedCountry),
           ),
         ),
         Container(
@@ -363,8 +376,11 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         Container(
           margin: EdgeInsets.only(left: 35, right: 35),
           child: ListTile(
-            onTap: _openCountryPickerDialog,
-            title: _buildSelectedCountry(selectedCountry),
+            onTap: ((){
+              firstSelector = false;
+              _openCountryPickerDialog();
+            }),
+            title: _buildsecondSelectedCountry(secondSelectedCountry),
           ),
         ),
         Container(
@@ -458,7 +474,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           ),
           child: Center(
             child: Text(
-              'Comparación en el período de Cuba',
+              'Comparación en el período de ${comparisonOfAccumulatedCases.countries[firstSelectedCountry].name}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

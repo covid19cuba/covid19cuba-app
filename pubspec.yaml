@@ -37,6 +37,7 @@ dependencies:
   searchable_dropdown: ^1.1.3
   timezone: ^0.5.7
   flutter_html: ^0.11.1
+  flutter_svg: ^0.17.4
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
@@ -60,6 +61,10 @@ flutter:
     - assets/map.html
     - assets/map2.html
     - assets/js/municipios.js
+  fonts:
+    - family: Ubuntu
+      fonts:
+        - asset: fonts/Ubuntu/Ubuntu-Regular.ttf
 
 flutter_native_splash:
   image: assets/images/icon.jpg
