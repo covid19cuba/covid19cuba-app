@@ -21,6 +21,8 @@ export 'item_list.dart';
 export 'item_municipality.dart';
 export 'item_province.dart';
 export 'item_string_list.dart';
+export 'jt_new_model.dart';
+export 'jt_news_model.dart';
 export 'list_of_tests_performed.dart';
 export 'moment.dart';
 export 'municipality_model.dart';
