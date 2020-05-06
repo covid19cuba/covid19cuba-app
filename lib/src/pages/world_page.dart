@@ -39,11 +39,13 @@ class WorldPageState extends State<WorldPage> {
           },
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              return Scaffold(
-                appBar: getAppBar(context, state),
-                drawer: getHomeDrawer(context, state),
-                body: getBody(context, state),
-              );
+              return getBody(context, state)
+              // Scaffold(
+              //   appBar: getAppBar(context, state),
+              //   drawer: getHomeDrawer(context, state),
+              //   body: getBody(context, state),
+              // )
+              ;
             },
           ),
         ),
