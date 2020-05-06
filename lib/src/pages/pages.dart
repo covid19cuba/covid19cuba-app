@@ -5,7 +5,7 @@ export 'data_page.dart';
 export 'home_page.dart';
 export 'info_page.dart';
 export 'info_more_page.dart';
-export 'news_page.dart';
+export 'jt_news_page.dart';
 export 'municipality_item_page.dart';
 export 'municipality_list_page.dart';
 export 'on_boarding_page.dart';

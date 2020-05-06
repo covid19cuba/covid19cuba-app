@@ -24,7 +24,6 @@ class SmallCard extends StatelessWidget {
               horizontal: 8,
             ),
             height: 130,
-//            padding: EdgeInsets.all(24),
             width: width,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -39,14 +38,10 @@ class SmallCard extends StatelessWidget {
           ),
           Container(
             width: width / 2.5,
-            //color: Colors.blueGrey,
             padding: EdgeInsets.all(10),
             child: imgPath.endsWith('.svg')
                 ? SvgPicture.asset(imgPath, height: 90)
-                : Image.asset(
-                    imgPath,
-                    height: 90
-                  ),
+                : Image.asset(imgPath, height: 90),
           ),
           Positioned(
               left: 130,
@@ -58,7 +53,6 @@ class SmallCard extends StatelessWidget {
                 ),
                 height: 136,
                 width: width - 130,
-//                color: Colors.redAccent,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

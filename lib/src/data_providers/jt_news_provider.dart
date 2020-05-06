@@ -7,9 +7,9 @@ import 'package:preferences/preferences.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-const urlJTNewsDataCU = 'https://cusobu.nat.cu/covid/api/v1/JTNews.json';
+const urlJTNewsDataCU = 'https://cusobu.nat.cu/covid/api/v1/jt_news.json';
 const urlJTNewsDataIO =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/JTNews.json';
+    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/jt_news.json';
 
 Future<JTNewsModel> getJTNewsData() async {
   var mode = PrefService.getInt(Constants.prefConnectionMode) ??
