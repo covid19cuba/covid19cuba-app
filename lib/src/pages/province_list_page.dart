@@ -31,14 +31,7 @@ class ProvinceListPageState extends State<ProvinceListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(Constants.appName),
-        centerTitle: true,
-      ),
-      drawer: HomeDrawerWidget(),
-      body: Column(
+    return Column(
         children: <Widget>[
           TextField(
             decoration: InputDecoration(
@@ -116,7 +109,7 @@ class ProvinceListPageState extends State<ProvinceListPage> {
             ),
           )
         ],
-      ),
-    );
+      )
+    ;
   }
 }

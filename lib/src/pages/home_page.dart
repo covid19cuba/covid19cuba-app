@@ -17,8 +17,8 @@ class HomePageState extends State<HomePage>
     WebViewPage(),
     WorldPage(),
     CubaPage(),
-    ProvinceListPage(),
-    MunicipalityListPage(),
+    JTNewsPage(),
+    InfoPage(),
   ];
 
   static const tabs = <BottomNavigationBarItem>[
@@ -35,12 +35,12 @@ class HomePageState extends State<HomePage>
       title: Text('Cuba'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.city),
-      title: Text('Provincias'),
+      icon: Icon(FontAwesomeIcons.solidNewspaper),
+      title: Text('Noticias'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.building),
-      title: Text('Municipios'),
+      icon: Icon(FontAwesomeIcons.solidQuestionCircle),
+      title: Text('Consejos'),
     ),
   ];
 
