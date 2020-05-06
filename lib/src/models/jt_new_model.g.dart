@@ -14,7 +14,8 @@ JTNewModel _$JTNewModelFromJson(Map<String, dynamic> json) {
     ..author = json['author'] as String
     ..published = (json['published'] as List)?.map((e) => e as int)?.toList()
     ..updated = (json['updated'] as List)?.map((e) => e as int)?.toList()
-    ..summary = json['summary'] as String;
+    ..summary = json['summary'] as String
+    ..abstract = json['abstract'] as String;
 }
 
 Map<String, dynamic> _$JTNewModelToJson(JTNewModel instance) =>
@@ -26,4 +27,5 @@ Map<String, dynamic> _$JTNewModelToJson(JTNewModel instance) =>
       'published': instance.published,
       'updated': instance.updated,
       'summary': instance.summary,
+      'abstract': instance.abstract,
     };

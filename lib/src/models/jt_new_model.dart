@@ -11,6 +11,7 @@ class JTNewModel {
   List<int> published;
   List<int> updated;
   String summary;
+  String abstract;
 
   JTNewModel();
 

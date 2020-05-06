@@ -160,8 +160,9 @@ class _InfoPageState extends State<InfoPage> {
                               child: Text(
                                 'Saber más',
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w800),
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                ),
                               ),
                             ),
                           ),

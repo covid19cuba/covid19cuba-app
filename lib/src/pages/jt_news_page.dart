@@ -8,6 +8,7 @@ import 'package:getflutter/getflutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/blocs/blocs.dart';
+import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/error_widget.dart' as ew;
 import 'package:covid19cuba/src/widgets/widgets.dart';
@@ -79,9 +80,7 @@ class JTNewsPageState extends State<JTNewsPage> {
 
   Widget getBody(BuildContext context, JTNewsState state) {
     if (state is InitialJTNewsState) {
-      BlocProvider.of<JTNewsBloc>(context).add(
-        RefreshJTNewsEvent(),
-      );
+      BlocProvider.of<JTNewsBloc>(context).add(LoadJTNewsEvent());
     }
     if (state is LoadingJTNewsState) {
       return LoadingWidget();
@@ -229,7 +228,7 @@ class JTNewsPageState extends State<JTNewsPage> {
                         ),
                       ),
                       Html(
-                        data: item.summary,
+                        data: item.abstract,
                         padding: EdgeInsets.all(10),
                         linkStyle: TextStyle(
                           color: Colors.red,
@@ -241,6 +240,35 @@ class JTNewsPageState extends State<JTNewsPage> {
                             log('Could not launch $url');
                           }
                         },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => JTNewsPageMore(item),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 20, right: 20),
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.red,
+                              ),
+                              child: Text(
+                                'Leer más',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -257,8 +285,12 @@ class JTNewsPageState extends State<JTNewsPage> {
         onPressed: () {
           BlocProvider.of<JTNewsBloc>(context).add(FetchJTNewsEvent());
         },
-        onPressedCache: () {},
-        cache: false,
+        onPressedCache: () {
+          BlocProvider.of<JTNewsBloc>(context).add(LoadJTNewsEvent(
+            showNotification: false,
+          ));
+        },
+        cache: state.cache,
       );
     }
     return Container();

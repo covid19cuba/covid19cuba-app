@@ -25,9 +25,10 @@ class LoadedJTNewsState extends JTNewsState {
 
 class ErrorJTNewsState extends JTNewsState {
   final String errorMessage;
+  final bool cache;
 
-  const ErrorJTNewsState({@required this.errorMessage})
-      : assert(errorMessage != null);
+  const ErrorJTNewsState({@required this.errorMessage, @required this.cache})
+      : assert(errorMessage != null, cache != null);
 
   @override
   List<Object> get props => [errorMessage];

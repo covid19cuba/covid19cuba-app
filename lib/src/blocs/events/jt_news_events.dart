@@ -7,6 +7,12 @@ abstract class JTNewsEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class LoadJTNewsEvent extends JTNewsEvent {
+  final bool showNotification;
+
+  const LoadJTNewsEvent({this.showNotification = true});
+}
+
 class FetchJTNewsEvent extends JTNewsEvent {
   const FetchJTNewsEvent();
 }
