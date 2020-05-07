@@ -47,22 +47,23 @@ class _InfoHeaderState extends State<InfoHeader> {
                     top: (widget.offset < 0) ? 0 : widget.offset,
                     child: SvgPicture.asset(
                       widget.image,
-                      width: 150,
+                      width: 135, 
                       fit: BoxFit.fitWidth,
                       alignment: Alignment.topCenter,
                     ),
                   ),
                   Positioned(
                     top: 20 - widget.offset / 2,
-                    left: 150,
+                    left: 140, 
+                    width: 160.0, 
                     child: Text(
-                      "${widget.textTop}\n${widget.textBottom}",
-                      style: Constants.kHeadingTextStyle.copyWith(
-                        color: Colors.white,
+                        "${widget.textTop}\n${widget.textBottom}",
+                        style: Constants.kHeadingTextStyle.copyWith(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.end,
                       ),
-                      textAlign: TextAlign.end,
                     ),
-                  ),
                   Container(), // I dont know why it can't work without container
                 ],
               ),

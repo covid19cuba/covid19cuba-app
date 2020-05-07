@@ -192,7 +192,7 @@ Widget smallCardContainer(String imgPath, String imgTitle, context) {
   final width = MediaQuery.of(context).size.width;
   return Container(
     width: width * 0.28,
-    height: 160,
+    height: 180,
     margin: EdgeInsets.only(left: 5, bottom: 8),
     padding: EdgeInsets.all(10),
     decoration: BoxDecoration(
