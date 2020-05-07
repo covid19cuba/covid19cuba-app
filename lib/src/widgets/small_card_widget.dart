@@ -49,9 +49,10 @@ class SmallCard extends StatelessWidget {
                 padding: EdgeInsets.only(
                   left: 8,
                   right: 18.8,
-                  top: 15,
+                  top: 32,
+                  bottom: 15.0
                 ),
-                height: 136,
+                height: 150,
                 width: width - 130,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,22 +62,21 @@ class SmallCard extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
                         imgTitle,
-                        style: Constants.kTitleTextstyle,
+                        style: TextStyle(
+                            fontSize: 18, height: 1.0,  fontWeight: FontWeight.w600),
                       ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    
                     Expanded(
-                      child: Container(
+                                          child: Container(
                         margin: const EdgeInsets.only(left: 8.0),
-                        padding: const EdgeInsets.only(right: 2.0, bottom: 5),
+                        padding: const EdgeInsets.only(right: 2.0),
                         child: Text(
                           desc,
                           maxLines: 5,
                           overflow: TextOverflow.visible,
                           style: TextStyle(
-                              fontSize: 14, height: 1.3, fontFamily: "Ubuntu"),
+                              fontSize: 14, height: 1.0, fontFamily: "Ubuntu"),
                         ),
                       ),
                     ),
