@@ -16,24 +16,13 @@ class ChangelogPage extends StatefulWidget {
   State<StatefulWidget> createState() => ChangelogPageState();
 }
 
-class ChangelogPageState extends State<ChangelogPage>
-    with TickerProviderStateMixin {
+class ChangelogPageState extends State<ChangelogPage> {
   Completer<void> refreshCompleter;
-  AnimationController fadeController;
-  Animation<double> fadeAnimation;
 
   @override
   void initState() {
     super.initState();
     refreshCompleter = Completer<void>();
-    fadeController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-    fadeAnimation = CurvedAnimation(
-      parent: fadeController,
-      curve: Curves.easeIn,
-    );
   }
 
   @override
@@ -52,10 +41,7 @@ class ChangelogPageState extends State<ChangelogPage>
             builder: (context, state) {
               return Scaffold(
                 appBar: getAppBar(context, state),
-                body: FadeTransition(
-                  opacity: fadeAnimation,
-                  child: getBody(context, state),
-                ),
+                body: getBody(context, state),
               );
             },
           ),
@@ -86,8 +72,6 @@ class ChangelogPageState extends State<ChangelogPage>
   }
 
   Widget getBody(BuildContext context, ChangelogState state) {
-    fadeController.reset();
-    fadeController.forward();
     if (state is InitialChangelogState) {
       BlocProvider.of<ChangelogBloc>(context).add(
         RefreshChangelogEvent(),

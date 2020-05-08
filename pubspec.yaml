@@ -1,7 +1,7 @@
 name: covid19cuba
 description: Mobile application of Covid19 Cuba Data project implemented with Flutter.
 
-version: 0.5.0+8
+version: 0.7.1+12
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -9,36 +9,41 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.2
-  flutter_bloc: ^3.1.0
-  equatable: ^1.0.0
-  shared_preferences: ^0.5.6
-  preferences: ^5.1.0
+  cupertino_icons: ^0.1.3
+  flutter_bloc: ^4.0.0
+  equatable: ^1.1.1
+  shared_preferences: ^0.5.7
+  preferences: ^5.2.0
   charts_flutter: ^0.9.0
-  http: ^0.12.0
-  getflutter: ^1.0.0-dev.1
-  flutter_launcher_icons: ^0.7.4
-  url_launcher: ^5.4.1
-  flutter_local_notifications: ^1.3.0
-  background_fetch: ^0.5.1
+  http: ^0.12.0+4
+  getflutter: ^1.0.11
+  flutter_launcher_icons: ^0.7.5
+  url_launcher: ^5.4.5
+  flutter_local_notifications: ^1.4.2
+  background_fetch: ^0.5.5
   webview_flutter:
     path: ./webview_flutter
-  package_info: ^0.4.0+16
+  package_info: ^0.4.0+17
   introduction_screen: ^1.0.8
-  json_annotation: ^3.0.0
-  font_awesome_flutter: ^8.5.0
-  share: ^0.6.3+5
+  json_annotation: ^3.0.1
+  font_awesome_flutter: ^8.8.1
+  share: ^0.6.4
   demoji: ^1.0.1
   random_color:
     path: ./RandomColor
   crypto: ^2.1.4
-  country_pickers: ^1.2.0
-  flutter_linkify: ^3.1.0
+  country_pickers: ^1.2.1
+  flutter_linkify: ^3.1.2
+  searchable_dropdown: ^1.1.3
+  timezone: ^0.5.7
+  flutter_html: ^0.11.1
+  flutter_svg: ^0.17.4
+  flutter_custom_clippers: ^1.1.1
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
-  build_runner: ^1.0.0
-  json_serializable: ^3.2.0
+  build_runner: ^1.9.0
+  json_serializable: ^3.3.0
 
 flutter:
   uses-material-design: true
@@ -57,6 +62,10 @@ flutter:
     - assets/map.html
     - assets/map2.html
     - assets/js/municipios.js
+  fonts:
+    - family: Ubuntu
+      fonts:
+        - asset: fonts/Ubuntu/Ubuntu-Regular.ttf
 
 flutter_native_splash:
   image: assets/images/icon.jpg

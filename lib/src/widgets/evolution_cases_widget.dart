@@ -39,11 +39,8 @@ class EvolutionCasesWidget extends StatelessWidget {
             [
                   charts.Series<int, DateTime>(
                     id: evolutionOfCasesByDays.daily.name,
-                    colorFn: (_, __) =>
-                        charts.MaterialPalette.purple.shadeDefault,
-                    domainFn: (_, i) => dateTimeFromJson(
-                      evolutionOfCasesByDays.date.values[i].toStr(),
-                    ),
+                    colorFn: (_, __) => ChartColors.blueDark,
+                    domainFn: (_, i) => evolutionOfCasesByDays.date.values[i],
                     measureFn: (item, _) => item,
                     data: evolutionOfCasesByDays.daily.values,
                   )
@@ -52,11 +49,9 @@ class EvolutionCasesWidget extends StatelessWidget {
                     ? [
                         charts.Series<int, DateTime>(
                           id: evolutionOfCasesByDays.active.name,
-                          colorFn: (_, __) =>
-                              charts.MaterialPalette.red.shadeDefault,
-                          domainFn: (_, i) => dateTimeFromJson(
-                            evolutionOfCasesByDays.date.values[i].toStr(),
-                          ),
+                          colorFn: (_, __) => ChartColors.redDark,
+                          domainFn: (_, i) =>
+                              evolutionOfCasesByDays.date.values[i],
                           measureFn: (item, _) => item,
                           data: evolutionOfCasesByDays.active.values,
                         ),
@@ -65,11 +60,8 @@ class EvolutionCasesWidget extends StatelessWidget {
                 [
                   charts.Series<int, DateTime>(
                     id: evolutionOfCasesByDays.accumulated.name,
-                    colorFn: (_, __) =>
-                        charts.MaterialPalette.blue.shadeDefault,
-                    domainFn: (_, i) => dateTimeFromJson(
-                      evolutionOfCasesByDays.date.values[i].toStr(),
-                    ),
+                    colorFn: (_, __) => ChartColors.pink,
+                    domainFn: (_, i) => evolutionOfCasesByDays.date.values[i],
                     measureFn: (item, _) => item,
                     data: evolutionOfCasesByDays.accumulated.values,
                   ),

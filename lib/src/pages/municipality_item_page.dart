@@ -24,13 +24,10 @@ class MunicipalityItemPage extends StatefulWidget {
   }
 }
 
-class MunicipalityItemPageState extends State<MunicipalityItemPage>
-    with TickerProviderStateMixin {
+class MunicipalityItemPageState extends State<MunicipalityItemPage> {
   final String municipality;
 
   Completer<void> refreshCompleter;
-  AnimationController fadeController;
-  Animation<double> fadeAnimation;
 
   MunicipalityItemPageState({this.municipality}) : assert(municipality != null);
 
@@ -38,14 +35,6 @@ class MunicipalityItemPageState extends State<MunicipalityItemPage>
   void initState() {
     super.initState();
     refreshCompleter = Completer<void>();
-    fadeController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-    fadeAnimation = CurvedAnimation(
-      parent: fadeController,
-      curve: Curves.easeIn,
-    );
   }
 
   @override
@@ -64,10 +53,7 @@ class MunicipalityItemPageState extends State<MunicipalityItemPage>
             builder: (context, state) {
               return Scaffold(
                 appBar: getAppBar(context, state),
-                body: FadeTransition(
-                  opacity: fadeAnimation,
-                  child: getBody(context, state),
-                ),
+                body: getBody(context, state),
               );
             },
           ),
@@ -96,8 +82,6 @@ class MunicipalityItemPageState extends State<MunicipalityItemPage>
   }
 
   Widget getBody(BuildContext context, HomeState state) {
-    fadeController.reset();
-    fadeController.forward();
     if (state is InitialHomeState) {
       BlocProvider.of<HomeBloc>(context).add(
         LoadHomeEvent(showNotification: false),

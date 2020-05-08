@@ -40,6 +40,8 @@ class ProvinceModel {
   @JsonKey(name: 'map_data')
   Map<String, dynamic> mapData;
 
+  @JsonKey(name: 'effective_reproductive_number')
+  EffectiveReproductiveNumber effectiveReproductiveNumber;
 
   ProvinceModel();
 

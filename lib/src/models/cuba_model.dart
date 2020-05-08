@@ -28,6 +28,9 @@ class CubaModel {
   @JsonKey(name: 'distribution_by_age_ranges')
   List<ItemCode> distributionByAgeRanges;
 
+  @JsonKey(name: 'distribution_of_cases')
+  DistributionOfCases distributionOfCases;
+
   @JsonKey(name: 'cases_by_nationality')
   CasesByNationality casesByNationality;
 
@@ -52,13 +55,19 @@ class CubaModel {
   @JsonKey(name: 'comparison_of_accumulated_cases')
   ComparisonOfAccumulatedCases comparisonOfAccumulatedCases;
 
+  @JsonKey(name: 'stringency_index_cuba')
+  StringencyIndexCubaModel stringencyIndexCuba;
+
   @JsonKey(name: 'map_data')
   Map<String, dynamic> mapData;
 
   @JsonKey(name: 'eventos')
   Map<String, dynamic> events;
 
-  @JsonKey(name: 'curves_evolution')
+  @JsonKey(name: 'pesquisador')
+  PesquisadorModel pesquisador;
+
+  @JsonKey(name: 'curves_evolution_v2')
   Map<String, dynamic> curvesEvolution;
 
   @JsonKey(name: 'updated', fromJson: dateTimeFromJson, toJson: dateTimeToJson)
@@ -69,6 +78,12 @@ class CubaModel {
 
   @JsonKey(name: 'top_20_accumulated_countries')
   List<ItemExtended> top20AccumulatedCountries;
+
+  @JsonKey(name: 'effective_reproductive_number')
+  EffectiveReproductiveNumber effectiveReproductiveNumber;
+
+  @JsonKey(name: 'test_behavior_comparison')
+  Map<String, TestBehaviorComparison> testBehaviorComparison;
 
   CubaModel();
 

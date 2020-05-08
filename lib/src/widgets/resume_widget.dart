@@ -38,6 +38,7 @@ class ResumeWidget extends StatelessWidget {
                     child: Center(
                       child: Text(
                         'Actualización del ${updated.toStrPlus()}',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -51,6 +52,10 @@ class ResumeWidget extends StatelessWidget {
           ],
         ),
         Table(
+          columnWidths: {
+            0: FlexColumnWidth(2),
+            1: FlexColumnWidth(1),
+          },
           border: TableBorder(
             top: borderSide,
             horizontalInside: borderSide,
@@ -65,6 +70,7 @@ class ResumeWidget extends StatelessWidget {
                     child: Center(
                       child: Text(
                         item.name,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -79,6 +85,7 @@ class ResumeWidget extends StatelessWidget {
                     child: Center(
                       child: Text(
                         item.value.toString(),
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

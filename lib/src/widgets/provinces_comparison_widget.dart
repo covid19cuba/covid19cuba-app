@@ -105,7 +105,7 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
             <charts.Series<int, int>>[
               charts.Series<int, int>(
                 id: Constants.provinceAbbreviations[selectedProvince1],
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                colorFn: (_, __) => ChartColors.blue,
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item,
                 data: provinces[selectedProvince1]
@@ -116,7 +116,7 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
               ),
               charts.Series<int, int>(
                 id: Constants.provinceAbbreviations[selectedProvince2],
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.orange,
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item,
                 data: provinces[selectedProvince2]

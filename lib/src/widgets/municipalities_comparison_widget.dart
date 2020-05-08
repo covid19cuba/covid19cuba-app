@@ -139,7 +139,7 @@ class MunicipalitiesComparisonWidgetState
             <charts.Series<int, int>>[
               charts.Series<int, int>(
                 id: Constants.municipalitiesCodes[selectedMunicipality1],
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                colorFn: (_, __) => ChartColors.blue,
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item,
                 data: data
@@ -151,7 +151,7 @@ class MunicipalitiesComparisonWidgetState
               ),
               charts.Series<int, int>(
                 id: Constants.municipalitiesCodes[selectedMunicipality2],
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.orange,
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item,
                 data: data

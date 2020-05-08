@@ -24,13 +24,10 @@ class ProvinceItemPage extends StatefulWidget {
   }
 }
 
-class ProvinceItemPageState extends State<ProvinceItemPage>
-    with TickerProviderStateMixin {
+class ProvinceItemPageState extends State<ProvinceItemPage> {
   final String province;
 
   Completer<void> refreshCompleter;
-  AnimationController fadeController;
-  Animation<double> fadeAnimation;
 
   ProvinceItemPageState({this.province}) : assert(province != null);
 
@@ -38,14 +35,6 @@ class ProvinceItemPageState extends State<ProvinceItemPage>
   void initState() {
     super.initState();
     refreshCompleter = Completer<void>();
-    fadeController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-    fadeAnimation = CurvedAnimation(
-      parent: fadeController,
-      curve: Curves.easeIn,
-    );
   }
 
   @override
@@ -64,10 +53,7 @@ class ProvinceItemPageState extends State<ProvinceItemPage>
             builder: (context, state) {
               return Scaffold(
                 appBar: getAppBar(context, state),
-                body: FadeTransition(
-                  opacity: fadeAnimation,
-                  child: getBody(context, state),
-                ),
+                body: getBody(context, state),
               );
             },
           ),
@@ -96,8 +82,6 @@ class ProvinceItemPageState extends State<ProvinceItemPage>
   }
 
   Widget getBody(BuildContext context, HomeState state) {
-    fadeController.reset();
-    fadeController.forward();
     if (state is InitialHomeState) {
       BlocProvider.of<HomeBloc>(context).add(
         LoadHomeEvent(showNotification: false),

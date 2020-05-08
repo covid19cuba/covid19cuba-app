@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class DistributionNationalityDiagnosedWidget extends StatelessWidget {
   final List<ItemCode> distributionByNationalityOfForeignCases;
@@ -17,6 +18,12 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
         distributionByNationalityOfForeignCases.length == 0) {
       return Container();
     }
+    String dialogText = '';
+    for (var item in distributionByNationalityOfForeignCases) {
+      print(item.code + ' = ' + item.name);
+      dialogText += '\n' + item.code + ' = ' + item.name;
+    }
+
     return Column(
       children: <Widget>[
         Container(
@@ -25,16 +32,27 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Distribución por nacionalidad de casos extranjeros',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Distribución por nacionalidad de casos extranjeros',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                title: 'Distribución por nacionalidad de casos extranjeros',
+                text: dialogText,
+              )
+            ],
           ),
         ),
         Container(
@@ -44,7 +62,7 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
             [
               charts.Series<ItemCode, String>(
                 id: 'Diagnosticados',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.red,
                 domainFn: (item, _) => item.code,
                 measureFn: (item, _) => item.value,
                 data: distributionByNationalityOfForeignCases,

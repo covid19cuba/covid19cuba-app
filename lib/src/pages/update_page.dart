@@ -1,15 +1,15 @@
 import 'dart:developer';
 
-import 'package:covid19cuba/src/data_providers/data_providers.dart';
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
+import 'package:preferences/preference_service.dart';
 
+import 'package:covid19cuba/src/data_providers/data_providers.dart';
+import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
-import 'package:package_info/package_info.dart';
-import 'package:preferences/preference_service.dart';
 
 class UpdatePage extends StatefulWidget {
   final bool first;
@@ -122,7 +122,11 @@ class UpdatePageState extends State<UpdatePage> {
               ),
               TouchableUrlImage(
                 Constants.apklisBanner,
-                Constants.apklisUrl,
+                () async {
+                  var apklisUrl =
+                      'https://www.apklis.cu/application/club.postdata.covid19cuba';
+                  getUrl(apklisUrl);
+                },
                 leftMargin: 50,
                 rightMargin: 50,
                 topMargin: 5,
@@ -146,7 +150,11 @@ class UpdatePageState extends State<UpdatePage> {
               ),
               TouchableUrlImage(
                 Constants.githubBanner,
-                Constants.githubUrl,
+                () async {
+                  var gitHubUrl =
+                      'https://github.com/covid19cuba/covid19cuba-app/releases';
+                  getUrl(gitHubUrl);
+                },
                 leftMargin: 50,
                 rightMargin: 50,
                 topMargin: 5,

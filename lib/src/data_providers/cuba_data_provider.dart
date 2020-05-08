@@ -63,6 +63,10 @@ Future<DataModel> getCubaDataFrom(String url) async {
     result = DataModel.fromJson(json);
     PrefService.setBool(Constants.prefFirstCacheNotification, true);
     PrefService.setBool(Constants.prefFirstModificationNotification, true);
+    PrefService.setString(
+      Constants.prefPesquisador,
+      jsonEncode(result.all.pesquisador.toJson()),
+    );
   } catch (e) {
     log(e.toString());
     throw ParseException('Parse error');

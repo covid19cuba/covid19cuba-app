@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:preferences/preference_service.dart';
 
 import 'package:covid19cuba/src/pages/pages.dart';
@@ -11,6 +12,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Constants.primaryColor));
     var isOnBoarding = PrefService.getBool(Constants.prefIsOnBoarding) ?? false;
     return MaterialApp(
       debugShowCheckedModeBanner: false,

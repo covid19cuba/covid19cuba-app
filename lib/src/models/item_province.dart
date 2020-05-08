@@ -7,6 +7,7 @@ class ItemProvince {
   int value;
   String name;
   int total;
+  int population;
 
   ItemProvince();
 

@@ -10,7 +10,8 @@ ItemProvince _$ItemProvinceFromJson(Map<String, dynamic> json) {
   return ItemProvince()
     ..value = json['value'] as int
     ..name = json['name'] as String
-    ..total = json['total'] as int;
+    ..total = json['total'] as int
+    ..population = json['population'] as int;
 }
 
 Map<String, dynamic> _$ItemProvinceToJson(ItemProvince instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$ItemProvinceToJson(ItemProvince instance) =>
       'value': instance.value,
       'name': instance.name,
       'total': instance.total,
+      'population': instance.population,
     };

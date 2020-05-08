@@ -7,7 +7,7 @@ part 'comparison_of_accumulated_cases.g.dart';
 
 @JsonSerializable()
 class ComparisonOfAccumulatedCases {
-  @JsonKey(name: 'countries_info')
+  @JsonKey(name: 'data')
   Map<String, ComparisonOfAccumulatedCasesItem> countries;
 
   @JsonKey(fromJson: dateTimeFromJson, toJson: dateTimeToJson)

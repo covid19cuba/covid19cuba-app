@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class TestsPositivePercentWidget extends StatelessWidget {
   final TestsPositivePercent testsPositivePercent;
@@ -20,16 +21,28 @@ class TestsPositivePercentWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              '% Tests Positivos con respecto a Total de Tests (PCR)',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  '% Tests Positivos con respecto a Total de Tests (PCR)',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                title: '% Tests Positivos con respecto a Total de Tests (PCR)',
+                text: 'Esta información se reporta desde el '
+                    '${testsPositivePercent.date.values[0].toStrPlus()}',
+              )
+            ],
           ),
         ),
         Container(
@@ -39,19 +52,15 @@ class TestsPositivePercentWidget extends StatelessWidget {
             [
               charts.Series<double, DateTime>(
                 id: testsPositivePercent.daily.name,
-                colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-                domainFn: (_, i) => dateTimeFromJson(
-                  testsPositivePercent.date.values[i].toStr(),
-                ),
+                colorFn: (_, __) => ChartColors.red,
+                domainFn: (_, i) => testsPositivePercent.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsPositivePercent.daily.values,
               ),
               charts.Series<double, DateTime>(
                 id: testsPositivePercent.accumulated.name,
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => dateTimeFromJson(
-                  testsPositivePercent.date.values[i].toStr(),
-                ),
+                colorFn: (_, __) => ChartColors.purple,
+                domainFn: (_, i) => testsPositivePercent.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsPositivePercent.accumulated.values,
               ),
@@ -90,25 +99,9 @@ class TestsPositivePercentWidget extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Text(
-              'Esta información se reporta desde el '
-              '${testsPositivePercent.date.values[0].toStrPlus()}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ),
+        SizedBox(
+          height: 5,
+        )
       ],
     );
   }

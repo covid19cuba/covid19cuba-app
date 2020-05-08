@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
   final List<ItemCode> distributionByAgeRanges;
@@ -20,16 +21,28 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Distribución por rangos etarios',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Distribución por rangos etarios',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                title: 'Distribución por rangos etarios',
+                text: '${distributionByAgeRanges.last.name} '
+                    'representa edad desconocida',
+              )
+            ],
           ),
         ),
         Container(
@@ -39,7 +52,7 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
             [
               charts.Series<ItemCode, String>(
                 id: 'Diagnosticados',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                colorFn: (_, __) => ChartColors.red,
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: distributionByAgeRanges,
@@ -80,6 +93,9 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(
+          height: 5,
+        )
       ],
     );
   }

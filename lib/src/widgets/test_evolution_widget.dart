@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class TestEvolutionWidget extends StatelessWidget {
   final TestsByDays testsByDays;
@@ -19,58 +20,58 @@ class TestEvolutionWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Center(
-            child: Text(
-              'Tests (PCR) por días',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Tests (PCR) por días',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
+              InfoDialogWidget(
+                title: 'Tests (PCR) por días',
+                text: 'Esta información se reporta desde el '
+                    '${testsByDays.date.values[0].toStrPlus()}',
+              )
+            ],
           ),
         ),
         Container(
           padding: EdgeInsets.all(10),
           height: 350,
-          child: charts.BarChart(
+          child: charts.TimeSeriesChart(
             [
-              charts.Series<int, String>(
-                id: testsByDays.negative.name,
-                seriesCategory: 'A',
-                colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-                domainFn: (_, i) => '${i + 1}',
-                measureFn: (item, _) => item,
-                data: testsByDays.negative.values,
-              ),
-              charts.Series<int, String>(
+              charts.Series<int, DateTime>(
                 id: testsByDays.positive.name,
-                seriesCategory: 'A',
-                colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-                domainFn: (_, i) => '${i + 1}',
+                colorFn: (_, __) => ChartColors.red,
+                domainFn: (_, i) => testsByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsByDays.positive.values,
               ),
-              charts.Series<int, String>(
+              charts.Series<int, DateTime>(
                 id: testsByDays.total.name,
-                seriesCategory: 'B',
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (_, i) => '${i + 1}',
+                colorFn: (_, __) => ChartColors.green,
+                domainFn: (_, i) => testsByDays.date.values[i],
                 measureFn: (item, _) => item,
                 data: testsByDays.total.values,
               ),
             ],
             animate: false,
-            barGroupingType: charts.BarGroupingType.groupedStacked,
             defaultInteractions: true,
-            domainAxis: new charts.OrdinalAxisSpec(
-              showAxisLine: true,
-              renderSpec: charts.NoneRenderSpec(),
+            defaultRenderer: charts.LineRendererConfig(
+              includePoints: true,
             ),
             behaviors: [
               charts.ChartTitle(
-                'Número de días',
+                'Fecha',
                 behaviorPosition: charts.BehaviorPosition.bottom,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -101,25 +102,9 @@ class TestEvolutionWidget extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
-          child: Center(
-            child: Text(
-              'Esta información se reporta desde el '
-              '${testsByDays.date.values[0].toStrPlus()}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ),
+        SizedBox(
+          height: 5,
+        )
       ],
     );
   }
