@@ -93,7 +93,7 @@ class TestBehaviorComparisonWidgetState
               InfoDialogWidget(
                 title: 'Comparación respecto al comportamiento de los Tests '
                     'realizados',
-                text: 'El gráfico permite comparar a Cuba con distintos paises '
+                text: 'El gráfico permite comparar a Cuba con distintos países '
                     'respecto, a la vez, el porciento de detección de '
                     'contagiados en base al total de tests realizados y el '
                     'número de tests por millón de habitantes.\n\n'

@@ -332,7 +332,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'Comparación entre paises',
+                  'Comparación entre países',
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   style: TextStyle(
