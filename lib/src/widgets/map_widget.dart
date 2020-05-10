@@ -123,7 +123,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
               InfoDialogWidget(
                 title: 'Distribución por Provincias',
                 text:
-                'El cuadrado representa aquellos que por distintas razones '
+                    'El cuadrado representa aquellos que por distintas razones '
                     'no tengan localización conocida.',
               )
             ],

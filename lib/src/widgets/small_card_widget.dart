@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:covid19cuba/src/utils/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SmallCard extends StatelessWidget {
@@ -47,11 +46,7 @@ class SmallCard extends StatelessWidget {
               left: 130,
               child: Container(
                 padding: EdgeInsets.only(
-                  left: 8,
-                  right: 18.8,
-                  top: 32,
-                  bottom: 15.0
-                ),
+                    left: 8, right: 18.8, top: 32, bottom: 15.0),
                 height: 150,
                 width: width - 130,
                 child: Column(
@@ -63,12 +58,13 @@ class SmallCard extends StatelessWidget {
                       child: Text(
                         imgTitle,
                         style: TextStyle(
-                            fontSize: 18, height: 1.0,  fontWeight: FontWeight.w600),
+                            fontSize: 18,
+                            height: 1.0,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
-                    
                     Expanded(
-                                          child: Container(
+                      child: Container(
                         margin: const EdgeInsets.only(left: 8.0),
                         padding: const EdgeInsets.only(right: 2.0),
                         child: Text(

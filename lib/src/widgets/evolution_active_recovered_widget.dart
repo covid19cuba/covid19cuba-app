@@ -5,9 +5,11 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
 class EvolutionActiveRecoveredWidget extends StatelessWidget {
-  final EvolutionOfActiveAndRecoveredAccumulated evolutionOfActiveAndRecoveredAccumulated;
+  final EvolutionOfActiveAndRecoveredAccumulated
+      evolutionOfActiveAndRecoveredAccumulated;
 
-  const EvolutionActiveRecoveredWidget({this.evolutionOfActiveAndRecoveredAccumulated})
+  const EvolutionActiveRecoveredWidget(
+      {this.evolutionOfActiveAndRecoveredAccumulated})
       : assert(evolutionOfActiveAndRecoveredAccumulated != null);
 
   @override

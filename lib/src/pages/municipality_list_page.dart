@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class MunicipalityListPage extends StatefulWidget {
   @override
