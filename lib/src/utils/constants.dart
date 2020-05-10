@@ -770,6 +770,13 @@ class Constants {
 
   static const collaborators = <List<String>>[
     [
+      'Daniel Alejandro Cárdenas Cabrera',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
+          'Integrante del grupo de Inteligencia Artificial de la Facultad de '
+          'Matemática y Computación.',
+      'https://github.com/DanielUH2019',
+    ],
+    [
       'Luis Eduardo González',
       'Ing. en Ciencias Informáticas. Graduado en la Universidad de '
           'Ciencias Informáticas. Desarrollador de Software.',
