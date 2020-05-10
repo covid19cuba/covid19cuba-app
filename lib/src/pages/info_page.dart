@@ -8,10 +8,10 @@ import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class InfoPage extends StatefulWidget {
   @override
-  _InfoPageState createState() => _InfoPageState();
+  InfoPageState createState() => InfoPageState();
 }
 
-class _InfoPageState extends State<InfoPage> {
+class InfoPageState extends State<InfoPage> {
   final controller = ScrollController();
   double offset = 0;
 
@@ -64,7 +64,7 @@ class _InfoPageState extends State<InfoPage> {
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
                       'Síntomas principales',
-                      style: Constants.kTitleTextstyle,
+                      style: Constants.kTitleTextStyle,
                     ),
                   ),
                 ],
@@ -190,7 +190,7 @@ class _InfoPageState extends State<InfoPage> {
                     padding: EdgeInsets.only(left: 5),
                     child: Text(
                       'Prevención',
-                      style: Constants.kTitleTextstyle,
+                      style: Constants.kTitleTextStyle,
                     ),
                   ),
                 ],
