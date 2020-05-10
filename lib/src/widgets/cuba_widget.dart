@@ -1,13 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:html/dom.dart' as dom;
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CubaWidget extends StatelessWidget {
   final DataModel data;
@@ -89,6 +84,15 @@ class CubaWidget extends StatelessWidget {
             child: EvolutionCasesRecoveredWidget(
               evolutionOfCasesAndRecoveredByDays:
                   data.all.evolutionOfCasesAndRecoveredByDays,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: EvolutionActiveRecoveredWidget(
+              evolutionOfActiveAndRecoveredAccumulated:
+                  data.all.evolutionOfActiveAndRecoveredAccumulated,
             ),
           ),
         ),
