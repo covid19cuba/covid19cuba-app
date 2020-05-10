@@ -33,8 +33,7 @@ class WorldCountriesWidgetState extends State<WorldCountriesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (worldCountries == null ||
-        worldCountries.length == 0) {
+    if (worldCountries == null || worldCountries.length == 0) {
       return Container();
     }
     return PaginatedDataTable(
@@ -119,13 +118,11 @@ class WorldCountriesWidgetState extends State<WorldCountriesWidget> {
                 if (isDeathsSorted) {
                   isDeathsSorted = false;
                   sortAscending = false;
-                  worldCountries
-                      .sort((x, y) => x.deaths.compareTo(y.deaths));
+                  worldCountries.sort((x, y) => x.deaths.compareTo(y.deaths));
                 } else {
                   isDeathsSorted = true;
                   sortAscending = true;
-                  worldCountries
-                      .sort((x, y) => y.deaths.compareTo(x.deaths));
+                  worldCountries.sort((x, y) => y.deaths.compareTo(x.deaths));
                 }
                 sortColumnIndex = 3;
               },
