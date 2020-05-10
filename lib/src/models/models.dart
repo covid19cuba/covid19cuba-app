@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 export 'cases_by_mode_of_contagion.dart';
 export 'cases_by_nationality.dart';
 export 'cases_by_sex.dart';
