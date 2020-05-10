@@ -39,7 +39,7 @@ class EvolutionCasesRecoveredWidget extends StatelessWidget {
             [
               charts.Series<int, DateTime>(
                 id: evolutionOfCasesAndRecoveredByDays.diagnosed.name,
-                colorFn: (_, __) => ChartColors.blueDark,
+                colorFn: (_, __) => ChartColors.red,
                 domainFn: (_, i) =>
                     evolutionOfCasesAndRecoveredByDays.date.values[i],
                 measureFn: (item, _) => item,
@@ -47,7 +47,7 @@ class EvolutionCasesRecoveredWidget extends StatelessWidget {
               ),
               charts.Series<int, DateTime>(
                 id: evolutionOfCasesAndRecoveredByDays.recovered.name,
-                colorFn: (_, __) => ChartColors.pink,
+                colorFn: (_, __) => ChartColors.blueLight,
                 domainFn: (_, i) =>
                     evolutionOfCasesAndRecoveredByDays.date.values[i],
                 measureFn: (item, _) => item,
