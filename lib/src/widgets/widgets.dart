@@ -7,6 +7,7 @@ export 'distribution_of_cases_widget.dart';
 export 'effective_reproductive_number_widget.dart';
 export 'error_widget.dart';
 export 'evolution_cases_widget.dart';
+export 'evolution_cases_recovered_widget.dart';
 export 'evolution_recovered_widget.dart';
 export 'evolution_death_widget.dart';
 export 'home_drawer_widget.dart';
