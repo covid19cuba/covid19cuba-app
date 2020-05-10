@@ -54,14 +54,6 @@ class CubaWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
-            child: DistributionOfCasesWidget(
-              distributionOfCases: data.all.distributionOfCases,
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
             child: EvolutionCasesWidget(
               evolutionOfCasesByDays: data.all.evolutionOfCasesByDays,
             ),
@@ -80,6 +72,23 @@ class CubaWidget extends StatelessWidget {
           child: Card(
             child: EvolutionDeathWidget(
               evolutionOfDeathsByDays: data.all.evolutionOfDeathsByDays,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: DistributionOfCasesWidget(
+              distributionOfCases: data.all.distributionOfCases,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: EvolutionCasesRecoveredWidget(
+              evolutionOfCasesAndRecoveredByDays:
+                  data.all.evolutionOfCasesAndRecoveredByDays,
             ),
           ),
         ),
