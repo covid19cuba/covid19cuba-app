@@ -80,8 +80,8 @@ class CubaPageState extends State<CubaPage> {
       title: Text(Constants.appName),
       bottom: TabBar(
         labelColor: Colors.white,
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicatorWeight: 5.0,
+        indicatorColor: Colors.white,
+        isScrollable: false,
         tabs: [
           Tab(text: 'Nacional'),
           Tab(text: 'Provincial'),
