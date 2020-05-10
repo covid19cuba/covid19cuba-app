@@ -56,7 +56,7 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..curvesEvolution = json['curves_evolution_v2'] as Map<String, dynamic>
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..note = json['note'] as String
-    ..top20AccumulatedCountries = (json['top_20_accumulated_countries'] as List)?.map((e) => e == null ? null : ItemExtended.fromJson(e as Map<String, dynamic>))?.toList()
+    ..worldCountries = (json['world_countries'] as List)?.map((e) => e == null ? null : ItemExtended.fromJson(e as Map<String, dynamic>))?.toList()
     ..effectiveReproductiveNumber = json['effective_reproductive_number'] == null ? null : EffectiveReproductiveNumber.fromJson(json['effective_reproductive_number'] as Map<String, dynamic>)
     ..testBehaviorComparison = (json['test_behavior_comparison'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(
@@ -96,7 +96,7 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'curves_evolution_v2': instance.curvesEvolution,
       'updated': dateTimeToJson(instance.updated),
       'note': instance.note,
-      'top_20_accumulated_countries': instance.top20AccumulatedCountries,
+      'world_countries': instance.worldCountries,
       'effective_reproductive_number': instance.effectiveReproductiveNumber,
       'test_behavior_comparison': instance.testBehaviorComparison,
     };

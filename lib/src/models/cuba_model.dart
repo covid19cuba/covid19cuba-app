@@ -83,8 +83,8 @@ class CubaModel {
   @JsonKey(name: 'note')
   String note;
 
-  @JsonKey(name: 'top_20_accumulated_countries')
-  List<ItemExtended> top20AccumulatedCountries;
+  @JsonKey(name: 'world_countries')
+  List<ItemExtended> worldCountries;
 
   @JsonKey(name: 'effective_reproductive_number')
   EffectiveReproductiveNumber effectiveReproductiveNumber;

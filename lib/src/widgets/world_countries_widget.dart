@@ -4,20 +4,20 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class Top20CountriesWidget extends StatefulWidget {
-  final List<ItemExtended> top20AccumulatedCountries;
+class WorldCountriesWidget extends StatefulWidget {
+  final List<ItemExtended> worldCountries;
   final DateTime updated;
 
-  Top20CountriesWidget({this.top20AccumulatedCountries, this.updated})
-      : assert(top20AccumulatedCountries != null, updated != null);
+  WorldCountriesWidget({this.worldCountries, this.updated})
+      : assert(worldCountries != null, updated != null);
 
   @override
-  Top20CountriesWidgetState createState() => Top20CountriesWidgetState(
-      top20AccumulatedCountries: top20AccumulatedCountries, updated: updated);
+  WorldCountriesWidgetState createState() => WorldCountriesWidgetState(
+      worldCountries: worldCountries, updated: updated);
 }
 
-class Top20CountriesWidgetState extends State<Top20CountriesWidget> {
-  List<ItemExtended> top20AccumulatedCountries;
+class WorldCountriesWidgetState extends State<WorldCountriesWidget> {
+  List<ItemExtended> worldCountries;
   final DateTime updated;
   var rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 
@@ -28,13 +28,13 @@ class Top20CountriesWidgetState extends State<Top20CountriesWidget> {
   var sortColumnIndex = 1;
   var sortAscending = true;
 
-  Top20CountriesWidgetState({this.top20AccumulatedCountries, this.updated})
-      : assert(top20AccumulatedCountries != null, updated != null);
+  WorldCountriesWidgetState({this.worldCountries, this.updated})
+      : assert(worldCountries != null, updated != null);
 
   @override
   Widget build(BuildContext context) {
-    if (top20AccumulatedCountries == null ||
-        top20AccumulatedCountries.length == 0) {
+    if (worldCountries == null ||
+        worldCountries.length == 0) {
       return Container();
     }
     return PaginatedDataTable(
@@ -46,7 +46,7 @@ class Top20CountriesWidgetState extends State<Top20CountriesWidget> {
         children: <Widget>[
           Expanded(
             child: Text(
-              'Top 20 de países con más casos acumulados',
+              'Acumulados por países',
               textAlign: TextAlign.center,
               maxLines: 3,
               style: TextStyle(
@@ -57,7 +57,7 @@ class Top20CountriesWidgetState extends State<Top20CountriesWidget> {
             ),
           ),
           InfoDialogWidget(
-            title: 'Top 20 de países con más casos acumulados',
+            title: 'Acumulados por países',
             text: 'Datos de los países tomados '
                 'de\nhttps://github.com/pomber/covid19\ny '
                 'actualizado el '
@@ -80,12 +80,12 @@ class Top20CountriesWidgetState extends State<Top20CountriesWidget> {
                 if (isConfirmedSorted) {
                   isConfirmedSorted = false;
                   sortAscending = false;
-                  top20AccumulatedCountries
+                  worldCountries
                       .sort((x, y) => x.confirmed.compareTo(y.confirmed));
                 } else {
                   isConfirmedSorted = true;
                   sortAscending = true;
-                  top20AccumulatedCountries
+                  worldCountries
                       .sort((x, y) => y.confirmed.compareTo(x.confirmed));
                 }
                 sortColumnIndex = 1;
@@ -99,12 +99,12 @@ class Top20CountriesWidgetState extends State<Top20CountriesWidget> {
                 if (isRecoveredSorted) {
                   isRecoveredSorted = false;
                   sortAscending = false;
-                  top20AccumulatedCountries
+                  worldCountries
                       .sort((x, y) => x.recovered.compareTo(y.recovered));
                 } else {
                   isRecoveredSorted = true;
                   sortAscending = true;
-                  top20AccumulatedCountries
+                  worldCountries
                       .sort((x, y) => y.recovered.compareTo(x.recovered));
                 }
                 sortColumnIndex = 2;
@@ -119,12 +119,12 @@ class Top20CountriesWidgetState extends State<Top20CountriesWidget> {
                 if (isDeathsSorted) {
                   isDeathsSorted = false;
                   sortAscending = false;
-                  top20AccumulatedCountries
+                  worldCountries
                       .sort((x, y) => x.deaths.compareTo(y.deaths));
                 } else {
                   isDeathsSorted = true;
                   sortAscending = true;
-                  top20AccumulatedCountries
+                  worldCountries
                       .sort((x, y) => y.deaths.compareTo(x.deaths));
                 }
                 sortColumnIndex = 3;
@@ -134,7 +134,7 @@ class Top20CountriesWidgetState extends State<Top20CountriesWidget> {
         ),
       ],
       source: DataTableSourceImplemented(
-        top20AccumulatedCountries: top20AccumulatedCountries,
+        top20AccumulatedCountries: worldCountries,
       ),
       columnSpacing: 1.5,
       horizontalMargin: 3.5,
