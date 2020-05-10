@@ -18,6 +18,7 @@ export 'map_widget.dart';
 export 'municipality_widget.dart';
 export 'municipalities_comparison_widget.dart';
 export 'note_widget.dart';
+export 'paginated_data_table_plus.dart';
 export 'pie_cases_nationality.dart';
 export 'pie_contagion_widget.dart';
 export 'pie_sex_widget.dart';

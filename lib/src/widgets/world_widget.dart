@@ -59,13 +59,9 @@ class WorldWidget extends StatelessWidget {
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: Container(
-              child: Top20CountriesWidget(
-                top20AccumulatedCountries: data.all.top20AccumulatedCountries,
-                updated: data.all.comparisonOfAccumulatedCases.updated,
-              ),
-            ),
+          child: Top20CountriesWidget(
+            top20AccumulatedCountries: data.all.top20AccumulatedCountries,
+            updated: data.all.comparisonOfAccumulatedCases.updated,
           ),
         ),
         Container(padding: EdgeInsets.all(5)),
