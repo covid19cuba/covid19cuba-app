@@ -6,6 +6,7 @@ export 'distribution_nationality_diagnosed_widget.dart';
 export 'distribution_of_cases_widget.dart';
 export 'effective_reproductive_number_widget.dart';
 export 'error_widget.dart';
+export 'evolution_active_recovered_widget.dart';
 export 'evolution_cases_widget.dart';
 export 'evolution_cases_recovered_widget.dart';
 export 'evolution_recovered_widget.dart';
