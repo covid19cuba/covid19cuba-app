@@ -37,7 +37,7 @@ class Top20CountriesWidgetState extends State<Top20CountriesWidget> {
         top20AccumulatedCountries.length == 0) {
       return Container();
     }
-    return PaginatedDataTablePlus(
+    return PaginatedDataTable(
       sortColumnIndex: sortColumnIndex,
       sortAscending: sortAscending,
       header: Row(
