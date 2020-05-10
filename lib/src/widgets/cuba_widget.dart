@@ -1,13 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:html/dom.dart' as dom;
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CubaWidget extends StatelessWidget {
   final DataModel data;
@@ -24,7 +19,9 @@ class CubaWidget extends StatelessWidget {
               ResumeWidget(resume: data.all.resume, updated: data.all.updated),
         ),
         Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          margin: data.all.note == null || data.all.note == ''
+              ? EdgeInsets.all(0)
+              : EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             color: Colors.red,
             child: NoteWidget(note: data.all.note),
@@ -34,7 +31,9 @@ class CubaWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: MapWebViewWidget(
-                mapData: data.all.mapData, eventsData: data.all.events),
+              mapData: data.all.mapData,
+              eventsData: data.all.events,
+            ),
           ),
         ),
         Container(
@@ -48,14 +47,6 @@ class CubaWidget extends StatelessWidget {
           child: Card(
             child: PieContagionWidget(
               casesByModeOfContagion: data.all.casesByModeOfContagion,
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: DistributionOfCasesWidget(
-              distributionOfCases: data.all.distributionOfCases,
             ),
           ),
         ),
@@ -80,6 +71,32 @@ class CubaWidget extends StatelessWidget {
           child: Card(
             child: EvolutionDeathWidget(
               evolutionOfDeathsByDays: data.all.evolutionOfDeathsByDays,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: DistributionOfCasesWidget(
+              distributionOfCases: data.all.distributionOfCases,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: EvolutionCasesRecoveredWidget(
+              evolutionOfCasesAndRecoveredByDays:
+                  data.all.evolutionOfCasesAndRecoveredByDays,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: EvolutionActiveRecoveredWidget(
+              evolutionOfActiveAndRecoveredAccumulated:
+                  data.all.evolutionOfActiveAndRecoveredAccumulated,
             ),
           ),
         ),

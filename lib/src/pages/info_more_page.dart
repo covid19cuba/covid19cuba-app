@@ -56,8 +56,11 @@ class InfoMorePage extends StatelessWidget {
               ),
               InfoCard(
                 title: 'Signos y síntomas',
-                content:
-                    'Los síntomas más comunes de la Covid-19 son fiebre, tos seca y cansancio. Algunos pacientes pueden tener dolores y molestias, congestión nasal, dolor de garganta o diarrea. Estos síntomas generalmente son leves y comienzan gradualmente.',
+                content: 'Los síntomas más comunes de la Covid-19 son fiebre, '
+                    'tos seca y cansancio. Algunos pacientes pueden tener '
+                    'dolores y molestias, congestión nasal, dolor de garganta '
+                    'o diarrea. Estos síntomas generalmente son leves y '
+                    'comienzan gradualmente.',
               ),
               Center(
                 child: SingleChildScrollView(
@@ -67,44 +70,41 @@ class InfoMorePage extends StatelessWidget {
                     children: <Widget>[
                       smallCardContainer(
                         'assets/images/dolor_cabeza.svg',
-                        'Dolor de cabeza',
+                        'Dolor\nde cabeza',
                         context,
                       ),
-                      SizedBox(
+                      Container(
                         width: 5,
                       ),
                       smallCardContainer(
                         'assets/images/dolor_garganta.svg',
-                        'Dolor de garganta',
+                        'Dolor\nde garganta',
                         context,
                       ),
-                      SizedBox(
+                      Container(
                         width: 5,
                       ),
                       smallCardContainer(
                         'assets/images/tos.svg',
-                        'Tos',
+                        'Tos\n',
                         context,
                       ),
-                      SizedBox(
+                      Container(
                         width: 5,
                       ),
                       smallCardContainer(
                         'assets/images/fiebre.svg',
-                        'Fiebre',
+                        'Fiebre\n',
                         context,
                       ),
-                      SizedBox(
+                      Container(
                         width: 5,
                       ),
                       smallCardContainer(
                         'assets/images/falta_aire.svg',
-                        'Dificultad para respirar',
+                        'Dificultad\npara respirar',
                         context,
                       ),
-                      SizedBox(
-                        width: 8,
-                      )
                     ],
                   ),
                 ),
@@ -125,7 +125,7 @@ class InfoMorePage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 15),
                   child: Text(
                     'Prevención',
-                    style: Constants.kTitleTextstyle,
+                    style: Constants.kTitleTextStyle,
                     textAlign: TextAlign.left,
                   ),
                 ),
@@ -188,45 +188,30 @@ class InfoMorePage extends StatelessWidget {
 }
 
 Widget smallCardContainer(String imgPath, String imgTitle, context) {
-  /*final height = MediaQuery.of(context).size.height;*/
-  final width = MediaQuery.of(context).size.width;
-  return Container(
-    width: width * 0.28,
-    height: 180,
-    margin: EdgeInsets.only(left: 5, bottom: 8),
-    padding: EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          offset: Offset(0, 0.1),
-          blurRadius: 0.1,
-        ),
-      ],
-    ),
-    child: Column(
-      children: <Widget>[
-        Center(
-          child: imgPath.endsWith('.svg')
-              ? SvgPicture.asset(imgPath, height: 90)
-              : Image.asset(
-                  imgPath,
-                  fit: BoxFit.contain,
-                ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          imgTitle,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 15,
+  return Card(
+    child: Container(
+      margin: EdgeInsets.all(10),
+      child: Column(
+        children: <Widget>[
+          Center(
+            child: imgPath.endsWith('.svg')
+                ? SvgPicture.asset(imgPath, height: 90)
+                : Image.asset(imgPath, height: 90),
           ),
-        ),
-      ],
+          Container(height: 10),
+          Center(
+            child: Text(
+              imgTitle,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Ubuntu',
+                fontSize: 13,
+              ),
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -251,30 +236,21 @@ class InfoCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   title,
-                  style: Constants.kTitleTextstyle,
+                  style: Constants.kTitleTextStyle,
                 ),
               ),
             ),
           ],
         ),
         Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 0.1),
-                blurRadius: 0.1,
+          margin: EdgeInsets.all(5),
+          child: Card(
+            child: Container(
+              margin: EdgeInsets.all(10),
+              child: Text(
+                content,
+                style: Constants.moreDescStyle,
               ),
-            ],
-          ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Text(
-              content,
-              style: Constants.moreDescStyle,
             ),
           ),
         ),

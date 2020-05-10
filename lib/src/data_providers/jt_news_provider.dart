@@ -13,7 +13,7 @@ const urlJTNewsDataIO =
     'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/jt_news.json';
 
 Future<JTNewsModel> getJTNewsData() async {
-  var stateList = await StateModel.check();
+  var stateList = await JTNewsStateModel.check();
   var cache = true;
   if (stateList != null) {
     cache = stateList[0];

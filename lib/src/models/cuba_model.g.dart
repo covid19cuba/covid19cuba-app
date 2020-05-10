@@ -23,25 +23,25 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
         ? null
         : EvolutionOfCasesByDays.fromJson(
             json['evolution_of_cases_by_days'] as Map<String, dynamic>)
+    ..evolutionOfCasesAndRecoveredByDays =
+        json['evolution_of_cases_and_recovered_by_days'] == null
+            ? null
+            : EvolutionOfCasesAndRecoveredByDays.fromJson(
+                json['evolution_of_cases_and_recovered_by_days']
+                    as Map<String, dynamic>)
+    ..evolutionOfActiveAndRecoveredAccumulated =
+        json['evolution_of_active_and_recovered_accumulated'] == null
+            ? null
+            : EvolutionOfActiveAndRecoveredAccumulated.fromJson(
+                json['evolution_of_active_and_recovered_accumulated']
+                    as Map<String, dynamic>)
     ..evolutionOfDeathsByDays = json['evolution_of_deaths_by_days'] == null
         ? null
-        : EvolutionOfDeathsByDays.fromJson(
-            json['evolution_of_deaths_by_days'] as Map<String, dynamic>)
-    ..evolutionOfRecoveredByDays =
-        json['evolution_of_recovered_by_days'] == null
-            ? null
-            : EvolutionOfRecoveredByDays.fromJson(
-                json['evolution_of_recovered_by_days'] as Map<String, dynamic>)
-    ..distributionByAgeRanges = (json['distribution_by_age_ranges'] as List)
-        ?.map((e) =>
-            e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..distributionOfCases = json['distribution_of_cases'] == null
-        ? null
-        : DistributionOfCases.fromJson(
-            json['distribution_of_cases'] as Map<String, dynamic>)
-    ..casesByNationality =
-        json['cases_by_nationality'] == null ? null : CasesByNationality.fromJson(json['cases_by_nationality'] as Map<String, dynamic>)
+        : EvolutionOfDeathsByDays.fromJson(json['evolution_of_deaths_by_days'] as Map<String, dynamic>)
+    ..evolutionOfRecoveredByDays = json['evolution_of_recovered_by_days'] == null ? null : EvolutionOfRecoveredByDays.fromJson(json['evolution_of_recovered_by_days'] as Map<String, dynamic>)
+    ..distributionByAgeRanges = (json['distribution_by_age_ranges'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
+    ..distributionOfCases = json['distribution_of_cases'] == null ? null : DistributionOfCases.fromJson(json['distribution_of_cases'] as Map<String, dynamic>)
+    ..casesByNationality = json['cases_by_nationality'] == null ? null : CasesByNationality.fromJson(json['cases_by_nationality'] as Map<String, dynamic>)
     ..distributionByNationalityOfForeignCases = (json['distribution_by_nationality_of_foreign_cases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
     ..listOfTestsPerformed = json['list_of_tests_performed'] == null ? null : ListOfTestsPerformed.fromJson(json['list_of_tests_performed'] as Map<String, dynamic>)
     ..testsByDays = json['tests_by_days'] == null ? null : TestsByDays.fromJson(json['tests_by_days'] as Map<String, dynamic>)
@@ -56,7 +56,7 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..curvesEvolution = json['curves_evolution_v2'] as Map<String, dynamic>
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..note = json['note'] as String
-    ..top20AccumulatedCountries = (json['top_20_accumulated_countries'] as List)?.map((e) => e == null ? null : ItemExtended.fromJson(e as Map<String, dynamic>))?.toList()
+    ..worldCountries = (json['world_countries'] as List)?.map((e) => e == null ? null : ItemExtended.fromJson(e as Map<String, dynamic>))?.toList()
     ..effectiveReproductiveNumber = json['effective_reproductive_number'] == null ? null : EffectiveReproductiveNumber.fromJson(json['effective_reproductive_number'] as Map<String, dynamic>)
     ..testBehaviorComparison = (json['test_behavior_comparison'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(
@@ -72,6 +72,10 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'cases_by_sex': instance.casesBySex,
       'cases_by_mode_of_contagion': instance.casesByModeOfContagion,
       'evolution_of_cases_by_days': instance.evolutionOfCasesByDays,
+      'evolution_of_cases_and_recovered_by_days':
+          instance.evolutionOfCasesAndRecoveredByDays,
+      'evolution_of_active_and_recovered_accumulated':
+          instance.evolutionOfActiveAndRecoveredAccumulated,
       'evolution_of_deaths_by_days': instance.evolutionOfDeathsByDays,
       'evolution_of_recovered_by_days': instance.evolutionOfRecoveredByDays,
       'distribution_by_age_ranges': instance.distributionByAgeRanges,
@@ -92,7 +96,7 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'curves_evolution_v2': instance.curvesEvolution,
       'updated': dateTimeToJson(instance.updated),
       'note': instance.note,
-      'top_20_accumulated_countries': instance.top20AccumulatedCountries,
+      'world_countries': instance.worldCountries,
       'effective_reproductive_number': instance.effectiveReproductiveNumber,
       'test_behavior_comparison': instance.testBehaviorComparison,
     };
