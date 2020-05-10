@@ -13,6 +13,7 @@ export 'effective_reproductive_number.dart';
 export 'evolution_of_deaths_by_days.dart';
 export 'evolution_of_recovered_by_days.dart';
 export 'evolution_of_cases_and_recovered_by_days.dart';
+export 'evolution_of_active_and_recovered_accumulated.dart';
 export 'item.dart';
 export 'item_code.dart';
 export 'item_date_list.dart';
