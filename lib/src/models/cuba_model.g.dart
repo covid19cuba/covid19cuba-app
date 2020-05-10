@@ -23,25 +23,25 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
         ? null
         : EvolutionOfCasesByDays.fromJson(
             json['evolution_of_cases_by_days'] as Map<String, dynamic>)
+    ..evolutionOfCasesAndRecoveredByDays =
+        json['evolution_of_cases_and_recovered_by_days'] == null
+            ? null
+            : EvolutionOfCasesAndRecoveredByDays.fromJson(
+                json['evolution_of_cases_and_recovered_by_days']
+                    as Map<String, dynamic>)
+    ..evolutionOfActiveAndRecoveredAccumulated =
+        json['evolution_of_active_and_recovered_accumulated'] == null
+            ? null
+            : EvolutionOfActiveAndRecoveredAccumulated.fromJson(
+                json['evolution_of_active_and_recovered_accumulated']
+                    as Map<String, dynamic>)
     ..evolutionOfDeathsByDays = json['evolution_of_deaths_by_days'] == null
         ? null
-        : EvolutionOfDeathsByDays.fromJson(
-            json['evolution_of_deaths_by_days'] as Map<String, dynamic>)
-    ..evolutionOfRecoveredByDays =
-        json['evolution_of_recovered_by_days'] == null
-            ? null
-            : EvolutionOfRecoveredByDays.fromJson(
-                json['evolution_of_recovered_by_days'] as Map<String, dynamic>)
-    ..distributionByAgeRanges = (json['distribution_by_age_ranges'] as List)
-        ?.map((e) =>
-            e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..distributionOfCases = json['distribution_of_cases'] == null
-        ? null
-        : DistributionOfCases.fromJson(
-            json['distribution_of_cases'] as Map<String, dynamic>)
-    ..casesByNationality =
-        json['cases_by_nationality'] == null ? null : CasesByNationality.fromJson(json['cases_by_nationality'] as Map<String, dynamic>)
+        : EvolutionOfDeathsByDays.fromJson(json['evolution_of_deaths_by_days'] as Map<String, dynamic>)
+    ..evolutionOfRecoveredByDays = json['evolution_of_recovered_by_days'] == null ? null : EvolutionOfRecoveredByDays.fromJson(json['evolution_of_recovered_by_days'] as Map<String, dynamic>)
+    ..distributionByAgeRanges = (json['distribution_by_age_ranges'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
+    ..distributionOfCases = json['distribution_of_cases'] == null ? null : DistributionOfCases.fromJson(json['distribution_of_cases'] as Map<String, dynamic>)
+    ..casesByNationality = json['cases_by_nationality'] == null ? null : CasesByNationality.fromJson(json['cases_by_nationality'] as Map<String, dynamic>)
     ..distributionByNationalityOfForeignCases = (json['distribution_by_nationality_of_foreign_cases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
     ..listOfTestsPerformed = json['list_of_tests_performed'] == null ? null : ListOfTestsPerformed.fromJson(json['list_of_tests_performed'] as Map<String, dynamic>)
     ..testsByDays = json['tests_by_days'] == null ? null : TestsByDays.fromJson(json['tests_by_days'] as Map<String, dynamic>)
@@ -72,6 +72,10 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'cases_by_sex': instance.casesBySex,
       'cases_by_mode_of_contagion': instance.casesByModeOfContagion,
       'evolution_of_cases_by_days': instance.evolutionOfCasesByDays,
+      'evolution_of_cases_and_recovered_by_days':
+          instance.evolutionOfCasesAndRecoveredByDays,
+      'evolution_of_active_and_recovered_accumulated':
+          instance.evolutionOfActiveAndRecoveredAccumulated,
       'evolution_of_deaths_by_days': instance.evolutionOfDeathsByDays,
       'evolution_of_recovered_by_days': instance.evolutionOfRecoveredByDays,
       'distribution_by_age_ranges': instance.distributionByAgeRanges,

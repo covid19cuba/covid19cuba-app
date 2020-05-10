@@ -19,6 +19,13 @@ class CubaModel {
   @JsonKey(name: 'evolution_of_cases_by_days')
   EvolutionOfCasesByDays evolutionOfCasesByDays;
 
+  @JsonKey(name: 'evolution_of_cases_and_recovered_by_days')
+  EvolutionOfCasesAndRecoveredByDays evolutionOfCasesAndRecoveredByDays;
+
+  @JsonKey(name: 'evolution_of_active_and_recovered_accumulated')
+  EvolutionOfActiveAndRecoveredAccumulated
+      evolutionOfActiveAndRecoveredAccumulated;
+
   @JsonKey(name: 'evolution_of_deaths_by_days')
   EvolutionOfDeathsByDays evolutionOfDeathsByDays;
 
