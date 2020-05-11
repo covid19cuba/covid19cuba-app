@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
@@ -34,13 +33,12 @@ class ProvinceWidgetState extends State<ProvinceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: <Widget>[
             Container(
-              color: Constants.primaryColor,
-              child: ResumeWidget(
-                resume: provinceData.resume,
-                updated: provinceData.updated,
+              margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+              child: Card(
+                child: ResumeWidget(resume: provinceData.resume),
               ),
             ),
             Container(
