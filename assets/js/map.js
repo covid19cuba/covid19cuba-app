@@ -193,7 +193,8 @@ covidData3 = function (data, province_id, events) {
         var municipalitydata = JSON.parse(strGeoJson);
         var muns = data.muns;
         var genInfo = data.genInfo;
-        var factor = 1.5*10**(Math.floor(Math.log10(genInfo.max_pros)));
+        var factor = 1.5*10**(Math.floor(Math.log10(genInfo.max_muns)));
+        factor = 100;
         var features = [];
         for (const i in municipalitydata.features) {
             const municipality = municipalitydata.features[i].properties;
