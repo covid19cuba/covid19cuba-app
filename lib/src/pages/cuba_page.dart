@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:async';
 import 'dart:developer';
 
@@ -80,8 +84,8 @@ class CubaPageState extends State<CubaPage> {
       title: Text(Constants.appName),
       bottom: TabBar(
         labelColor: Colors.white,
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicatorWeight: 5.0,
+        indicatorColor: Colors.white,
+        isScrollable: false,
         tabs: [
           Tab(text: 'Nacional'),
           Tab(text: 'Provincial'),

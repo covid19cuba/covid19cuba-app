@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,23 +51,23 @@ class _InfoHeaderState extends State<InfoHeader> {
                     top: (widget.offset < 0) ? 0 : widget.offset,
                     child: SvgPicture.asset(
                       widget.image,
-                      width: 135, 
+                      width: 135,
                       fit: BoxFit.fitWidth,
                       alignment: Alignment.topCenter,
                     ),
                   ),
                   Positioned(
                     top: 20 - widget.offset / 2,
-                    left: 140, 
-                    width: 160.0, 
+                    left: 140,
+                    width: 160.0,
                     child: Text(
-                        "${widget.textTop}\n${widget.textBottom}",
-                        style: Constants.kHeadingTextStyle.copyWith(
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.end,
+                      "${widget.textTop}\n${widget.textBottom}",
+                      style: Constants.kHeadingTextStyle.copyWith(
+                        color: Colors.white,
                       ),
+                      textAlign: TextAlign.end,
                     ),
+                  ),
                   Container(), // I dont know why it can't work without container
                 ],
               ),

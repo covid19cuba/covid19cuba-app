@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -24,23 +28,38 @@ class HomePageState extends State<HomePage>
   static const tabs = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.notesMedical),
-      title: Text('Pesquisa'),
+      title: Text(
+        'Pesquisa',
+        style: TextStyle(fontSize: 12),
+      ),
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.globe),
-      title: Text('Mundo'),
+      title: Text(
+        'Mundo',
+        style: TextStyle(fontSize: 12),
+      ),
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.home),
-      title: Text('Cuba'),
+      title: Text(
+        'Cuba',
+        style: TextStyle(fontSize: 12),
+      ),
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.solidNewspaper),
-      title: Text('Noticias'),
+      title: Text(
+        'Noticias',
+        style: TextStyle(fontSize: 12),
+      ),
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.solidQuestionCircle),
-      title: Text('Consejos'),
+      title: Text(
+        'Consejos',
+        style: TextStyle(fontSize: 12),
+      ),
     ),
   ];
 

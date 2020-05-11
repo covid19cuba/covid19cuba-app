@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -59,13 +63,9 @@ class WorldWidget extends StatelessWidget {
         ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: Container(
-              child: Top20CountriesWidget(
-                top20AccumulatedCountries: data.all.top20AccumulatedCountries,
-                updated: data.all.comparisonOfAccumulatedCases.updated,
-              ),
-            ),
+          child: WorldCountriesWidget(
+            worldCountries: data.all.worldCountries,
+            updated: data.all.comparisonOfAccumulatedCases.updated,
           ),
         ),
         Container(padding: EdgeInsets.all(5)),
