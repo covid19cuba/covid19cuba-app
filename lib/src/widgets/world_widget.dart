@@ -18,13 +18,9 @@ class WorldWidget extends StatelessWidget {
       children: <Widget>[
         UpdateWidget(updated: data.all.updated),
         Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: ResumeWidget(resume: data.all.resume),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          margin: data.all.note == null || data.all.note == ''
+              ? EdgeInsets.all(0)
+              : EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             color: Colors.red,
             child: NoteWidget(note: data.all.note),
