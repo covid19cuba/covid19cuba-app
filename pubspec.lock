@@ -372,7 +372,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.16.0"
   introduction_screen:
     dependency: "direct main"
     description:
@@ -583,6 +583,13 @@ packages:
       relative: true
     source: path
     version: "1.0.5-fix"
+  search_choices:
+    dependency: "direct main"
+    description:
+      name: search_choices
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.15"
   searchable_dropdown:
     dependency: "direct main"
     description:

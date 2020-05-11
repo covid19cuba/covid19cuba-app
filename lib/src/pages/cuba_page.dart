@@ -12,7 +12,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/blocs/blocs.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/widgets/error_widget.dart' as ew;
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
@@ -44,13 +43,10 @@ class CubaPageState extends State<CubaPage> {
           },
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              return new DefaultTabController(
-                length: 3,
-                child: Scaffold(
-                  appBar: getAppBarTabs(context, state),
-                  drawer: getHomeDrawer(context, state),
-                  body: getBody(context, state),
-                ),
+              return Scaffold(
+                appBar: getAppBarTabs(context, state),
+                drawer: getHomeDrawer(context, state),
+                body: getBody(context, state),
               );
             },
           ),
@@ -82,16 +78,6 @@ class CubaPageState extends State<CubaPage> {
     return AppBar(
       centerTitle: true,
       title: Text(Constants.appName),
-      bottom: TabBar(
-        labelColor: Colors.white,
-        indicatorColor: Colors.white,
-        isScrollable: false,
-        tabs: [
-          Tab(text: 'Nacional'),
-          Tab(text: 'Provincial'),
-          Tab(text: 'Municipal'),
-        ],
-      ),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.refresh),
@@ -124,11 +110,7 @@ class CubaPageState extends State<CubaPage> {
             );
             return refreshCompleter.future;
           },
-          child: TabBarView(children: [
-            CubaWidget(data: state.data),
-            ProvinceListPage(),
-            MunicipalityListPage(),
-          ]),
+          child: CubaWidget(data: state.data),
         ),
       );
     }
