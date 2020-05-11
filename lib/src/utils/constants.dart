@@ -98,6 +98,8 @@ class Constants {
   static const String prefFirstModificationNotification =
       'firstModificationNotification';
   static const String prefPesquisador = 'prefPesquisador';
+  static const String prefProvinceSelected = 'prefProvinceSelected';
+  static const String prefMunicipalitySelected = 'prefMunicipalitySelected';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;

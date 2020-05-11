@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
@@ -17,11 +16,11 @@ class WorldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
+        UpdateWidget(updated: data.all.updated),
         Container(
-          color: Constants.primaryColor,
-          child: ResumeWidget(
-            resume: List<Item>(),
-            updated: data.all.updated,
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: ResumeWidget(resume: data.all.resume),
           ),
         ),
         Container(
