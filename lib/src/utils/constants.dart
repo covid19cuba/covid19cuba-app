@@ -1,7 +1,13 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Constants {
+  Constants._();
+
   static const String appName = 'Covid19 Cuba Data';
   static const String appLogo = 'assets/images/logo.png';
   static const String diseaseName = 'Covid-19';
@@ -15,6 +21,66 @@ class Constants {
   static const showMunicipalities = "covidData";
   static const showProvinces = "covidData2";
 
+  // Colors
+  static const kBackgroundColor = Color(0xFFFEFEFE);
+  static const kTitleTextColor = Color(0xFF303030);
+  static const kBodyTextColor = Color(0xFF4B4B4B);
+  static const kTextLightColor = Color(0xFF959595);
+  static const kInfectedColor = Color(0xFFFF8748);
+  static const kDeathColor = Color(0xFFFF4848);
+  static const kRecoveredColor = Color(0xFF36C12C);
+  static const kPrimaryColor = Color(0xFF3382CC);
+
+  // Text Style
+  static const kHeadingTextStyle = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const kSubTextStyle = TextStyle(
+    fontSize: 16,
+    color: kTextLightColor,
+  );
+
+  static const kTitleTextStyle = TextStyle(
+    fontSize: 18,
+    color: kTitleTextColor,
+    fontWeight: FontWeight.bold,
+  );
+
+  static final TextStyle firstHeadingStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 30,
+    fontWeight: FontWeight.w900,
+  );
+
+  static final TextStyle secondHeadingStyle = TextStyle(
+    color: Color(0xFF303030),
+    fontSize: 27,
+    fontWeight: FontWeight.w900,
+  );
+
+  static final TextStyle topTextStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+  );
+
+  static final TextStyle headingTextStyle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: Colors.black45,
+  );
+
+  static final TextStyle descStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 16,
+  );
+
+  static final TextStyle moreDescStyle = TextStyle(
+    fontSize: 16,
+  );
+
   //Shared preferences
   static const String prefIsOnBoarding = 'isOnBoarding';
   static const String prefCompareCountry = 'compareCountry';
@@ -23,13 +89,17 @@ class Constants {
   static const String prefSetUpTasksMinutes = 'setUpTasksMinutes';
   static const String prefVersionCode = 'versionCode';
   static const String prefData = 'data';
+  static const String prefDataJTNews = 'dataJTNews';
   static const String prefCacheHash = 'cacheHash';
+  static const String prefCacheJTNewsHash = 'cacheJTNewsHash';
   static const String prefVersionLastSkip = 'versionLastSkip';
   static const String prefFirstCacheNotification = 'firstCacheNotification';
   static const String prefFirstVersionNotification = 'firstVersionNotification';
   static const String prefFirstModificationNotification =
       'firstModificationNotification';
   static const String prefPesquisador = 'prefPesquisador';
+  static const String prefProvinceSelected = 'prefProvinceSelected';
+  static const String prefMunicipalitySelected = 'prefMunicipalitySelected';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
@@ -705,6 +775,13 @@ class Constants {
   ];
 
   static const collaborators = <List<String>>[
+    [
+      'Daniel Alejandro Cárdenas Cabrera',
+      'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
+          'Integrante del grupo de Inteligencia Artificial de la Facultad de '
+          'Matemática y Computación.',
+      'https://github.com/DanielUH2019',
+    ],
     [
       'Luis Eduardo González',
       'Ing. en Ciencias Informáticas. Graduado en la Universidad de '

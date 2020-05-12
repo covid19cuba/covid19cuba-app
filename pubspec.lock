@@ -237,6 +237,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  flutter_custom_clippers:
+    dependency: "direct main"
+    description:
+      name: flutter_custom_clippers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
+  flutter_html:
+    dependency: "direct main"
+    description:
+      name: flutter_html
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.1"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -265,6 +279,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_native_splash:
     dependency: "direct dev"
     description:
@@ -272,6 +291,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.9"
+  flutter_svg:
+    dependency: "direct main"
+    description:
+      name: flutter_svg
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.4"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -466,6 +492,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.4"
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1"
+  path_parsing:
+    dependency: transitive
+    description:
+      name: path_parsing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.4"
   pedantic:
     dependency: transitive
     description:
@@ -543,6 +583,13 @@ packages:
       relative: true
     source: path
     version: "1.0.5-fix"
+  search_choices:
+    dependency: "direct main"
+    description:
+      name: search_choices
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.15"
   searchable_dropdown:
     dependency: "direct main"
     description:

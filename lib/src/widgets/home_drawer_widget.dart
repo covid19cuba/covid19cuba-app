@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -123,6 +127,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           context,
           MaterialPageRoute(
             builder: (context) => TipsPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget infoItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.info,
+      text: 'Información',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InfoPage(),
           ),
         );
       },

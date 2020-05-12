@@ -1,11 +1,14 @@
 ## Contributions are highly appreciated.
 
 ### All contributors will be granted credit on the following list:
+
 * Leynier Gutiérrez González ([@leynier](https://github.com/leynier))
 * Norlan Capote Díaz ([@norlancd](https://github.com/norlancd))
 * Carlos Bermudez Porto ([@stdevCbermudez](https://github.com/stdevCbermudez))
 * Roberto Martí Cedeño ([@rmarticedeno](https://github.com/rmarticedeno))
 * Sadan ([@fsadannn](https://github.com/fsadannn))
+* Luis Eduardo Gonzalez ([@luiseduardoglez](https://github.com/luiseduardoglez))
+* Daniel Alejandro Cárdenas Cabrera ([@DanielUH2019](https://github.com/DanielUH2019))
 
 You can help out by: 
 - Reporting a bug
@@ -22,9 +25,11 @@ We're using the following branches to manage work:
 - `feature`, `bug` branches: unstable development
 
 ## How to report bugs
+
 We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https:ithub.//gcom/covid19-cuba-efforts/covid19cuba-app/issues/new/choose); it's that easy!
 
 ### Write bug reports with detail, background, and sample code
+
 **Great Bug Reports** tend to have:
 
 - A quick summary and/or background
@@ -38,6 +43,7 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 We <3 thorough bug reports.
 
 ## How to contribute code
+
 We use GitHub to host code, to track issues and feature requests, as well as accept pull requests.
 
 Pull requests are the best way to propose changes to the codebase. We use a loose version of Git Flow
@@ -54,4 +60,5 @@ and actively welcome your pull requests:
 1. Issue that pull request!
 
 ### Any contributions you make will be under the Creative Commons Zero v1.0 Universal
+
 When you submit code changes, your submissions are understood to be under the same [CC0-1.0](LICENSE) that covers the project.

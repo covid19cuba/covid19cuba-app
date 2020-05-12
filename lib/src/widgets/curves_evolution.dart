@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:math';
 
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -81,7 +85,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'Evolución de la epidemia (paises seleccionados)',
+                  'Evolución de la epidemia (países seleccionados)',
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   style: TextStyle(
@@ -92,7 +96,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
                 ),
               ),
               InfoDialogWidget(
-                title: 'Evolución de la epidemia (paises seleccionados)',
+                title: 'Evolución de la epidemia (países seleccionados)',
                 text: 'El gráfico muestra a partir de 30 casos, en escala '
                     'logarítmica y agrupados cada siete días, los casos '
                     'nuevos por el total de casos confirmados de cada país. '

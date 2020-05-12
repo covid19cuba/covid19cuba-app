@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:async';
 import 'dart:developer';
 
@@ -40,7 +44,7 @@ class CubaPageState extends State<CubaPage> {
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               return Scaffold(
-                appBar: getAppBar(context, state),
+                appBar: getAppBarTabs(context, state),
                 drawer: getHomeDrawer(context, state),
                 body: getBody(context, state),
               );
@@ -55,6 +59,22 @@ class CubaPageState extends State<CubaPage> {
   }
 
   Widget getAppBar(BuildContext context, HomeState state) {
+    return AppBar(
+      centerTitle: true,
+      title: Text(Constants.appName),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.refresh),
+          color: Colors.white,
+          onPressed: () {
+            BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget getAppBarTabs(BuildContext context, HomeState state) {
     return AppBar(
       centerTitle: true,
       title: Text(Constants.appName),

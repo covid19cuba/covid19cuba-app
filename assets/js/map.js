@@ -50,9 +50,9 @@ function getMarkerProfile(title, pro, mun) {
 
 covidData = function (data, events) {
 
-    var factor = 100;
     var muns = data.muns;
     var genInfo = data.genInfo;
+    var factor = 1.5*10**(Math.floor(Math.log10(genInfo.max_pros)));
 
     if (geojsonM)
         map_mun.removeLayer(geojsonM);
@@ -92,6 +92,7 @@ covidData = function (data, events) {
     function getColorM(code) {
         if (code in muns) {
             var opac = logx(factor,muns[code] * factor / genInfo.max_muns);
+            if(opac<0.07){opac=0.07;}
             return "rgba(176,30,34," + opac + ")";
         }
         return '#D1D2D4';
@@ -121,9 +122,9 @@ covidData = function (data, events) {
 
 covidData2 = function (data, events) {
 
-    var factor = 100;
     var pros = data.pros;
     var genInfo = data.genInfo;
+    var factor = 1.5*10**(Math.floor(Math.log10(genInfo.max_pros)));
 
     if (geojsonM)
         map_mun.removeLayer(geojsonM);
@@ -162,6 +163,7 @@ covidData2 = function (data, events) {
     function getColorP(code) {
         if (code in pros) {
             var opac = logx(factor,pros[code] * factor / genInfo.max_pros);
+            if(opac<0.07){opac=0.07;}
             return "rgba(176,30,34," + opac + ")";
         }
         return '#D1D2D4';
@@ -189,9 +191,10 @@ filterByProvince = function (province_id, data) {
 
 covidData3 = function (data, province_id, events) {
         var municipalitydata = JSON.parse(strGeoJson);
-        var factor = 100;
         var muns = data.muns;
         var genInfo = data.genInfo;
+        var factor = 1.5*10**(Math.floor(Math.log10(genInfo.max_muns)));
+        factor = 100;
         var features = [];
         for (const i in municipalitydata.features) {
             const municipality = municipalitydata.features[i].properties;
@@ -240,6 +243,7 @@ covidData3 = function (data, province_id, events) {
         function getColorM(code) {
             if (code in muns) {
                 var opac = logx(factor,muns[code] * factor / genInfo.max_muns);
+                if(opac<0.07){opac=0.07;}
                 return "rgba(176,30,34," + opac + ")";
             }
             return '#D1D2D4';

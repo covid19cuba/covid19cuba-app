@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
@@ -93,7 +97,7 @@ class TestBehaviorComparisonWidgetState
               InfoDialogWidget(
                 title: 'Comparación respecto al comportamiento de los Tests '
                     'realizados',
-                text: 'El gráfico permite comparar a Cuba con distintos paises '
+                text: 'El gráfico permite comparar a Cuba con distintos países '
                     'respecto, a la vez, el porciento de detección de '
                     'contagiados en base al total de tests realizados y el '
                     'número de tests por millón de habitantes.\n\n'

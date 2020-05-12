@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:convert';
 import 'dart:developer';
 
@@ -63,7 +67,7 @@ extension DateTimeToString on DateTime {
     return '${this.day}/${this.month}';
   }
 
-  String toStrPlus() {
+  String toStrPlus({time: false}) {
     var months = [
       'enero',
       'febrero',
@@ -77,7 +81,10 @@ extension DateTimeToString on DateTime {
       'noviembre',
       'diciembre',
     ];
-    return '${this.day} de ${months[this.month - 1]} del ${this.year}';
+    if (!time) {
+      return '${this.day} de ${months[this.month - 1]} del ${this.year}';
+    }
+    return '${this.hour % 12 < 10 ? '0' : ''}${this.hour % 12}:${this.minute < 10 ? '0' : ''}${this.minute} ${this.hour < 12 ? 'AM' : 'PM'} del ${this.day} de ${months[this.month - 1]} del ${this.year}';
   }
 }
 
