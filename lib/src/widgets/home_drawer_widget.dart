@@ -48,6 +48,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             header(),
             separator(),
             casesTableItem(),
+            contactRegistrationItem(),
             tipsItem(),
             linksDrawerItem(),
             updateDrawerItem(),
@@ -334,6 +335,15 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         );
       }
     );
+  }
+
+  Widget contactRegistrationItem() {
+    return createDrawerItem(context,
+        icon: Icons.account_box, text: 'Registro de Contactos', onTap: () {
+      Navigator.of(context).pop();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ContactsListPage()));
+    });
   }
 
   Widget settingsDrawerItem() {

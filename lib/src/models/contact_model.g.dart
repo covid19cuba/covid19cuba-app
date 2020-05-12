@@ -1,19 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'moment.dart';
+part of 'contact_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MomentModel _$MomentModelFromJson(Map<String, dynamic> json) {
-  return MomentModel()
+ContactModel _$ContactModelFromJson(Map<String, dynamic> json) {
+  return ContactModel()
+    ..name = json['name'] as String
     ..date = dateTimeFromJson(json['date'] as String)
-    ..value = json['value'] as String;
+    ..place = json['place'] as String;
 }
 
-Map<String, dynamic> _$MomentModelToJson(MomentModel instance) =>
+Map<String, dynamic> _$ContactModelToJson(ContactModel instance) =>
     <String, dynamic>{
+      'name': instance.name,
       'date': dateTimeToJson(instance.date),
-      'value': instance.value,
+      'place': instance.place,
     };
