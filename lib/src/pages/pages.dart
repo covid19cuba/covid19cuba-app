@@ -4,6 +4,8 @@
 
 export 'changelog_page.dart';
 export 'credits_page.dart';
+export 'contacts_list_page.dart';
+export 'contacts_registration_page.dart';
 export 'cuba_page.dart';
 export 'data_page.dart';
 export 'home_page.dart';

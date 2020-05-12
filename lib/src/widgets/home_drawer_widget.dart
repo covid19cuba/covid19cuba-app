@@ -4,7 +4,6 @@
 
 import 'dart:developer';
 
-import 'package:covid19cuba/src/pages/contacts_registration_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
@@ -48,11 +47,11 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             header(),
             separator(),
             casesTableItem(),
+            contactRegistrationItem(),
             tipsItem(),
             linksDrawerItem(),
             updateDrawerItem(),
             sharerDrawerItem(),
-            contactRegistrationItem(),
             settingsDrawerItem(),
             faqsDrawerItem(),
             creditsDrawerItem(),
@@ -318,22 +317,14 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
       },
     );
   }
-  
-  Widget contactRegistrationItem(){
-    return createDrawerItem(
-      context,
-      icon: Icons.account_box,
-      text: 'Registro de Contactos',
-      onTap: (){
-        Navigator.of(context).pop();
-        Navigator.push(
-          context,
-          MaterialPageRoute(  
-            builder: (context) => ContactsRegistrationPage()
-          )
-        );
-      }
-    );
+
+  Widget contactRegistrationItem() {
+    return createDrawerItem(context,
+        icon: Icons.account_box, text: 'Registro de Contactos', onTap: () {
+      Navigator.of(context).pop();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ContactsListPage()));
+    });
   }
 
   Widget settingsDrawerItem() {
