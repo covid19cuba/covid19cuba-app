@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:convert';
 import 'dart:developer';
 
@@ -13,7 +17,7 @@ const urlJTNewsDataIO =
     'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/jt_news.json';
 
 Future<JTNewsModel> getJTNewsData() async {
-  var stateList = await StateModel.check();
+  var stateList = await JTNewsStateModel.check();
   var cache = true;
   if (stateList != null) {
     cache = stateList[0];

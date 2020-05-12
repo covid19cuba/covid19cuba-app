@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -123,7 +127,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
               InfoDialogWidget(
                 title: 'Distribución por Provincias',
                 text:
-                'El cuadrado representa aquellos que por distintas razones '
+                    'El cuadrado representa aquellos que por distintas razones '
                     'no tengan localización conocida.',
               )
             ],

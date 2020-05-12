@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
@@ -18,6 +22,13 @@ class CubaModel {
 
   @JsonKey(name: 'evolution_of_cases_by_days')
   EvolutionOfCasesByDays evolutionOfCasesByDays;
+
+  @JsonKey(name: 'evolution_of_cases_and_recovered_by_days')
+  EvolutionOfCasesAndRecoveredByDays evolutionOfCasesAndRecoveredByDays;
+
+  @JsonKey(name: 'evolution_of_active_and_recovered_accumulated')
+  EvolutionOfActiveAndRecoveredAccumulated
+      evolutionOfActiveAndRecoveredAccumulated;
 
   @JsonKey(name: 'evolution_of_deaths_by_days')
   EvolutionOfDeathsByDays evolutionOfDeathsByDays;
@@ -76,8 +87,8 @@ class CubaModel {
   @JsonKey(name: 'note')
   String note;
 
-  @JsonKey(name: 'top_20_accumulated_countries')
-  List<ItemExtended> top20AccumulatedCountries;
+  @JsonKey(name: 'world_countries')
+  List<ItemExtended> worldCountries;
 
   @JsonKey(name: 'effective_reproductive_number')
   EffectiveReproductiveNumber effectiveReproductiveNumber;
