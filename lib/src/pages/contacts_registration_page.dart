@@ -155,4 +155,8 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
     PrefService.setStringList(Constants.prefContacts, contacts);
     Navigator.pop(context);
   }
+
 }
+
+
+
