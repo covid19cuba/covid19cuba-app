@@ -19,7 +19,7 @@ class InfoDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Icon(Icons.info),
+      child: Icon(Icons.info, color: Constants.primaryColor.withOpacity(0.54)),
       onTap: () {
         showDialog(
           context: context,
@@ -54,10 +54,16 @@ class InfoDialogWidget extends StatelessWidget {
               ),
               actions: <Widget>[
                 FlatButton(
-                    child: Text('Cerrar'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
+                  child: Text(
+                    'Cerrar',
+                    style: TextStyle(
+                      color: Constants.primaryColor,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ],
             );
           },

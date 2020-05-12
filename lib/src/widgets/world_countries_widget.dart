@@ -2,11 +2,14 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class WorldCountriesWidget extends StatefulWidget {
   final List<ItemExtended> worldCountries;
@@ -41,6 +44,63 @@ class WorldCountriesWidgetState extends State<WorldCountriesWidget> {
       return Container();
     }
     return PaginatedDataTable(
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.info, color: Constants.primaryColor),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Acumulados por países'),
+                  content: Container(
+                    margin: EdgeInsets.only(
+                      top: 10,
+                      bottom: 10,
+                    ),
+                    child: Linkify(
+                      text: 'Datos de los países tomados '
+                          'de\nhttps://github.com/pomber/covid19\ny '
+                          'actualizado el '
+                          '${updated.toStrPlus()}',
+                      options: LinkifyOptions(humanize: true),
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Constants.primaryColor,
+                        fontSize: 14,
+                      ),
+                      linkStyle: TextStyle(
+                        color: Colors.red,
+                        fontSize: 14,
+                      ),
+                      onOpen: (link) async {
+                        if (await canLaunch(link.url)) {
+                          await launch(link.url);
+                        } else {
+                          log('Could not launch $link');
+                        }
+                      },
+                    ),
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        'Cerrar',
+                        style: TextStyle(
+                          color: Constants.primaryColor,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        )
+      ],
       sortColumnIndex: sortColumnIndex,
       sortAscending: sortAscending,
       header: Row(
@@ -58,13 +118,6 @@ class WorldCountriesWidgetState extends State<WorldCountriesWidget> {
                 fontSize: 18,
               ),
             ),
-          ),
-          InfoDialogWidget(
-            title: 'Acumulados por países',
-            text: 'Datos de los países tomados '
-                'de\nhttps://github.com/pomber/covid19\ny '
-                'actualizado el '
-                '${updated.toStrPlus()}',
           ),
         ],
       ),

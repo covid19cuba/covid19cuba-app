@@ -24,7 +24,6 @@ class DistributionNationalityDiagnosedWidget extends StatelessWidget {
     }
     String dialogText = '';
     for (var item in distributionByNationalityOfForeignCases) {
-      print(item.code + ' = ' + item.name);
       dialogText += '\n' + item.code + ' = ' + item.name;
     }
 
