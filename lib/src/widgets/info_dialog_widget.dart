@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -15,7 +19,7 @@ class InfoDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Icon(Icons.info),
+      child: Icon(Icons.info, color: Constants.primaryColor.withOpacity(0.54)),
       onTap: () {
         showDialog(
           context: context,
@@ -50,10 +54,16 @@ class InfoDialogWidget extends StatelessWidget {
               ),
               actions: <Widget>[
                 FlatButton(
-                    child: Text('Cerrar'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
+                  child: Text(
+                    'Cerrar',
+                    style: TextStyle(
+                      color: Constants.primaryColor,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ],
             );
           },

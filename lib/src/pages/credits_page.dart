@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -283,20 +287,37 @@ class CreditsPage extends StatelessWidget {
     );
 
     result.add(
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Copyright 2020',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),
-            ),
-            Container(padding: EdgeInsets.all(2)),
-            Icon(Icons.copyright, color: Colors.white),
-          ],
+      GestureDetector(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Copyright 2020',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
+              ),
+              Container(padding: EdgeInsets.all(2)),
+              Icon(Icons.copyright, color: Colors.white),
+              Container(padding: EdgeInsets.all(2)),
+              Text(
+                'GPL-3.0',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
         ),
+        onTap: () async {
+          const url =
+              'https://raw.githubusercontent.com/covid19cuba/covid19cuba-app/master/LICENSE';
+          if (await canLaunch(url)) {
+            await launch(url);
+          } else {
+            log('Could not launch $url');
+          }
+        },
       ),
     );
 

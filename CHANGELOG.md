@@ -1,5 +1,24 @@
 # Covid19 Cuba Data Mobile Application Changelog
 
+## [0.8.0] - May 11, 2020
+
+### Added
+
+* Tips section accessible from the menu at the bottom.
+* News section accessible from the menu at the bottom.
+* Evolution chart by days of cases and daily discharges.
+* Evolution chart by days of active cases and accumulated registrations.
+* Sorting and paging of the Accumulated table by countries in the World section accessible from the menu at the bottom.
+
+### Changed
+
+* Organization of provincial and municipal statistics, now all are found from the Cuba section accessible from the menu at the bottom using filters to select the desired province or municipality.
+* Ability to choose between any pair of countries in the Comparison chart between countries in the World section.
+
+### Fixed
+
+Color of the municipalities and provinces on the maps.
+
 ## [0.7.1] - May 4, 2020
 
 ### Added

@@ -1,34 +1,26 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 
 class ResumeWidget extends StatelessWidget {
   final List<Item> resume;
-  final DateTime updated;
 
-  const ResumeWidget({
-    this.resume,
-    this.updated,
-  }) : assert(resume != null, updated != null);
+  const ResumeWidget({this.resume}) : assert(resume != null);
 
   @override
   Widget build(BuildContext context) {
     var borderSide = BorderSide(
-      color: Colors.white,
-      width: 2,
+      color: Constants.primaryColor,
+      width: 1,
     );
     return Column(
       children: <Widget>[
         Table(
-          border: TableBorder(
-            top: BorderSide(
-              color: Colors.white,
-              width: 4,
-            ),
-            horizontalInside: borderSide,
-            bottom: borderSide,
-          ),
           children: [
             TableRow(
               children: [
@@ -37,18 +29,19 @@ class ResumeWidget extends StatelessWidget {
                     margin: EdgeInsets.all(15),
                     child: Center(
                       child: Text(
-                        'Actualización del ${updated.toStrPlus()}',
+                        'Resumen',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Constants.primaryColor,
                           fontWeight: FontWeight.bold,
+                          fontSize: 18,
                         ),
                       ),
                     ),
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
         Table(
@@ -59,7 +52,6 @@ class ResumeWidget extends StatelessWidget {
           border: TableBorder(
             top: borderSide,
             horizontalInside: borderSide,
-            bottom: borderSide,
           ),
           children: resume.map((item) {
             return TableRow(
@@ -72,7 +64,7 @@ class ResumeWidget extends StatelessWidget {
                         item.name,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Constants.primaryColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -87,7 +79,7 @@ class ResumeWidget extends StatelessWidget {
                         item.value.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Constants.primaryColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

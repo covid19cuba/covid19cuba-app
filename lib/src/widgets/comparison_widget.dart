@@ -1,3 +1,7 @@
+// Copyright (C) 2020 covid19cuba
+// Use of this source code is governed by a GNU GPL 3 license that can be
+// found in the LICENSE file.
+
 import 'dart:math';
 
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -22,11 +26,10 @@ class ComparisonWidget extends StatefulWidget {
 }
 
 class ComparisonWidgetState extends State<ComparisonWidget> {
-  String firstSelectedCountry  = Constants.countryCuba;
+  String firstSelectedCountry = Constants.countryCuba;
   String secondSelectedCountry = Constants.defaultCompareCountry;
   String selectedOption = 'Confirmados';
   bool firstSelector = false;
-
 
   final List<String> options = List<String>()
     ..add('Confirmados')
@@ -40,12 +43,14 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
 
   ComparisonWidgetState({this.comparisonOfAccumulatedCases}) {
     assert(comparisonOfAccumulatedCases != null);
-    secondSelectedCountry = PrefService.getString(Constants.prefCompareCountry) ??
-        Constants.defaultCompareCountry;
+    secondSelectedCountry =
+        PrefService.getString(Constants.prefCompareCountry) ??
+            Constants.defaultCompareCountry;
     if (!comparisonOfAccumulatedCases.countries.keys
         .contains(secondSelectedCountry)) {
       secondSelectedCountry = Constants.defaultCompareCountry;
-      PrefService.setString(Constants.prefCompareCountry, secondSelectedCountry);
+      PrefService.setString(
+          Constants.prefCompareCountry, secondSelectedCountry);
     }
   }
 
@@ -286,7 +291,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
           child: CountryPickerDialog(
             titlePadding: EdgeInsets.all(8.0),
             semanticLabel: 'País seleccionado ' +
-                comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
+                comparisonOfAccumulatedCases
+                    .countries[secondSelectedCountry].name,
             searchCursorColor: Colors.pinkAccent,
             searchInputDecoration: InputDecoration(hintText: 'Buscar...'),
             searchEmptyView: Center(child: Text('No se encontró el país')),
@@ -298,7 +304,9 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
                 country.iso3Code,
               );
               setState(() {
-                firstSelector ? firstSelectedCountry = country.iso3Code :  secondSelectedCountry = country.iso3Code;
+                firstSelector
+                    ? firstSelectedCountry = country.iso3Code
+                    : secondSelectedCountry = country.iso3Code;
               });
             },
             itemFilter: (c) => comparisonOfAccumulatedCases.countries.keys
@@ -352,7 +360,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         Container(
           margin: EdgeInsets.only(left: 35, right: 35),
           child: ListTile(
-            onTap:((){
+            onTap: (() {
               firstSelector = true;
               _openCountryPickerDialog();
             }),
@@ -376,7 +384,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         Container(
           margin: EdgeInsets.only(left: 35, right: 35),
           child: ListTile(
-            onTap: ((){
+            onTap: (() {
               firstSelector = false;
               _openCountryPickerDialog();
             }),
