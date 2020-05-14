@@ -125,8 +125,4 @@ class ContactsListPageState extends State<ContactsListPage> {
       },
     );
   }
-
 }
-
-
-
