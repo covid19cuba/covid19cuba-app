@@ -317,21 +317,21 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
       },
     );
   }
-  
-  Widget contactRegistrationItem(){
+
+  Widget contactRegistrationItem() {
     return createDrawerItem(
       context,
       icon: Icons.account_box,
       text: 'Registro de Contactos',
-      onTap: (){
+      onTap: () {
         Navigator.of(context).pop();
         Navigator.push(
           context,
-          MaterialPageRoute(  
-            builder: (context) => ContactsRegistrationPage()
-          )
+          MaterialPageRoute(
+            builder: (context) => ContactsRegistrationPage(),
+          ),
         );
-      }
+      },
     );
   }
 
