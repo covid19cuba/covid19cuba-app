@@ -3,10 +3,13 @@
 // found in the LICENSE file.
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:grizzly_io/grizzly_io.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
@@ -39,7 +42,13 @@ class ContactsListPageState extends State<ContactsListPage> {
                 ),
               ];
             },
-            onSelected: (index) {},
+            onSelected: (index) async {
+              var box = await Hive.openBox('contacts');              
+              var data = getListForCsv(box.toMap());
+
+              //save in /storage/emulated/0/Android/data/club.postdata.covid19cuba/files
+              await _exportToCsv(encodeCsv(data));
+            },
           )
         ],
       ),
@@ -124,5 +133,39 @@ class ContactsListPageState extends State<ContactsListPage> {
         return Divider();
       },
     );
+  }
+
+  List<List<String>> getListForCsv(Map<dynamic,dynamic> contactsMap){
+
+
+    Iterable<dynamic> values = contactsMap.values;
+    List<List<String>> data = values.map((item){
+                                  return _getAttributesList(item);
+                                  }).toList();
+    
+    data.insert(0, ['Nombre','Fecha','Lugar']);
+    return data;
+  }
+
+  List<String> _getAttributesList(String item){
+
+    List<String> attributes = new List();
+    List<String> firstSplit = item.split(',');
+    
+    firstSplit.forEach((sequence){
+      List<String> temp = sequence.split(':');
+      String attribute = temp[1].replaceAll('"', '').replaceAll('}', '');
+      attributes.add(attribute);
+    });
+    
+    return attributes;
+  }
+
+  Future<File>_exportToCsv(String data) async {
+
+    final directory = await getExternalStorageDirectory();
+    final localPath = directory.path;
+    final file      = File('$localPath/contactos.csv');
+    return file.writeAsString('$data');
   }
 }
