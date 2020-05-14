@@ -5,30 +5,86 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:preferences/preferences.dart';
+import 'package:hive/hive.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class ContactsRegistrationPage extends StatefulWidget {
+  final int index;
+
+  const ContactsRegistrationPage({this.index = -1});
+
   @override
   ContactsRegistrationPageState createState() =>
-      ContactsRegistrationPageState();
+      ContactsRegistrationPageState(index: index);
 }
 
 class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
+  final int index;
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final dateController = TextEditingController();
   final placeController = TextEditingController();
   DateTime dateTime;
 
+  ContactsRegistrationPageState({this.index}) {
+    if (index != -1) {
+      var box = Hive.box('contacts');
+      var json = box.getAt(index);
+      var contact = ContactModel.fromJson(jsonDecode(json));
+      contact.index = index;
+      nameController.text = contact.name;
+      dateController.text = contact.date.toStrPlus();
+      placeController.text = contact.place;
+      dateTime = contact.date;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Registrar Contacto'),
+        title: Text('${index == -1 ? 'Registrar' : 'Editar'} Contacto'),
+        actions: index != -1
+            ? <Widget>[
+                IconButton(
+                  icon: Icon(Icons.delete, color: Colors.white),
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Confirme'),
+                          content: Text(
+                            'Usted esta seguro o segura que desea '
+                            'eliminar el contacto.',
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Si'),
+                              onPressed: () async {
+                                var box = Hive.box('contacts');
+                                await box.deleteAt(index);
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                            ),
+                            FlatButton(
+                              child: Text('No'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ]
+            : [],
         backgroundColor: Constants.primaryColor,
       ),
       floatingActionButton: FloatingActionButton(
@@ -135,24 +191,22 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
     );
   }
 
-  void saveContact() {
+  void saveContact() async {
     if (!formKey.currentState.validate()) {
       return;
     }
-    if (dateController.text == null || dateController.text.isEmpty) {
-      dateController.text = DateTime.now().toStrPlus();
-      dateTime = DateTime.now();
-    }
     var contact = ContactModel.create(
       name: nameController.text,
-      date: dateTime,
+      date: dateTime ?? DateTime.now(),
       place: placeController.text,
     );
     var json = jsonEncode(contact.toJson());
-    var contacts =
-        PrefService.getStringList(Constants.prefContacts) ?? List<String>();
-    contacts.add(json);
-    PrefService.setStringList(Constants.prefContacts, contacts);
+    var box = Hive.box('contacts');
+    if (index == -1) {
+      await box.add(json);
+    } else {
+      await box.putAt(index, json);
+    }
     Navigator.pop(context);
   }
 

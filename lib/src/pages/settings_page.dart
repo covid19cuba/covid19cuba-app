@@ -89,7 +89,6 @@ class SettingsPageState extends State<SettingsPage> {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  // return object of type Dialog
                   return AlertDialog(
                     title: Text('Confirme'),
                     content: Text('Usted esta seguro o segura que desea '
