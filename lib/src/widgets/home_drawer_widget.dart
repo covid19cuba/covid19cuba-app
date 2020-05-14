@@ -328,7 +328,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ContactsRegistrationPage(),
+            builder: (context) => ContactsListPage(),
           ),
         );
       },
