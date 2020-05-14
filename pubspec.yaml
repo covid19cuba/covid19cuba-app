@@ -42,11 +42,14 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   search_choices: ^1.0.15
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
-  build_runner: ^1.9.0
   json_serializable: ^3.3.0
+  hive_generator: ^0.7.0+2
+  build_runner: ^1.10.0
 
 flutter:
   uses-material-design: true

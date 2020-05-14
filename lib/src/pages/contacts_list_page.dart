@@ -5,7 +5,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:preferences/preferences.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
@@ -19,19 +20,6 @@ class ContactsListPage extends StatefulWidget {
 class ContactsListPageState extends State<ContactsListPage> {
   @override
   Widget build(BuildContext context) {
-    var contacts = List<ContactModel>();
-    var json =
-        PrefService.getStringList(Constants.prefContacts) ?? List<String>();
-    for (var item in json) {
-      contacts.add(ContactModel.fromJson(jsonDecode(item)));
-    }
-    contacts.sort((a, b) {
-      var cmp = a.date.compareTo(b.date);
-      if (cmp == 0) {
-        return a.name.compareTo(b.name);
-      }
-      return cmp;
-    });
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -67,7 +55,26 @@ class ContactsListPageState extends State<ContactsListPage> {
           );
         },
       ),
-      body: getList(contacts),
+      body: ValueListenableBuilder(
+        valueListenable: Hive.box('contacts').listenable(),
+        builder: (context, Box box, widget) {
+          var contacts = List<ContactModel>();
+          for (var i = 0; i < box.length; ++i) {
+            var json = box.getAt(i);
+            var contact = ContactModel.fromJson(jsonDecode(json));
+            contact.index = i;
+            contacts.add(contact);
+          }
+          contacts.sort((a, b) {
+            var cmp = a.date.compareTo(b.date);
+            if (cmp == 0) {
+              return a.name.compareTo(b.name);
+            }
+            return cmp;
+          });
+          return getList(contacts);
+        },
+      ),
     );
   }
 
@@ -101,6 +108,16 @@ class ContactsListPageState extends State<ContactsListPage> {
             Icons.account_circle,
             color: Constants.primaryColor,
           ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ContactsRegistrationPage(
+                  index: contacts[index].index,
+                ),
+              ),
+            );
+          },
         );
       },
       separatorBuilder: (context, index) {

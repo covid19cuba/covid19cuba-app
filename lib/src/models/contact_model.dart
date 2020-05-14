@@ -13,6 +13,8 @@ class ContactModel {
   @JsonKey(fromJson: dateTimeFromJson, toJson: dateTimeToJson)
   DateTime date;
   String place;
+  @JsonKey(ignore: true)
+  int index;
 
   ContactModel();
 
