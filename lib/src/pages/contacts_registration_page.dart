@@ -209,8 +209,4 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
     }
     Navigator.pop(context);
   }
-
 }
-
-
-

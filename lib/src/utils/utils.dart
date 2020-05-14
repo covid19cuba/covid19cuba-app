@@ -10,4 +10,3 @@ export 'exceptions.dart';
 export 'functions.dart';
 export 'notification_manager.dart';
 export 'notifications.dart';
-export 'contact.dart';
