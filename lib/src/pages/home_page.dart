@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/utils/cuba_icon_icons.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class HomePageState extends State<HomePage>
     InfoPage(),
   ];
 
-  static const tabs = <BottomNavigationBarItem>[
+  static final tabs = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.notesMedical),
       title: Text(
@@ -41,7 +42,11 @@ class HomePageState extends State<HomePage>
       ),
     ),
     BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.home),
+      // icon: Icon(FontAwesomeIcons.home),
+      icon: Container(
+        margin: EdgeInsets.only(bottom: 6.0, right: 22.0, top: 6.0),
+        child: Icon(CubaIcon.cuba, size: 12.0),
+      ),
       title: Text(
         'Cuba',
         style: TextStyle(fontSize: 12),
