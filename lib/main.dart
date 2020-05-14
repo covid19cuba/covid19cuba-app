@@ -4,12 +4,14 @@
 
 import 'dart:developer';
 
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:preferences/preference_service.dart';
 
 import 'package:covid19cuba/src/app.dart';
+import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 void main() async {
@@ -26,6 +28,10 @@ void main() async {
   var update = await checkUpdate();
 
   await setUpTasks();
+
+  await Hive.initFlutter();
+
+  await Hive.openBox('contacts');
 
   runApp(App(update));
 
