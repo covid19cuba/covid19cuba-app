@@ -3,13 +3,13 @@
 // found in the LICENSE file.
 
 import 'dart:convert';
-import 'dart:io';
 
+import 'package:covid19cuba/src/utils/export.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:grizzly_io/grizzly_io.dart';
-import 'package:path_provider/path_provider.dart';
+
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
@@ -43,11 +43,12 @@ class ContactsListPageState extends State<ContactsListPage> {
               ];
             },
             onSelected: (index) async {
-              var box = await Hive.openBox('contacts');              
-              var data = getListForCsv(box.toMap());
-
+              var box = await Hive.openBox('contacts');
+              var contacts = getContactsList(box);              
+              var data = getCsvList(contacts);
+              
               //save in /storage/emulated/0/Android/data/club.postdata.covid19cuba/files
-              await _exportToCsv(encodeCsv(data));
+              await exportToCsv(encodeCsv(data));
             },
           )
         ],
@@ -67,13 +68,7 @@ class ContactsListPageState extends State<ContactsListPage> {
       body: ValueListenableBuilder(
         valueListenable: Hive.box('contacts').listenable(),
         builder: (context, Box box, widget) {
-          var contacts = List<ContactModel>();
-          for (var i = 0; i < box.length; ++i) {
-            var json = box.getAt(i);
-            var contact = ContactModel.fromJson(jsonDecode(json));
-            contact.index = i;
-            contacts.add(contact);
-          }
+          var contacts = getContactsList(box);
           contacts.sort((a, b) {
             var cmp = a.date.compareTo(b.date);
             if (cmp == 0) {
@@ -135,37 +130,16 @@ class ContactsListPageState extends State<ContactsListPage> {
     );
   }
 
-  List<List<String>> getListForCsv(Map<dynamic,dynamic> contactsMap){
+  List<ContactModel> getContactsList(Box box){
 
-
-    Iterable<dynamic> values = contactsMap.values;
-    List<List<String>> data = values.map((item){
-                                  return _getAttributesList(item);
-                                  }).toList();
-    
-    data.insert(0, ['Nombre','Fecha','Lugar']);
-    return data;
+    var contacts = List<ContactModel>();
+    for (var i = 0; i < box.length; ++i) {
+      var json = box.getAt(i);
+      var contact = ContactModel.fromJson(jsonDecode(json));
+      contact.index = i;
+      contacts.add(contact);
+    }
+    return contacts;
   }
 
-  List<String> _getAttributesList(String item){
-
-    List<String> attributes = new List();
-    List<String> firstSplit = item.split(',');
-    
-    firstSplit.forEach((sequence){
-      List<String> temp = sequence.split(':');
-      String attribute = temp[1].replaceAll('"', '').replaceAll('}', '');
-      attributes.add(attribute);
-    });
-    
-    return attributes;
-  }
-
-  Future<File>_exportToCsv(String data) async {
-
-    final directory = await getExternalStorageDirectory();
-    final localPath = directory.path;
-    final file      = File('$localPath/contactos.csv');
-    return file.writeAsString('$data');
-  }
 }
