@@ -4,9 +4,12 @@
 
 import 'dart:convert';
 
+import 'package:covid19cuba/src/utils/export.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:grizzly_io/grizzly_io.dart';
+
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
@@ -39,7 +42,14 @@ class ContactsListPageState extends State<ContactsListPage> {
                 ),
               ];
             },
-            onSelected: (index) {},
+            onSelected: (index) async {
+              var box = await Hive.openBox('contacts');
+              var contacts = getContactsList(box);              
+              var data = getCsvList(contacts);
+              
+              //save in /storage/emulated/0/Android/data/club.postdata.covid19cuba/files
+              await exportToCsv(encodeCsv(data));
+            },
           )
         ],
       ),
@@ -58,13 +68,7 @@ class ContactsListPageState extends State<ContactsListPage> {
       body: ValueListenableBuilder(
         valueListenable: Hive.box('contacts').listenable(),
         builder: (context, Box box, widget) {
-          var contacts = List<ContactModel>();
-          for (var i = 0; i < box.length; ++i) {
-            var json = box.getAt(i);
-            var contact = ContactModel.fromJson(jsonDecode(json));
-            contact.index = i;
-            contacts.add(contact);
-          }
+          var contacts = getContactsList(box);
           contacts.sort((a, b) {
             var cmp = a.date.compareTo(b.date);
             if (cmp == 0) {
@@ -125,4 +129,17 @@ class ContactsListPageState extends State<ContactsListPage> {
       },
     );
   }
+
+  List<ContactModel> getContactsList(Box box){
+
+    var contacts = List<ContactModel>();
+    for (var i = 0; i < box.length; ++i) {
+      var json = box.getAt(i);
+      var contact = ContactModel.fromJson(jsonDecode(json));
+      contact.index = i;
+      contacts.add(contact);
+    }
+    return contacts;
+  }
+
 }
