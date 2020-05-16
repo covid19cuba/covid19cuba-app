@@ -67,7 +67,8 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
           e == null
               ? null
               : TestBehaviorComparison.fromJson(e as Map<String, dynamic>)),
-    );
+    )
+    ..radarChartData = json['radar_chart_data'] == null ? null : RadarDataModel.fromJson(json['radar_chart_data'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
@@ -102,4 +103,5 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'world_countries': instance.worldCountries,
       'effective_reproductive_number': instance.effectiveReproductiveNumber,
       'test_behavior_comparison': instance.testBehaviorComparison,
+      'radar_chart_data': instance.radarChartData,
     };

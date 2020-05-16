@@ -42,6 +42,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   search_choices: ^1.0.15
+  flutter_echarts:
+    path: ./flutter_echarts
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9

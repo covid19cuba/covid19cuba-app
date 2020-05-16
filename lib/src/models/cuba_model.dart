@@ -96,6 +96,9 @@ class CubaModel {
   @JsonKey(name: 'test_behavior_comparison')
   Map<String, TestBehaviorComparison> testBehaviorComparison;
 
+  @JsonKey(name: 'radar_chart_data')
+  RadarDataModel radarChartData;
+
   CubaModel();
 
   factory CubaModel.fromJson(Map<String, dynamic> json) =>
