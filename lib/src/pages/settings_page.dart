@@ -16,6 +16,12 @@ class SettingsPage extends StatefulWidget {
 }
 
 class SettingsPageState extends State<SettingsPage> {
+  var _settingsDivider = Divider(
+    thickness: 1,
+    indent: 16,
+    endIndent: 16,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +48,7 @@ class SettingsPageState extends State<SettingsPage> {
            displayValues: ["15 minutos", "30 minutos", "1 hora"],
         ),*/
         PreferenceTitle(
-          'Modo de conexión:',
+          'Modo de conexión',
           style: TextStyle(
             color: Constants.primaryColor,
             fontWeight: FontWeight.bold,
@@ -72,6 +78,17 @@ class SettingsPageState extends State<SettingsPage> {
               'ahorrar y a la vez tener una estabilidad del servicio buena.',
           isDefault: true,
         ),
+        _settingsDivider,
+        SwitchPreference(
+          'Zoom en las gráficas',
+          Constants.prefGraphsZoom,
+          //defaultVal: PrefService.getBool(Constants.prefGraphsZoom),
+          defaultVal: true,
+          desc: 'Permite hacer zoom en las gráficas. '
+              'Puede que necesite de mayor consumo de recursos '
+              'de su teléfono.',
+        ),
+        _settingsDivider,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           child: GFButton(
