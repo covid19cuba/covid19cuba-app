@@ -45,7 +45,9 @@ dependencies:
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
   grizzly_io: ^2.2.0
-  
+  pdf: ^1.8.0
+
+
 dev_dependencies:
   flutter_native_splash: ^0.1.9
   json_serializable: ^3.3.0
