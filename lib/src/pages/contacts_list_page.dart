@@ -10,7 +10,6 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:grizzly_io/grizzly_io.dart';
 
-
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -33,24 +32,37 @@ class ContactsListPageState extends State<ContactsListPage> {
               return [
                 PopupMenuItem(
                   child: Text(
-                    'Exportar',
+                    'Exportar CSV',
                     style: TextStyle(
                       color: Constants.primaryColor,
                     ),
                   ),
                   value: 0,
                 ),
+                PopupMenuItem(
+                  child: Text(
+                    'Exportar PDF',
+                    style: TextStyle(
+                      color: Constants.primaryColor,
+                    ),
+                  ),
+                  value: 1,
+                ),
               ];
             },
             onSelected: (index) async {
-              var box = await Hive.openBox('contacts');
-              var contacts = getContactsList(box);              
-              var data = getCsvList(contacts);
-              
               //save in /storage/emulated/0/Android/data/club.postdata.covid19cuba/files
-              await exportToCsv(encodeCsv(data));
+              var box = await Hive.openBox('contacts');
+              var contacts = getContactsList(box);  
+              if(index == 0){            
+                var data = getCsvList(contacts);
+                await exportToCsv(encodeCsv(data));
+              }
+              else{
+                await exportToPdf(contacts);
+              } 
             },
-          )
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
