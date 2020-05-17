@@ -183,9 +183,9 @@ class TestBehaviorComparisonWidgetState
             },
             hint: Padding(
               padding: EdgeInsets.all(3),
-              child: Text('Seleccione los países que desee'),
+              child: Text('Seleccione los países'),
             ),
-            searchHint: 'Seleccione los países que desee',
+            searchHint: 'Seleccione los países',
             onChanged: (value) {
               setState(() {
                 selectedItems = value;
