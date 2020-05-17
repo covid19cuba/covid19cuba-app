@@ -100,7 +100,7 @@ class Constants {
   static const String prefPesquisador = 'prefPesquisador';
   static const String prefProvinceSelected = 'prefProvinceSelected';
   static const String prefMunicipalitySelected = 'prefMunicipalitySelected';
-  static const String prefGraphsZoom = 'prefGraphsZoom';
+  static const String prefChartsZoom = 'prefChartsZoom';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;

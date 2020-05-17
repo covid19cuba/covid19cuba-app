@@ -184,7 +184,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
-              if (PrefService.getBool(Constants.prefGraphsZoom)) charts.PanAndZoomBehavior(),
+              if (PrefService.getBool(Constants.prefChartsZoom)) charts.PanAndZoomBehavior(),
             ],
             domainAxis: charts.NumericAxisSpec(
               viewport: charts.NumericExtents(
@@ -215,9 +215,9 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
             },
             hint: Padding(
               padding: EdgeInsets.all(3),
-              child: Text('Seleccione los países que desee'),
+              child: Text('Seleccione los países'),
             ),
-            searchHint: 'Seleccione los países que desee',
+            searchHint: 'Seleccione los países',
             onChanged: (value) {
               setState(() {
                 selectedItems = value;

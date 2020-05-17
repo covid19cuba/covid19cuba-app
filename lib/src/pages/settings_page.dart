@@ -16,7 +16,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class SettingsPageState extends State<SettingsPage> {
-  var _settingsDivider = Divider(
+  static const divider = const Divider(
     thickness: 1,
     indent: 16,
     endIndent: 16,
@@ -78,41 +78,40 @@ class SettingsPageState extends State<SettingsPage> {
               'ahorrar y a la vez tener una estabilidad del servicio buena.',
           isDefault: true,
         ),
-        _settingsDivider,
+        divider,
         SwitchPreference(
           'Zoom en las gráficas',
-          Constants.prefGraphsZoom,
-          //defaultVal: PrefService.getBool(Constants.prefGraphsZoom),
-          defaultVal: true,
+          Constants.prefChartsZoom,
           desc: 'Permite hacer zoom en las gráficas. '
               'Puede que necesite de mayor consumo de recursos '
               'de su teléfono.',
         ),
-        _settingsDivider,
+        divider,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           child: GFButton(
             text: 'Reiniciar estado de la Aplicación',
-            textColor: Colors.black,
+            textColor: Constants.primaryColor,
             textStyle: TextStyle(
-              color: Colors.black,
+              color: Constants.primaryColor,
             ),
             color: Constants.primaryColor,
             shape: GFButtonShape.pills,
             type: GFButtonType.outline2x,
-            borderSide: BorderSide(width: 1.0, color: Colors.black),
+            borderSide: BorderSide(width: 1.0, color: Constants.primaryColor),
             fullWidthButton: true,
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  // return object of type Dialog
                   return AlertDialog(
                     title: Text('Confirme'),
-                    content: Text('Usted esta seguro o segura que desea '
-                        'reiniciar el estado de la aplicación.\n\n'
-                        'Esto hará que vuelva al estado de acabada de '
-                        'instalar.'),
+                    content: Text(
+                      'Usted esta seguro o segura que desea '
+                      'reiniciar el estado de la aplicación.\n\n'
+                      'Esto hará que vuelva al estado de acabada de '
+                      'instalar.',
+                    ),
                     actions: <Widget>[
                       FlatButton(
                         child: Text('Si'),
