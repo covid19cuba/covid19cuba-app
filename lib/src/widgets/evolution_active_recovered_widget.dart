@@ -91,6 +91,7 @@ class EvolutionActiveRecoveredWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              charts.PanAndZoomBehavior(),
             ],
           ),
         ),

@@ -87,6 +87,7 @@ class EvolutionDeathWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              charts.PanAndZoomBehavior(),
             ],
           ),
         ),

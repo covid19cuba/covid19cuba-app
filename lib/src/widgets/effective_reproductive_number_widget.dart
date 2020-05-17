@@ -121,7 +121,8 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
                   charts.RangeAnnotationAxisType.measure,
                   color: charts.MaterialPalette.gray.shadeDefault,
                 )
-              ])
+              ]),
+              charts.PanAndZoomBehavior(),
             ],
           ),
         ),

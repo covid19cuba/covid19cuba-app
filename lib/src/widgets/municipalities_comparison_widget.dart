@@ -201,6 +201,7 @@ class MunicipalitiesComparisonWidgetState
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              charts.PanAndZoomBehavior(),
             ],
           ),
         ),

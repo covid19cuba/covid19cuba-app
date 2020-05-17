@@ -100,6 +100,7 @@ class TestsPositivePercentWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              charts.PanAndZoomBehavior(),
             ],
           ),
         ),
