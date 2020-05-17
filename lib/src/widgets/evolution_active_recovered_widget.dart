@@ -4,6 +4,7 @@
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
@@ -91,6 +92,7 @@ class EvolutionActiveRecoveredWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefGraphsZoom)) charts.PanAndZoomBehavior(),
             ],
           ),
         ),
