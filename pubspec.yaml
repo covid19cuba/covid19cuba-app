@@ -54,6 +54,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - flutter_echarts/assets/echart.html
     - assets/images/
     - assets/js/leaflet.js
     - assets/js/jquery.min.js

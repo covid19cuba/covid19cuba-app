@@ -97,7 +97,7 @@ class CubaModel {
   Map<String, TestBehaviorComparison> testBehaviorComparison;
 
   @JsonKey(name: 'radar_chart_data')
-  RadarDataModel radarChartData;
+  Map<String, dynamic> radarChartData;
 
   CubaModel();
 
