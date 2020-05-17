@@ -161,7 +161,8 @@ class TestBehaviorComparisonWidgetState
                 cellPadding: EdgeInsets.symmetric(horizontal: 5),
                 measureFormatter: (num measure) => measure == null ? '' : '<-',
               ),
-              if (PrefService.getBool(Constants.prefChartsZoom)) charts.PanAndZoomBehavior(),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),
