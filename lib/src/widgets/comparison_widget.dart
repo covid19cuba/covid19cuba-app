@@ -135,7 +135,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         showVerticalFollowLine:
             charts.LinePointHighlighterFollowLineType.nearest,
       ),
-      charts.PanAndZoomBehavior(),
+      if (PrefService.getBool(Constants.prefGraphsZoom)) charts.PanAndZoomBehavior(),
     ];
   }
 
