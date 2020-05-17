@@ -3,11 +3,13 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:search_choices/search_choices.dart';
 
-import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/blocs/blocs.dart';
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class CubaWidget extends StatefulWidget {
@@ -81,10 +83,7 @@ class CubaWidgetState extends State<CubaWidget> {
       onChanged: (value) {
         PrefService.setString(Constants.prefProvinceSelected, value);
         PrefService.setString(Constants.prefMunicipalitySelected, null);
-        setState(() {
-          province = value;
-          municipality = null;
-        });
+        BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
       },
       hint: Container(
         margin: EdgeInsets.all(10),
