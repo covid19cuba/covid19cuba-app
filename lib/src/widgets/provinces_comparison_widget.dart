@@ -165,6 +165,7 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              charts.PanAndZoomBehavior(),
             ],
           ),
         ),
