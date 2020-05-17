@@ -160,6 +160,7 @@ class TestBehaviorComparisonWidgetState
                 cellPadding: EdgeInsets.symmetric(horizontal: 5),
                 measureFormatter: (num measure) => measure == null ? '' : '<-',
               ),
+              charts.PanAndZoomBehavior(),
             ],
           ),
         ),
