@@ -24,7 +24,7 @@ class ProvinceModel {
   EvolutionOfCasesByDays evolutionOfCasesByDays;
 
   @JsonKey(name: 'distribution_by_age_ranges')
-  List<ItemCode> distributionByAgeRanges;
+  List<ItemCodePlus> distributionByAgeRanges;
 
   @JsonKey(name: 'cases_by_nationality')
   CasesByNationality casesByNationality;

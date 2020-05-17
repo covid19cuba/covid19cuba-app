@@ -10,7 +10,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
-  final List<ItemCode> distributionByAgeRanges;
+  final List<ItemCodePlus> distributionByAgeRanges;
 
   const DistributionAgeGroupsDiagnosedWidget({this.distributionByAgeRanges})
       : assert(distributionByAgeRanges != null);
@@ -54,7 +54,7 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
           height: 250,
           child: charts.BarChart(
             [
-              charts.Series<ItemCode, String>(
+              charts.Series<ItemCodePlus, String>(
                 id: 'Diagnosticados',
                 colorFn: (_, __) => ChartColors.red,
                 domainFn: (item, _) => item.name,
