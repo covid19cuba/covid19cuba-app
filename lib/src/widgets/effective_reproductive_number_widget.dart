@@ -4,6 +4,7 @@
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -121,7 +122,9 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
                   charts.RangeAnnotationAxisType.measure,
                   color: charts.MaterialPalette.gray.shadeDefault,
                 )
-              ])
+              ]),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),

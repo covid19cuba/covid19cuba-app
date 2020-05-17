@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:random_color/random_color.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
+import 'package:preferences/preference_service.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
@@ -183,6 +184,8 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
             domainAxis: charts.NumericAxisSpec(
               viewport: charts.NumericExtents(
@@ -213,9 +216,9 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
             },
             hint: Padding(
               padding: EdgeInsets.all(3),
-              child: Text('Seleccione los países que desee'),
+              child: Text('Seleccione los países'),
             ),
-            searchHint: 'Seleccione los países que desee',
+            searchHint: 'Seleccione los países',
             onChanged: (value) {
               setState(() {
                 selectedItems = value;

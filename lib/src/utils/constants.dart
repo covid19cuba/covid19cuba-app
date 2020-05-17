@@ -101,6 +101,8 @@ class Constants {
   static const String prefProvinceSelected = 'prefProvinceSelected';
   static const String prefMunicipalitySelected = 'prefMunicipalitySelected';
   static const String prefContacts = 'prefContacts';
+  static const String prefChartsZoom = 'prefChartsZoom';
+  static const String prefBadgeNews = 'prefBadgeNews';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;

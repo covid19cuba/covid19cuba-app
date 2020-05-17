@@ -46,7 +46,8 @@ dependencies:
   hive_flutter: ^0.3.0+2
   grizzly_io: ^2.2.0
   pdf: ^1.8.0
-
+  device_info: ">=0.4.2+4 <2.0.0"
+  badges: ^1.1.1
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
@@ -75,6 +76,9 @@ flutter:
     - family: Ubuntu
       fonts:
         - asset: fonts/Ubuntu/Ubuntu-Regular.ttf
+    - family: CubaIcon
+      fonts:
+        - asset: fonts/CubaIcon.ttf
 
 flutter_native_splash:
   image: assets/images/icon.jpg

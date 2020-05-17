@@ -39,7 +39,7 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
         ? null
         : EvolutionOfDeathsByDays.fromJson(json['evolution_of_deaths_by_days'] as Map<String, dynamic>)
     ..evolutionOfRecoveredByDays = json['evolution_of_recovered_by_days'] == null ? null : EvolutionOfRecoveredByDays.fromJson(json['evolution_of_recovered_by_days'] as Map<String, dynamic>)
-    ..distributionByAgeRanges = (json['distribution_by_age_ranges'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
+    ..distributionByAgeRanges = (json['distribution_by_age_ranges'] as List)?.map((e) => e == null ? null : ItemCodePlus.fromJson(e as Map<String, dynamic>))?.toList()
     ..distributionOfCases = json['distribution_of_cases'] == null ? null : DistributionOfCases.fromJson(json['distribution_of_cases'] as Map<String, dynamic>)
     ..casesByNationality = json['cases_by_nationality'] == null ? null : CasesByNationality.fromJson(json['cases_by_nationality'] as Map<String, dynamic>)
     ..distributionByNationalityOfForeignCases = (json['distribution_by_nationality_of_foreign_cases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()

@@ -21,6 +21,7 @@ export 'evolution_of_cases_and_recovered_by_days.dart';
 export 'evolution_of_active_and_recovered_accumulated.dart';
 export 'item.dart';
 export 'item_code.dart';
+export 'item_code_plus.dart';
 export 'item_date_list.dart';
 export 'item_double_list.dart';
 export 'item_extended.dart';

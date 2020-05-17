@@ -47,8 +47,6 @@ Color of the municipalities and provinces on the maps.
 * Chart colors to keep up with the website.
 * Order of items in the side menu.
 
-### Fixed
-
 ## [0.6.1] - April 24, 2020
 
 ### Added

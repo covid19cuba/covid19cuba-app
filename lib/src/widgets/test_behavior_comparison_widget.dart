@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:random_color/random_color.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
+import 'package:preferences/preference_service.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -160,6 +161,8 @@ class TestBehaviorComparisonWidgetState
                 cellPadding: EdgeInsets.symmetric(horizontal: 5),
                 measureFormatter: (num measure) => measure == null ? '' : '<-',
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),
@@ -181,9 +184,9 @@ class TestBehaviorComparisonWidgetState
             },
             hint: Padding(
               padding: EdgeInsets.all(3),
-              child: Text('Seleccione los países que desee'),
+              child: Text('Seleccione los países'),
             ),
-            searchHint: 'Seleccione los países que desee',
+            searchHint: 'Seleccione los países',
             onChanged: (value) {
               setState(() {
                 selectedItems = value;

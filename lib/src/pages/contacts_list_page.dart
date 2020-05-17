@@ -4,11 +4,9 @@
 
 import 'dart:convert';
 
-import 'package:covid19cuba/src/utils/export.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:grizzly_io/grizzly_io.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
@@ -51,16 +49,16 @@ class ContactsListPageState extends State<ContactsListPage> {
               ];
             },
             onSelected: (index) async {
-              //save in /storage/emulated/0/Android/data/club.postdata.covid19cuba/files
               var box = await Hive.openBox('contacts');
-              var contacts = getContactsList(box);  
-              if(index == 0){            
-                var data = getCsvList(contacts);
-                await exportToCsv(encodeCsv(data));
+              var contacts = getContactsList(box);
+              switch (index) {
+                case 0:
+                  await exportToCsv(contacts);
+                  break;
+                case 1:
+                  await exportToPdf(contacts);
+                  break;
               }
-              else{
-                await exportToPdf(contacts);
-              } 
             },
           ),
         ],
@@ -142,8 +140,7 @@ class ContactsListPageState extends State<ContactsListPage> {
     );
   }
 
-  List<ContactModel> getContactsList(Box box){
-
+  List<ContactModel> getContactsList(Box box) {
     var contacts = List<ContactModel>();
     for (var i = 0; i < box.length; ++i) {
       var json = box.getAt(i);
@@ -153,5 +150,4 @@ class ContactsListPageState extends State<ContactsListPage> {
     }
     return contacts;
   }
-
 }
