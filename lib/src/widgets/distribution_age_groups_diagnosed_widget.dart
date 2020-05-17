@@ -51,12 +51,38 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 250,
+          height: 350,
           child: charts.BarChart(
             [
               charts.Series<ItemCodePlus, String>(
-                id: 'Diagnosticados',
+                id: 'Diagnosticados Hombres',
+                seriesCategory: 'A',
+                colorFn: (_, __) => ChartColors.purple,
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.men,
+                data: distributionByAgeRanges,
+              ),
+              charts.Series<ItemCodePlus, String>(
+                id: 'Diagnosticados Mujeres',
+                seriesCategory: 'A',
                 colorFn: (_, __) => ChartColors.red,
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.women,
+                data: distributionByAgeRanges,
+              ),
+              if (distributionByAgeRanges.any((x) => x.unknown != 0))
+                charts.Series<ItemCodePlus, String>(
+                  id: 'Diagnosticados Sexo Desconocido',
+                  seriesCategory: 'A',
+                  colorFn: (_, __) => ChartColors.yellow,
+                  domainFn: (item, _) => item.name,
+                  measureFn: (item, _) => item.unknown,
+                  data: distributionByAgeRanges,
+                ),
+              charts.Series<ItemCodePlus, String>(
+                id: 'Diagnosticados',
+                seriesCategory: 'B',
+                colorFn: (_, __) => ChartColors.grey,
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: distributionByAgeRanges,
@@ -64,6 +90,7 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
             ],
             animate: false,
             defaultInteractions: true,
+            barGroupingType: charts.BarGroupingType.groupedStacked,
             behaviors: [
               charts.ChartTitle(
                 'Rango',
@@ -83,10 +110,6 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
                 position: charts.BehaviorPosition.bottom,
                 desiredMaxColumns: 1,
                 showMeasures: true,
-                measureFormatter: (num measure) {
-                  if (measure == null) return '';
-                  return measure.toInt().toString() + ' Casos';
-                },
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:
