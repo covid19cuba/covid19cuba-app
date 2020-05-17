@@ -184,7 +184,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
-              if (PrefService.getBool(Constants.prefGraphsZoom)) charts.PanAndZoomBehavior(),
+              if (PrefService.getBool(Constants.prefChartsZoom)) charts.PanAndZoomBehavior(),
             ],
             domainAxis: charts.NumericAxisSpec(
               viewport: charts.NumericExtents(

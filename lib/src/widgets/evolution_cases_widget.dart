@@ -102,7 +102,7 @@ class EvolutionCasesWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
-              if (PrefService.getBool(Constants.prefGraphsZoom)) charts.PanAndZoomBehavior(),
+              if (PrefService.getBool(Constants.prefChartsZoom)) charts.PanAndZoomBehavior(),
             ],
           ),
         ),
