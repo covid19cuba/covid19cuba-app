@@ -123,7 +123,8 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
                   color: charts.MaterialPalette.gray.shadeDefault,
                 )
               ]),
-              if (PrefService.getBool(Constants.prefChartsZoom)) charts.PanAndZoomBehavior(),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),
