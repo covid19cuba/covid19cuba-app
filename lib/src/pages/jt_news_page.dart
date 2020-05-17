@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:getflutter/getflutter.dart';
+import 'package:preferences/preference_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/blocs/blocs.dart';
@@ -90,6 +91,7 @@ class JTNewsPageState extends State<JTNewsPage> {
       return LoadingWidget();
     }
     if (state is LoadedJTNewsState) {
+      PrefService.setBool(Constants.prefBadgeNews, false);
       return Container(
         child: RefreshIndicator(
           onRefresh: () {
