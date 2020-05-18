@@ -5,6 +5,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -54,19 +55,25 @@ class TestEvolutionWidget extends StatelessWidget {
           height: 350,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: testsByDays.positive.name,
                 colorFn: (_, __) => ChartColors.red,
-                domainFn: (_, i) => testsByDays.date.values[i],
-                measureFn: (item, _) => item,
-                data: testsByDays.positive.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  testsByDays.positive.values,
+                  testsByDays.date.values,
+                ]).toList(),
               ),
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: testsByDays.total.name,
                 colorFn: (_, __) => ChartColors.green,
-                domainFn: (_, i) => testsByDays.date.values[i],
-                measureFn: (item, _) => item,
-                data: testsByDays.total.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  testsByDays.total.values,
+                  testsByDays.date.values,
+                ]).toList(),
               ),
             ],
             animate: false,

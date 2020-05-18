@@ -5,6 +5,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
@@ -141,30 +142,32 @@ class MunicipalitiesComparisonWidgetState
           padding: EdgeInsets.all(10),
           height: 300,
           child: charts.LineChart(
-            <charts.Series<int, int>>[
-              charts.Series<int, int>(
+            <charts.Series<List, int>>[
+              charts.Series<List, int>(
                 id: Constants.municipalitiesCodes[selectedMunicipality1],
                 colorFn: (_, __) => ChartColors.blue,
                 domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: data
+                measureFn: (item, _) => item[0],
+                data: zip([data
                     .getMunicipality(selectedMunicipality1)
                     .all
                     .evolutionOfCasesByDays
                     .accumulated
                     .values,
+                ]).toList(),
               ),
-              charts.Series<int, int>(
+              charts.Series<List, int>(
                 id: Constants.municipalitiesCodes[selectedMunicipality2],
                 colorFn: (_, __) => ChartColors.orange,
                 domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: data
+                measureFn: (item, _) => item[0],
+                data: zip([data
                     .getMunicipality(selectedMunicipality2)
                     .all
                     .evolutionOfCasesByDays
                     .accumulated
                     .values,
+                ]).toList(),
               ),
             ],
             animate: false,

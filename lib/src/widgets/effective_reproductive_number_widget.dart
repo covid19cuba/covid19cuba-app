@@ -5,6 +5,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -62,26 +63,39 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
           height: 400,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<double, DateTime>(
+              charts.Series<List, DateTime>(
                 id: effectiveReproductiveNumber.upper.name,
                 colorFn: (_, __) => ChartColors.pink,
-                domainFn: (_, i) => effectiveReproductiveNumber.date.values[i],
-                measureFn: (item, _) => item,
-                data: effectiveReproductiveNumber.upper.values,
+                domainFn: (item, i) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  effectiveReproductiveNumber.upper.values,
+                  effectiveReproductiveNumber.date.values,
+                ]).toList(),
               ),
-              charts.Series<double, DateTime>(
+              charts.Series<List, DateTime>(
                 id: effectiveReproductiveNumber.value.name,
                 colorFn: (_, __) => ChartColors.red,
-                domainFn: (_, i) => effectiveReproductiveNumber.date.values[i],
-                measureFn: (item, _) => item,
-                data: effectiveReproductiveNumber.value.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                measureLowerBoundFn: (item, _) => item[2],
+                measureUpperBoundFn: (item, _) => item[3],
+                data: zip([
+                  effectiveReproductiveNumber.value.values,
+                  effectiveReproductiveNumber.date.values,
+                  effectiveReproductiveNumber.lower.values,
+                  effectiveReproductiveNumber.upper.values,
+                ]).toList(),
               ),
-              charts.Series<double, DateTime>(
+              charts.Series<List, DateTime>(
                 id: effectiveReproductiveNumber.lower.name,
                 colorFn: (_, __) => ChartColors.pink,
-                domainFn: (_, i) => effectiveReproductiveNumber.date.values[i],
-                measureFn: (item, _) => item,
-                data: effectiveReproductiveNumber.lower.values,
+                domainFn: (item, i) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                    effectiveReproductiveNumber.lower.values,
+                    effectiveReproductiveNumber.date.values,
+                ]).toList(),
               ),
             ],
             animate: false,
