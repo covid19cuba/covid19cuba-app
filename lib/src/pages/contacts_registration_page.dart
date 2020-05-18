@@ -4,11 +4,11 @@
 
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:simple_autocomplete_formfield/simple_autocomplete_formfield.dart';
 
 class ContactsRegistrationPage extends StatefulWidget {
   final int index;
@@ -26,11 +26,15 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
   final nameController = TextEditingController();
   final dateController = TextEditingController();
   final placeController = TextEditingController();
+  List<String> contactsNames;
+  List<String> contactsPlaces;
   DateTime dateTime;
 
   ContactsRegistrationPageState({this.index}) {
+    var box = Hive.box('contacts');
+    contactsNames = getContactsList(box).map((x) => x.name).toSet().toList();
+    contactsPlaces = getContactsList(box).map((x) => x.place).toSet().toList();
     if (index != -1) {
-      var box = Hive.box('contacts');
       var json = box.getAt(index);
       var contact = ContactModel.fromJson(jsonDecode(json));
       contact.index = index;
@@ -114,22 +118,35 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
   }
 
   Widget nameField() {
-    return TextFormField(
+    return SimpleAutocompleteFormField<String>(
       controller: nameController,
-      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         labelText: 'Nombre de la persona',
         suffixIcon: Icon(
+          Icons.clear,
+        ),
+        prefixIcon: Icon(
           Icons.account_circle,
           color: Constants.primaryColor,
         ),
       ),
-      validator: (value) => value.length == 0
-          ? 'Debe rellenar este campo antes de guardar'
-          : null,
+      suggestionsHeight: 120,
+      itemBuilder: (context, value) => Container(
+        padding: EdgeInsets.all(10),
+        child: Text(value),
+      ),
+      onSearch: (s) async => contactsNames
+          .where((x) => x.toLowerCase().contains(s.toLowerCase()))
+          .toList(),
+      onChanged: (value) => setState(() => nameController.text = value),
+      onSaved: (value) => setState(() => nameController.text = value),
+      validator: (value) =>
+          nameController == null || nameController.text.length == 0
+              ? 'Debe rellenar este campo antes de guardar'
+              : null,
     );
   }
 
@@ -143,7 +160,7 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
         ),
         labelText: 'Fecha cuando tuvo el contacto',
         helperText: 'Si se deja en blanco se guardará la fecha actual',
-        suffixIcon: Icon(
+        prefixIcon: Icon(
           Icons.calendar_today,
           color: Constants.primaryColor,
         ),
@@ -172,22 +189,35 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
   }
 
   Widget placeField() {
-    return TextFormField(
+    return SimpleAutocompleteFormField<String>(
       controller: placeController,
-      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         labelText: 'Lugar del contacto',
         suffixIcon: Icon(
+          Icons.clear,
+        ),
+        prefixIcon: Icon(
           Icons.add_location,
           color: Constants.primaryColor,
         ),
       ),
-      validator: (value) => value.length == 0
-          ? 'Debe rellenar este campo antes de guardar'
-          : null,
+      suggestionsHeight: 120,
+      itemBuilder: (context, value) => Container(
+        padding: EdgeInsets.all(10),
+        child: Text(value),
+      ),
+      onSearch: (s) async => contactsPlaces
+          .where((x) => x.toLowerCase().contains(s.toLowerCase()))
+          .toList(),
+      onChanged: (value) => setState(() => placeController.text = value),
+      onSaved: (value) => setState(() => placeController.text = value),
+      validator: (value) =>
+          placeController == null || placeController.text.length == 0
+              ? 'Debe rellenar este campo antes de guardar'
+              : null,
     );
   }
 
