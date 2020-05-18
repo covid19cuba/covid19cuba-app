@@ -1,7 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Copyright (C) 2020 covid19cuba
-// Use of this source code is governed by a GNU GPL 3 license that can be
-// found in the LICENSE file.
 
 part of 'province_model.dart';
 
@@ -28,7 +25,7 @@ ProvinceModel _$ProvinceModelFromJson(Map<String, dynamic> json) {
             json['evolution_of_cases_by_days'] as Map<String, dynamic>)
     ..distributionByAgeRanges = (json['distribution_by_age_ranges'] as List)
         ?.map((e) =>
-            e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))
+            e == null ? null : ItemCodePlus.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..casesByNationality = json['cases_by_nationality'] == null
         ? null

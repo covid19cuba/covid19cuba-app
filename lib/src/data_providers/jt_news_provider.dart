@@ -29,6 +29,7 @@ Future<JTNewsModel> getJTNewsData() async {
       return data;
     }
   }
+  PrefService.setBool(Constants.prefBadgeNews, true);
   var mode = PrefService.getInt(Constants.prefConnectionMode) ??
       Constants.ConnectionModeMerge;
   switch (mode) {
