@@ -5,6 +5,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
@@ -55,19 +56,25 @@ class TestsPositivePercentWidget extends StatelessWidget {
           height: 300,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<double, DateTime>(
+              charts.Series<List, DateTime>(
                 id: testsPositivePercent.daily.name,
                 colorFn: (_, __) => ChartColors.red,
-                domainFn: (_, i) => testsPositivePercent.date.values[i],
-                measureFn: (item, _) => item,
-                data: testsPositivePercent.daily.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  testsPositivePercent.daily.values,
+                  testsPositivePercent.date.values,
+                ]).toList(),
               ),
-              charts.Series<double, DateTime>(
+              charts.Series<List, DateTime>(
                 id: testsPositivePercent.accumulated.name,
                 colorFn: (_, __) => ChartColors.purple,
-                domainFn: (_, i) => testsPositivePercent.date.values[i],
-                measureFn: (item, _) => item,
-                data: testsPositivePercent.accumulated.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  testsPositivePercent.accumulated.values,
+                  testsPositivePercent.date.values,
+                ]).toList(),
               ),
             ],
             animate: false,

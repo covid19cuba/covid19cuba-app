@@ -5,6 +5,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
@@ -42,35 +43,44 @@ class EvolutionCasesWidget extends StatelessWidget {
           height: 400,
           child: charts.TimeSeriesChart(
             [
-                  charts.Series<int, DateTime>(
-                    id: evolutionOfCasesByDays.daily.name,
-                    colorFn: (_, __) => ChartColors.blueDark,
-                    domainFn: (_, i) => evolutionOfCasesByDays.date.values[i],
-                    measureFn: (item, _) => item,
-                    data: evolutionOfCasesByDays.daily.values,
-                  )
-                ] +
-                (evolutionOfCasesByDays.active != null
-                    ? [
-                        charts.Series<int, DateTime>(
-                          id: evolutionOfCasesByDays.active.name,
-                          colorFn: (_, __) => ChartColors.redDark,
-                          domainFn: (_, i) =>
-                              evolutionOfCasesByDays.date.values[i],
-                          measureFn: (item, _) => item,
-                          data: evolutionOfCasesByDays.active.values,
-                        ),
-                      ]
-                    : []) +
-                [
-                  charts.Series<int, DateTime>(
-                    id: evolutionOfCasesByDays.accumulated.name,
-                    colorFn: (_, __) => ChartColors.pink,
-                    domainFn: (_, i) => evolutionOfCasesByDays.date.values[i],
-                    measureFn: (item, _) => item,
-                    data: evolutionOfCasesByDays.accumulated.values,
-                  ),
-                ],
+              charts.Series<List, DateTime>(
+                id: evolutionOfCasesByDays.daily.name,
+                colorFn: (_, __) => ChartColors.blueDark,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfCasesByDays.daily.values,
+                  evolutionOfCasesByDays.date.values,
+                ]).toList(),
+              )
+            ] +
+            (evolutionOfCasesByDays.active != null ?
+              [
+                charts.Series<List, DateTime>(
+                  id: evolutionOfCasesByDays.active.name,
+                  colorFn: (_, __) => ChartColors.redDark,
+                  domainFn: (item, _) => item[1],
+                  measureFn: (item, _) => item[0],
+                  data: zip([
+                    evolutionOfCasesByDays.active.values,
+                    evolutionOfCasesByDays.date.values,
+                  ]).toList(),
+                ),
+              ] :
+              []
+            ) +
+            [
+              charts.Series<List, DateTime>(
+                id: evolutionOfCasesByDays.accumulated.name,
+                colorFn: (_, __) => ChartColors.pink,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfCasesByDays.accumulated.values,
+                  evolutionOfCasesByDays.date.values,
+                ]).toList(),
+              ),
+            ],
             animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(

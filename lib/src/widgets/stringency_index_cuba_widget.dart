@@ -6,6 +6,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
@@ -98,19 +99,25 @@ class StringencyIndexCubaWidget extends StatelessWidget {
           height: 400,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<double, DateTime>(
+              charts.Series<List, DateTime>(
                 id: 'Stringency actual (v2)',
                 colorFn: (_, __) => ChartColors.red,
-                domainFn: (_, i) => stringencyIndexCuba.days[i],
-                measureFn: (item, _) => item,
-                data: stringencyIndexCuba.data,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  stringencyIndexCuba.data,
+                  stringencyIndexCuba.days,
+                ]).toList(),
               ),
-              charts.Series<double, DateTime>(
+              charts.Series<List, DateTime>(
                 id: 'Stringency previo (v1)',
                 colorFn: (_, __) => ChartColors.purple,
-                domainFn: (_, i) => stringencyIndexCuba.days[i],
-                measureFn: (item, _) => item,
-                data: stringencyIndexCuba.dataLegacy,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  stringencyIndexCuba.dataLegacy,
+                  stringencyIndexCuba.days,
+                ]).toList(),
               ),
             ],
             animate: false,

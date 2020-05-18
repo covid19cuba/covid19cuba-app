@@ -5,6 +5,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
@@ -107,28 +108,30 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
           padding: EdgeInsets.all(10),
           height: 300,
           child: charts.LineChart(
-            <charts.Series<int, int>>[
-              charts.Series<int, int>(
+            <charts.Series<List, int>>[
+              charts.Series<List, int>(
                 id: Constants.provinceAbbreviations[selectedProvince1],
                 colorFn: (_, __) => ChartColors.blue,
                 domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: provinces[selectedProvince1]
+                measureFn: (item, _) => item[0],
+                data: zip([provinces[selectedProvince1]
                     .all
                     .evolutionOfCasesByDays
                     .accumulated
                     .values,
+                ]).toList(),
               ),
-              charts.Series<int, int>(
+              charts.Series<List, int>(
                 id: Constants.provinceAbbreviations[selectedProvince2],
                 colorFn: (_, __) => ChartColors.orange,
                 domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: provinces[selectedProvince2]
+                measureFn: (item, _) => item[0],
+                data: zip([provinces[selectedProvince2]
                     .all
                     .evolutionOfCasesByDays
                     .accumulated
                     .values,
+                ]).toList(),
               ),
             ],
             animate: false,

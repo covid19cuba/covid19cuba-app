@@ -9,6 +9,7 @@ import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
 import 'package:preferences/preferences.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -204,19 +205,19 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         comparisonOfAccumulatedCases.countries[secondSelectedCountry]);
 
     return [
-      charts.Series<dynamic, int>(
+      charts.Series<List, int>(
         id: comparisonOfAccumulatedCases.countries[firstSelectedCountry].name,
         colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: firstList,
+        measureFn: (item, _) => item[0],
+        data: zip([firstList]).toList(),
       ),
-      charts.Series<dynamic, int>(
+      charts.Series<List, int>(
         id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
         colorFn: (_, __) => ChartColors.blue,
         domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: secondList,
+        measureFn: (item, _) => item[0],
+        data: zip([secondList]).toList(),
       ),
     ];
   }
@@ -228,23 +229,23 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         comparisonOfAccumulatedCases.countries[secondSelectedCountry]);
 
     return [
-      charts.Series<dynamic, int>(
+      charts.Series<List, int>(
         id: comparisonOfAccumulatedCases.countries[firstSelectedCountry].name,
         colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: firstList,
+        measureFn: (item, _) => item[0],
+        data: zip([firstList]).toList(),
       ),
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
         colorFn: (_, __) => ChartColors.blue,
         domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: secondList
-            .take(
-              min(secondList.length, firstList.length),
-            )
+        measureFn: (item, _) => item[0],
+        data: zip([
+          secondList
+            .take(min(secondList.length, firstList.length))
             .toList(),
+        ]).toList(),
       ),
     ];
   }

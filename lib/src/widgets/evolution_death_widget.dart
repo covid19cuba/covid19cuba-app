@@ -5,6 +5,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
@@ -42,19 +43,25 @@ class EvolutionDeathWidget extends StatelessWidget {
           height: 300,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: evolutionOfDeathsByDays.daily.name,
                 colorFn: (_, __) => ChartColors.blueDark,
-                domainFn: (_, i) => evolutionOfDeathsByDays.date.values[i],
-                measureFn: (item, _) => item,
-                data: evolutionOfDeathsByDays.daily.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfDeathsByDays.daily.values,
+                  evolutionOfDeathsByDays.date.values,
+                ]).toList(),
               ),
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: evolutionOfDeathsByDays.accumulated.name,
                 colorFn: (_, __) => ChartColors.purple,
-                domainFn: (_, i) => evolutionOfDeathsByDays.date.values[i],
-                measureFn: (item, _) => item,
-                data: evolutionOfDeathsByDays.accumulated.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfDeathsByDays.accumulated.values,
+                  evolutionOfDeathsByDays.date.values,
+    ]).toList(),
               ),
             ],
             animate: false,
