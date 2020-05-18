@@ -2,15 +2,14 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'dart:io';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ContactsListPage extends StatefulWidget {
   @override
@@ -18,6 +17,8 @@ class ContactsListPage extends StatefulWidget {
 }
 
 class ContactsListPageState extends State<ContactsListPage> {
+  final GlobalKey globalKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +27,7 @@ class ContactsListPageState extends State<ContactsListPage> {
         title: Text('Contactos Registrados'),
         actions: <Widget>[
           PopupMenuButton(
-            itemBuilder: (context) {
+            itemBuilder: (c) {
               return [
                 PopupMenuItem(
                   child: Text(
@@ -51,13 +52,24 @@ class ContactsListPageState extends State<ContactsListPage> {
             onSelected: (index) async {
               var box = await Hive.openBox('contacts');
               var contacts = getContactsList(box);
+              File file;
               switch (index) {
                 case 0:
-                  await exportToCsv(contacts);
+                  file = await exportToCsv(contacts);
                   break;
                 case 1:
-                  await exportToPdf(contacts);
+                  file = await exportToPdf(contacts);
                   break;
+              }
+              if (file != null) {
+                final snackBar = SnackBar(
+                  content: Text(
+                    'Se guardo el archivo correctamente en la dirección:\n\n'
+                    '${file.path}',
+                  ),
+                  duration: Duration(seconds: 5),
+                );
+                Scaffold.of(globalKey.currentContext).showSnackBar(snackBar);
               }
             },
           ),
@@ -76,6 +88,7 @@ class ContactsListPageState extends State<ContactsListPage> {
         },
       ),
       body: ValueListenableBuilder(
+        key: globalKey,
         valueListenable: Hive.box('contacts').listenable(),
         builder: (context, Box box, widget) {
           var contacts = getContactsList(box);
@@ -138,16 +151,5 @@ class ContactsListPageState extends State<ContactsListPage> {
         return Divider();
       },
     );
-  }
-
-  List<ContactModel> getContactsList(Box box) {
-    var contacts = List<ContactModel>();
-    for (var i = 0; i < box.length; ++i) {
-      var json = box.getAt(i);
-      var contact = ContactModel.fromJson(jsonDecode(json));
-      contact.index = i;
-      contacts.add(contact);
-    }
-    return contacts;
   }
 }

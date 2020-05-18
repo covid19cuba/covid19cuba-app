@@ -5,12 +5,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:hive/hive.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 
 int getInt(dynamic value) {
   return value is String ? int.parse(value) : value;
@@ -147,4 +147,15 @@ Autores:
 
 Copyright 2020 ©️""";
   return sharedContent;
+}
+
+List<ContactModel> getContactsList(Box box) {
+  var contacts = List<ContactModel>();
+  for (var i = 0; i < box.length; ++i) {
+    var json = box.getAt(i);
+    var contact = ContactModel.fromJson(jsonDecode(json));
+    contact.index = i;
+    contacts.add(contact);
+  }
+  return contacts;
 }
