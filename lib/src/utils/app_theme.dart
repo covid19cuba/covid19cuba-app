@@ -2,28 +2,15 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
-
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData themeLight = ThemeData.light().copyWith(
     primaryColor: Constants.primaryColor,
     accentColor: Colors.red,
     primaryTextTheme: TextTheme(
-      title: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
-      ),
-      caption: TextStyle(
-        color: Constants.primaryColor,
-        fontWeight: FontWeight.bold,
-      ),
-      body1: TextStyle(
-        color: Constants.primaryColor,
-        fontWeight: FontWeight.bold,
-      ),
-      body2: TextStyle(
+      overline: TextStyle(
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
@@ -31,35 +18,47 @@ class AppTheme {
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
-      display1: TextStyle(
+      caption: TextStyle(
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
-      display2: TextStyle(
+      bodyText1: TextStyle(
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
-      display3: TextStyle(
+      bodyText2: TextStyle(
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
-      display4: TextStyle(
+      headline1: TextStyle(
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
-      headline: TextStyle(
+      headline2: TextStyle(
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
-      overline: TextStyle(
+      headline3: TextStyle(
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
-      subhead: TextStyle(
+      headline4: TextStyle(
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
-      subtitle: TextStyle(
+      headline5: TextStyle(
+        color: Constants.primaryColor,
+        fontWeight: FontWeight.bold,
+      ),
+      headline6: TextStyle(
+        color: Constants.primaryColor,
+        fontWeight: FontWeight.bold,
+      ),
+      subtitle1: TextStyle(
+        color: Constants.primaryColor,
+        fontWeight: FontWeight.bold,
+      ),
+      subtitle2: TextStyle(
         color: Constants.primaryColor,
         fontWeight: FontWeight.bold,
       ),
