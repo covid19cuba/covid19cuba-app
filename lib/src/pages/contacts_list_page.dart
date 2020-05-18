@@ -2,15 +2,12 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ContactsListPage extends StatefulWidget {
   @override
@@ -138,16 +135,5 @@ class ContactsListPageState extends State<ContactsListPage> {
         return Divider();
       },
     );
-  }
-
-  List<ContactModel> getContactsList(Box box) {
-    var contacts = List<ContactModel>();
-    for (var i = 0; i < box.length; ++i) {
-      var json = box.getAt(i);
-      var contact = ContactModel.fromJson(jsonDecode(json));
-      contact.index = i;
-      contacts.add(contact);
-    }
-    return contacts;
   }
 }
