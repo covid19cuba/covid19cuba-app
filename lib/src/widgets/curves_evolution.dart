@@ -146,8 +146,7 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
               charts.Series<List, double>(
                 id: 'Cuba',
                 colorFn: (_, __) => colors[index],
-                domainFn: (_, i) =>
-                    curvesEvolution['Cuba']['cummulative_sum'][i],
+                domainFn: (_, i) => item[1],
                 measureFn: (item, _) => item[0],
                 data: zip([
                   List<double>.from(curvesEvolution['Cuba']['weeks']),
