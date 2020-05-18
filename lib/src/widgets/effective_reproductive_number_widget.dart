@@ -63,7 +63,7 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
           height: 400,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<dynamic, DateTime>(
+              charts.Series<List, DateTime>(
                 id: effectiveReproductiveNumber.upper.name,
                 colorFn: (_, __) => ChartColors.pink,
                 domainFn: (item, i) => item[1],
@@ -73,7 +73,7 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
                   effectiveReproductiveNumber.date.values,
                 ]).toList(),
               ),
-              charts.Series<dynamic, DateTime>(
+              charts.Series<List, DateTime>(
                 id: effectiveReproductiveNumber.value.name,
                 colorFn: (_, __) => ChartColors.red,
                 domainFn: (item, _) => item[1],
@@ -87,7 +87,7 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
                   effectiveReproductiveNumber.upper.values,
                 ]).toList(),
               ),
-              charts.Series<dynamic, DateTime>(
+              charts.Series<List, DateTime>(
                 id: effectiveReproductiveNumber.lower.name,
                 colorFn: (_, __) => ChartColors.pink,
                 domainFn: (item, i) => item[1],

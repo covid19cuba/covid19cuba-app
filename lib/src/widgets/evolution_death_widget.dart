@@ -61,7 +61,7 @@ class EvolutionDeathWidget extends StatelessWidget {
                 data: zip([
                   evolutionOfDeathsByDays.accumulated.values,
                   evolutionOfDeathsByDays.date.values,
-    ]).toList(),
+                ]).toList(),
               ),
             ],
             animate: false,
