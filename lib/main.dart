@@ -3,13 +3,15 @@
 // found in the LICENSE file.
 
 import 'dart:developer';
+import 'dart:io';
 
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:preferences/preference_service.dart';
 
 import 'package:covid19cuba/src/app.dart';
+import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 void main() async {
@@ -18,6 +20,10 @@ void main() async {
   BlocSupervisor.delegate = SimpleBlocDelegate();
 
   await PrefService.init();
+
+  PrefService.setDefaultValues({
+    Constants.prefChartsZoom: await chartsZoomInitValue(),
+  });
 
   await NotificationManager.initialize();
 
@@ -50,4 +56,15 @@ Future<bool> checkUpdate() async {
     log(e.toString());
   }
   return false;
+}
+
+Future<bool> chartsZoomInitValue() async {
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
+    return int.parse(androidInfo.version.release) >= 7;
+  } else if (Platform.isIOS) {
+    // iOS implementation here
+    return true;
+  }
+  return true; // desktop OSes
 }
