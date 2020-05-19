@@ -51,7 +51,7 @@ class AppTheme {
         fontWeight: FontWeight.bold,
       ),
       headline6: TextStyle(
-        color: Constants.primaryColor,
+        color: Colors.white,
         fontWeight: FontWeight.bold,
       ),
       subtitle1: TextStyle(
