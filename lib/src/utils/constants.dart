@@ -778,6 +778,12 @@ class Constants {
 
   static const collaborators = <List<String>>[
     [
+      'Jorge Alberto Reyes Carballeira',
+      'Ing. en Telecomunicaciones y Electrónica, graduado de la CUJAE. '
+      'Programador aficionado.',
+      'https://github.com/georkings',
+    ],
+    [
       'Daniel Alejandro Cárdenas Cabrera',
       'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
           'Integrante del grupo de Inteligencia Artificial de la Facultad de '
