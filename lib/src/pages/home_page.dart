@@ -79,7 +79,10 @@ class HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentTabIndex],
+      body: IndexedStack(
+        index: currentTabIndex,
+        children: pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Constants.primaryColor,
         selectedItemColor: Colors.white,
