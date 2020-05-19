@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/CubaIcon.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -21,5 +21,6 @@ class CubaIcon {
   static const _kFontFam = 'CubaIcon';
   static const _kFontPkg = null;
 
-  static const IconData cuba = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData cuba =
+      IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -37,7 +37,7 @@ class CubaModel {
   EvolutionOfRecoveredByDays evolutionOfRecoveredByDays;
 
   @JsonKey(name: 'distribution_by_age_ranges')
-  List<ItemCode> distributionByAgeRanges;
+  List<ItemCodePlus> distributionByAgeRanges;
 
   @JsonKey(name: 'distribution_of_cases')
   DistributionOfCases distributionOfCases;
