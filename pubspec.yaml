@@ -46,6 +46,8 @@ dependencies:
   hive_flutter: ^0.3.0+2
   grizzly_io: ^2.2.0
   pdf: ^1.8.0
+  flutter_echarts:
+    path: ./flutter_echarts
   device_info: ">=0.4.2+4 <2.0.0"
   badges: ^1.1.1
   simple_autocomplete_formfield: ^0.2.7
@@ -60,10 +62,12 @@ flutter:
   uses-material-design: true
 
   assets:
+    - flutter_echarts/assets/echart.html
     - assets/images/
     - assets/js/leaflet.js
     - assets/js/jquery.min.js
     - assets/js/map.js
+    - assets/js/bootstrap.min.js
     - assets/css/bootstrap.min.css
     - assets/css/custom.css
     - assets/css/leaflet.css
