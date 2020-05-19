@@ -27,20 +27,52 @@ Future<File> exportToPdf(List<ContactModel> data) async {
   final pdf = pw.Document();
   pdf.addPage(
     pw.Page(
-      build: (pw.Context context) => pw.Table(
-          children: data.map((contact) {
-        return pw.TableRow(children: <pw.Widget>[
-          pw.Container(
-            child: pw.Text(contact.name),
-          ),
-          pw.Container(
-            child: pw.Text(contact.date.toStrPlus()),
-          ),
-          pw.Container(
-            child: pw.Text(contact.place),
-          ),
-        ]);
-      }).toList()),
+      build: (pw.Context context) {
+        return pw.Column(
+          children: [
+            pw.Header(text: 'Registro de Contactos'),
+            pw.Table(
+              children: [
+                    pw.TableRow(
+                      children: <pw.Widget>[
+                        pw.Container(
+                          child: pw.Text('Nombre'),
+                        ),
+                        pw.Container(
+                          child: pw.Text('Fecha'),
+                        ),
+                        pw.Container(
+                          child: pw.Text('Lugar'),
+                        ),
+                      ],
+                    ),
+                    pw.TableRow(
+                      children: <pw.Widget>[
+                        pw.Divider(),
+                        pw.Divider(),
+                        pw.Divider(),
+                      ],
+                    )
+                  ] +
+                  data.map((contact) {
+                    return pw.TableRow(
+                      children: <pw.Widget>[
+                        pw.Container(
+                          child: pw.Text(contact.name),
+                        ),
+                        pw.Container(
+                          child: pw.Text(contact.date.toStrPlus()),
+                        ),
+                        pw.Container(
+                          child: pw.Text(contact.place),
+                        ),
+                      ],
+                    );
+                  }).toList(),
+            ),
+          ],
+        );
+      },
     ),
   );
   final file = File('${directory.path}/contactos.pdf');
