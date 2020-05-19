@@ -92,13 +92,6 @@ class ContactsListPageState extends State<ContactsListPage> {
         valueListenable: Hive.box('contacts').listenable(),
         builder: (context, Box box, widget) {
           var contacts = getContactsList(box);
-          contacts.sort((a, b) {
-            var cmp = a.date.compareTo(b.date);
-            if (cmp == 0) {
-              return a.name.compareTo(b.name);
-            }
-            return cmp;
-          });
           return getList(contacts);
         },
       ),

@@ -157,5 +157,11 @@ List<ContactModel> getContactsList(Box box) {
     contact.index = i;
     contacts.add(contact);
   }
+  contacts.sort((a, b) {
+    var cmpName = a.name.compareTo(b.name);
+    var cmpDate = a.date.compareTo(b.date);
+    var cmpPlace = a.name.compareTo(b.name);
+    return cmpDate == 0 ? (cmpName == 0 ? cmpPlace : cmpName) : cmpDate;
+  });
   return contacts;
 }
