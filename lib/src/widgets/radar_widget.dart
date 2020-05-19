@@ -2,54 +2,41 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-//import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/models.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
 
 class RadarChartWidget extends StatefulWidget{
-  final Map<String, dynamic> data;
+  final RadarModel data;
 
   const RadarChartWidget({this.data}) : assert(data != null);
 
   @override
   RadarChartWidgetState createState() => RadarChartWidgetState(
-      bounds: (data['bounds'] as Map<String, dynamic>)?.map(
-        (k, e) => MapEntry(
-            k,
-            e == null
-                ? null
-                : double.parse(e.toString()),
-        )
-      ),
-      data: (data['data'] as Map<String, dynamic>)?.map(
-        (k, e) => MapEntry(
-            k,
-            e == null
-                ? null
-                : e as Map<String, dynamic>,
-        )
-      ),
-      countries: (data['data'] as Map<String, dynamic>).keys.toList(),
-      cubaData: (data['data'] as Map<String, dynamic>)['Cuba'] as Map<String, dynamic>
+      bounds: data.bounds,
+      data: data,
+      countries: data.data.keys.toList(),
+      cubaData: data.data['Cuba']
   );
 }
 
 class RadarChartWidgetState extends State<RadarChartWidget> {
 
-  final Map<String, double> bounds;
-  final Map<String, Map<String,dynamic>> data;
+  final RadarBoundModel bounds;
+  final RadarModel data;
   final List<String> countries;
-  final Map<String, dynamic> cubaData;
+  final RadarItemModel cubaData;
   String selectedCountry = 'Estados Unidos';
-  Map<String, dynamic> selectedData;
+  RadarItemModel selectedData;
 
   RadarChartWidgetState({this.bounds, this.data, this.countries, this.cubaData}){
     assert(bounds != null);
     assert(data != null);
     assert(countries != null);
     assert(cubaData != null);
-    selectedData=data[selectedCountry];
+    selectedData=data.data[selectedCountry];
   }
 
   @override
@@ -86,7 +73,7 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
             onChanged: (String newValue) {
               setState(() {
                 selectedCountry = newValue;
-                selectedData=data[newValue];
+                selectedData=data.data[newValue];
               });
             },
             items: this.countries.map<DropdownMenuItem<String>>((String value) {
@@ -99,35 +86,46 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
         ),
         Container(
         child: Echarts(
+        extraScript: '''
+          function round(number, digits = 2) {
+              return Math.round((number + Number.EPSILON) * 10 ** digits) / 10 ** digits;
+          }
+        ''',
         option: '''
         {
           title: {
               text: ''
           },
-          tooltip: {},
+          tooltip: {
+            position: function(pt){
+                        return [0,0];
+                    }
+          },
           legend: {
-              padding: [ 4, 4],
-              data: ['Cuba'],
-              bottom: -10,
-              //itemGap: 20
+              data: ['Cuba','$selectedCountry'],
+              bottom: -5,
+              itemGap: 20
           },
           radar: {
             // shape: 'circle',
+            nameGap: 5,
+            radius: '58%',
             name: {
-                textStyle: {
-                    color: '#fff',
-                    backgroundColor: '#999',
-                    borderRadius: 3,
-                    padding: [ 2, 2]
-                }
+              textStyle: {
+                color: '#fff',
+                backgroundColor: '#999',
+                borderRadius: 3,
+                fontSize: 11,
+                padding: [2, 2]
+              }
             },
             indicator: [
-                { name: 'Stringency Index' , max: 100},
-                { name: 'Test por millón de habitantes', max: 100},
-                { name: 'Casos por millón de habitantes', max: 100},
-                { name: '% test positivos', max: 40},
-                { name: '% casos fallecidos', max: 15},
-                { name: '% casos recuperados', max: 100}
+              { name: 'Test por millón de habitantes', max: ${selectedData.testPerMillionBound}},
+              { name: '% test positivos', max: ${bounds.testPercent}},
+              { name: 'Stringency Index' , max: ${bounds.stringency}},
+              { name: 'Casos por millón de habitantes', max: ${selectedData.confirmedPerMillionBound}},
+              { name: '% casos recuperados', max: ${bounds.recoveredPercent}},
+              { name: '% casos fallecidos', max: ${bounds.deathPercent}}
             ]
           },
           series: [{
@@ -138,14 +136,23 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
             },
             data: [
               {
-                value: [10,
-                    10,
-                    10,
-                    10,
-                    10,
-                    10],
+                value: [${cubaData.testPerMillionBound},
+                    round(${cubaData.testPercent}),
+                    ${cubaData.stringency},
+                    ${cubaData.confirmedPerMillion},
+                    round(${cubaData.recoveredPercent}),
+                    round(${cubaData.deathPercent})],
                 name: 'Cuba'
               },
+              {
+                value: [${selectedData.testPerMillionBound},
+                    round(${selectedData.testPercent}),
+                    ${selectedData.stringency},
+                    ${selectedData.confirmedPerMillion},
+                    round(${selectedData.recoveredPercent}),
+                    round(${selectedData.deathPercent})],
+                name: '$selectedCountry',
+              }
             ],
           }]
         }
@@ -153,7 +160,8 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
         ),
         padding: EdgeInsets.all(10),
         //width: 400,
-        height: 350,
+        //height: 350,
+        height: min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height)-25,
       )
       ],
     );

@@ -59,6 +59,7 @@ flutter:
     - assets/js/leaflet.js
     - assets/js/jquery.min.js
     - assets/js/map.js
+    - assets/js/bootstrap.min.js
     - assets/css/bootstrap.min.css
     - assets/css/custom.css
     - assets/css/leaflet.css

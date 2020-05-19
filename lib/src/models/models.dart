@@ -42,3 +42,6 @@ export 'stringency_index_cuba.dart';
 export 'test_behavior_comparison.dart';
 export 'tests_by_days.dart';
 export 'tests_positive_percent.dart';
+export 'radar_bound_model.dart';
+export 'radar_item_model.dart';
+export 'radar_model.dart';
