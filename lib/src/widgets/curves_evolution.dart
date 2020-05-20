@@ -5,15 +5,14 @@
 import 'dart:math';
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter/material.dart';
-import 'package:getflutter/getflutter.dart';
-import 'package:random_color/random_color.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
-import 'package:preferences/preference_service.dart';
-import 'package:quiver/iterables.dart' show zip;
-
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:getflutter/getflutter.dart';
+import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
+import 'package:random_color/random_color.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class CurvesEvolutionWidget extends StatefulWidget {
   final Map<String, dynamic> curvesEvolution;
@@ -119,42 +118,43 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
           height: 750,
           child: charts.LineChart(
             selectedItems.map((i) {
-              var key = items[i].value;
-              var value = curvesEvolution[key];
-              var localIndex = index++;
-              var list = List<double>();
-              for (var x in value['weeks']) {
-                if (x == null) {
-                  list.add(null);
-                } else {
-                  list.add(double.parse(x.toString()));
-                }
-              }
-              return charts.Series<List, double>(
-                id: key,
-                colorFn: (_, __) => colors[localIndex],
-                domainFn: (item, _) => item[1],
-                measureFn: (item, _) => item[0],
-                data: zip([
-                  list,
-                  List<double>.from(value['cummulative_sum']),
-                ]).toList(),
-                domainLowerBoundFn: (_, __) => 1.4771212547196624,
-              );
-            }).toList() +
-            [
-              charts.Series<List, double>(
-                id: 'Cuba',
-                colorFn: (_, __) => colors[index],
-                domainFn: (_, i) => item[1],
-                measureFn: (item, _) => item[0],
-                data: zip([
-                  List<double>.from(curvesEvolution['Cuba']['weeks']),
-                  List<double>.from(curvesEvolution['Cuba']['cummulative_sum']),
-                ]).toList(),
-                domainLowerBoundFn: (_, __) => 1.4771212547196624,
-              )
-            ],
+                  var key = items[i].value;
+                  var value = curvesEvolution[key];
+                  var localIndex = index++;
+                  var list = List<double>();
+                  for (var x in value['weeks']) {
+                    if (x == null) {
+                      list.add(null);
+                    } else {
+                      list.add(double.parse(x.toString()));
+                    }
+                  }
+                  return charts.Series<List, double>(
+                    id: key,
+                    colorFn: (_, __) => colors[localIndex],
+                    domainFn: (item, _) => item[1],
+                    measureFn: (item, _) => item[0],
+                    data: zip([
+                      list,
+                      List<double>.from(value['cummulative_sum']),
+                    ]).toList(),
+                    domainLowerBoundFn: (_, __) => 1.4771212547196624,
+                  );
+                }).toList() +
+                [
+                  charts.Series<List, double>(
+                    id: 'Cuba',
+                    colorFn: (_, __) => colors[index],
+                    domainFn: (item, _) => item[1],
+                    measureFn: (item, _) => item[0],
+                    data: zip([
+                      List<double>.from(curvesEvolution['Cuba']['weeks']),
+                      List<double>.from(
+                          curvesEvolution['Cuba']['cummulative_sum']),
+                    ]).toList(),
+                    domainLowerBoundFn: (_, __) => 1.4771212547196624,
+                  )
+                ],
             animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(

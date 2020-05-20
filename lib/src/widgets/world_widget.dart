@@ -2,6 +2,7 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
+import 'package:covid19cuba/src/widgets/radar_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
@@ -24,6 +25,15 @@ class WorldWidget extends StatelessWidget {
           child: Card(
             color: Colors.red,
             child: NoteWidget(note: data.all.note),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: RadarChartWidget(
+              data:
+                  data.all.radarChartData,
+            ),
           ),
         ),
         Container(
