@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/utils/province.dart';
 
 int getInt(dynamic value) {
   return value is String ? int.parse(value) : value;
@@ -104,6 +105,40 @@ int getDayFromCache() {
     return dta.all.evolutionOfCasesByDays.accumulated.values.length;
   }
   return -1;
+}
+
+List<Province> getProvinceList(){
+
+  List<Province> provinceList = new List();
+  final provinceNames = {'Pinar del Río'       : ['48-724640', '48-724639'],
+                         'Artemisa'            : ['47-367157', '47-366503', '47-367491'],
+                         'La Habana'           : ['78-302524', '78-302521', '78-302116'],
+                         'Mayabeque'           : ['47-867533', '47-848543'],
+                         'Matanzas'            : ['45-243725', '45-262417'],
+                         'Villa Clara'         : ['42-215057', '42-223936'],
+                         'Cienfuegos'          : ['43-515873', '43-519512', '43-517737'],
+                         'Sancti Spíritus'     : ['41-336137'],
+                         'Ciego de Ávila'      : ['33-223192', '33202748'], 
+                         'Camagüey'            : ['32-297118', '32-256218'],
+                         'Las Tunas'           : ['31-349244', '31-346179'],
+                         'Holguín'             : ['24-473036', '24-453766', '24 -429557'],
+                         'Granma'              : ['23-411012', '23-423017', '23-423009'],
+                         'Santiago de Cuba'    : ['22-656455 ext 192', '22-651573', '22-651542'],
+                         'Guantánamo'          : ['21-326890', '21-326705'],
+                         'Isla de la Juventud' : ['46-324587', '46-324090 ext 104']
+                         };
+  provinceNames.forEach((name, phonesList){
+    String image = 'assets/images/' + name.
+                                      replaceAll(' ', '_').
+                                      replaceFirst('í', 'i').
+                                      replaceFirst('Á', 'A').
+                                      replaceFirst('á', 'a').
+                                      replaceFirst('ü', 'u')
+                                      + '.jpg';
+    
+    provinceList.add(Province(name: name, image: image, phoneNumbers: phonesList));
+  });
+  return provinceList;
 }
 
 Future<String> getSharedContent() async {
