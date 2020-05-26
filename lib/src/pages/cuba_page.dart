@@ -49,42 +49,6 @@ class CubaPageState extends State<CubaPage> {
     }
   }
 
-  Widget getAppBar(BuildContext context, HomeState state) {
-    return AppBar(
-      centerTitle: true,
-      title: Text(Constants.appName),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.refresh),
-          color: Colors.white,
-          onPressed: () {
-            BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget getAppBarTabs(BuildContext context, HomeState state) {
-    return AppBar(
-      centerTitle: true,
-      title: Text(Constants.appName),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.refresh),
-          color: Colors.white,
-          onPressed: () {
-            BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget getHomeDrawer(BuildContext context, HomeState state) {
-    return HomeDrawerWidget();
-  }
-
   Widget getBody(BuildContext context, HomeState state) {
     if (state is InitialHomeState) {
       BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent());
@@ -123,71 +87,64 @@ class CubaPageState extends State<CubaPage> {
   }
 
   Widget getError() {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(Constants.appName),
-      ),
-      drawer: HomeDrawerWidget(),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(30),
-            child: Icon(
-              Icons.error_outline,
-              color: Constants.primaryColor,
-              size: 150,
-            ),
+    return ListView(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(30),
+          child: Icon(
+            Icons.error_outline,
+            color: Constants.primaryColor,
+            size: 150,
           ),
-          Text(
-            'Ha ocurrido un error',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Constants.primaryColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-            ),
+        ),
+        Text(
+          'Ha ocurrido un error',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Constants.primaryColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
           ),
-          Container(
-            margin: EdgeInsets.all(20),
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                'El equipo de desarrollo de la aplicación le pide disculpas '
-                'y le invita al grupo de Telegram para que reporte el '
-                'problema y así poder solucionarlo ayudando a los restantes '
-                'usuarios. Gracias de antemano.',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: Constants.primaryColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
+        ),
+        Container(
+          margin: EdgeInsets.all(20),
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              'El equipo de desarrollo de la aplicación le pide disculpas '
+              'y le invita al grupo de Telegram para que reporte el '
+              'problema y así poder solucionarlo ayudando a los restantes '
+              'usuarios. Gracias de antemano.',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 50),
-            child: GFButton(
-              text: 'Grupo de soporte en Telegram',
-              textColor: Constants.primaryColor,
-              color: Constants.primaryColor,
-              size: GFSize.LARGE,
-              shape: GFButtonShape.pills,
-              type: GFButtonType.outline2x,
-              fullWidthButton: true,
-              onPressed: () async {
-                const url = 'https://t.me/covid19cubadatachat';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
-            ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 50),
+          child: GFButton(
+            text: 'Grupo de soporte en Telegram',
+            textColor: Constants.primaryColor,
+            color: Constants.primaryColor,
+            size: GFSize.LARGE,
+            shape: GFButtonShape.pills,
+            type: GFButtonType.outline2x,
+            fullWidthButton: true,
+            onPressed: () async {
+              const url = 'https://t.me/covid19cubadatachat';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                log('Could not launch $url');
+              }
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
