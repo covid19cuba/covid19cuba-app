@@ -338,8 +338,8 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
   Widget usefulPhonesItem() {
     return createDrawerItem(
       context,
-      icon: Icons.phone,
-      text: 'Teléfonos Útiles',
+      icon: Icons.people,
+      text: 'Atención a la Población',
       onTap: () {
         Navigator.of(context).pop();
         Navigator.push(

@@ -13,12 +13,17 @@ class UsefulPhonesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atención a la población'),
+        centerTitle: true,
+        title: Text('Atención a la Población'),
       ),
-      body: Container(
-          child: SingleChildScrollView(
-        child: Table(children: _getRowsList(context)),
-      )),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.all(5),
+          child: Table(
+            children: _getRowsList(context),
+          ),
+        ),
+      ),
     );
   }
 
@@ -34,24 +39,45 @@ class UsefulPhonesPage extends StatelessWidget {
   }
 
   Widget _createTableItem(BuildContext context, Province province) {
-    final tableItem = Hero(
-        tag: province.name,
-        child: Container(
-            height: 200,
-            margin: EdgeInsets.all(4),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.55),
-                      BlendMode.darken,
-                    ),
-                    image: AssetImage(province.image),
-                    fit: BoxFit.cover),
-                borderRadius: BorderRadius.circular(20)),
+    final tableItem = Container(
+      height: 100,
+      margin: EdgeInsets.all(5),
+      child: Stack(
+        children: <Widget>[
+          Hero(
+            tag: province.name,
             child: Container(
-                child: Center(
-              child: _description(province),
-            ))));
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.55),
+                    BlendMode.darken,
+                  ),
+                  image: AssetImage(province.image),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                province.name,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
     return GestureDetector(
       child: tableItem,
       onTap: () {
@@ -61,27 +87,6 @@ class UsefulPhonesPage extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Widget _description(Province province) {
-    return Column(
-      children: <Widget>[
-        SizedBox(height: 35),
-        Text(
-          province.name,
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-        SizedBox(height: 15),
-        Column(
-          children: province.phoneNumbers.map((phoneNumber) {
-            return Text(
-              phoneNumber,
-              style: TextStyle(color: Colors.white),
-            );
-          }).toList(),
-        )
-      ],
     );
   }
 }

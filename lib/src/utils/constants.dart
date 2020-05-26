@@ -124,8 +124,11 @@ class Constants {
   static const int startSilentTime = 22;
   static const int endSilentTime = 9;
 
-  static const String defaultPesquisador =
-      """{'url': 'http://autopesquisa.sld.cu/','javascript': "document.querySelector('app-root').removeChild(document.querySelector('mat-toolbar'));",'contains': 'autopesquisa.sld.cu'}""";
+  static const String defaultPesquisador = """{
+    "url": "http://autopesquisa.sld.cu/",
+    "javascript": "document.querySelector('app-root').removeChild(document.querySelector('mat-toolbar'));",
+    "contains": "autopesquisa.sld.cu"
+  }""";
 
   static const String apklisUrl =
       "https://www.apklis.cu/application/club.postdata.covid19cuba";
@@ -781,7 +784,7 @@ class Constants {
     [
       'Jorge Alberto Reyes Carballeira',
       'Ing. en Telecomunicaciones y Electrónica, graduado de la CUJAE. '
-      'Programador aficionado.',
+          'Programador aficionado.',
       'https://github.com/georkings',
     ],
     [
