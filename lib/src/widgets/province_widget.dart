@@ -2,10 +2,10 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
-
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class ProvinceWidget extends StatefulWidget {
   final DataModel data;
@@ -35,6 +35,7 @@ class ProvinceWidgetState extends State<ProvinceWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+            if (shouldBe()) getWidget(context),
             Container(
               margin: EdgeInsets.only(left: 5, right: 5, top: 5),
               child: Card(

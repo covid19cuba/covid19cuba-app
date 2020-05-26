@@ -4,6 +4,7 @@
 
 export 'app_theme.dart';
 export 'background_fetch.dart';
+export 'call_to_action.dart';
 export 'colors.dart';
 export 'constants.dart';
 export 'exceptions.dart';
