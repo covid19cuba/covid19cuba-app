@@ -35,23 +35,16 @@ class JTNewsPageState extends State<JTNewsPage> {
   @override
   Widget build(BuildContext context) {
     try {
-      return BlocProvider(
-        create: (context) => JTNewsBloc(),
-        child: BlocConsumer<JTNewsBloc, JTNewsState>(
-          listener: (context, state) {
-            if (state is LoadedJTNewsState) {
-              refreshCompleter?.complete();
-              refreshCompleter = Completer();
-            }
-          },
-          builder: (context, state) {
-            return Scaffold(
-              appBar: getAppBar(context, state),
-              drawer: getHomeDrawer(context, state),
-              body: getBody(context, state),
-            );
-          },
-        ),
+      return BlocConsumer<JTNewsBloc, JTNewsState>(
+        listener: (context, state) {
+          if (state is LoadedJTNewsState) {
+            refreshCompleter?.complete();
+            refreshCompleter = Completer();
+          }
+        },
+        builder: (context, state) {
+          return getBody(context, state);
+        },
       );
     } catch (e) {
       log(e.toString());

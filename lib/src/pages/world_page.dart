@@ -32,23 +32,16 @@ class WorldPageState extends State<WorldPage> {
   @override
   Widget build(BuildContext context) {
     try {
-      return BlocProvider(
-        create: (context) => HomeBloc(),
-        child: BlocConsumer<HomeBloc, HomeState>(
-          listener: (context, state) {
-            if (state is LoadedHomeState) {
-              refreshCompleter?.complete();
-              refreshCompleter = Completer();
-            }
-          },
-          builder: (context, state) {
-            return Scaffold(
-              appBar: getAppBar(context, state),
-              drawer: getHomeDrawer(context, state),
-              body: getBody(context, state),
-            );
-          },
-        ),
+      return BlocConsumer<HomeBloc, HomeState>(
+        listener: (context, state) {
+          if (state is LoadedHomeState) {
+            refreshCompleter?.complete();
+            refreshCompleter = Completer();
+          }
+        },
+        builder: (context, state) {
+          return getBody(context, state);
+        },
       );
     } catch (e) {
       log(e.toString());
