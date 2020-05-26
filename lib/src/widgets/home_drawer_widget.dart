@@ -4,6 +4,7 @@
 
 import 'dart:developer';
 
+import 'package:covid19cuba/src/pages/useful_phones_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
@@ -48,6 +49,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             separator(),
             casesTableItem(),
             contactRegistrationItem(),
+            usefulPhonesItem(),
             tipsItem(),
             linksDrawerItem(),
             updateDrawerItem(),
@@ -329,6 +331,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           context,
           MaterialPageRoute(
             builder: (context) => ContactsListPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget usefulPhonesItem(){
+    return createDrawerItem(
+      context,
+      icon: Icons.phone,
+      text: 'Teléfonos Útiles',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UsefulPhonesPage(),
           ),
         );
       },
