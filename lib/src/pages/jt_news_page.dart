@@ -36,22 +36,20 @@ class JTNewsPageState extends State<JTNewsPage> {
     try {
       return BlocProvider(
         create: (context) => JTNewsBloc(),
-        child: BlocListener<JTNewsBloc, JTNewsState>(
+        child: BlocConsumer<JTNewsBloc, JTNewsState>(
           listener: (context, state) {
             if (state is LoadedJTNewsState) {
               refreshCompleter?.complete();
               refreshCompleter = Completer();
             }
           },
-          child: BlocBuilder<JTNewsBloc, JTNewsState>(
-            builder: (context, state) {
-              return Scaffold(
-                appBar: getAppBar(context, state),
-                drawer: getHomeDrawer(context, state),
-                body: getBody(context, state),
-              );
-            },
-          ),
+          builder: (context, state) {
+            return Scaffold(
+              appBar: getAppBar(context, state),
+              drawer: getHomeDrawer(context, state),
+              body: getBody(context, state),
+            );
+          },
         ),
       );
     } catch (e) {
