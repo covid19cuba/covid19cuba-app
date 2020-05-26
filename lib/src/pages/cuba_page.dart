@@ -34,22 +34,20 @@ class CubaPageState extends State<CubaPage> {
     try {
       return BlocProvider(
         create: (context) => HomeBloc(),
-        child: BlocListener<HomeBloc, HomeState>(
+        child: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is LoadedHomeState) {
               refreshCompleter?.complete();
               refreshCompleter = Completer();
             }
           },
-          child: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              return Scaffold(
-                appBar: getAppBarTabs(context, state),
-                drawer: getHomeDrawer(context, state),
-                body: getBody(context, state),
-              );
-            },
-          ),
+          builder: (context, state) {
+            return Scaffold(
+              appBar: getAppBarTabs(context, state),
+              drawer: getHomeDrawer(context, state),
+              body: getBody(context, state),
+            );
+          },
         ),
       );
     } catch (e) {
