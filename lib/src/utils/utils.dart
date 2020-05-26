@@ -11,3 +11,4 @@ export 'exports.dart';
 export 'functions.dart';
 export 'notification_manager.dart';
 export 'notifications.dart';
+export 'province.dart';
