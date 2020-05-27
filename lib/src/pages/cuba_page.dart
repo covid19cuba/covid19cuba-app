@@ -15,22 +15,10 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/error_widget.dart' as ew;
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class CubaPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => CubaPageState();
-}
-
-class CubaPageState extends State<CubaPage> {
-  Completer<void> refreshCompleter;
-
-  @override
-  void initState() {
-    super.initState();
-    refreshCompleter = Completer<void>();
-  }
-
+class CubaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Completer<void> refreshCompleter = Completer<void>();
     try {
       return BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
@@ -40,7 +28,7 @@ class CubaPageState extends State<CubaPage> {
           }
         },
         builder: (context, state) {
-          return getBody(context, state);
+          return getBody(context, state, refreshCompleter);
         },
       );
     } catch (e) {
@@ -49,7 +37,8 @@ class CubaPageState extends State<CubaPage> {
     }
   }
 
-  Widget getBody(BuildContext context, HomeState state) {
+  Widget getBody(BuildContext context, HomeState state,
+      Completer<void> refreshCompleter) {
     if (state is InitialHomeState) {
       BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent());
     }
