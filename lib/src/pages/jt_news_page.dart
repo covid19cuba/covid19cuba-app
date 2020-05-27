@@ -18,22 +18,10 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/error_widget.dart' as ew;
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class JTNewsPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => JTNewsPageState();
-}
-
-class JTNewsPageState extends State<JTNewsPage> {
-  Completer<void> refreshCompleter;
-
-  @override
-  void initState() {
-    super.initState();
-    refreshCompleter = Completer<void>();
-  }
-
+class JTNewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Completer<void> refreshCompleter = Completer<void>();
     try {
       return BlocConsumer<JTNewsBloc, JTNewsState>(
         listener: (context, state) {
@@ -43,7 +31,7 @@ class JTNewsPageState extends State<JTNewsPage> {
           }
         },
         builder: (context, state) {
-          return getBody(context, state);
+          return getBody(context, state, refreshCompleter);
         },
       );
     } catch (e) {
@@ -52,7 +40,8 @@ class JTNewsPageState extends State<JTNewsPage> {
     }
   }
 
-  Widget getBody(BuildContext context, JTNewsState state) {
+  Widget getBody(BuildContext context, JTNewsState state,
+      Completer<void> refreshCompleter) {
     if (state is InitialJTNewsState) {
       BlocProvider.of<JTNewsBloc>(context).add(LoadJTNewsEvent());
     }
