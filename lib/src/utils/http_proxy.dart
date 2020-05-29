@@ -50,7 +50,7 @@ Future<Response> get(url, {Map<String, String> headers}) =>
 /// For more fine-grained control over the request, use [Request] or
 /// [StreamedRequest] instead.
 Future<Response> post(url,
-    {Map<String, String> headers, body, Encoding encoding}) =>
+        {Map<String, String> headers, body, Encoding encoding}) =>
     _withClient((client) =>
         client.post(url, headers: headers, body: body, encoding: encoding));
 
@@ -74,9 +74,8 @@ Future<Response> post(url,
 /// For more fine-grained control over the request, use [Request] or
 /// [StreamedRequest] instead.
 Future<Response> put(url,
-    {Map<String, String> headers, body, Encoding encoding}) =>
-    _withClient((client) =>
-        client.put(url, headers: headers, body: body, encoding: encoding));
+    {Map<String, String> headers, body, Encoding encoding}) => _withClient((client) =>
+      client.put(url, headers: headers, body: body, encoding: encoding));
 
 /// Sends an HTTP PATCH request with the given headers and body to the given
 /// URL, which can be a [Uri] or a [String].
@@ -98,9 +97,8 @@ Future<Response> put(url,
 /// For more fine-grained control over the request, use [Request] or
 /// [StreamedRequest] instead.
 Future<Response> patch(url,
-    {Map<String, String> headers, body, Encoding encoding}) =>
-    _withClient((client) =>
-        client.patch(url, headers: headers, body: body, encoding: encoding));
+    {Map<String, String> headers, body, Encoding encoding}) => _withClient((client) =>
+      client.patch(url, headers: headers, body: body, encoding: encoding));
 
 /// Sends an HTTP DELETE request with the given headers to the given URL, which
 /// can be a [Uri] or a [String].
@@ -110,8 +108,7 @@ Future<Response> patch(url,
 /// the same server, you should use a single [Client] for all of those requests.
 ///
 /// For more fine-grained control over the request, use [Request] instead.
-Future<Response> delete(url, {Map<String, String> headers}) =>
-    _withClient((client) => client.delete(url, headers: headers));
+Future<Response> delete(url, {Map<String, String> headers}) =>  _withClient((client) => client.delete(url, headers: headers));
 
 /// Sends an HTTP GET request with the given headers to the given URL, which can
 /// be a [Uri] or a [String], and returns a Future that completes to the body of
@@ -126,8 +123,7 @@ Future<Response> delete(url, {Map<String, String> headers}) =>
 ///
 /// For more fine-grained control over the request and response, use [Request]
 /// instead.
-Future<String> read(url, {Map<String, String> headers}) =>
-    _withClient((client) => client.read(url, headers: headers));
+Future<String> read(url, {Map<String, String> headers}) => _withClient((client) => client.read(url, headers: headers));
 
 /// Sends an HTTP GET request with the given headers to the given URL, which can
 /// be a [Uri] or a [String], and returns a Future that completes to the body of
@@ -142,14 +138,24 @@ Future<String> read(url, {Map<String, String> headers}) =>
 ///
 /// For more fine-grained control over the request and response, use [Request]
 /// instead.
-Future<Uint8List> readBytes(url, {Map<String, String> headers}) =>
-    _withClient((client) => client.readBytes(url, headers: headers));
+Future<Uint8List> readBytes(url, {Map<String, String> headers}) => _withClient((client) => client.readBytes(url, headers: headers));
 
 Future<T> _withClient<T>(Future<T> Function(Client) fn) async {
   HttpClient httpClient = new HttpClient();
-  httpClient.findProxy = (uri){
-    return "PROXY r.marti@estudiantes.matcom.uh.cu@proxy-est.uh.cu:3129;";
+//    ..badCertificateCallback =
+//        ((X509Certificate cert, String host, int port) => true);
+
+  httpClient.findProxy = (uri) {
+    return "PROXY proxy:port";
+    //return "PROXY 192.168.1.3:5555;";
   };
+  httpClient.addProxyCredentials(
+      'proxy',
+      3128,
+      '',
+      HttpClientBasicCredentials(
+          'username', 'password'));
+
   IOClient client = IOClient(httpClient);
   try {
     return await fn(client);
