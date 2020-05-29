@@ -102,6 +102,8 @@ class Constants {
   static const String prefMunicipalitySelected = 'prefMunicipalitySelected';
   static const String prefChartsZoom = 'prefChartsZoom';
   static const String prefBadgeNews = 'prefBadgeNews';
+  static const String prefProxy = 'proxy';
+  static const String prefProxyCredentials = 'proxy-authorization';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
