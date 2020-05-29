@@ -149,8 +149,13 @@ Future<Uint8List> readBytes(url, {Map<String, String> headers}) =>
 
 Future<T> _withClient<T>(Future<T> Function(Client) fn) async {
   HttpClient httpClient = new HttpClient();
-//    ..badCertificateCallback =
-//        ((X509Certificate cert, String host, int port) => true);
+
+  bool insecure = PrefService.getBool(Constants.prefProxyAllowInsecureCertificates) ?? false;
+
+  if(insecure){
+    httpClient.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
+  }
+
   bool proxy = PrefService.getBool(Constants.prefProxy) ?? false;
 
   if (proxy) {
@@ -159,8 +164,7 @@ Future<T> _withClient<T>(Future<T> Function(Client) fn) async {
     httpClient.findProxy = (uri) {
       return "PROXY ${host}:${port}";
     };
-    bool proxyCredentials =
-        PrefService.getBool(Constants.prefProxyCredentials);
+    bool proxyCredentials = PrefService.getBool(Constants.prefProxyCredentials);
     if (proxyCredentials) {
       String username =
           PrefService.getString(Constants.prefProxyCredentialsName);

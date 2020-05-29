@@ -108,6 +108,7 @@ class Constants {
   static const String prefProxyPort = 'proxy-port';
   static const String prefProxyCredentialsName = 'proxy-credentials-name';
   static const String prefProxyCredentialsPassword = 'proxi-credentials-password';
+  static const String prefProxyAllowInsecureCertificates = 'proxy-insecure-certificates';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;

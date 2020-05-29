@@ -82,11 +82,18 @@ class ProxyPage extends StatelessWidget {
           defaultVal: '',
           obscureText: true,
         ),
-
+        divider,
         PreferenceText(
-          PrefService.getString('user_description') ?? 'textaco',
-          style: TextStyle(color: Colors.grey),
+          'Configuración avanzada',
+          style: TextStyle(color: Colors.red),
         ),
+        SwitchPreference(
+          'Aceptar certificados de seguridad inseguros',
+          Constants.prefProxyAllowInsecureCertificates,
+          desc: 'Aceptar cualquier certificado de seguridad que sea devuelto al conectarse al proxy. '
+              'Esta opción no tiene efecto si la conexión necesita el empleo de credenciales',
+        ),
+        divider,
       ]),
     );
   }
