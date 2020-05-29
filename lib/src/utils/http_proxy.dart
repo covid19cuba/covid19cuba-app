@@ -155,7 +155,7 @@ Future<T> _withClient<T>(Future<T> Function(Client) fn) async {
 
   if (proxy) {
     String host = PrefService.getString(Constants.prefProxyHost);
-    int port = PrefService.getInt(Constants.prefProxyPort);
+    int port = int.parse(PrefService.getString(Constants.prefProxyPort));
     httpClient.findProxy = (uri) {
       return "PROXY ${host}:${port}";
     };
