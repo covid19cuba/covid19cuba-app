@@ -7,6 +7,8 @@ import 'dart:typed_data';
 import 'dart:io';
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
+import 'package:preferences/preferences.dart';
+import 'utils.dart';
 
 /// Sends an HTTP HEAD request with the given headers to the given URL, which
 /// can be a [Uri] or a [String].
@@ -74,8 +76,9 @@ Future<Response> post(url,
 /// For more fine-grained control over the request, use [Request] or
 /// [StreamedRequest] instead.
 Future<Response> put(url,
-    {Map<String, String> headers, body, Encoding encoding}) => _withClient((client) =>
-      client.put(url, headers: headers, body: body, encoding: encoding));
+        {Map<String, String> headers, body, Encoding encoding}) =>
+    _withClient((client) =>
+        client.put(url, headers: headers, body: body, encoding: encoding));
 
 /// Sends an HTTP PATCH request with the given headers and body to the given
 /// URL, which can be a [Uri] or a [String].
@@ -97,8 +100,9 @@ Future<Response> put(url,
 /// For more fine-grained control over the request, use [Request] or
 /// [StreamedRequest] instead.
 Future<Response> patch(url,
-    {Map<String, String> headers, body, Encoding encoding}) => _withClient((client) =>
-      client.patch(url, headers: headers, body: body, encoding: encoding));
+        {Map<String, String> headers, body, Encoding encoding}) =>
+    _withClient((client) =>
+        client.patch(url, headers: headers, body: body, encoding: encoding));
 
 /// Sends an HTTP DELETE request with the given headers to the given URL, which
 /// can be a [Uri] or a [String].
@@ -108,7 +112,8 @@ Future<Response> patch(url,
 /// the same server, you should use a single [Client] for all of those requests.
 ///
 /// For more fine-grained control over the request, use [Request] instead.
-Future<Response> delete(url, {Map<String, String> headers}) =>  _withClient((client) => client.delete(url, headers: headers));
+Future<Response> delete(url, {Map<String, String> headers}) =>
+    _withClient((client) => client.delete(url, headers: headers));
 
 /// Sends an HTTP GET request with the given headers to the given URL, which can
 /// be a [Uri] or a [String], and returns a Future that completes to the body of
@@ -123,7 +128,8 @@ Future<Response> delete(url, {Map<String, String> headers}) =>  _withClient((cli
 ///
 /// For more fine-grained control over the request and response, use [Request]
 /// instead.
-Future<String> read(url, {Map<String, String> headers}) => _withClient((client) => client.read(url, headers: headers));
+Future<String> read(url, {Map<String, String> headers}) =>
+    _withClient((client) => client.read(url, headers: headers));
 
 /// Sends an HTTP GET request with the given headers to the given URL, which can
 /// be a [Uri] or a [String], and returns a Future that completes to the body of
@@ -138,24 +144,36 @@ Future<String> read(url, {Map<String, String> headers}) => _withClient((client) 
 ///
 /// For more fine-grained control over the request and response, use [Request]
 /// instead.
-Future<Uint8List> readBytes(url, {Map<String, String> headers}) => _withClient((client) => client.readBytes(url, headers: headers));
+Future<Uint8List> readBytes(url, {Map<String, String> headers}) =>
+    _withClient((client) => client.readBytes(url, headers: headers));
 
 Future<T> _withClient<T>(Future<T> Function(Client) fn) async {
   HttpClient httpClient = new HttpClient();
 //    ..badCertificateCallback =
 //        ((X509Certificate cert, String host, int port) => true);
+  bool proxy = PrefService.getBool(Constants.prefProxy) ?? false;
 
-  httpClient.findProxy = (uri) {
-    return "PROXY proxy:port";
-    //return "PROXY 192.168.1.3:5555;";
-  };
-  httpClient.addProxyCredentials(
-      'proxy',
-      3128,
-      '',
-      HttpClientBasicCredentials(
-          'username', 'password'));
-
+  if (proxy) {
+    String host = PrefService.getString(Constants.prefProxyHost);
+    int port = PrefService.getInt(Constants.prefProxyPort);
+    httpClient.findProxy = (uri) {
+      return "PROXY ${host}:${port}";
+    };
+    bool proxyCredentials =
+        PrefService.getBool(Constants.prefProxyCredentials);
+    if (proxyCredentials) {
+      String username =
+          PrefService.getString(Constants.prefProxyCredentialsName);
+      String password =
+          PrefService.getString(Constants.prefProxyCredentialsPassword) ?? '';
+      httpClient.addProxyCredentials(
+        host,
+        port,
+        '',
+        HttpClientBasicCredentials(username, password),
+      );
+    }
+  }
   IOClient client = IOClient(httpClient);
   try {
     return await fn(client);
