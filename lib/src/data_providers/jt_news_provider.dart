@@ -5,7 +5,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:http/http.dart';
+import '../utils/http_proxy.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
 
