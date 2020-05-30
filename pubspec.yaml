@@ -42,21 +42,16 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   search_choices: ^1.0.15
-  hive: ^1.4.1+1
-  hive_flutter: ^0.3.0+2
-  grizzly_io: ^2.2.0
-  pdf: ^1.8.0
   flutter_echarts:
     path: ./flutter_echarts
   device_info: ">=0.4.2+4 <2.0.0"
   badges: ^1.1.1
-  simple_autocomplete_formfield: ^0.2.7
   quiver: ^2.1.3
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
+  build_runner: ^1.9.0
   json_serializable: ^3.3.0
-  build_runner: ^1.10.0
 
 flutter:
   uses-material-design: true
