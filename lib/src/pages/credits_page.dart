@@ -9,28 +9,33 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:covid19cuba/src/data_providers/about_us_provider.dart';
 
 class CreditsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('Sobre Nosotros'),
-        centerTitle: true,
-      ),
-      backgroundColor: Constants.primaryColor,
-      body: Center(
-        child: ListView(
-          children: credits(context),
-        ),
-      ),
+    return FutureBuilder<void>(
+      future: getAboutUsData(),
+      builder: (context, AsyncSnapshot<void> snapshot) {
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            title: Text('Sobre Nosotros'),
+            centerTitle: true,
+          ),
+          backgroundColor: Constants.primaryColor,
+          body: Center(
+            child: ListView(
+              children: credits(context),
+            ),
+          ),
+        );
+      }
     );
   }
 
   List<Widget> credits(BuildContext context) {
     List<Widget> result = [];
-
     result.add(
       Container(
         child: Image.asset(Constants.appLogo),
@@ -70,14 +75,14 @@ class CreditsPage extends StatelessWidget {
       ),
     );
 
-    for (var collaborator in List<List<String>>()
+    for (var collaborator in List<Map<String,String>>()
       ..addAll(Constants.collaborators)
-      ..sort((a, b) => a[0].compareTo(b[0]))) {
+      ..sort((a, b) => a['name'].compareTo(b['name']))) {
       result.add(
         PresentationCard(
-          name: collaborator[0],
-          description: collaborator[1],
-          link: collaborator[2],
+          name: collaborator['name'],
+          description: collaborator['description'],
+          link: collaborator['link'],
         ),
       );
     }
