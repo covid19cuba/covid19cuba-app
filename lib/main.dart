@@ -67,7 +67,11 @@ Future<bool> checkUpdate() async {
 Future<bool> chartsZoomInitValue() async {
   if (Platform.isAndroid) {
     AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
-    return int.parse(androidInfo.version.release) >= 7;
+    String version = androidInfo.version.release;
+    if(version.contains('.')){
+      version=version.substring(0,version.indexOf('.'));
+    }
+    return int.parse(version) >= 7;
   } else if (Platform.isIOS) {
     // iOS implementation here
     return true;
