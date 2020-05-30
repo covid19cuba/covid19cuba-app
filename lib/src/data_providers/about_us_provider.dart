@@ -42,11 +42,17 @@ Future<void> getAboutUsData() async {
     data = await getAboutUsDataFromCache();
     log('Data obtained from cache.');
     //print('Data obtained from cache.');
+    if (data == null) {return ;}
   }
-  Constants.collaborators=data;
+  //print(data);
+  Constants.collaborators=(data['collaborators'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+  Constants.replicas=(data['replicas'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+  Constants.promotors=(data['promotors'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+  Constants.collabProjects=(data['collabProjects'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+  Constants.thanks = data['thanks'] as String;
 }
 
-Future<List<Map<String,String>>> getAboutUsDataFrom(String url) async {
+Future<Map<String, dynamic>> getAboutUsDataFrom(String url) async {
   var resp = await get(url, headers: {
     'Accept-Encoding': 'gzip, deflate, br',
   });
@@ -61,45 +67,45 @@ Future<List<Map<String,String>>> getAboutUsDataFrom(String url) async {
     return null;
     //throw BadRequestException('Bad request');
   }
-  List<Map<String,String>> result;
   try {
-    var json = jsonDecode(utf8.decode(resp.bodyBytes));
-    result = (jsonDecode(json) as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+    var json = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String,dynamic>;
+    //result = (json as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
     //print('get data from network');
-    await setAboutUsDataToCache(result);
+    await setAboutUsDataToCache(json);
+    return json;
   } catch (e) {
     log(e.toString());
     //print(e.toString());
     return null;
     //throw ParseException('Parse error');
   }
-  return result;
 }
 
-Future<List<Map<String,String>>> getAboutUsDataFromCache() async {
+Future<Map<String,dynamic>> getAboutUsDataFromCache() async {
   try {
     var packageInfo = await PackageInfo.fromPlatform();
     var versionCodeNow = int.parse(packageInfo.buildNumber);
     var versionCodeOld = PrefService.getInt(Constants.prefVersionCode) ?? 0;
     if (versionCodeNow != versionCodeOld) {
-      return Constants.collaborators;
+      return null;
     }
     var data = PrefService.getString(Constants.prefDataAboutUs);
     if (data == null) {
-      return Constants.collaborators;
+      return null;
     }
-    return (jsonDecode(data) as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+    return jsonDecode(data) as Map<String,dynamic>;
+    //return (jsonDecode(data) as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
   } catch (e) {
     log(e.toString());
     //print(e.toString());
   }
-  return Constants.collaborators;
+  return null;
 }
 
-Future<void> setAboutUsDataToCache(List<Map<String,String>> data) async {
+Future<void> setAboutUsDataToCache(Map<String, dynamic> data) async {
   try {
     String result = jsonEncode(data);
-    PrefService.setString(Constants.prefDataJTNews, result);
+    PrefService.setString(Constants.prefDataAboutUs, result);
   } catch (e) {
     log(e.toString());
     //print(e.toString());

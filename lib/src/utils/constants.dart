@@ -917,31 +917,78 @@ class Constants {
     },
   ];
 
-  static const replicas = <List<String>>[
-    [
-      'CUSOBU',
-      'https://www.cusobu.nat.cu/covid',
-      'https://www.cusobu.nat.cu',
-    ],
-    [
-      'Federación de Radioaficionados de Cuba',
-      'http://covid19.frcuba.cu',
-      'https://www.frcuba.cu',
-    ],
-    [
-      'Proyecto SWL-X',
-      'http://covidcuba.swlx.info',
-      'https://www.swlx.info',
-    ],
-    [
-      'Universidad de La Habana',
-      'https://covid19cubadata.uh.cu',
-      'http://www.uh.cu',
-    ],
-    /*[
-      'Joven Club',
-      'http://covid19.jovenclub.cu',
-      'https://www.jovenclub.cu',
-    ],*/
+  static List<Map<String, String>> replicas = <Map<String, String>>[
+    {
+      'text':'CUSOBU',
+      'url':'https://www.cusobu.nat.cu/covid',
+      'replicaUrl':'https://www.cusobu.nat.cu',
+    },
+    {
+      'text':'Federación de Radioaficionados de Cuba',
+      'url':'http://covid19.frcuba.cu',
+      'replicaUrl':'https://www.frcuba.cu',
+    },
+    {
+      'text':'Proyecto SWL-X',
+      'url':'http://covidcuba.swlx.info',
+      'replicaUrl':'https://www.swlx.info',
+    },
+    {
+      'text':'Universidad de La Habana',
+      'url':'https://covid19cubadata.uh.cu',
+      'replicaUrl':'http://www.uh.cu',
+    },
+    /*{
+      'text':'Joven Club',
+      'url':'http://covid19.jovenclub.cu',
+      'replicaUrl':'https://www.jovenclub.cu',
+    },*/
+  ];
+
+  static String thanks = 'El equipo de desarrollo de Covid19 Cuba Data agradece a todos '
+          'los que de una forma u otra ayudan a combatir la pandemia de la '
+          'Covid-19, en especial a los que arriesgan su vida luchando en '
+          'primera línea.';
+
+  static List<Map<String, String>> promotors = <Map<String, String>>[
+    {
+      'name': 'MatCom',
+      'url': 'http://www.matcom.uh.cu',
+    },
+    {
+      'name': 'Postdata.club',
+      'url': 'https://www.postdata.club',
+    },
+    {
+      'name': 'Juventud Técnica',
+      'url': 'https://medium.com/juventud-técnica',
+    },
+  ];
+
+  static List<Map<String, String>> collabProjects = <Map<String, String>>[
+    {
+      'name': 'CUSOBU',
+      'url': 'https://www.cusobu.nat.cu',
+    },
+    {
+      'name': 'Proyecto SWL-X',
+      'url': 'https://www.swlx.info',
+    },
+    {
+      'name': 'Daxslab',
+      'url': 'https://www.daxslab.com',
+    },
+    {
+      'name': 'Unión de Informáticos de Cuba',
+      'url': 'https://www.uic.cu',
+    },
+    {
+      'name': 'Universidad de Oriente',
+      'url': 'https://www.uo.edu.cu',
+    },
+    {
+      'name': 'Universidad de La Habana',
+      'url': 'http://www.uh.cu',
+    },
   ];
 }
