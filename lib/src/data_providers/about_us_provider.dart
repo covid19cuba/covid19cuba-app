@@ -16,14 +16,10 @@ const urlAboutUsDataIO =
     'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/about_us.json';
 
 Future<void> getAboutUsData() async {
-  print('getting about us data');
-  var data = await getAboutUsDataFromCache();
-  if (data != null) {
-    log('Data obtained from cache.');
-    print('Data obtained from cache.');
-  }
-  else{
-    var mode = PrefService.getInt(Constants.prefConnectionMode) ?? Constants.ConnectionModeMerge;
+  //print('getting about us data');
+  var data = null;
+  var mode = PrefService.getInt(Constants.prefConnectionMode) ?? Constants.ConnectionModeMerge;
+  try {
     switch (mode) {
       case Constants.ConnectionModeIntranet:
         data = await getAboutUsDataFrom(urlAboutUsDataCU);
@@ -33,14 +29,19 @@ Future<void> getAboutUsData() async {
         break;
       case Constants.ConnectionModeMerge:
       default:
-        try {
           data = await getAboutUsDataFrom(urlAboutUsDataCU);
-        } catch (e) {
-          log(e.toString());
-          print(e.toString());
-          data = await getAboutUsDataFrom(urlAboutUsDataIO);
-        }
+          if(data == null){
+            data = await getAboutUsDataFrom(urlAboutUsDataIO);
+          }
     }
+  } catch (e) {
+    log(e.toString());
+    //print(e.toString());
+  }
+  if (data == null) {
+    data = await getAboutUsDataFromCache();
+    log('Data obtained from cache.');
+    //print('Data obtained from cache.');
   }
   Constants.collaborators=data;
 }
@@ -51,24 +52,25 @@ Future<List<Map<String,String>>> getAboutUsDataFrom(String url) async {
   });
   if (resp.statusCode == 404) {
     log('Source is invalid');
-    print('Source is invalid');
-    return Constants.collaborators;
+    //print('Source is invalid');
+    return null;
     //throw InvalidSourceException('Source is invalid');
   } else if (resp.statusCode != 200) {
     log('Bad request');
-    print('Bad request');
-    return Constants.collaborators;
+    //print('Bad request');
+    return null;
     //throw BadRequestException('Bad request');
   }
   List<Map<String,String>> result;
   try {
     var json = jsonDecode(utf8.decode(resp.bodyBytes));
     result = (jsonDecode(json) as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+    //print('get data from network');
     await setAboutUsDataToCache(result);
   } catch (e) {
     log(e.toString());
-    print(e.toString());
-    return Constants.collaborators;
+    //print(e.toString());
+    return null;
     //throw ParseException('Parse error');
   }
   return result;
@@ -80,17 +82,18 @@ Future<List<Map<String,String>>> getAboutUsDataFromCache() async {
     var versionCodeNow = int.parse(packageInfo.buildNumber);
     var versionCodeOld = PrefService.getInt(Constants.prefVersionCode) ?? 0;
     if (versionCodeNow != versionCodeOld) {
-      return null;
+      return Constants.collaborators;
     }
     var data = PrefService.getString(Constants.prefDataAboutUs);
     if (data == null) {
-      return null;
+      return Constants.collaborators;
     }
     return (jsonDecode(data) as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
   } catch (e) {
     log(e.toString());
+    //print(e.toString());
   }
-  return null;
+  return Constants.collaborators;
 }
 
 Future<void> setAboutUsDataToCache(List<Map<String,String>> data) async {
@@ -99,5 +102,6 @@ Future<void> setAboutUsDataToCache(List<Map<String,String>> data) async {
     PrefService.setString(Constants.prefDataJTNews, result);
   } catch (e) {
     log(e.toString());
+    //print(e.toString());
   }
 }
