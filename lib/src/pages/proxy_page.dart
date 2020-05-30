@@ -10,7 +10,7 @@ import 'package:preferences/preferences.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 
-class ProxyPage extends StatefulWidget{
+class ProxyPage extends StatefulWidget {
   @override
   State<ProxyPage> createState() => ProxyPageState();
 
@@ -27,9 +27,10 @@ class ProxyPageState extends State<ProxyPage> {
     endIndent: 16,
   );
 
-  ProxyPageState(){
+  ProxyPageState() {
     this.proxyEnabled = PrefService.getBool(Constants.prefProxy) ?? false;
-    this.credentialsEnabled = PrefService.getBool(Constants.prefProxyCredentials) ?? false;
+    this.credentialsEnabled =
+        PrefService.getBool(Constants.prefProxyCredentials) ?? false;
   }
 
   @override
@@ -59,30 +60,14 @@ class ProxyPageState extends State<ProxyPage> {
           'Dirección Web', Constants.prefProxyHost,
           defaultVal: '',
           disabled: !this.proxyEnabled,
-          validator: (String str) {
-            if (str.contains(' ')) {
-              return "Dirección Inválida";
-            }
-            return null;
-          },
+          validator: proxyUrlValidator,
         ),
         TextFieldPreference(
           'Puerto',
           Constants.prefProxyPort,
           defaultVal: '',
           disabled: !this.proxyEnabled,
-          validator: (str) {
-            try{
-              var value = int.parse(str);
-              if(value <= 0){
-                return "Puerto incorrecto";
-              }
-            }
-            catch (e) {
-              return "Puerto incorrecto";
-            }
-            return null;
-          },
+          validator: proxyPortValidator,
         ),
         divider,
         SwitchPreference(
@@ -121,15 +106,36 @@ class ProxyPageState extends State<ProxyPage> {
     );
   }
 
-  void updateProxySettings(){
+  void updateProxySettings() {
     setState(() {
       this.proxyEnabled = PrefService.getBool(Constants.prefProxy);
     });
   }
 
-  void updateProxyCredentialsSettings(){
+  void updateProxyCredentialsSettings() {
     setState(() {
-      this.credentialsEnabled = PrefService.getBool(Constants.prefProxyCredentials);
+      this.credentialsEnabled =
+          PrefService.getBool(Constants.prefProxyCredentials);
     });
+  }
+
+  String proxyUrlValidator(String str) {
+    if (str.contains(' ')) {
+      return "Dirección Inválida";
+    }
+    return null;
+  }
+
+  String proxyPortValidator(String str) {
+    try {
+      var value = int.parse(str);
+      if (value <= 0) {
+        return "Puerto incorrecto";
+      }
+    }
+    catch (e) {
+      return "Puerto incorrecto";
+    }
+    return null;
   }
 }
