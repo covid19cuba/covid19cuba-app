@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:preferences/preferences.dart';
@@ -85,6 +86,17 @@ class SettingsPageState extends State<SettingsPage> {
           desc: 'Permite hacer zoom en las gráficas. '
               'Puede que necesite de mayor consumo de recursos '
               'de su teléfono.',
+        ),
+        divider,
+        ListTile(
+          title: Text('Configurar Proxy'),
+          trailing: Icon(Icons.arrow_right),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProxyPage(),
+            ),
+          ),
         ),
         divider,
         Container(

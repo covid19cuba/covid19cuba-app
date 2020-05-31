@@ -104,6 +104,13 @@ class Constants {
   static const String prefContacts = 'prefContacts';
   static const String prefChartsZoom = 'prefChartsZoom';
   static const String prefBadgeNews = 'prefBadgeNews';
+  static const String prefProxy = 'proxy';
+  static const String prefProxyCredentials = 'proxy-authorization';
+  static const String prefProxyHost = 'proxy-host';
+  static const String prefProxyPort = 'proxy-port';
+  static const String prefProxyCredentialsName = 'proxy-credentials-name';
+  static const String prefProxyCredentialsPassword = 'proxi-credentials-password';
+  static const String prefProxyAllowInsecureCertificates = 'proxy-insecure-certificates';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
