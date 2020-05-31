@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  barcode:
+    dependency: transitive
+    description:
+      name: barcode
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.10.0"
   bloc:
     dependency: transitive
     description:
@@ -352,6 +359,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  grizzly_io:
+    dependency: "direct main"
+    description:
+      name: grizzly_io
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.2"
+  hive:
+    dependency: "direct main"
+    description:
+      name: hive
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.1+1"
+  hive_flutter:
+    dependency: "direct main"
+    description:
+      name: hive_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0+2"
   html:
     dependency: transitive
     description:
@@ -500,7 +528,7 @@ packages:
     source: hosted
     version: "0.4.0+18"
   path:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: path
       url: "https://pub.dartlang.org"
@@ -520,6 +548,34 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.4"
+  path_provider:
+    dependency: transitive
+    description:
+      name: path_provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.9"
+  path_provider_macos:
+    dependency: transitive
+    description:
+      name: path_provider_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4+3"
+  path_provider_platform_interface:
+    dependency: transitive
+    description:
+      name: path_provider_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
+  pdf:
+    dependency: "direct main"
+    description:
+      name: pdf
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.8.1"
   pedantic:
     dependency: transitive
     description:
@@ -590,6 +646,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.5"
+  qr:
+    dependency: transitive
+    description:
+      name: qr
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   quiver:
     dependency: "direct main"
     description:
@@ -667,6 +730,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.3"
+  simple_autocomplete_formfield:
+    dependency: "direct main"
+    description:
+      name: simple_autocomplete_formfield
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.7"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -721,6 +791,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  textfield_state:
+    dependency: transitive
+    description:
+      name: textfield_state
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0+2"
   timezone:
     dependency: "direct main"
     description:
@@ -770,6 +847,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1+6"
+  utf:
+    dependency: transitive
+    description:
+      name: utf
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.0+5"
   vector_math:
     dependency: transitive
     description:
