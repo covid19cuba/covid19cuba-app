@@ -6,9 +6,12 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:preferences/preference_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19cuba/src/blocs/blocs.dart';
 
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:covid19cuba/src/utils/cuba_icon_icons.dart';
 
 class HomePage extends StatefulWidget {
@@ -78,24 +81,73 @@ class HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: currentTabIndex,
-        children: pages,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Constants.primaryColor,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        items: getTabs(),
-        currentIndex: currentTabIndex,
-        type: BottomNavigationBarType.fixed,
-        onTap: (int index) {
-          setState(() {
-            currentTabIndex = index;
-          });
-        },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeBloc>(
+          create: (context) => HomeBloc(),
+        ),
+        BlocProvider<JTNewsBloc>(
+          create: (context) => JTNewsBloc(),
+        ),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          title: Text(Constants.appName),
+          centerTitle: true,
+          actions: _getAppBarActions(context, currentTabIndex),
+        ),
+        drawer: HomeDrawerWidget(),
+        body: IndexedStack(
+          index: currentTabIndex,
+          children: pages,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Constants.primaryColor,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey,
+          items: getTabs(),
+          currentIndex: currentTabIndex,
+          type: BottomNavigationBarType.fixed,
+          onTap: (int index) {
+            setState(() {
+              currentTabIndex = index;
+            });
+          },
+        ),
       ),
     );
+  }
+
+  List<Widget> _getAppBarActions(BuildContext context, int index) {
+    if (index == 1 || index == 2) {
+      return <Widget>[
+        BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            return IconButton(
+              icon: Icon(Icons.refresh),
+              color: Colors.white,
+              onPressed: () {
+                BlocProvider.of<HomeBloc>(context).add(FetchHomeEvent());
+              },
+            );
+          },
+        ),
+      ];
+    } else if (index == 3) {
+      return <Widget>[
+        BlocBuilder<JTNewsBloc, JTNewsState>(
+          builder: (context, state) {
+            return IconButton(
+              icon: Icon(Icons.refresh),
+              color: Colors.white,
+              onPressed: () {
+                BlocProvider.of<JTNewsBloc>(context).add(FetchJTNewsEvent());
+              },
+            );
+          },
+        ),
+      ];
+    } else return <Widget>[];
   }
 }

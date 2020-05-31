@@ -17,40 +17,21 @@ import 'package:getflutter/getflutter.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class JTNewsPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => JTNewsPageState();
-}
-
-class JTNewsPageState extends State<JTNewsPage> {
-  Completer<void> refreshCompleter;
-
-  @override
-  void initState() {
-    super.initState();
-    refreshCompleter = Completer<void>();
-  }
-
+class JTNewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Completer<void> refreshCompleter = Completer<void>();
     try {
-      return BlocProvider(
-        create: (context) => JTNewsBloc(),
-        child: BlocConsumer<JTNewsBloc, JTNewsState>(
-          listener: (context, state) {
-            if (state is LoadedJTNewsState) {
-              refreshCompleter?.complete();
-              refreshCompleter = Completer();
-            }
-          },
-          builder: (context, state) {
-            return Scaffold(
-              appBar: getAppBar(context, state),
-              drawer: getHomeDrawer(context, state),
-              body: getBody(context, state),
-            );
-          },
-        ),
+      return BlocConsumer<JTNewsBloc, JTNewsState>(
+        listener: (context, state) {
+          if (state is LoadedJTNewsState) {
+            refreshCompleter?.complete();
+            refreshCompleter = Completer();
+          }
+        },
+        builder: (context, state) {
+          return getBody(context, state, refreshCompleter);
+        },
       );
     } catch (e) {
       log(e.toString());
@@ -58,29 +39,8 @@ class JTNewsPageState extends State<JTNewsPage> {
     }
   }
 
-  Widget getAppBar(BuildContext context, JTNewsState state) {
-    return AppBar(
-      centerTitle: true,
-      title: Text(Constants.appName),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.refresh),
-          color: Colors.white,
-          onPressed: () {
-            BlocProvider.of<JTNewsBloc>(context).add(
-              FetchJTNewsEvent(),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget getHomeDrawer(BuildContext context, JTNewsState state) {
-    return HomeDrawerWidget();
-  }
-
-  Widget getBody(BuildContext context, JTNewsState state) {
+  Widget getBody(BuildContext context, JTNewsState state,
+      Completer<void> refreshCompleter) {
     if (state is InitialJTNewsState) {
       BlocProvider.of<JTNewsBloc>(context).add(LoadJTNewsEvent());
     }
@@ -306,71 +266,64 @@ class JTNewsPageState extends State<JTNewsPage> {
   }
 
   Widget getError() {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(Constants.appName),
-      ),
-      drawer: HomeDrawerWidget(),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(30),
-            child: Icon(
-              Icons.error_outline,
-              color: Constants.primaryColor,
-              size: 150,
-            ),
+    return ListView(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(30),
+          child: Icon(
+            Icons.error_outline,
+            color: Constants.primaryColor,
+            size: 150,
           ),
-          Text(
-            'Ha ocurrido un error',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Constants.primaryColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-            ),
+        ),
+        Text(
+          'Ha ocurrido un error',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Constants.primaryColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
           ),
-          Container(
-            margin: EdgeInsets.all(20),
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                'El equipo de desarrollo de la aplicación le pide disculpas '
-                'y le invita al grupo de Telegram para que reporte el '
-                'problema y así poder solucionarlo ayudando a los restantes '
-                'usuarios. Gracias de antemano.',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: Constants.primaryColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
+        ),
+        Container(
+          margin: EdgeInsets.all(20),
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              'El equipo de desarrollo de la aplicación le pide disculpas '
+              'y le invita al grupo de Telegram para que reporte el '
+              'problema y así poder solucionarlo ayudando a los restantes '
+              'usuarios. Gracias de antemano.',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 50),
-            child: GFButton(
-              text: 'Grupo de soporte en Telegram',
-              textColor: Constants.primaryColor,
-              color: Constants.primaryColor,
-              size: GFSize.LARGE,
-              shape: GFButtonShape.pills,
-              type: GFButtonType.outline2x,
-              fullWidthButton: true,
-              onPressed: () async {
-                const url = 'https://t.me/covid19cubadatachat';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
-            ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 50),
+          child: GFButton(
+            text: 'Grupo de soporte en Telegram',
+            textColor: Constants.primaryColor,
+            color: Constants.primaryColor,
+            size: GFSize.LARGE,
+            shape: GFButtonShape.pills,
+            type: GFButtonType.outline2x,
+            fullWidthButton: true,
+            onPressed: () async {
+              const url = 'https://t.me/covid19cubadatachat';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                log('Could not launch $url');
+              }
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
