@@ -90,6 +90,7 @@ class Constants {
   static const String prefVersionCode = 'versionCode';
   static const String prefData = 'data';
   static const String prefDataJTNews = 'dataJTNews';
+  static const String prefDataAboutUs = 'dataAboutUs';
   static const String prefCacheHash = 'cacheHash';
   static const String prefCacheJTNewsHash = 'cacheJTNewsHash';
   static const String prefVersionLastSkip = 'versionLastSkip';
@@ -100,8 +101,16 @@ class Constants {
   static const String prefPesquisador = 'prefPesquisador';
   static const String prefProvinceSelected = 'prefProvinceSelected';
   static const String prefMunicipalitySelected = 'prefMunicipalitySelected';
+  static const String prefContacts = 'prefContacts';
   static const String prefChartsZoom = 'prefChartsZoom';
   static const String prefBadgeNews = 'prefBadgeNews';
+  static const String prefProxy = 'proxy';
+  static const String prefProxyCredentials = 'proxy-authorization';
+  static const String prefProxyHost = 'proxy-host';
+  static const String prefProxyPort = 'proxy-port';
+  static const String prefProxyCredentialsName = 'proxy-credentials-name';
+  static const String prefProxyCredentialsPassword = 'proxi-credentials-password';
+  static const String prefProxyAllowInsecureCertificates = 'proxy-insecure-certificates';
 
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
@@ -123,8 +132,11 @@ class Constants {
   static const int startSilentTime = 22;
   static const int endSilentTime = 9;
 
-  static const String defaultPesquisador =
-      """{'url': 'http://autopesquisa.sld.cu/','javascript': "document.querySelector('app-root').removeChild(document.querySelector('mat-toolbar'));",'contains': 'autopesquisa.sld.cu'}""";
+  static const String defaultPesquisador = """{
+    "url": "http://autopesquisa.sld.cu/",
+    "javascript": "document.querySelector('app-root').removeChild(document.querySelector('mat-toolbar'));",
+    "contains": "autopesquisa.sld.cu"
+  }""";
 
   static const String apklisUrl =
       "https://www.apklis.cu/application/club.postdata.covid19cuba";
@@ -776,167 +788,214 @@ class Constants {
     ],
   ];
 
-  static const collaborators = <List<String>>[
-    [
-      'Jorge Alberto Reyes Carballeira',
-      'Ing. en Telecomunicaciones y Electrónica, graduado de la CUJAE. '
-      'Programador aficionado.',
-      'https://github.com/georkings',
-    ],
-    [
-      'Daniel Alejandro Cárdenas Cabrera',
-      'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
+  static List<Map<String, String>> collaborators = <Map<String, String>>[
+    {
+      'name':'Jorge Alberto Reyes Carballeira',
+      'description':'Ing. en Telecomunicaciones y Electrónica, graduado de la CUJAE. '
+          'Programador aficionado.',
+      'link':'https://github.com/georkings',
+    },
+    {
+      'name':'Daniel Alejandro Cárdenas Cabrera',
+      'description':'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
           'Integrante del grupo de Inteligencia Artificial de la Facultad de '
           'Matemática y Computación.',
-      'https://github.com/DanielUH2019',
-    ],
-    [
-      'Luis Eduardo González',
-      'Ing. en Ciencias Informáticas. Graduado en la Universidad de '
+      'link':'https://github.com/DanielUH2019',
+    },
+    {
+      'name':'Luis Eduardo González',
+      'description':'Ing. en Ciencias Informáticas. Graduado en la Universidad de '
           'Ciencias Informáticas. Desarrollador de Software.',
-      'https://github.com/luiseduardoglez',
-    ],
-    [
-      'Ernesto Avila Domenech',
-      'Ing. en Ciencias Informáticas. Máster en Informática Aplicada en '
+      'link':'https://github.com/luiseduardoglez',
+    },
+    {
+      'name':'Ernesto Avila Domenech',
+      'description':'Ing. en Ciencias Informáticas. Máster en Informática Aplicada en '
           'la Univ. de Camagüey. Profesor Asistente en la Universidad de '
           'Granma.',
-      'https://github.com/eadomenech',
-    ],
-    [
-      'Saimi Reyes',
-      'Lic. en Periodismo, graduada de la Univ. de La Habana. Editora y '
+      'link':'https://github.com/eadomenech',
+    },
+    {
+      'name':'Saimi Reyes',
+      'description':'Lic. en Periodismo, graduada de la Univ. de La Habana. Editora y '
           'Periodista de Postdata.club.',
-      '',
-    ],
-    [
-      'Claudia Alemañy',
-      'Lic. en Periodismo, graduada de la Univ. de La Habana. Periodista '
+      'link':'',
+    },
+    {
+      'name':'Claudia Alemañy',
+      'description':'Lic. en Periodismo, graduada de la Univ. de La Habana. Periodista '
           'de Juventud Técnica.',
-      '',
-    ],
-    [
-      'Dariagna Steyners',
-      'Diseñadora, graduada del Instituto Superior de Diseño de la Univ. de '
+      'link':'',
+    },
+    {
+      'name':'Dariagna Steyners',
+      'description':'Diseñadora, graduada del Instituto Superior de Diseño de la Univ. de '
           'La Habana. Diseñadora de Juventud Técnica.',
-      '',
-    ],
-    [
-      'Iramis Alonso',
-      'Lic. en Periodismo, graduada de la Univ. de La Habana. Directora y '
+      'link':'',
+    },
+    {
+      'name':'Iramis Alonso',
+      'description':'Lic. en Periodismo, graduada de la Univ. de La Habana. Directora y '
           'Periodista de Juventud Técnica.',
-      '',
-    ],
-    [
-      'Ernesto Guerra',
-      'Lic. en Periodismo, graduado de la Univ. de La Habana. Periodista '
+      'link':'',
+    },
+    {
+      'name':'Ernesto Guerra',
+      'description':'Lic. en Periodismo, graduado de la Univ. de La Habana. Periodista '
           'de Postdata.club y Juventud Técnica.',
-      '',
-    ],
-    [
-      'Norlan Capote Díaz',
-      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias '
+      'link':'',
+    },
+    {
+      'name':'Norlan Capote Díaz',
+      'description':'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias '
           'Informáticas. Scrum Máster.'
           ' Analista y desarrollador senior de sistemas.',
-      'https://www.linkedin.com/in/norlancd',
-    ],
-    [
-      'Sandy F. Pérez Matamoros',
-      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias '
+      'link':'https://www.linkedin.com/in/norlancd',
+    },
+    {
+      'name':'Sandy F. Pérez Matamoros',
+      'description':'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias '
           'Informáticas. Cofundador de CUSOBU.',
-      'https://www.linkedin.com/in/sandy-p%C3%A9rez-25a00585',
-    ],
-    [
-      'Gabriel Alejandro López López',
-      'Ing. Informático, graduado de la Univ. de Cienfuegos. MSc. '
+      'link':'https://www.linkedin.com/in/sandy-p%C3%A9rez-25a00585',
+    },
+    {
+      'name':'Gabriel Alejandro López López',
+      'description':'Ing. Informático, graduado de la Univ. de Cienfuegos. MSc. '
           'Administracion de negocios. CEO y fundador de Daxslab.',
-      'https://www.linkedin.com/in/glpzzz/',
-    ],
-    [
-      'Carlos César Caballero',
-      'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias '
+      'link':'https://www.linkedin.com/in/glpzzz/',
+    },
+    {
+      'name':'Carlos César Caballero',
+      'description':'Ing. en Ciencias Informáticas, graduado de la Univ. de las Ciencias '
           'Informáticas. CTO y fundador de Daxslab.',
-      'https://www.linkedin.com/in/carlos-cesar-caballero-d%C3%ADaz-a76b24103',
-    ],
-    [
-      'Maikel Llamaret Heredia',
-      'Lic. Bioquímica, graduado de la Univ. de La Habana. Estudiante de '
+      'link':'https://www.linkedin.com/in/carlos-cesar-caballero-d%C3%ADaz-a76b24103',
+    },
+    {
+      'name':'Maikel Llamaret Heredia',
+      'description':'Lic. Bioquímica, graduado de la Univ. de La Habana. Estudiante de '
           'Ingeniería Informática en la Univ. de Oriente.'
           'Fundador del Proyecto SWL-X.',
-      'mailto:llamaret@webmisolutions.com',
-    ],
-    [
-      'Frank Sadan Naranjo Noda',
-      'Lic. Matemática, graduado de la Univ. de La Habana. Investigador del '
+      'link':'mailto:llamaret@webmisolutions.com',
+    },
+    {
+      'name':'Frank Sadan Naranjo Noda',
+      'description':'Lic. Matemática, graduado de la Univ. de La Habana. Investigador del '
           'departamento de Matemática Interdisciplinaria del Instituto de '
           'Cibernética, Matemática y Física. Integrante del grupo de IA de '
           'la Univ. de La Habana.',
-      'mailto:fsadannn@gmail.com',
-    ],
-    [
-      'Hian Cañizares Díaz',
-      'Lic. Ciencia de la Computación, graduado de la Univ. de La Habana. '
+      'link':'mailto:fsadannn@gmail.com',
+    },
+    {
+      'name':'Hian Cañizares Díaz',
+      'description':'Lic. Ciencia de la Computación, graduado de la Univ. de La Habana. '
           'Profesor de la Fac. Matemática y Computación de la Univ. de '
           'La Habana. Integrante del grupo de IA de la Univ. de La Habana.',
-      'mailto:hiancdtrsnm@gmail.com',
-    ],
-    [
-      'Yudivián Almeida',
-      'Lic. Ciencia de la Computación, Dr. Ciencias Matemáticas, Profesor de '
+      'link':'mailto:hiancdtrsnm@gmail.com',
+    },
+    {
+      'name':'Yudivián Almeida',
+      'description':'Lic. Ciencia de la Computación, Dr. Ciencias Matemáticas, Profesor de '
           'la Fac. Matemática y Computación de la Univ. de La Habana, Editor '
           'de Datos de Postdata.club',
-      '',
-    ],
-    [
-      'Luis Correa Leyva',
-      'Estudiante de Ciencia de la Computación en la Univ. de Oriente.',
-      'https://correaleyval.github.io',
-    ],
-    [
-      'Carlos Bermudez Porto',
-      'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
+      'link':'',
+    },
+    {
+      'name':'Luis Correa Leyva',
+      'description':'Estudiante de Ciencia de la Computación en la Univ. de Oriente.',
+      'link':'https://correaleyval.github.io',
+    },
+    {
+      'name':'Carlos Bermudez Porto',
+      'description':'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
           'Alumno Ayudante de Programación.',
-      'https://www.linkedin.com/in/carlos-bermudez-porto-3078bb165',
-    ],
-    [
-      'Roberto Marti Cedeño',
-      'Estudiante de Ciencia de la Computación en la Univ. de La Habana.',
-      'mailto:roberto.marti@iris.uh.cu',
-    ],
-    [
-      'Leynier Gutiérrez González',
-      'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
+      'link':'https://www.linkedin.com/in/carlos-bermudez-porto-3078bb165',
+    },
+    {
+      'name':'Roberto Marti Cedeño',
+      'description':'Estudiante de Ciencia de la Computación en la Univ. de La Habana.',
+      'link':'mailto:roberto.marti@iris.uh.cu',
+    },
+    {
+      'name':'Leynier Gutiérrez González',
+      'description':'Estudiante de Ciencia de la Computación en la Univ. de La Habana. '
           'Alumno Ayudante de Programación y Redes de Computadoras. '
           'Desarrollador Full Stack.',
-      'https://leynier.github.io',
-    ],
+      'link':'https://leynier.github.io',
+    },
   ];
 
-  static const replicas = <List<String>>[
-    [
-      'CUSOBU',
-      'https://www.cusobu.nat.cu/covid',
-      'https://www.cusobu.nat.cu',
-    ],
-    [
-      'Federación de Radioaficionados de Cuba',
-      'http://covid19.frcuba.cu',
-      'https://www.frcuba.cu',
-    ],
-    [
-      'Proyecto SWL-X',
-      'http://covidcuba.swlx.info',
-      'https://www.swlx.info',
-    ],
-    [
-      'Universidad de La Habana',
-      'https://covid19cubadata.uh.cu',
-      'http://www.uh.cu',
-    ],
-    /*[
-      'Joven Club',
-      'http://covid19.jovenclub.cu',
-      'https://www.jovenclub.cu',
-    ],*/
+  static List<Map<String, String>> replicas = <Map<String, String>>[
+    {
+      'text':'CUSOBU',
+      'url':'https://www.cusobu.nat.cu/covid',
+      'replicaUrl':'https://www.cusobu.nat.cu',
+    },
+    {
+      'text':'Federación de Radioaficionados de Cuba',
+      'url':'http://covid19.frcuba.cu',
+      'replicaUrl':'https://www.frcuba.cu',
+    },
+    {
+      'text':'Proyecto SWL-X',
+      'url':'http://covidcuba.swlx.info',
+      'replicaUrl':'https://www.swlx.info',
+    },
+    {
+      'text':'Universidad de La Habana',
+      'url':'https://covid19cubadata.uh.cu',
+      'replicaUrl':'http://www.uh.cu',
+    },
+    /*{
+      'text':'Joven Club',
+      'url':'http://covid19.jovenclub.cu',
+      'replicaUrl':'https://www.jovenclub.cu',
+    },*/
+  ];
+
+  static String thanks = 'El equipo de desarrollo de Covid19 Cuba Data agradece a todos '
+          'los que de una forma u otra ayudan a combatir la pandemia de la '
+          'Covid-19, en especial a los que arriesgan su vida luchando en '
+          'primera línea.';
+
+  static List<Map<String, String>> promotors = <Map<String, String>>[
+    {
+      'name': 'MatCom',
+      'url': 'http://www.matcom.uh.cu',
+    },
+    {
+      'name': 'Postdata.club',
+      'url': 'https://www.postdata.club',
+    },
+    {
+      'name': 'Juventud Técnica',
+      'url': 'https://medium.com/juventud-técnica',
+    },
+  ];
+
+  static List<Map<String, String>> collabProjects = <Map<String, String>>[
+    {
+      'name': 'CUSOBU',
+      'url': 'https://www.cusobu.nat.cu',
+    },
+    {
+      'name': 'Proyecto SWL-X',
+      'url': 'https://www.swlx.info',
+    },
+    {
+      'name': 'Daxslab',
+      'url': 'https://www.daxslab.com',
+    },
+    {
+      'name': 'Unión de Informáticos de Cuba',
+      'url': 'https://www.uic.cu',
+    },
+    {
+      'name': 'Universidad de Oriente',
+      'url': 'https://www.uo.edu.cu',
+    },
+    {
+      'name': 'Universidad de La Habana',
+      'url': 'http://www.uh.cu',
+    },
   ];
 }

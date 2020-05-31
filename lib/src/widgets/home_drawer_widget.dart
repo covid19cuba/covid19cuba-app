@@ -4,15 +4,14 @@
 
 import 'dart:developer';
 
+import 'package:covid19cuba/src/pages/pages.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:covid19cuba/src/pages/pages.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
   @override
@@ -47,6 +46,8 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             header(),
             separator(),
             casesTableItem(),
+            contactRegistrationItem(),
+            usefulPhonesItem(),
             tipsItem(),
             linksDrawerItem(),
             updateDrawerItem(),
@@ -313,6 +314,40 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
       onTap: () async {
         var sharedContent = await getSharedContent();
         Share.share(sharedContent, subject: '$appName');
+      },
+    );
+  }
+
+  Widget contactRegistrationItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.account_box,
+      text: 'Registro de Contactos',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ContactsListPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget usefulPhonesItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.people,
+      text: 'Atención a la Población',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UsefulPhonesPage(),
+          ),
+        );
       },
     );
   }
