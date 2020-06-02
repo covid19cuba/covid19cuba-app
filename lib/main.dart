@@ -8,6 +8,8 @@ import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:preferences/preference_service.dart';
 
 import 'package:covid19cuba/src/app.dart';
@@ -32,6 +34,10 @@ void main() async {
   var update = await checkUpdate();
 
   await setUpTasks();
+
+  await Hive.initFlutter();
+
+  await Hive.openBox('contacts');
 
   runApp(App(update));
 
@@ -61,7 +67,11 @@ Future<bool> checkUpdate() async {
 Future<bool> chartsZoomInitValue() async {
   if (Platform.isAndroid) {
     AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
-    return int.parse(androidInfo.version.release) >= 7;
+    String version = androidInfo.version.release;
+    if(version.contains('.')){
+      version=version.substring(0,version.indexOf('.'));
+    }
+    return int.parse(version) >= 7;
   } else if (Platform.isIOS) {
     // iOS implementation here
     return true;

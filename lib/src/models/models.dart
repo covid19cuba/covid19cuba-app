@@ -9,6 +9,7 @@ export 'changelog_item.dart';
 export 'changelog_model.dart';
 export 'comparison_of_accumulated_cases.dart';
 export 'comparison_of_accumulated_cases_item.dart';
+export 'contact_model.dart';
 export 'cuba_model.dart';
 export 'evolution_of_cases_by_days.dart';
 export 'data_model.dart';

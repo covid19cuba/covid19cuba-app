@@ -4,7 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -94,25 +93,7 @@ class WebViewPageState extends State<WebViewPage>
         }
         return true;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: Text(Constants.appName),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () {
-                if (controller != null) {
-                  controller.reload();
-                }
-              },
-            ),
-          ],
-        ),
-        drawer: HomeDrawerWidget(),
-        body: webView,
-      ),
+      child: webView,
     );
   }
 }

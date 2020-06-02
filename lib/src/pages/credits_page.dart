@@ -9,28 +9,33 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:covid19cuba/src/data_providers/about_us_provider.dart';
 
 class CreditsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('Sobre Nosotros'),
-        centerTitle: true,
-      ),
-      backgroundColor: Constants.primaryColor,
-      body: Center(
-        child: ListView(
-          children: credits(context),
-        ),
-      ),
+    return FutureBuilder<void>(
+      future: getAboutUsData(),
+      builder: (context, AsyncSnapshot<void> snapshot) {
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            title: Text('Sobre Nosotros'),
+            centerTitle: true,
+          ),
+          backgroundColor: Constants.primaryColor,
+          body: Center(
+            child: ListView(
+              children: credits(context),
+            ),
+          ),
+        );
+      }
     );
   }
 
   List<Widget> credits(BuildContext context) {
     List<Widget> result = [];
-
     result.add(
       Container(
         child: Image.asset(Constants.appLogo),
@@ -70,14 +75,13 @@ class CreditsPage extends StatelessWidget {
       ),
     );
 
-    for (var collaborator in List<List<String>>()
-      ..addAll(Constants.collaborators)
-      ..sort((a, b) => a[0].compareTo(b[0]))) {
+    for (var collaborator in Constants.collaborators
+        ..sort((a, b) => a['name'].compareTo(b['name']))) {
       result.add(
         PresentationCard(
-          name: collaborator[0],
-          description: collaborator[1],
-          link: collaborator[2],
+          name: collaborator['name'],
+          description: collaborator['description'],
+          link: collaborator['link'],
         ),
       );
     }
@@ -97,38 +101,20 @@ class CreditsPage extends StatelessWidget {
     result.add(Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        linkText(
-          'CUSOBU',
-          'https://www.cusobu.nat.cu',
+      ]..addAll(Constants.collabProjects.sublist(0, Constants.collabProjects.length>=3 ? 3 : Constants.collabProjects.length).map((e) => linkText(
+          e['name'],
+          e['url'],
           topMargin: 0.0,
           rightMargin: 0.0,
           bottomMargin: 0.0,
           leftMargin: 0.0,
-        ),
-        linkText(
-          'Proyecto SWL-X',
-          'https://www.swlx.info',
-          topMargin: 0.0,
-          rightMargin: 0.0,
-          bottomMargin: 0.0,
-          leftMargin: 0.0,
-        ),
-        linkText(
-          'Daxslab',
-          'https://www.daxslab.com',
-          topMargin: 0.0,
-          rightMargin: 0.0,
-          bottomMargin: 0.0,
-          leftMargin: 0.0,
-        ),
-      ],
+        )))
     ));
-
     result.add(Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        linkText(
+        /*linkText(
           'Unión de Informáticos de Cuba',
           'https://www.uic.cu',
           topMargin: 15.0,
@@ -151,8 +137,15 @@ class CreditsPage extends StatelessWidget {
           rightMargin: 0.0,
           bottomMargin: 0.0,
           leftMargin: 0.0,
-        ),
-      ],
+        ),*/
+      ]..addAll(Constants.collabProjects.sublist(Constants.collabProjects.length>=3 ? 3 : Constants.collabProjects.length,Constants.collabProjects.length).map((e) => linkText(
+          e['name'],
+          e['url'],
+          topMargin: 15.0,
+          rightMargin: 0.0,
+          bottomMargin: 0.0,
+          leftMargin: 0.0,
+        ))),
     ));
 
     result.add(
@@ -171,9 +164,9 @@ class CreditsPage extends StatelessWidget {
     for (var item in Constants.replicas) {
       result.add(
         Replica(
-          collaboratorText: item[0],
-          url: item[1],
-          collaboratorUrl: item[2],
+          collaboratorText: item['text'],
+          url: item['url'],
+          collaboratorUrl: item['replicaUrl'],
           topMargin: 20,
         ),
       );
@@ -196,10 +189,7 @@ class CreditsPage extends StatelessWidget {
       Container(
         margin: EdgeInsets.all(20),
         child: Text(
-          'El equipo de desarrollo de Covid19 Cuba Data agradece a todos '
-          'los que de una forma u otra ayudan a combatir la pandemia de la '
-          'Covid-19, en especial a los que arriesgan su vida luchando en '
-          'primera línea.',
+          Constants.thanks,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
@@ -208,83 +198,35 @@ class CreditsPage extends StatelessWidget {
       ),
     );
 
-    result.add(
-      GestureDetector(
-        child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 50),
-          child: Text(
-            'MatCom',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
+    for(int i=0;i<Constants.promotors.length;i++){
+      var item = Constants.promotors[i];
+      result.add(
+        GestureDetector(
+          child: Container(
+            padding: EdgeInsets.only(left: 20, right: 20, top: i==0 ? 50 : 20),
+            child: Text(
+              item['name'],
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
           ),
+          onTap: () async {
+            Navigator.pop(context);
+            var url = item['url'];
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              log('Could not launch $url');
+            }
+          },
         ),
-        onTap: () async {
-          Navigator.pop(context);
-          const url = 'http://www.matcom.uh.cu';
-          if (await canLaunch(url)) {
-            await launch(url);
-          } else {
-            log('Could not launch $url');
-          }
-        },
-      ),
-    );
+      );
 
-    result.add(
-      GestureDetector(
-        child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Text(
-            'Postdata.club',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-        ),
-        onTap: () async {
-          Navigator.pop(context);
-          const url = 'https://www.postdata.club';
-          if (await canLaunch(url)) {
-            await launch(url);
-          } else {
-            log('Could not launch $url');
-          }
-        },
-      ),
-    );
-
-    result.add(
-      GestureDetector(
-        child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Text(
-            'Juventud Técnica',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-        ),
-        onTap: () async {
-          Navigator.pop(context);
-          const url = 'https://medium.com/juventud-técnica';
-          if (await canLaunch(url)) {
-            await launch(url);
-          } else {
-            log('Could not launch $url');
-          }
-        },
-      ),
-    );
+    }
 
     result.add(
       GestureDetector(
