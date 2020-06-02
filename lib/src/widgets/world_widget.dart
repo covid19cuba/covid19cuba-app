@@ -2,11 +2,11 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
-import 'package:covid19cuba/src/widgets/radar_widget.dart';
-import 'package:flutter/material.dart';
-
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/radar_widget.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class WorldWidget extends StatelessWidget {
   final DataModel data;
@@ -18,6 +18,7 @@ class WorldWidget extends StatelessWidget {
     return ListView(
       children: <Widget>[
         UpdateWidget(updated: data.all.updated),
+        if (shouldBe()) getWidget(context),
         Container(
           margin: data.all.note == null || data.all.note == ''
               ? EdgeInsets.all(0)
@@ -31,8 +32,7 @@ class WorldWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: RadarChartWidget(
-              data:
-                  data.all.radarChartData,
+              data: data.all.radarChartData,
             ),
           ),
         ),
