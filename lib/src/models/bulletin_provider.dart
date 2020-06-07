@@ -7,6 +7,7 @@ import 'bulletin.dart';
 
 part 'bulletin_provider.g.dart';
 
+@JsonSerializable()
 class BulletinProvider{
   String name;
   String url;
