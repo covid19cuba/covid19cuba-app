@@ -15,7 +15,7 @@ class Bulletin{
 
   Bulletin();
 
-  factory Bulletin.fromJson(Map<string, dynamic> json) => _$BulletinFromJson(json);
+  factory Bulletin.fromJson(Map<String, dynamic> json) => _$BulletinFromJson(json);
 
   Map<String, dynamic> toJson() => _$BulletinToJson(this);
 }
