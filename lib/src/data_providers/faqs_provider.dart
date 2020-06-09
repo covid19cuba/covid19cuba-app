@@ -11,27 +11,27 @@ import 'package:preferences/preferences.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
 
-const urlAboutUsDataCU = 'https://cusobu.nat.cu/covid/api/v2/about_us.json';
-const urlAboutUsDataIO =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/about_us.json';
+const urlFaqsDataCU = 'https://cusobu.nat.cu/covid/api/v2/faqs.json';
+const urlFaqsDataIO =
+    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/faqs.json';
 
-Future<void> getAboutUsData() async {
-  //print('getting about us data');
+Future<void> getFaqsData() async {
+  //print('getting faqs data');
   var data = null;
   var mode = PrefService.getInt(Constants.prefConnectionMode) ?? Constants.ConnectionModeMerge;
   try {
     switch (mode) {
       case Constants.ConnectionModeIntranet:
-        data = await getAboutUsDataFrom(urlAboutUsDataCU);
+        data = await getFaqsDataFrom(urlFaqsDataCU);
         break;
       case Constants.ConnectionModeInternet:
-        data = await getAboutUsDataFrom(urlAboutUsDataIO);
+        data = await getFaqsDataFrom(urlFaqsDataIO);
         break;
       case Constants.ConnectionModeMerge:
       default:
-          data = await getAboutUsDataFrom(urlAboutUsDataCU);
+          data = await getFaqsDataFrom(urlFaqsDataCU);
           if(data == null){
-            data = await getAboutUsDataFrom(urlAboutUsDataIO);
+            data = await getFaqsDataFrom(urlFaqsDataIO);
           }
     }
   } catch (e) {
@@ -39,20 +39,16 @@ Future<void> getAboutUsData() async {
     //print(e.toString());
   }
   if (data == null) {
-    data = await getAboutUsDataFromCache();
+    data = await getFaqsDataFromCache();
+    if (data == null) {return ;}
     log('Data obtained from cache.');
     //print('Data obtained from cache.');
-    if (data == null) {return ;}
   }
   //print(data);
-  Constants.collaborators=(data['collaborators'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
-  Constants.replicas=(data['replicas'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
-  Constants.promotors=(data['promotors'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
-  Constants.collabProjects=(data['collabProjects'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
-  Constants.thanks = data['thanks'] as String;
+  Constants.faqs=(data as List<dynamic>).map((e) => (e as List<dynamic>).map((f) => (f as String)).toList()).toList();
 }
 
-Future<Map<String, dynamic>> getAboutUsDataFrom(String url) async {
+Future<List<dynamic>> getFaqsDataFrom(String url) async {
   var resp = await get(url, headers: {
     'Accept-Encoding': 'gzip, deflate, br',
   });
@@ -68,9 +64,9 @@ Future<Map<String, dynamic>> getAboutUsDataFrom(String url) async {
     //throw BadRequestException('Bad request');
   }
   try {
-    var json = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String,dynamic>;
+    var json = jsonDecode(utf8.decode(resp.bodyBytes)) as List<dynamic>;
     //print('get data from network');
-    await setAboutUsDataToCache(json);
+    await setFaqsDataToCache(json);
     return json;
   } catch (e) {
     log(e.toString());
@@ -80,7 +76,7 @@ Future<Map<String, dynamic>> getAboutUsDataFrom(String url) async {
   }
 }
 
-Future<Map<String,dynamic>> getAboutUsDataFromCache() async {
+Future<List<dynamic>> getFaqsDataFromCache() async {
   try {
     var packageInfo = await PackageInfo.fromPlatform();
     var versionCodeNow = int.parse(packageInfo.buildNumber);
@@ -88,11 +84,11 @@ Future<Map<String,dynamic>> getAboutUsDataFromCache() async {
     if (versionCodeNow != versionCodeOld) {
       return null;
     }
-    var data = PrefService.getString(Constants.prefDataAboutUs);
+    var data = PrefService.getString(Constants.prefDataFaqs);
     if (data == null) {
       return null;
     }
-    return jsonDecode(data) as Map<String,dynamic>;
+    return jsonDecode(data) as List<dynamic>;
   } catch (e) {
     log(e.toString());
     //print(e.toString());
@@ -100,10 +96,10 @@ Future<Map<String,dynamic>> getAboutUsDataFromCache() async {
   return null;
 }
 
-Future<void> setAboutUsDataToCache(Map<String, dynamic> data) async {
+Future<void> setFaqsDataToCache(List<dynamic> data) async {
   try {
     String result = jsonEncode(data);
-    PrefService.setString(Constants.prefDataAboutUs, result);
+    PrefService.setString(Constants.prefDataFaqs, result);
   } catch (e) {
     log(e.toString());
     //print(e.toString());
