@@ -10,22 +10,28 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/data_providers/faqs_provider.dart';
 
 class FaqsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('Preguntas Frecuentes'),
-        centerTitle: true,
-      ),
-      backgroundColor: Constants.primaryColor,
-      body: Center(
-        child: ListView(
-          children: faqs(),
-        ),
-      ),
+    return FutureBuilder<void>(
+      future: getFaqsData(),
+      builder: (context, AsyncSnapshot<void> snapshot) {
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            title: Text('Preguntas Frecuentes'),
+            centerTitle: true,
+          ),
+          backgroundColor: Constants.primaryColor,
+          body: Center(
+            child: ListView(
+              children: faqs(),
+            ),
+          ),
+        );
+      }
     );
   }
 

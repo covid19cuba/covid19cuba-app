@@ -91,6 +91,7 @@ class Constants {
   static const String prefData = 'data';
   static const String prefDataJTNews = 'dataJTNews';
   static const String prefDataAboutUs = 'dataAboutUs';
+  static const String prefDataFaqs = 'dataFaqs';
   static const String prefCacheHash = 'cacheHash';
   static const String prefCacheJTNewsHash = 'cacheJTNewsHash';
   static const String prefVersionLastSkip = 'versionLastSkip';
@@ -708,7 +709,7 @@ class Constants {
     ]
   ];
 
-  static const faqs = <List<String>>[
+  static List<List<String>> faqs = <List<String>>[
     [
       '¿Si presento problemas con la aplicación qué debería hacer?',
       'Primero le aconsejamos que lea esta sección de la aplicación, y si '
