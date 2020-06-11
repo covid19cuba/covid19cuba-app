@@ -4,18 +4,18 @@ import '../utils/http_proxy.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'dart:convert';
 
-typedef ParserMethod<T> = T Function(dynamic data);
+typedef ParserMethod<T> = T Function(Map<String, dynamic> data);
 
 class DataProvider<T>{
   static final String sourceCu = "https://cusobu.nat.cu/covid";
-  static final String sourceIo = "https://covid19cuba.github.io";
+  static final String sourceIo = "https://covid19cuba.github.io/covid19cubadata.github.io";
 
   final String cuPath;
   final String ioPath;
 
   final ParserMethod<T> parser;
 
-  const DataProvider(this.ioPath, this.cuPath, this.parser);
+  const DataProvider({this.ioPath, this.cuPath, this.parser});
 
   Future<T> getDataFrom(String url) async{
     var resp = await get(url, headers: {
