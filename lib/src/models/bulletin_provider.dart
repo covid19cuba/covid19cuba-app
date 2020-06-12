@@ -16,7 +16,7 @@ class BulletinProvider{
 
   BulletinProvider();
 
-  factory BulletinProvider.fromJson(Map<String,dynamic> json) => _$BulletinProviderFromJson(json);
+  static BulletinProvider fromJson(Map<String,dynamic> json) => _$BulletinProviderFromJson(json);
 
   Map<String, dynamic> toJson() => _$BulletinProviderToJson(this);
 }

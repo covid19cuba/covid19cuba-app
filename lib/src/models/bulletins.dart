@@ -13,7 +13,7 @@ class Bulletins{
 
   Bulletins();
 
-  factory Bulletins.fromJson(Map<String,dynamic> json) => _$BulletinsFromJson(json);
+  static Bulletins fromJson(Map<String,dynamic> json) => _$BulletinsFromJson(json);
 
   Map<String, dynamic> toJson() => _$BulletinsToJson(this);
 }
