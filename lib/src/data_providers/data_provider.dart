@@ -1,26 +1,46 @@
+import 'package:flutter/cupertino.dart';
 import 'package:preferences/preferences.dart';
+import 'package:http/http.dart' as http;
 import 'dart:developer';
 import '../utils/http_proxy.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'dart:convert';
+import '../models/state.dart';
 
 typedef ParserMethod<T> = T Function(Map<String, dynamic> data);
+typedef CacheCheckMethod<T extends CacheState> = Future<bool> Function( DataProvider<T>
+    provider, String prefCache);
 
-class DataProvider<T>{
+Future<bool> basicCacheCheck<T extends CacheState>(DataProvider<T> state, String prefCache) async {
+  String cache = PrefService.getString(prefCache);
+  T serverCache = await state.getData();
+  if (cache == serverCache.cache){
+    return true;
+  }
+  return false;
+}
+
+class DataProvider<T> {
   static final String sourceCu = "https://cusobu.nat.cu/covid";
-  static final String sourceIo = "https://covid19cuba.github.io/covid19cubadata.github.io";
+  static final String sourceIo =
+      "https://covid19cuba.github.io/covid19cubadata.github.io";
 
   final String cuPath;
   final String ioPath;
+  final http.BaseClient client;
 
   final ParserMethod<T> parser;
 
-  const DataProvider({this.ioPath, this.cuPath, this.parser});
+  const DataProvider(
+      {@required this.ioPath, @required this.cuPath, @required this.parser, this.client});
 
-  Future<T> getDataFrom(String url) async{
-    var resp = await get(url, headers: {
+  Future<T> getDataFrom(String url) async {
+    var headers = {
       'Accept-Encoding': 'gzip, deflate, br',
-    });
+    };
+    var method = client?.get ?? get;
+    var resp = await method(url, headers: headers);
+
     if (resp.statusCode == 404) {
       throw InvalidSourceException('Source is invalid');
     } else if (resp.statusCode != 200) {
@@ -55,4 +75,26 @@ class DataProvider<T>{
         }
     }
   }
+}
+
+Future<T> getDataAndCacheCheck<T, F extends CacheState>(
+   { CacheCheckMethod cacheCheck = basicCacheCheck,
+  @required DataProvider<T> dataProvider,
+  @required DataProvider<F> cacheProvider,
+  @required String dataStateKey,
+  @required String dataCacheKey,
+}) async {
+  bool cacheHit = await cacheCheck(cacheProvider, dataStateKey);
+
+  return cacheHit
+      ? getDataFromCache(dataProvider, dataCacheKey)
+      : dataProvider.getData();
+}
+
+T getDataFromCache<T>(DataProvider<T> dataProvider, String dataCacheKey) {
+  String cache = PrefService.getString(dataCacheKey);
+  if (cache == null) {
+    return null;
+  }
+  return dataProvider.parser(jsonDecode(cache));
 }
