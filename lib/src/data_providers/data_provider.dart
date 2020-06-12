@@ -91,7 +91,7 @@ Future<T> getDataAndCacheCheck<T, F extends CacheState>(
       : dataProvider.getData();
 }
 
-T getDataFromCache<T>(DataProvider<T> dataProvider, String dataCacheKey) {
+Future<T> getDataFromCache<T>(DataProvider<T> dataProvider, String dataCacheKey) async{
   String cache = PrefService.getString(dataCacheKey);
   if (cache == null) {
     return null;
