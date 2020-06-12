@@ -1,5 +1,3 @@
-import 'package:demoji/demoji.dart';
-
 import 'data_provider.dart';
 import '../models/bulletins.dart';
 import '../models/bulletins_state.dart';
