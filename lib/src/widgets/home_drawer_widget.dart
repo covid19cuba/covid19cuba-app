@@ -45,6 +45,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           children: <Widget>[
             header(),
             separator(),
+            bulletinsDrawerItem(),
             casesTableItem(),
             contactRegistrationItem(),
             usefulPhonesItem(),
@@ -418,5 +419,20 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         );
       },
     );
+  }
+
+  Widget bulletinsDrawerItem() {
+    return createDrawerItem(context,
+    icon: Icons.library_books,
+    text: 'Boletines',
+    onTap: (){
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BulletinsPage(),
+        )
+      );
+    });
   }
 }
