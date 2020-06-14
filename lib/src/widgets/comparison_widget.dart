@@ -243,9 +243,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         domainFn: (_, i) => i,
         measureFn: (item, _) => item[0],
         data: zip([
-          secondList
-            .take(min(secondList.length, firstList.length))
-            .toList(),
+          secondList.take(min(secondList.length, firstList.length)).toList(),
         ]).toList(),
       ),
     ];

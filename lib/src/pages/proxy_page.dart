@@ -2,20 +2,14 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:getflutter/getflutter.dart';
-import 'package:preferences/preferences.dart';
-
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:preferences/preferences.dart';
 
 class ProxyPage extends StatefulWidget {
   @override
   State<ProxyPage> createState() => ProxyPageState();
-
 }
-
 
 class ProxyPageState extends State<ProxyPage> {
   bool proxyEnabled;
@@ -57,7 +51,8 @@ class ProxyPageState extends State<ProxyPage> {
           onChange: updateProxySettings,
         ),
         TextFieldPreference(
-          'Dirección Web', Constants.prefProxyHost,
+          'Dirección Web',
+          Constants.prefProxyHost,
           defaultVal: '',
           disabled: !this.proxyEnabled,
           validator: proxyUrlValidator,
@@ -78,7 +73,8 @@ class ProxyPageState extends State<ProxyPage> {
           onChange: updateProxyCredentialsSettings,
         ),
         TextFieldPreference(
-          'Nombre de Usuario', Constants.prefProxyCredentialsName,
+          'Nombre de Usuario',
+          Constants.prefProxyCredentialsName,
           defaultVal: '',
           disabled: !this.proxyEnabled || !this.credentialsEnabled,
         ),
@@ -97,7 +93,8 @@ class ProxyPageState extends State<ProxyPage> {
         SwitchPreference(
           'Aceptar certificados de seguridad inseguros',
           Constants.prefProxyAllowInsecureCertificates,
-          desc: 'Aceptar cualquier certificado de seguridad que sea devuelto al conectarse al proxy. '
+          desc:
+              'Aceptar cualquier certificado de seguridad que sea devuelto al conectarse al proxy. '
               'Esta opción no tiene efecto si la conexión necesita el empleo de credenciales',
           disabled: !this.proxyEnabled,
         ),
@@ -132,8 +129,7 @@ class ProxyPageState extends State<ProxyPage> {
       if (value <= 0) {
         return "Puerto incorrecto";
       }
-    }
-    catch (e) {
+    } catch (e) {
       return "Puerto incorrecto";
     }
     return null;

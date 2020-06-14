@@ -3,27 +3,29 @@
 // found in the LICENSE file.
 
 import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
+
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
 
-class RadarChartWidget extends StatefulWidget{
+class RadarChartWidget extends StatefulWidget {
   final RadarModel data;
 
   const RadarChartWidget({this.data}) : assert(data != null);
 
   @override
-  RadarChartWidgetState createState() => RadarChartWidgetState(
+  RadarChartWidgetState createState() {
+    return RadarChartWidgetState(
       bounds: data.bounds,
       data: data,
       countries: data.data.keys.toList(),
-      cubaData: data.data['Cuba']
-  );
+      cubaData: data.data['Cuba'],
+    );
+  }
 }
 
 class RadarChartWidgetState extends State<RadarChartWidget> {
-
   final RadarBoundModel bounds;
   final RadarModel data;
   final List<String> countries;
@@ -31,12 +33,16 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
   String selectedCountry = 'Estados Unidos';
   RadarItemModel selectedData;
 
-  RadarChartWidgetState({this.bounds, this.data, this.countries, this.cubaData}){
-    assert(bounds != null);
-    assert(data != null);
-    assert(countries != null);
-    assert(cubaData != null);
-    selectedData=data.data[selectedCountry];
+  RadarChartWidgetState({
+    this.bounds,
+    this.data,
+    this.countries,
+    this.cubaData,
+  })  : assert(bounds != null),
+        assert(data != null),
+        assert(countries != null),
+        assert(cubaData != null) {
+    selectedData = data.data[selectedCountry];
   }
 
   @override
@@ -71,27 +77,31 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
               color: Constants.primaryColor,
             ),
             onChanged: (String newValue) {
-              setState(() {
-                selectedCountry = newValue;
-                selectedData=data.data[newValue];
-              });
-            },
-            items: this.countries.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
+              setState(
+                () {
+                  selectedCountry = newValue;
+                  selectedData = data.data[newValue];
+                },
               );
-            }).toList(),
+            },
+            items: this.countries.map<DropdownMenuItem<String>>(
+              (String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              },
+            ).toList(),
           ),
         ),
         Container(
-        child: Echarts(
-        extraScript: '''
+          child: Echarts(
+            extraScript: '''
           function round(number, digits = 2) {
               return Math.round((number + Number.EPSILON) * 10 ** digits) / 10 ** digits;
           }
         ''',
-        option: '''
+            option: '''
         {
           title: {
               text: ''
@@ -157,14 +167,15 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
           }]
         }
         ''',
-        ),
-        padding: EdgeInsets.all(10),
-        //width: 400,
-        //height: 350,
-        height: min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height)-25,
-      )
+          ),
+          padding: EdgeInsets.all(10),
+          //width: 400,
+          //height: 350,
+          height: min(MediaQuery.of(context).size.width,
+                  MediaQuery.of(context).size.height) -
+              25,
+        )
       ],
     );
   }
-
 }

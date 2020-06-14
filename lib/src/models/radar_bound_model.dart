@@ -20,7 +20,6 @@ class RadarBoundModel {
   @JsonKey(name: 'test_p')
   double testPercent;
 
-
   RadarBoundModel();
 
   factory RadarBoundModel.fromJson(Map<String, dynamic> json) =>

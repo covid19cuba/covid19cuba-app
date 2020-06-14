@@ -14,16 +14,14 @@ RadarModel _$RadarModelFromJson(Map<String, dynamic> json) {
     ..bounds = json['bounds'] == null
         ? null
         : RadarBoundModel.fromJson(json['bounds'] as Map<String, dynamic>)
-    ..data = (json['data'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(
+    ..data = (json['data'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
           k,
-          e == null
-              ? null
-              : RadarItemModel.fromJson(e as Map<String, dynamic>),
-    ));
+          e == null ? null : RadarItemModel.fromJson(e as Map<String, dynamic>),
+        ));
 }
 
-Map<String, dynamic> _$RadarModelToJson(RadarModel instance) => <String, dynamic>{
+Map<String, dynamic> _$RadarModelToJson(RadarModel instance) =>
+    <String, dynamic>{
       'data': instance.data,
       'bounds': instance.bounds,
     };
