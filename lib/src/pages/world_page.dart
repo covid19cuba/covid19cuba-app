@@ -37,8 +37,8 @@ class WorldPage extends StatelessWidget {
     }
   }
 
-  Widget getBody(BuildContext context, HomeState state,
-      Completer<void> refreshCompleter) {
+  Widget getBody(
+      BuildContext context, HomeState state, Completer<void> refreshCompleter) {
     if (state is InitialHomeState) {
       BlocProvider.of<HomeBloc>(context).add(LoadHomeEvent());
     }

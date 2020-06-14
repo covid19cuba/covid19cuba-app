@@ -5,11 +5,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:http/http.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
-
-import 'package:covid19cuba/src/utils/utils.dart';
 
 const urlFaqsDataCU = 'https://cusobu.nat.cu/covid/api/v2/faqs.json';
 const urlFaqsDataIO =
@@ -17,8 +16,9 @@ const urlFaqsDataIO =
 
 Future<void> getFaqsData() async {
   //print('getting faqs data');
-  var data = null;
-  var mode = PrefService.getInt(Constants.prefConnectionMode) ?? Constants.ConnectionModeMerge;
+  List<dynamic> data;
+  var mode = PrefService.getInt(Constants.prefConnectionMode) ??
+      Constants.ConnectionModeMerge;
   try {
     switch (mode) {
       case Constants.ConnectionModeIntranet:
@@ -29,10 +29,10 @@ Future<void> getFaqsData() async {
         break;
       case Constants.ConnectionModeMerge:
       default:
-          data = await getFaqsDataFrom(urlFaqsDataCU);
-          if(data == null){
-            data = await getFaqsDataFrom(urlFaqsDataIO);
-          }
+        data = await getFaqsDataFrom(urlFaqsDataCU);
+        if (data == null) {
+          data = await getFaqsDataFrom(urlFaqsDataIO);
+        }
     }
   } catch (e) {
     log(e.toString());
@@ -40,12 +40,16 @@ Future<void> getFaqsData() async {
   }
   if (data == null) {
     data = await getFaqsDataFromCache();
-    if (data == null) {return ;}
+    if (data == null) {
+      return;
+    }
     log('Data obtained from cache.');
     //print('Data obtained from cache.');
   }
   //print(data);
-  Constants.faqs=(data as List<dynamic>).map((e) => (e as List<dynamic>).map((f) => (f as String)).toList()).toList();
+  Constants.faqs = data
+      .map((e) => (e as List<dynamic>).map((f) => (f as String)).toList())
+      .toList();
 }
 
 Future<List<dynamic>> getFaqsDataFrom(String url) async {

@@ -15,23 +15,22 @@ class CreditsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
-      future: getAboutUsData(),
-      builder: (context, AsyncSnapshot<void> snapshot) {
-        return Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            title: Text('Sobre Nosotros'),
-            centerTitle: true,
-          ),
-          backgroundColor: Constants.primaryColor,
-          body: Center(
-            child: ListView(
-              children: credits(context),
+        future: getAboutUsData(),
+        builder: (context, AsyncSnapshot<void> snapshot) {
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              title: Text('Sobre Nosotros'),
+              centerTitle: true,
             ),
-          ),
-        );
-      }
-    );
+            backgroundColor: Constants.primaryColor,
+            body: Center(
+              child: ListView(
+                children: credits(context),
+              ),
+            ),
+          );
+        });
   }
 
   List<Widget> credits(BuildContext context) {
@@ -76,7 +75,7 @@ class CreditsPage extends StatelessWidget {
     );
 
     for (var collaborator in Constants.collaborators
-        ..sort((a, b) => a['name'].compareTo(b['name']))) {
+      ..sort((a, b) => a['name'].compareTo(b['name']))) {
       result.add(
         PresentationCard(
           name: collaborator['name'],
@@ -99,17 +98,21 @@ class CreditsPage extends StatelessWidget {
     );
 
     result.add(Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-      ]..addAll(Constants.collabProjects.sublist(0, Constants.collabProjects.length>=3 ? 3 : Constants.collabProjects.length).map((e) => linkText(
-          e['name'],
-          e['url'],
-          topMargin: 0.0,
-          rightMargin: 0.0,
-          bottomMargin: 0.0,
-          leftMargin: 0.0,
-        )))
-    ));
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[]..addAll(Constants.collabProjects
+            .sublist(
+                0,
+                Constants.collabProjects.length >= 3
+                    ? 3
+                    : Constants.collabProjects.length)
+            .map((e) => linkText(
+                  e['name'],
+                  e['url'],
+                  topMargin: 0.0,
+                  rightMargin: 0.0,
+                  bottomMargin: 0.0,
+                  leftMargin: 0.0,
+                )))));
     result.add(Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -138,14 +141,20 @@ class CreditsPage extends StatelessWidget {
           bottomMargin: 0.0,
           leftMargin: 0.0,
         ),*/
-      ]..addAll(Constants.collabProjects.sublist(Constants.collabProjects.length>=3 ? 3 : Constants.collabProjects.length,Constants.collabProjects.length).map((e) => linkText(
-          e['name'],
-          e['url'],
-          topMargin: 15.0,
-          rightMargin: 0.0,
-          bottomMargin: 0.0,
-          leftMargin: 0.0,
-        ))),
+      ]..addAll(Constants.collabProjects
+          .sublist(
+              Constants.collabProjects.length >= 3
+                  ? 3
+                  : Constants.collabProjects.length,
+              Constants.collabProjects.length)
+          .map((e) => linkText(
+                e['name'],
+                e['url'],
+                topMargin: 15.0,
+                rightMargin: 0.0,
+                bottomMargin: 0.0,
+                leftMargin: 0.0,
+              ))),
     ));
 
     result.add(
@@ -198,12 +207,13 @@ class CreditsPage extends StatelessWidget {
       ),
     );
 
-    for(int i=0;i<Constants.promotors.length;i++){
+    for (int i = 0; i < Constants.promotors.length; i++) {
       var item = Constants.promotors[i];
       result.add(
         GestureDetector(
           child: Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: i==0 ? 50 : 20),
+            padding:
+                EdgeInsets.only(left: 20, right: 20, top: i == 0 ? 50 : 20),
             child: Text(
               item['name'],
               textAlign: TextAlign.center,
@@ -225,7 +235,6 @@ class CreditsPage extends StatelessWidget {
           },
         ),
       );
-
     }
 
     result.add(

@@ -68,8 +68,8 @@ Future<bool> chartsZoomInitValue() async {
   if (Platform.isAndroid) {
     AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
     String version = androidInfo.version.release;
-    if(version.contains('.')){
-      version=version.substring(0,version.indexOf('.'));
+    if (version.contains('.')) {
+      version = version.substring(0, version.indexOf('.'));
     }
     return int.parse(version) >= 7;
   } else if (Platform.isIOS) {

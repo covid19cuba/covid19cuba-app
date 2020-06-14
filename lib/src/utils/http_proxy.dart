@@ -3,11 +3,13 @@
 // found in the LICENSE file.
 
 import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
 import 'package:preferences/preferences.dart';
+
 import 'utils.dart';
 
 /// Sends an HTTP HEAD request with the given headers to the given URL, which
@@ -150,10 +152,13 @@ Future<Uint8List> readBytes(url, {Map<String, String> headers}) =>
 Future<T> _withClient<T>(Future<T> Function(Client) fn) async {
   HttpClient httpClient = new HttpClient();
 
-  bool insecure = PrefService.getBool(Constants.prefProxyAllowInsecureCertificates) ?? false;
+  bool insecure =
+      PrefService.getBool(Constants.prefProxyAllowInsecureCertificates) ??
+          false;
 
-  if(insecure){
-    httpClient.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
+  if (insecure) {
+    httpClient.badCertificateCallback =
+        ((X509Certificate cert, String host, int port) => true);
   }
 
   bool proxy = PrefService.getBool(Constants.prefProxy) ?? false;
@@ -162,7 +167,7 @@ Future<T> _withClient<T>(Future<T> Function(Client) fn) async {
     String host = PrefService.getString(Constants.prefProxyHost);
     int port = int.parse(PrefService.getString(Constants.prefProxyPort));
     httpClient.findProxy = (uri) {
-      return "PROXY ${host}:${port}";
+      return "PROXY $host:$port";
     };
     bool proxyCredentials = PrefService.getBool(Constants.prefProxyCredentials);
     if (proxyCredentials) {

@@ -15,14 +15,18 @@ RadarItemModel _$RadarItemModelFromJson(Map<String, dynamic> json) {
     ..deathPercent = double.parse(json['deaths_p'].toString())
     ..recoveredPercent = double.parse(json['recovered_p'].toString())
     ..testPercent = double.parse(json['test_p'].toString())
-    ..confirmedPerMillion = double.parse(json['confirmed_per_million'].toString())
+    ..confirmedPerMillion =
+        double.parse(json['confirmed_per_million'].toString())
     ..testPerMillion = double.parse(json['test_per_million'].toString())
-    ..confirmedPerMillionBound = double.parse(json['confirmed_per_million_bound'].toString())
-    ..testPerMillionBound = double.parse(json['test_per_million_bound'].toString())
+    ..confirmedPerMillionBound =
+        double.parse(json['confirmed_per_million_bound'].toString())
+    ..testPerMillionBound =
+        double.parse(json['test_per_million_bound'].toString())
     ..name = json['name'].toString();
 }
 
-Map<String, dynamic> _$RadarItemModelToJson(RadarItemModel instance) => <String, dynamic>{
+Map<String, dynamic> _$RadarItemModelToJson(RadarItemModel instance) =>
+    <String, dynamic>{
       'stringency': instance.stringency,
       'deaths_p': instance.deathPercent,
       'recovered_p': instance.recoveredPercent,
