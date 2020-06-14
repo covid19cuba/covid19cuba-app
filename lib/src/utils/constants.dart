@@ -21,6 +21,9 @@ class Constants {
   static const showMunicipalities = "covidData";
   static const showProvinces = "covidData2";
 
+  static const modeGeneral = 'general';
+  static const modeDeceases = 'deceases';
+
   // Colors
   static const kBackgroundColor = Color(0xFFFEFEFE);
   static const kTitleTextColor = Color(0xFF303030);
@@ -100,6 +103,7 @@ class Constants {
   static const String prefFirstModificationNotification =
       'firstModificationNotification';
   static const String prefPesquisador = 'prefPesquisador';
+  static const String prefModeSelected = 'prefModeSelected';
   static const String prefProvinceSelected = 'prefProvinceSelected';
   static const String prefMunicipalitySelected = 'prefMunicipalitySelected';
   static const String prefContacts = 'prefContacts';
