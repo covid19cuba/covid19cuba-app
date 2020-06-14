@@ -148,6 +148,7 @@ class HomePageState extends State<HomePage>
           },
         ),
       ];
-    } else return <Widget>[];
+    } else
+      return <Widget>[];
   }
 }

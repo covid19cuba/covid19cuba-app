@@ -93,8 +93,8 @@ class EffectiveReproductiveNumberWidget extends StatelessWidget {
                 domainFn: (item, i) => item[1],
                 measureFn: (item, _) => item[0],
                 data: zip([
-                    effectiveReproductiveNumber.lower.values,
-                    effectiveReproductiveNumber.date.values,
+                  effectiveReproductiveNumber.lower.values,
+                  effectiveReproductiveNumber.date.values,
                 ]).toList(),
               ),
             ],

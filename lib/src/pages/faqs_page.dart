@@ -16,23 +16,22 @@ class FaqsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
-      future: getFaqsData(),
-      builder: (context, AsyncSnapshot<void> snapshot) {
-        return Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            title: Text('Preguntas Frecuentes'),
-            centerTitle: true,
-          ),
-          backgroundColor: Constants.primaryColor,
-          body: Center(
-            child: ListView(
-              children: faqs(),
+        future: getFaqsData(),
+        builder: (context, AsyncSnapshot<void> snapshot) {
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              title: Text('Preguntas Frecuentes'),
+              centerTitle: true,
             ),
-          ),
-        );
-      }
-    );
+            backgroundColor: Constants.primaryColor,
+            body: Center(
+              child: ListView(
+                children: faqs(),
+              ),
+            ),
+          );
+        });
   }
 
   List<Widget> faqs() {

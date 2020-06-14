@@ -114,11 +114,12 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                 colorFn: (_, __) => ChartColors.blue,
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item[0],
-                data: zip([provinces[selectedProvince1]
-                    .all
-                    .evolutionOfCasesByDays
-                    .accumulated
-                    .values,
+                data: zip([
+                  provinces[selectedProvince1]
+                      .all
+                      .evolutionOfCasesByDays
+                      .accumulated
+                      .values,
                 ]).toList(),
               ),
               charts.Series<List, int>(
@@ -126,11 +127,12 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                 colorFn: (_, __) => ChartColors.orange,
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item[0],
-                data: zip([provinces[selectedProvince2]
-                    .all
-                    .evolutionOfCasesByDays
-                    .accumulated
-                    .values,
+                data: zip([
+                  provinces[selectedProvince2]
+                      .all
+                      .evolutionOfCasesByDays
+                      .accumulated
+                      .values,
                 ]).toList(),
               ),
             ],

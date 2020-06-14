@@ -17,7 +17,8 @@ RadarBoundModel _$RadarBoundModelFromJson(Map<String, dynamic> json) {
     ..testPercent = double.parse(json['test_p'].toString());
 }
 
-Map<String, dynamic> _$RadarBoundModelToJson(RadarBoundModel instance) => <String, dynamic>{
+Map<String, dynamic> _$RadarBoundModelToJson(RadarBoundModel instance) =>
+    <String, dynamic>{
       'stringency': instance.stringency,
       'deaths_p': instance.deathPercent,
       'recovered_p': instance.recoveredPercent,

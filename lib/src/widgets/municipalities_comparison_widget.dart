@@ -148,12 +148,13 @@ class MunicipalitiesComparisonWidgetState
                 colorFn: (_, __) => ChartColors.blue,
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item[0],
-                data: zip([data
-                    .getMunicipality(selectedMunicipality1)
-                    .all
-                    .evolutionOfCasesByDays
-                    .accumulated
-                    .values,
+                data: zip([
+                  data
+                      .getMunicipality(selectedMunicipality1)
+                      .all
+                      .evolutionOfCasesByDays
+                      .accumulated
+                      .values,
                 ]).toList(),
               ),
               charts.Series<List, int>(
@@ -161,12 +162,13 @@ class MunicipalitiesComparisonWidgetState
                 colorFn: (_, __) => ChartColors.orange,
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item[0],
-                data: zip([data
-                    .getMunicipality(selectedMunicipality2)
-                    .all
-                    .evolutionOfCasesByDays
-                    .accumulated
-                    .values,
+                data: zip([
+                  data
+                      .getMunicipality(selectedMunicipality2)
+                      .all
+                      .evolutionOfCasesByDays
+                      .accumulated
+                      .values,
                 ]).toList(),
               ),
             ],
