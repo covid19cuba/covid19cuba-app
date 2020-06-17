@@ -12,7 +12,7 @@ ProvinceModel _$ProvinceModelFromJson(Map<String, dynamic> json) {
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..resume = (json['resume'] as List)
         ?.map(
-            (e) => e == null ? null : Item.fromJson(e as Map<String, dynamic>))
+            (e) => e == null ? null : ItemDouble.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..mapData = json['map_data'] as Map<String, dynamic>
     ..casesBySex = json['cases_by_sex'] == null

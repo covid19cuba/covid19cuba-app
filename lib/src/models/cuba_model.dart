@@ -14,7 +14,7 @@ class CubaModel {
   DateTime updated;
 
   @JsonKey(name: 'resume')
-  List<Item> resume;
+  List<ItemDouble> resume;
 
   @JsonKey(name: 'note')
   String note;
