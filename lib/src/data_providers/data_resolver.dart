@@ -7,6 +7,8 @@ abstract class DataResolver<T,E>{
 
   Future<T> getCache();
 
+  Future<void> setCache(T data);
+
   E createInstance();
 }
 

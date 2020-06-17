@@ -39,4 +39,10 @@ class BulletinsProvider extends DataProvider<Bulletins> implements DataResolver<
   BulletinsProvider createInstance() {
    return BulletinsProvider();
   }
+
+  @override
+  Future<void> setCache(Bulletins data) {
+    return setDataToCache(data, Constants.prefBulletins);
+  }
+
 }

@@ -10,6 +10,7 @@ import '../utils/http_proxy.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'dart:convert';
 import '../models/state.dart';
+import '../models/model.dart';
 
 typedef ParserMethod<T> = T Function(Map<String, dynamic> data);
 typedef CacheCheckMethod<T extends CacheState> = Future<bool> Function( DataProvider<T>
@@ -101,4 +102,13 @@ Future<T> getDataFromCache<T>(DataProvider<T> dataProvider, String dataCacheKey)
     return null;
   }
   return dataProvider.parser(jsonDecode(cache));
+}
+
+Future<void> setDataToCache<T extends Model>(T data, String prefKey) async {
+  try {
+    String result = jsonEncode(data.toJson());
+    PrefService.setString(prefKey, result);
+  } catch (e) {
+    log(e.toString());
+  }
 }
