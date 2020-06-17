@@ -13,8 +13,7 @@ abstract class DataResolver<T,E>{
 class DataFactory<F, T extends DataResolver<F,T>>{
   T data;
 
-  DataFactory(){
-  }
+  DataFactory();
 
   Future<F> getData(){
     data.createInstance();
