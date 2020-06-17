@@ -1,6 +1,6 @@
-## Contributions are highly appreciated.
+# Contributions are highly appreciated
 
-### All contributors will be granted credit on the following list:
+## All contributors will be granted credit on the following list
 
 * Leynier Gutiérrez González ([@leynier](https://github.com/leynier))
 * Norlan Capote Díaz ([@norlancd](https://github.com/norlancd))
@@ -10,19 +10,21 @@
 * Luis Eduardo Gonzalez ([@luiseduardoglez](https://github.com/luiseduardoglez))
 * Daniel Alejandro Cárdenas Cabrera ([@DanielUH2019](https://github.com/DanielUH2019))
 
-You can help out by: 
-- Reporting a bug
-- Reviewing the code
-- Submitting a fix
-- Proposing new features
-- Becoming a maintainer
+You can help out by:
+
+* Reporting a bug
+* Reviewing the code
+* Submitting a fix
+* Proposing new features
+* Becoming a maintainer
 
 ## Branches
 
 We're using the following branches to manage work:
-- `develop` is semi-stable and should be used as the branch to fork from
-- `master` is stable and ready for prod (or it will be once we merge in the first release)
-- `feature`, `bug` branches: unstable development
+
+* `develop` is semi-stable and should be used as the branch to fork from
+* `master` is stable and ready for prod (or it will be once we merge in the first release)
+* `feature`, `bug` branches: unstable development
 
 ## How to report bugs
 
@@ -32,13 +34,13 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 
 **Great Bug Reports** tend to have:
 
-- A quick summary and/or background
-- Steps to reproduce
-  - Be specific!
-  - Give sample code if you can.
-- What you expected to happen
-- What actually happens
-- Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
+* A quick summary and/or background
+* Steps to reproduce
+  * Be specific!
+  * Give sample code if you can.
+* What you expected to happen
+* What actually happens
+* Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
 
 We <3 thorough bug reports.
 
@@ -52,8 +54,8 @@ and actively welcome your pull requests:
 1. Set up your local development environment. See [USAGE.md](USAGE.md) for instructions.
 1. Make sure to use the latest Flutter stable-channel SDK release.
 1. Create a new branch based on `develop`:
-   - Feature branches should start with `feature/`
-   - Bugfix branches should start with `bug/`
+   * Feature branches should start with `feature/`
+   * Bugfix branches should start with `bug/`
 1. Implement your changes.
 1. Add tests if applicable.
 1. Make sure your code lints.

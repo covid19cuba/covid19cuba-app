@@ -3,16 +3,15 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:quiver/iterables.dart' show zip;
 
-import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/widgets/widgets.dart';
-
 class TestsPositivePercentWidget extends StatelessWidget {
-  final TestsPositivePercent testsPositivePercent;
+  final PercentPositiveTests testsPositivePercent;
 
   const TestsPositivePercentWidget({this.testsPositivePercent})
       : assert(testsPositivePercent != null);

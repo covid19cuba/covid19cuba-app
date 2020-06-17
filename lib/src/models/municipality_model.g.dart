@@ -8,6 +8,8 @@ part of 'municipality_model.dart';
 
 MunicipalityModel _$MunicipalityModelFromJson(Map<String, dynamic> json) {
   return MunicipalityModel()
+    ..municipalityCode = json['dpa_municipality_code'] as String
+    ..updated = dateTimeFromJson(json['updated'] as String)
     ..resume = (json['resume'] as List)
         ?.map(
             (e) => e == null ? null : Item.fromJson(e as Map<String, dynamic>))
@@ -31,18 +33,33 @@ MunicipalityModel _$MunicipalityModelFromJson(Map<String, dynamic> json) {
         ? null
         : CasesByNationality.fromJson(
             json['cases_by_nationality'] as Map<String, dynamic>)
-    ..distributionByNationalityOfForeignCases =
-        (json['distribution_by_nationality_of_foreign_cases'] as List)
-            ?.map((e) =>
-                e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))
-            ?.toList()
-    ..updated = dateTimeFromJson(json['updated'] as String)
-    ..municipalityCode = json['dpa_municipality_code'] as String
-    ..mapData = json['map_data'] as Map<String, dynamic>;
+    ..distributionByNationalityOfForeignCases = (json['distribution_by_nationality_of_foreign_cases'] as List)
+        ?.map((e) =>
+            e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..deceasesUpdated = dateTimeFromJson(json['deceases_updated'] as String)
+    ..deceasesEvolutionByDays = json['deceases_evolution_by_days'] == null
+        ? null
+        : EvolutionOfDeathsByDays.fromJson(
+            json['deceases_evolution_by_days'] as Map<String, dynamic>)
+    ..deceasesBySex = json['deceases_by_sex'] == null
+        ? null
+        : CasesBySex.fromJson(json['deceases_by_sex'] as Map<String, dynamic>)
+    ..deceasesDistributionByAgeRanges = (json['deceases_distribution_by_age_ranges'] as List)
+        ?.map((e) => e == null ? null : ItemCodePlus.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..deceasesByNationality = json['deceases_by_nationality'] == null ? null : CasesByNationality.fromJson(json['deceases_by_nationality'] as Map<String, dynamic>)
+    ..deceasesDistributionAmountDiseaseHistory = (json['deceases_distribution_amount_disease_history'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(
+          k, e == null ? null : Item.fromJson(e as Map<String, dynamic>)),
+    )
+    ..deceasesCommonPreviousDiseases = (json['deceases_common_previous_diseases'] as List)?.map((e) => e == null ? null : Item.fromJson(e as Map<String, dynamic>))?.toList();
 }
 
 Map<String, dynamic> _$MunicipalityModelToJson(MunicipalityModel instance) =>
     <String, dynamic>{
+      'dpa_municipality_code': instance.municipalityCode,
+      'updated': dateTimeToJson(instance.updated),
       'resume': instance.resume,
       'cases_by_sex': instance.casesBySex,
       'cases_by_mode_of_contagion': instance.casesByModeOfContagion,
@@ -51,7 +68,14 @@ Map<String, dynamic> _$MunicipalityModelToJson(MunicipalityModel instance) =>
       'cases_by_nationality': instance.casesByNationality,
       'distribution_by_nationality_of_foreign_cases':
           instance.distributionByNationalityOfForeignCases,
-      'updated': dateTimeToJson(instance.updated),
-      'dpa_municipality_code': instance.municipalityCode,
-      'map_data': instance.mapData,
+      'deceases_updated': dateTimeToJson(instance.deceasesUpdated),
+      'deceases_evolution_by_days': instance.deceasesEvolutionByDays,
+      'deceases_by_sex': instance.deceasesBySex,
+      'deceases_distribution_by_age_ranges':
+          instance.deceasesDistributionByAgeRanges,
+      'deceases_by_nationality': instance.deceasesByNationality,
+      'deceases_distribution_amount_disease_history':
+          instance.deceasesDistributionAmountDiseaseHistory,
+      'deceases_common_previous_diseases':
+          instance.deceasesCommonPreviousDiseases,
     };

@@ -135,7 +135,7 @@ class NationalWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: PieTestsPercentWidget(
-              listOfTestsPerformed: data.all.listOfTestsPerformed,
+              listOfTestsPerformed: data.all.relationOfTestsPerformed,
             ),
           ),
         ),
@@ -149,7 +149,7 @@ class NationalWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: TestsPositivePercentWidget(
-              testsPositivePercent: data.all.testsPositivePercent,
+              testsPositivePercent: data.all.percentPositiveTests,
             ),
           ),
         ),
