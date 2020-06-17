@@ -5,20 +5,22 @@
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'radar_model.g.dart';
+part 'multiple_comparison_of_cuba_with_radar_model.g.dart';
 
 @JsonSerializable(ignoreUnannotated: true)
-class RadarModel {
+class MultipleComparisonOfCubaWithRadarModel {
   @JsonKey(name: 'data')
   Map<String, RadarItemModel> data;
 
   @JsonKey(name: 'bounds')
   RadarBoundModel bounds;
 
-  RadarModel();
+  MultipleComparisonOfCubaWithRadarModel();
 
-  factory RadarModel.fromJson(Map<String, dynamic> json) =>
-      _$RadarModelFromJson(json);
+  factory MultipleComparisonOfCubaWithRadarModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$MultipleComparisonOfCubaWithRadarModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RadarModelToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$MultipleComparisonOfCubaWithRadarModelToJson(this);
 }

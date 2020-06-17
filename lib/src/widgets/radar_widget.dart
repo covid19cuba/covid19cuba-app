@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
 
 class RadarChartWidget extends StatefulWidget {
-  final RadarModel data;
+  final MultipleComparisonOfCubaWithRadarModel data;
 
   const RadarChartWidget({this.data}) : assert(data != null);
 
@@ -27,7 +27,7 @@ class RadarChartWidget extends StatefulWidget {
 
 class RadarChartWidgetState extends State<RadarChartWidget> {
   final RadarBoundModel bounds;
-  final RadarModel data;
+  final MultipleComparisonOfCubaWithRadarModel data;
   final List<String> countries;
   final RadarItemModel cubaData;
   String selectedCountry = 'Estados Unidos';

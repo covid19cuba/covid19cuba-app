@@ -5,16 +5,16 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:covid19cuba/src/app.dart';
+import 'package:covid19cuba/src/data_providers/data_providers.dart';
+import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:preferences/preference_service.dart';
-
-import 'package:covid19cuba/src/app.dart';
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
