@@ -47,3 +47,6 @@ export 'tests_positive_percent.dart';
 export 'radar_bound_model.dart';
 export 'radar_item_model.dart';
 export 'radar_model.dart';
+export 'bulletins.dart';
+export 'bulletin_provider.dart';
+export 'bulletin.dart';

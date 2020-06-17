@@ -9,7 +9,7 @@ import '../utils/utils.dart';
 import 'data_resolver.dart';
 
 
-class BulletinProvider extends DataProvider<Bulletins> implements DataResolver<Bulletins>{
+class BulletinsProvider extends DataProvider<Bulletins> implements DataResolver<Bulletins, BulletinsProvider>{
   static const String cuDataPath = "/api/v2/bulletins.json";
   static const String ioDataPath = cuDataPath;
 
@@ -19,13 +19,13 @@ class BulletinProvider extends DataProvider<Bulletins> implements DataResolver<B
   static const bulletinState = DataProvider(
       cuPath: cuStatePath, ioPath: ioStatePath, parser: BulletinState.fromJson);
 
-  const BulletinProvider() : super(
+  const BulletinsProvider() : super(
       cuPath: cuDataPath, ioPath: ioDataPath, parser: Bulletins.fromJson);
 
   @override
   Future<Bulletins> getDataOrCache() {
     return getDataAndCacheCheck(dataProvider: this,
-        cacheProvider: BulletinProvider.bulletinState,
+        cacheProvider: BulletinsProvider.bulletinState,
         dataStateKey: Constants.prefBulletinState,
         dataCacheKey: Constants.prefBulletins);
   }
@@ -33,5 +33,10 @@ class BulletinProvider extends DataProvider<Bulletins> implements DataResolver<B
   @override
   Future<Bulletins> getCache() {
     return getDataFromCache(this, Constants.prefBulletinState);
+  }
+
+  @override
+  BulletinsProvider createInstance() {
+   return BulletinsProvider();
   }
 }
