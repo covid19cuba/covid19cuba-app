@@ -6,7 +6,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:covid19cuba/src/app.dart';
-import 'package:covid19cuba/src/data_providers/data_providers.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:device_info/device_info.dart';
