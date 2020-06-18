@@ -17,7 +17,7 @@ class ProvinceModel {
   DateTime updated;
 
   @JsonKey(name: 'resume')
-  List<Item> resume;
+  List<ItemDouble> resume;
 
   @JsonKey(name: 'map_data')
   Map<String, dynamic> mapData;

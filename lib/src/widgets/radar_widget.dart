@@ -53,7 +53,7 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
             child: Text(
-              'Comparación de los casos acumulados por provincias',
+              'Comparación múltiple de Cuba con: ',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,

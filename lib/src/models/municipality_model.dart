@@ -17,7 +17,7 @@ class MunicipalityModel {
   DateTime updated;
 
   @JsonKey(name: 'resume')
-  List<Item> resume;
+  List<ItemDouble> resume;
 
   @JsonKey(name: 'cases_by_sex')
   CasesBySex casesBySex;

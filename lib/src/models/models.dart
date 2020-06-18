@@ -25,6 +25,7 @@ export 'item_code.dart';
 export 'item_code_plus.dart';
 export 'item_date_list.dart';
 export 'item_double_list.dart';
+export 'item_double.dart';
 export 'item_extended.dart';
 export 'item_list.dart';
 export 'item_municipality.dart';
