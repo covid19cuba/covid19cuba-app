@@ -19,7 +19,7 @@ typedef CacheCheckMethod<T extends CacheState> = Future<bool> Function( DataProv
 Future<bool> basicCacheCheck<T extends CacheState>(DataProvider<T> state, String prefCache) async {
   String cache = PrefService.getString(prefCache);
   T serverCache = await state.getData();
-  if (cache == serverCache.cache){
+  if (cache != null && cache == serverCache.cache){
     return true;
   }
   return false;
