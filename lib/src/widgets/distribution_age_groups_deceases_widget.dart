@@ -3,19 +3,18 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/material.dart';
+
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:preferences/preference_service.dart';
-import 'package:quiver/iterables.dart' show zip;
 
-class TestsPositivePercentWidget extends StatelessWidget {
-  final PercentPositiveTests testsPositivePercent;
+class DistributionAgeGroupsDeceasesWidget extends StatelessWidget {
+  final List<ItemCodePlus> distributionByAgeRanges;
 
-  const TestsPositivePercentWidget({this.testsPositivePercent})
-      : assert(testsPositivePercent != null);
-
+  const DistributionAgeGroupsDeceasesWidget({this.distributionByAgeRanges})
+      : assert(distributionByAgeRanges != null);
+      
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,7 +31,7 @@ class TestsPositivePercentWidget extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  '% Tests Positivos con respecto a Total de Tests (PCR)',
+                  'Distribución de fallecidos por rangos etarios',
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   style: TextStyle(
@@ -43,54 +42,65 @@ class TestsPositivePercentWidget extends StatelessWidget {
                 ),
               ),
               InfoDialogWidget(
-                title: '% Tests Positivos con respecto a Total de Tests (PCR)',
-                text: 'Esta información se reporta desde el '
-                    '${testsPositivePercent.date.values[0].toStrPlus()}',
+                title: 'Distribución de fallecidos por rangos etarios',
+                text: '${distributionByAgeRanges.last.name} '
+                    'representa edad desconocida',
               )
             ],
           ),
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 300,
-          child: charts.TimeSeriesChart(
+          height: 350,
+          child: charts.BarChart(
             [
-              charts.Series<List, DateTime>(
-                id: testsPositivePercent.daily.name,
-                colorFn: (_, __) => ChartColors.red,
-                domainFn: (item, _) => item[1],
-                measureFn: (item, _) => item[0],
-                data: zip([
-                  testsPositivePercent.daily.values,
-                  testsPositivePercent.date.values,
-                ]).toList(),
-              ),
-              charts.Series<List, DateTime>(
-                id: testsPositivePercent.accumulated.name,
+              charts.Series<ItemCodePlus, String>(
+                id: 'Fallecidos Hombres',
+                seriesCategory: 'A',
                 colorFn: (_, __) => ChartColors.purple,
-                domainFn: (item, _) => item[1],
-                measureFn: (item, _) => item[0],
-                data: zip([
-                  testsPositivePercent.accumulated.values,
-                  testsPositivePercent.date.values,
-                ]).toList(),
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.men,
+                data: distributionByAgeRanges,
+              ),
+              charts.Series<ItemCodePlus, String>(
+                id: 'Fallecidos Mujeres',
+                seriesCategory: 'A',
+                colorFn: (_, __) => ChartColors.red,
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.women,
+                data: distributionByAgeRanges,
+              ),
+              if (distributionByAgeRanges.any((x) => x.unknown != 0))
+                charts.Series<ItemCodePlus, String>(
+                  id: 'Fallecidos Sexo Desconocido',
+                  seriesCategory: 'A',
+                  colorFn: (_, __) => ChartColors.yellow,
+                  domainFn: (item, _) => item.name,
+                  measureFn: (item, _) => item.unknown,
+                  data: distributionByAgeRanges,
+                ),
+              charts.Series<ItemCodePlus, String>(
+                id: 'Fallecidos',
+                seriesCategory: 'B',
+                colorFn: (_, __) => ChartColors.grey,
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.value,
+                data: distributionByAgeRanges,
               ),
             ],
             animate: false,
             defaultInteractions: true,
-            defaultRenderer: charts.LineRendererConfig(
-              includePoints: true,
-            ),
+            barGroupingType: charts.BarGroupingType.groupedStacked,
             behaviors: [
               charts.ChartTitle(
-                'Fecha',
+                'Rango',
                 behaviorPosition: charts.BehaviorPosition.bottom,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Por ciento (%)',
+                'Fallecidos',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -107,8 +117,6 @@ class TestsPositivePercentWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
-              if (PrefService.getBool(Constants.prefChartsZoom))
-                charts.PanAndZoomBehavior(),
             ],
           ),
         ),

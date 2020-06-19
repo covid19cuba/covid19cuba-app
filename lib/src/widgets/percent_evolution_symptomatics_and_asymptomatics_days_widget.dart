@@ -3,18 +3,20 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:quiver/iterables.dart' show zip;
 
-class TestsPositivePercentWidget extends StatelessWidget {
-  final PercentPositiveTests testsPositivePercent;
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/models/models.dart';
 
-  const TestsPositivePercentWidget({this.testsPositivePercent})
-      : assert(testsPositivePercent != null);
+class PercentEvolutionSymptomaticsAsymptomaticsDaysWidget extends StatelessWidget {
+  final PercentEvolutionSymptomaticsAsymptomatics 
+      percentEvolutionSymptomaticsAsymptomatics;
+
+  const PercentEvolutionSymptomaticsAsymptomaticsDaysWidget(
+      {this.percentEvolutionSymptomaticsAsymptomatics})
+      : assert(percentEvolutionSymptomaticsAsymptomatics != null);
 
   @override
   Widget build(BuildContext context) {
@@ -26,28 +28,16 @@ class TestsPositivePercentWidget extends StatelessWidget {
             right: 20,
             top: 20,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  '% Tests Positivos con respecto a Total de Tests (PCR)',
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                  style: TextStyle(
-                    color: Constants.primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
+          child: Center(
+            child: Text(
+              'Evolución del porciento de casos sintomáticos/asintomáticos por día',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
-              InfoDialogWidget(
-                title: '% Tests Positivos con respecto a Total de Tests (PCR)',
-                text: 'Esta información se reporta desde el '
-                    '${testsPositivePercent.date.values[0].toStrPlus()}',
-              )
-            ],
+            ),
           ),
         ),
         Container(
@@ -56,29 +46,30 @@ class TestsPositivePercentWidget extends StatelessWidget {
           child: charts.TimeSeriesChart(
             [
               charts.Series<List, DateTime>(
-                id: testsPositivePercent.daily.name,
-                colorFn: (_, __) => ChartColors.red,
-                domainFn: (item, _) => item[1],
-                measureFn: (item, _) => item[0],
-                data: zip([
-                  testsPositivePercent.daily.values,
-                  testsPositivePercent.date.values,
-                ]).toList(),
-              ),
-              charts.Series<List, DateTime>(
-                id: testsPositivePercent.accumulated.name,
+                id: percentEvolutionSymptomaticsAsymptomatics.asymptomatics.name,
                 colorFn: (_, __) => ChartColors.purple,
                 domainFn: (item, _) => item[1],
                 measureFn: (item, _) => item[0],
                 data: zip([
-                  testsPositivePercent.accumulated.values,
-                  testsPositivePercent.date.values,
+                  percentEvolutionSymptomaticsAsymptomatics.asymptomatics.values,
+                  percentEvolutionSymptomaticsAsymptomatics.date.values,
+                ]).toList(),
+              ),
+              charts.Series<List, DateTime>(
+                id: percentEvolutionSymptomaticsAsymptomatics.symptomatics.name,
+                colorFn: (_, __) => ChartColors.red,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  percentEvolutionSymptomaticsAsymptomatics.symptomatics.values,
+                  percentEvolutionSymptomaticsAsymptomatics.date.values,
                 ]).toList(),
               ),
             ],
             animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
+              includeArea: true,
               includePoints: true,
             ),
             behaviors: [
@@ -90,7 +81,7 @@ class TestsPositivePercentWidget extends StatelessWidget {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Por ciento (%)',
+                '% de casos en el día',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -112,9 +103,6 @@ class TestsPositivePercentWidget extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: 5,
-        )
       ],
     );
   }

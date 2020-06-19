@@ -3,14 +3,13 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter/material.dart';
-
-import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class PieTestsPercentWidget extends StatefulWidget {
-  final ListOfTestsPerformed listOfTestsPerformed;
+  final RelationOfTestsPerformed listOfTestsPerformed;
   List<charts.Color> colorPalettes;
 
   PieTestsPercentWidget({this.listOfTestsPerformed})

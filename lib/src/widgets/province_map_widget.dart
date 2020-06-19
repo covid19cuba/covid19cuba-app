@@ -15,9 +15,14 @@ class ProvinceWebViewKeepAlive extends StatefulWidget {
   final Map<String, dynamic> mapData;
   final Map<String, dynamic> eventsData;
   final String provinceCode;
+  final String title;
 
-  ProvinceWebViewKeepAlive({this.mapData, this.eventsData, this.provinceCode})
-      : assert(mapData != null && eventsData != null && provinceCode != null);
+  ProvinceWebViewKeepAlive({
+    this.mapData,
+    this.eventsData,
+    this.provinceCode,
+    this.title,
+  }) : assert(mapData != null && provinceCode != null);
 
   @override
   ProvinceWebViewKeepAliveState createState() =>
@@ -47,6 +52,9 @@ class ProvinceWebViewKeepAliveState extends State<ProvinceWebViewKeepAlive>
         code = widget.provinceCode;
         controller
             .evaluateJavascript('covidData3($mapData,\"$code\", $eventsData)')
+            .whenComplete(() {});
+        controller
+            .evaluateJavascript("title = '${widget.title ?? 'Diagnosticados'}'")
             .whenComplete(() {});
       },
       gestureRecognizers: Set()
@@ -97,9 +105,16 @@ class ProvinceMapWebViewWidget extends StatefulWidget {
   final Map<String, dynamic> mapData;
   final String provinceCode;
   final Map<String, dynamic> eventsData;
+  final String title;
+  final String titleMunicipality;
 
-  ProvinceMapWebViewWidget({this.mapData, this.eventsData, this.provinceCode})
-      : assert(mapData != null && eventsData != null && provinceCode != null);
+  ProvinceMapWebViewWidget({
+    this.mapData,
+    this.eventsData,
+    this.provinceCode,
+    this.title,
+    this.titleMunicipality,
+  }) : assert(mapData != null && provinceCode != null);
 
   @override
   ProvinceMapWebViewWidgetState createState() =>
@@ -115,7 +130,7 @@ class ProvinceMapWebViewWidgetState extends State<ProvinceMapWebViewWidget> {
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
             child: Text(
-              'Distribución por Municipios',
+              widget.titleMunicipality ?? 'Distribución por Municipios',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -129,46 +144,49 @@ class ProvinceMapWebViewWidgetState extends State<ProvinceMapWebViewWidget> {
           mapData: widget.mapData,
           eventsData: widget.eventsData,
           provinceCode: widget.provinceCode,
+          title: widget.title,
         ),
         Container(
           height: 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Eventos de transmisión local activos',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 10,
+        if (widget.eventsData != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Eventos de transmisión local activos',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Constants.primaryColor,
+                  fontSize: 10,
+                ),
               ),
-            ),
-            Container(
-              child: Image.asset('assets/images/marker-icon-2x-gold.png'),
-              width: 15,
-              height: 15,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Eventos de transmisión local cerrados',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 10,
+              Container(
+                child: Image.asset('assets/images/marker-icon-2x-gold.png'),
+                width: 15,
+                height: 15,
               ),
-            ),
-            Container(
-              child: Image.asset('assets/images/marker-icon-2x-green.png'),
-              width: 15,
-              height: 15,
-            ),
-          ],
-        ),
+            ],
+          ),
+        if (widget.eventsData != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Eventos de transmisión local cerrados',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Constants.primaryColor,
+                  fontSize: 10,
+                ),
+              ),
+              Container(
+                child: Image.asset('assets/images/marker-icon-2x-green.png'),
+                width: 15,
+                height: 15,
+              ),
+            ],
+          ),
         Container(
           height: 20,
         ),

@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'comparison_of_accumulated_cases_item.dart';
+part of 'curves_comparison_model_item.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ComparisonOfAccumulatedCasesItem _$ComparisonOfAccumulatedCasesItemFromJson(
+CurvesComparisonModelItem _$CurvesComparisonModelItemFromJson(
     Map<String, dynamic> json) {
-  return ComparisonOfAccumulatedCasesItem()
+  return CurvesComparisonModelItem()
     ..confirmed = (json['confirmed'] as List)?.map((e) => e as int)?.toList()
     ..deaths = (json['deaths'] as List)?.map((e) => e as int)?.toList()
     ..recovered = (json['recovered'] as List)?.map((e) => e as int)?.toList()
@@ -20,8 +20,8 @@ ComparisonOfAccumulatedCasesItem _$ComparisonOfAccumulatedCasesItemFromJson(
     ..name = json['name'] as String;
 }
 
-Map<String, dynamic> _$ComparisonOfAccumulatedCasesItemToJson(
-        ComparisonOfAccumulatedCasesItem instance) =>
+Map<String, dynamic> _$CurvesComparisonModelItemToJson(
+        CurvesComparisonModelItem instance) =>
     <String, dynamic>{
       'confirmed': instance.confirmed,
       'deaths': instance.deaths,
