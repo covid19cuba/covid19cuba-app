@@ -14,7 +14,7 @@ Bulletin _$BulletinFromJson(Map<String, dynamic> json) {
     ..id = json['id'] as String
     ..info = json['info'] as String
     ..url = json['url'] as String
-    ..size = json['size'] as int;
+    ..size = json['size'] as double;
 }
 
 Map<String, dynamic> _$BulletinToJson(Bulletin instance) => <String, dynamic>{

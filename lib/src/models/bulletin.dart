@@ -12,7 +12,7 @@ class Bulletin extends Model{
   String id;
   String info;
   String url;
-  int size;
+  double size;
 
   Bulletin();
 
