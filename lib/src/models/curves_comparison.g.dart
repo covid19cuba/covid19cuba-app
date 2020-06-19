@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'comparison_of_accumulated_cases.dart';
+part of 'curves_comparison.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ComparisonOfAccumulatedCases _$ComparisonOfAccumulatedCasesFromJson(
+CurvesComparisonModel _$CurvesComparisonModelFromJson(
     Map<String, dynamic> json) {
-  return ComparisonOfAccumulatedCases()
+  return CurvesComparisonModel()
     ..countries = (json['data'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(
           k,
           e == null
               ? null
-              : ComparisonOfAccumulatedCasesItem.fromJson(
-                  e as Map<String, dynamic>)),
+              : CurvesComparisonModelItem.fromJson(e as Map<String, dynamic>)),
     )
     ..updated = dateTimeFromJson(json['updated'] as String);
 }
 
-Map<String, dynamic> _$ComparisonOfAccumulatedCasesToJson(
-        ComparisonOfAccumulatedCases instance) =>
+Map<String, dynamic> _$CurvesComparisonModelToJson(
+        CurvesComparisonModel instance) =>
     <String, dynamic>{
       'data': instance.countries,
       'updated': dateTimeToJson(instance.updated),

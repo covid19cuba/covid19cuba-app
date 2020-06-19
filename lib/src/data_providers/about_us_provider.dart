@@ -5,20 +5,20 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:http/http.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
 
-import 'package:covid19cuba/src/utils/utils.dart';
-
-const urlAboutUsDataCU = 'https://cusobu.nat.cu/covid/api/v1/about_us.json';
+const urlAboutUsDataCU = 'https://cusobu.nat.cu/covid/api/v2/about_us.json';
 const urlAboutUsDataIO =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/about_us.json';
+    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/about_us.json';
 
 Future<void> getAboutUsData() async {
   //print('getting about us data');
-  var data = null;
-  var mode = PrefService.getInt(Constants.prefConnectionMode) ?? Constants.ConnectionModeMerge;
+  Map<String, dynamic> data;
+  var mode = PrefService.getInt(Constants.prefConnectionMode) ??
+      Constants.ConnectionModeMerge;
   try {
     switch (mode) {
       case Constants.ConnectionModeIntranet:
@@ -29,10 +29,10 @@ Future<void> getAboutUsData() async {
         break;
       case Constants.ConnectionModeMerge:
       default:
-          data = await getAboutUsDataFrom(urlAboutUsDataCU);
-          if(data == null){
-            data = await getAboutUsDataFrom(urlAboutUsDataIO);
-          }
+        data = await getAboutUsDataFrom(urlAboutUsDataCU);
+        if (data == null) {
+          data = await getAboutUsDataFrom(urlAboutUsDataIO);
+        }
     }
   } catch (e) {
     log(e.toString());
@@ -42,13 +42,27 @@ Future<void> getAboutUsData() async {
     data = await getAboutUsDataFromCache();
     log('Data obtained from cache.');
     //print('Data obtained from cache.');
-    if (data == null) {return ;}
+    if (data == null) {
+      return;
+    }
   }
   //print(data);
-  Constants.collaborators=(data['collaborators'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
-  Constants.replicas=(data['replicas'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
-  Constants.promotors=(data['promotors'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
-  Constants.collabProjects=(data['collabProjects'] as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+  Constants.collaborators = (data['collaborators'] as List<dynamic>)
+      .map((i) =>
+          (i as Map<String, dynamic>).map((j, k) => MapEntry(j, k as String)))
+      .toList();
+  Constants.replicas = (data['replicas'] as List<dynamic>)
+      .map((i) =>
+          (i as Map<String, dynamic>).map((j, k) => MapEntry(j, k as String)))
+      .toList();
+  Constants.promotors = (data['promotors'] as List<dynamic>)
+      .map((i) =>
+          (i as Map<String, dynamic>).map((j, k) => MapEntry(j, k as String)))
+      .toList();
+  Constants.collabProjects = (data['collabProjects'] as List<dynamic>)
+      .map((i) =>
+          (i as Map<String, dynamic>).map((j, k) => MapEntry(j, k as String)))
+      .toList();
   Constants.thanks = data['thanks'] as String;
 }
 
@@ -68,8 +82,7 @@ Future<Map<String, dynamic>> getAboutUsDataFrom(String url) async {
     //throw BadRequestException('Bad request');
   }
   try {
-    var json = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String,dynamic>;
-    //result = (json as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+    var json = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
     //print('get data from network');
     await setAboutUsDataToCache(json);
     return json;
@@ -81,7 +94,7 @@ Future<Map<String, dynamic>> getAboutUsDataFrom(String url) async {
   }
 }
 
-Future<Map<String,dynamic>> getAboutUsDataFromCache() async {
+Future<Map<String, dynamic>> getAboutUsDataFromCache() async {
   try {
     var packageInfo = await PackageInfo.fromPlatform();
     var versionCodeNow = int.parse(packageInfo.buildNumber);
@@ -93,8 +106,7 @@ Future<Map<String,dynamic>> getAboutUsDataFromCache() async {
     if (data == null) {
       return null;
     }
-    return jsonDecode(data) as Map<String,dynamic>;
-    //return (jsonDecode(data) as List<dynamic>).map((i)=>(i as Map<String,dynamic>).map((j,k)=>MapEntry(j, k as String))).toList();
+    return jsonDecode(data) as Map<String, dynamic>;
   } catch (e) {
     log(e.toString());
     //print(e.toString());

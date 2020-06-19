@@ -35,7 +35,6 @@ class RadarItemModel {
   @JsonKey(name: 'test_per_million_bound')
   double testPerMillionBound;
 
-
   RadarItemModel();
 
   factory RadarItemModel.fromJson(Map<String, dynamic> json) =>
