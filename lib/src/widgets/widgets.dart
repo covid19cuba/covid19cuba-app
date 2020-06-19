@@ -45,3 +45,5 @@ export 'tests_positive_percent_widget.dart';
 export 'world_countries_widget.dart';
 export 'touchable_url_widget.dart';
 export 'world_widget.dart';
+export 'pie_deceases_distribution_amount_disease_history_widget.dart';
+export 'distribution_age_groups_deceases_widget.dart';

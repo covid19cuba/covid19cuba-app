@@ -8,25 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
-// ignore: must_be_immutable
-class PieCasesNationalityWidget extends StatefulWidget {
-  final CasesByNationality casesByNationality;
+class PieDeceasesDistributionAmountDiseaseHistoryWidget extends StatelessWidget {
 
-  List<charts.Color> colorPalettes;
-  String title;
+  final Map<String, Item> deceasesDistributionAmountDiseaseHistory;
+  //final List<charts.Color> colorPalettes;
 
-  PieCasesNationalityWidget({this.casesByNationality, this.title})
-      : assert(casesByNationality != null) {
-    if (title == null) title = 'Casos';
-    colorPalettes = [ChartColors.purple, ChartColors.red, ChartColors.green];
-  }
+  PieDeceasesDistributionAmountDiseaseHistoryWidget({this.deceasesDistributionAmountDiseaseHistory});
 
-  @override
-  PieCasesNationalityWidgetState createState() =>
-      PieCasesNationalityWidgetState();
-}
-
-class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +27,7 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
           ),
           child: Center(
             child: Text(
-              '${widget.title} por nacionalidad',
+              'Distribución de la cantidad de antecedentes de enfermedad por fallecido',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -49,28 +37,24 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
             ),
           ),
         ),
-        Container(
+        Container( 
           padding: EdgeInsets.all(10),
           height: 300,
-          child: charts.PieChart(
+          child: charts.PieChart(  
             [
-              charts.Series<Item, String>(
-                id: '${widget.title} por nacionalidad',
-                colorFn: (_, i) => widget.colorPalettes[i],
+              charts.Series<Item, String>(  
+                id: 'Conmorbilidades',
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
-                data: [
-                  widget.casesByNationality.foreign,
-                  widget.casesByNationality.cubans,
-                  widget.casesByNationality.unknown
-                ],
-              ),
+                data: deceasesDistributionAmountDiseaseHistory.values.toList(),
+                
+              )
             ],
             animate: false,
             behaviors: [
               charts.DatumLegend(
                 position: charts.BehaviorPosition.bottom,
-                cellPadding: EdgeInsets.all(10),
+                cellPadding: EdgeInsets.all(3),
                 showMeasures: true,
                 legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
                 desiredMaxColumns: 2,
@@ -78,7 +62,9 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
             ],
           ),
         ),
-      ],
+      ]
     );
   }
 }
+
+

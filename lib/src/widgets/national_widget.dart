@@ -258,6 +258,41 @@ class NationalWidget extends StatelessWidget {
             child: MunicipalitiesComparisonWidget(data: data),
           ),
         ),
+        // Deceases Section
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PieSexWidget(
+              casesBySex: data.all.deceasesBySex, 
+              title: 'Fallecidos',
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: DistributionAgeGroupsDeceasesWidget(
+              distributionByAgeRanges: data.all.deceasesDistributionByAgeRanges,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PieCasesNationalityWidget(
+              casesByNationality: data.all.deceasesByNationality,
+              title: 'Fallecidos',
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PieDeceasesDistributionAmountDiseaseHistoryWidget(
+              deceasesDistributionAmountDiseaseHistory: data.all.deceasesDistributionAmountDiseaseHistory,
+            ),
+          ),
+        ),
         Container(padding: EdgeInsets.all(5)),
       ],
     );
