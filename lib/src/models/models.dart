@@ -40,6 +40,7 @@ export 'municipalities_model.dart';
 export 'municipality_model.dart';
 export 'percent_critics_serious_to_actives.dart';
 export 'percent_positive_tests.dart';
+export 'percent_of_symptomatics_and_asymptomatics.dart';
 export 'pesquisador_model.dart';
 export 'province_model.dart';
 export 'provinces_model.dart';

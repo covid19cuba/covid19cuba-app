@@ -52,6 +52,7 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..relationOfTestsPerformed = json['relation_of_tests_performed'] == null ? null : RelationOfTestsPerformed.fromJson(json['relation_of_tests_performed'] as Map<String, dynamic>)
     ..testsByDays = json['tests_by_days'] == null ? null : TestsByDays.fromJson(json['tests_by_days'] as Map<String, dynamic>)
     ..percentPositiveTests = json['percent_positive_tests'] == null ? null : PercentPositiveTests.fromJson(json['percent_positive_tests'] as Map<String, dynamic>)
+    ..percentSymptomaticsAsymptomatics = json['percent_of_symptomatics_and_asymptomatics'] == null ? null : PercentSymptomaticsAsymptomatics.fromJson(json['percent_of_symptomatics_and_asymptomatics'] as Map<String, dynamic>)
     ..criticsSeriousEvolution = json['critics_serious_evolution'] == null ? null : CriticsSeriousEvolution.fromJson(json['critics_serious_evolution'] as Map<String, dynamic>)
     ..percentCriticsSeriousToActives = json['percent_critics_serious_to_actives'] == null ? null : PercentCriticsSeriousToActives.fromJson(json['percent_critics_serious_to_actives'] as Map<String, dynamic>)
     ..effectiveReproductiveNumber = json['effective_reproductive_number'] == null ? null : EffectiveReproductiveNumber.fromJson(json['effective_reproductive_number'] as Map<String, dynamic>)
@@ -108,6 +109,8 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'relation_of_tests_performed': instance.relationOfTestsPerformed,
       'tests_by_days': instance.testsByDays,
       'percent_positive_tests': instance.percentPositiveTests,
+      'percent_of_symptomatics_and_asymptomatics':
+          instance.percentSymptomaticsAsymptomatics,
       'critics_serious_evolution': instance.criticsSeriousEvolution,
       'percent_critics_serious_to_actives':
           instance.percentCriticsSeriousToActives,
