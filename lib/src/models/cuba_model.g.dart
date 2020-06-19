@@ -53,6 +53,9 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..testsByDays = json['tests_by_days'] == null ? null : TestsByDays.fromJson(json['tests_by_days'] as Map<String, dynamic>)
     ..percentPositiveTests = json['percent_positive_tests'] == null ? null : PercentPositiveTests.fromJson(json['percent_positive_tests'] as Map<String, dynamic>)
     ..percentSymptomaticsAsymptomatics = json['percent_of_symptomatics_and_asymptomatics'] == null ? null : PercentSymptomaticsAsymptomatics.fromJson(json['percent_of_symptomatics_and_asymptomatics'] as Map<String, dynamic>)
+    ..evolutionSymptomaticsAsymptomaticsDays = json['evolution_of_symptomatics_and_asymptomatics_by_days'] == null ? null : EvolutionSymptomaticsAsymptomaticsDays.fromJson(json['evolution_of_symptomatics_and_asymptomatics_by_days'] as Map<String, dynamic>)
+    ..percentEvolutionSymptomaticsAsymptomaticsDays = json['percent_evolution_of_symptomatics_and_asymptomatics_by_days'] == null ? null : PercentEvolutionSymptomaticsAsymptomatics.fromJson(json['percent_evolution_of_symptomatics_and_asymptomatics_by_days'] as Map<String, dynamic>)
+    ..percentEvolutionSymptomaticsAsymptomaticsAccumulated = json['percent_evolution_of_symptomatics_and_asymptomatics_accumulated'] == null ? null : PercentEvolutionSymptomaticsAsymptomatics.fromJson(json['percent_evolution_of_symptomatics_and_asymptomatics_accumulated'] as Map<String, dynamic>)
     ..criticsSeriousEvolution = json['critics_serious_evolution'] == null ? null : CriticsSeriousEvolution.fromJson(json['critics_serious_evolution'] as Map<String, dynamic>)
     ..percentCriticsSeriousToActives = json['percent_critics_serious_to_actives'] == null ? null : PercentCriticsSeriousToActives.fromJson(json['percent_critics_serious_to_actives'] as Map<String, dynamic>)
     ..effectiveReproductiveNumber = json['effective_reproductive_number'] == null ? null : EffectiveReproductiveNumber.fromJson(json['effective_reproductive_number'] as Map<String, dynamic>)
@@ -111,6 +114,12 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'percent_positive_tests': instance.percentPositiveTests,
       'percent_of_symptomatics_and_asymptomatics':
           instance.percentSymptomaticsAsymptomatics,
+      'evolution_of_symptomatics_and_asymptomatics_by_days':
+          instance.evolutionSymptomaticsAsymptomaticsDays,
+      'percent_evolution_of_symptomatics_and_asymptomatics_by_days':
+          instance.percentEvolutionSymptomaticsAsymptomaticsDays,
+      'percent_evolution_of_symptomatics_and_asymptomatics_accumulated':
+          instance.percentEvolutionSymptomaticsAsymptomaticsAccumulated,
       'critics_serious_evolution': instance.criticsSeriousEvolution,
       'percent_critics_serious_to_actives':
           instance.percentCriticsSeriousToActives,

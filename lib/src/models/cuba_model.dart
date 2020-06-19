@@ -71,6 +71,15 @@ class CubaModel {
   @JsonKey(name: 'percent_of_symptomatics_and_asymptomatics')
   PercentSymptomaticsAsymptomatics percentSymptomaticsAsymptomatics;
 
+  @JsonKey(name: 'evolution_of_symptomatics_and_asymptomatics_by_days')
+  EvolutionSymptomaticsAsymptomaticsDays evolutionSymptomaticsAsymptomaticsDays;
+
+  @JsonKey(name: 'percent_evolution_of_symptomatics_and_asymptomatics_by_days')
+  PercentEvolutionSymptomaticsAsymptomatics percentEvolutionSymptomaticsAsymptomaticsDays;
+
+  @JsonKey(name: 'percent_evolution_of_symptomatics_and_asymptomatics_accumulated')
+  PercentEvolutionSymptomaticsAsymptomatics percentEvolutionSymptomaticsAsymptomaticsAccumulated;
+
   @JsonKey(name: 'critics_serious_evolution')
   CriticsSeriousEvolution criticsSeriousEvolution;
 
