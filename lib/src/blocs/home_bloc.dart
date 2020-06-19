@@ -68,11 +68,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       } catch (e) {
         log(e.toString());
         var data = await getCubaDataFromCache();
-        throw e;
-        /*yield ErrorHomeState(
+        yield ErrorHomeState(
           errorMessage: e.toString(),
           cache: data != null,
-        );*/
+        );
       }
     }
     if (event is FetchHomeEvent) {
@@ -100,12 +99,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       } on ParseException catch (e) {
         log(e.toString());
         var data = await getCubaDataFromCache();
-        throw e;
-        /*yield ErrorHomeState(
+        yield ErrorHomeState(
           errorMessage: 'Hay problema con los servidores. Por favor, '
               'espere unos minutos y vuelva a intentarlo.',
           cache: data != null,
-        );*/
+        );
       } catch (e) {
         log(e.toString());
         var data = await getCubaDataFromCache();
