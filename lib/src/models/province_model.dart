@@ -53,6 +53,9 @@ class ProvinceModel {
   )
   DateTime deceasesUpdated;
 
+  @JsonKey(name: 'deceases_resume')
+  List<ItemDouble> deceasesResume;
+
   @JsonKey(name: 'deceases_map_data')
   Map<String, dynamic> deceasesMapData;
 
@@ -72,7 +75,7 @@ class ProvinceModel {
   Map<String, Item> deceasesDistributionAmountDiseaseHistory;
 
   @JsonKey(name: 'deceases_common_previous_diseases')
-  List<Item> deceasesCommonPreviousDiseases;
+  List<ItemCode> deceasesCommonPreviousDiseases;
 
   @JsonKey(name: 'deceases_affected_municipalities')
   List<ItemMunicipality> deceasesAffectedMunicipalities;

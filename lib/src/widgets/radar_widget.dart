@@ -169,12 +169,11 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
         ''',
           ),
           padding: EdgeInsets.all(10),
-          //width: 400,
-          //height: 350,
           height: min(MediaQuery.of(context).size.width,
                   MediaQuery.of(context).size.height) -
               25,
-        )
+        ),
+        Container(padding: EdgeInsets.all(5)),
       ],
     );
   }

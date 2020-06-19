@@ -8,13 +8,23 @@ import 'package:flutter/material.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
-class PieDeceasesDistributionAmountDiseaseHistoryWidget extends StatelessWidget {
+// ignore: must_be_immutable
+class PieSymptomaticsAsymptomaticsWidget extends StatefulWidget {
+  final PercentSymptomaticsAsymptomatics percentSymptomaticsAsymptomatics;
 
-  final Map<String, Item> deceasesDistributionAmountDiseaseHistory;
-  //final List<charts.Color> colorPalettes;
+  List<charts.Color> colorPalettes;
 
-  PieDeceasesDistributionAmountDiseaseHistoryWidget({this.deceasesDistributionAmountDiseaseHistory});
+  PieSymptomaticsAsymptomaticsWidget({this.percentSymptomaticsAsymptomatics})
+      : assert(percentSymptomaticsAsymptomatics != null) {
+    colorPalettes = [ChartColors.purple, ChartColors.red];
+  }
 
+  @override
+  PieSymptomaticsAsymptomaticsWidgetState createState() =>
+      PieSymptomaticsAsymptomaticsWidgetState();
+}
+
+class PieSymptomaticsAsymptomaticsWidgetState extends State<PieSymptomaticsAsymptomaticsWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +37,7 @@ class PieDeceasesDistributionAmountDiseaseHistoryWidget extends StatelessWidget 
           ),
           child: Center(
             child: Text(
-              'Distribución de la cantidad de antecedentes de enfermedad por fallecido',
+              'Casos sintomáticos/asintomáticos',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -37,33 +47,35 @@ class PieDeceasesDistributionAmountDiseaseHistoryWidget extends StatelessWidget 
             ),
           ),
         ),
-        Container( 
+        Container(
           padding: EdgeInsets.all(10),
           height: 300,
-          child: charts.PieChart(  
+          child: charts.PieChart(
             [
-              charts.Series<Item, String>(  
-                id: 'Conmorbilidades',
+              charts.Series<ItemDouble, String>(
+                id: 'Casos sintomáticos/asintomáticos',
+                colorFn: (_, i) => widget.colorPalettes[i],
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
-                data: deceasesDistributionAmountDiseaseHistory.values.toList(),
-              )
+                data: [
+                  widget.percentSymptomaticsAsymptomatics.symptomatics,
+                  widget.percentSymptomaticsAsymptomatics.asymptomatics,
+                ],
+              ),
             ],
             animate: false,
             behaviors: [
               charts.DatumLegend(
                 position: charts.BehaviorPosition.bottom,
-                cellPadding: EdgeInsets.all(3),
+                cellPadding: EdgeInsets.all(10),
                 showMeasures: true,
                 legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
-                desiredMaxColumns: 2,
+                desiredMaxColumns: 1,
               ),
             ],
           ),
         ),
-      ]
+      ],
     );
   }
 }
-
-

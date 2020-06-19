@@ -12,8 +12,16 @@ import 'package:covid19cuba/src/models/models.dart';
 
 class ProvincesComparisonWidget extends StatefulWidget {
   final Map<String, ProvincesModel> provinces;
+  final String title;
+  final String subtitle;
+  final bool isDeceases;
 
-  const ProvincesComparisonWidget({this.provinces}) : assert(provinces != null);
+  const ProvincesComparisonWidget({
+    this.provinces,
+    this.title,
+    this.subtitle,
+    this.isDeceases = false,
+  }) : assert(provinces != null);
 
   @override
   ProvincesComparisonWidgetState createState() =>
@@ -40,7 +48,8 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
             child: Text(
-              'Comparación de los casos acumulados por provincias',
+              widget.title ??
+                  'Comparación de los casos acumulados por provincias',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -115,11 +124,17 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item[0],
                 data: zip([
-                  provinces[selectedProvince1]
-                      .all
-                      .evolutionOfCasesByDays
-                      .accumulated
-                      .values,
+                  widget.isDeceases
+                      ? provinces[selectedProvince1]
+                          .all
+                          .deceasesEvolutionByDays
+                          .accumulated
+                          .values
+                      : provinces[selectedProvince1]
+                          .all
+                          .evolutionOfCasesByDays
+                          .accumulated
+                          .values,
                 ]).toList(),
               ),
               charts.Series<List, int>(
@@ -128,11 +143,17 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                 domainFn: (_, i) => i,
                 measureFn: (item, _) => item[0],
                 data: zip([
-                  provinces[selectedProvince2]
-                      .all
-                      .evolutionOfCasesByDays
-                      .accumulated
-                      .values,
+                  widget.isDeceases
+                      ? provinces[selectedProvince2]
+                          .all
+                          .deceasesEvolutionByDays
+                          .accumulated
+                          .values
+                      : provinces[selectedProvince2]
+                          .all
+                          .evolutionOfCasesByDays
+                          .accumulated
+                          .values,
                 ]).toList(),
               ),
             ],
@@ -150,7 +171,7 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Casos',
+                widget.subtitle ?? 'Casos',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -162,7 +183,8 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                 showMeasures: true,
                 measureFormatter: (num measure) {
                   if (measure == null) return '';
-                  return measure.toInt().toString() + ' Casos';
+                  return measure.toInt().toString() + ' ' + widget.subtitle ??
+                      'Casos';
                 },
               ),
               charts.LinePointHighlighter(

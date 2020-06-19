@@ -75,6 +75,7 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
     ..worldCountries = (json['world_countries'] as List)?.map((e) => e == null ? null : ItemExtended.fromJson(e as Map<String, dynamic>))?.toList()
     ..pesquisador = json['pesquisador'] == null ? null : PesquisadorModel.fromJson(json['pesquisador'] as Map<String, dynamic>)
     ..deceasesUpdated = dateTimeFromJson(json['deceases_updated'] as String)
+    ..deceasesResume = (json['deceases_resume'] as List)?.map((e) => e == null ? null : ItemDouble.fromJson(e as Map<String, dynamic>))?.toList()
     ..deceasesMapData = json['deceases_map_data'] as Map<String, dynamic>
     ..deceasesEvolutionByDays = json['deceases_evolution_by_days'] == null ? null : EvolutionOfDeathsByDays.fromJson(json['deceases_evolution_by_days'] as Map<String, dynamic>)
     ..deceasesBySex = json['deceases_by_sex'] == null ? null : CasesBySex.fromJson(json['deceases_by_sex'] as Map<String, dynamic>)
@@ -84,7 +85,7 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
       (k, e) => MapEntry(
           k, e == null ? null : Item.fromJson(e as Map<String, dynamic>)),
     )
-    ..deceasesCommonPreviousDiseases = (json['deceases_common_previous_diseases'] as List)?.map((e) => e == null ? null : Item.fromJson(e as Map<String, dynamic>))?.toList()
+    ..deceasesCommonPreviousDiseases = (json['deceases_common_previous_diseases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
     ..deceasesAffectedProvinces = (json['deceases_affected_provinces'] as List)?.map((e) => e == null ? null : ItemProvince.fromJson(e as Map<String, dynamic>))?.toList()
     ..deceasesAffectedMunicipalities = (json['deceases_affected_municipalities'] as List)?.map((e) => e == null ? null : ItemMunicipality.fromJson(e as Map<String, dynamic>))?.toList();
 }
@@ -135,6 +136,7 @@ Map<String, dynamic> _$CubaModelToJson(CubaModel instance) => <String, dynamic>{
       'world_countries': instance.worldCountries,
       'pesquisador': instance.pesquisador,
       'deceases_updated': dateTimeToJson(instance.deceasesUpdated),
+      'deceases_resume': instance.deceasesResume,
       'deceases_map_data': instance.deceasesMapData,
       'deceases_evolution_by_days': instance.deceasesEvolutionByDays,
       'deceases_by_sex': instance.deceasesBySex,

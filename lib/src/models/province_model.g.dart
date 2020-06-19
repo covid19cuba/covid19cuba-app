@@ -48,6 +48,7 @@ ProvinceModel _$ProvinceModelFromJson(Map<String, dynamic> json) {
         ?.map((e) => e == null ? null : ItemMunicipality.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..deceasesUpdated = dateTimeFromJson(json['deceases_updated'] as String)
+    ..deceasesResume = (json['deceases_resume'] as List)?.map((e) => e == null ? null : ItemDouble.fromJson(e as Map<String, dynamic>))?.toList()
     ..deceasesMapData = json['deceases_map_data'] as Map<String, dynamic>
     ..deceasesEvolutionByDays = json['deceases_evolution_by_days'] == null ? null : EvolutionOfDeathsByDays.fromJson(json['deceases_evolution_by_days'] as Map<String, dynamic>)
     ..deceasesBySex = json['deceases_by_sex'] == null ? null : CasesBySex.fromJson(json['deceases_by_sex'] as Map<String, dynamic>)
@@ -57,7 +58,7 @@ ProvinceModel _$ProvinceModelFromJson(Map<String, dynamic> json) {
       (k, e) => MapEntry(
           k, e == null ? null : Item.fromJson(e as Map<String, dynamic>)),
     )
-    ..deceasesCommonPreviousDiseases = (json['deceases_common_previous_diseases'] as List)?.map((e) => e == null ? null : Item.fromJson(e as Map<String, dynamic>))?.toList()
+    ..deceasesCommonPreviousDiseases = (json['deceases_common_previous_diseases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
     ..deceasesAffectedMunicipalities = (json['deceases_affected_municipalities'] as List)?.map((e) => e == null ? null : ItemMunicipality.fromJson(e as Map<String, dynamic>))?.toList();
 }
 
@@ -77,6 +78,7 @@ Map<String, dynamic> _$ProvinceModelToJson(ProvinceModel instance) =>
       'effective_reproductive_number': instance.effectiveReproductiveNumber,
       'affected_municipalities': instance.affectedMunicipalities,
       'deceases_updated': dateTimeToJson(instance.deceasesUpdated),
+      'deceases_resume': instance.deceasesResume,
       'deceases_map_data': instance.deceasesMapData,
       'deceases_evolution_by_days': instance.deceasesEvolutionByDays,
       'deceases_by_sex': instance.deceasesBySex,

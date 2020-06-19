@@ -154,6 +154,42 @@ class NationalWidget extends StatelessWidget {
           ),
         ),
         Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PieSymptomaticsAsymptomaticsWidget(
+              percentSymptomaticsAsymptomatics:
+                  data.all.percentSymptomaticsAsymptomatics,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: EvolutionSymptomaticsAsymptomaticsWidget(
+              evolutionSymptomaticsAsymptomatics:
+                  data.all.evolutionSymptomaticsAsymptomaticsDays,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PercentEvolutionSymptomaticsAsymptomaticsDaysWidget(
+              percentEvolutionSymptomaticsAsymptomatics:
+                  data.all.percentEvolutionSymptomaticsAsymptomaticsDays,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PercentEvolutionSymptomaticsAsymptomaticsAccumulatedWidget(
+              percentEvolutionSymptomaticsAsymptomatics:
+                  data.all.percentEvolutionSymptomaticsAsymptomaticsAccumulated,
+            ),
+          ),
+        ),
+        Container(
           margin: data.all.effectiveReproductiveNumber == null
               ? EdgeInsets.all(0)
               : EdgeInsets.only(left: 5, right: 5, top: 5),
@@ -256,41 +292,6 @@ class NationalWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: MunicipalitiesComparisonWidget(data: data),
-          ),
-        ),
-        // Deceases Section
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: PieSexWidget(
-              casesBySex: data.all.deceasesBySex, 
-              title: 'Fallecidos',
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: DistributionAgeGroupsDeceasesWidget(
-              distributionByAgeRanges: data.all.deceasesDistributionByAgeRanges,
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: PieCasesNationalityWidget(
-              casesByNationality: data.all.deceasesByNationality,
-              title: 'Fallecidos',
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: PieDeceasesDistributionAmountDiseaseHistoryWidget(
-              deceasesDistributionAmountDiseaseHistory: data.all.deceasesDistributionAmountDiseaseHistory,
-            ),
           ),
         ),
         Container(padding: EdgeInsets.all(5)),

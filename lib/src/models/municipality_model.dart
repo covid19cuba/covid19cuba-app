@@ -44,6 +44,9 @@ class MunicipalityModel {
   )
   DateTime deceasesUpdated;
 
+  @JsonKey(name: 'deceases_resume')
+  List<ItemDouble> deceasesResume;
+
   @JsonKey(name: 'deceases_evolution_by_days')
   EvolutionOfDeathsByDays deceasesEvolutionByDays;
 
@@ -60,7 +63,7 @@ class MunicipalityModel {
   Map<String, Item> deceasesDistributionAmountDiseaseHistory;
 
   @JsonKey(name: 'deceases_common_previous_diseases')
-  List<Item> deceasesCommonPreviousDiseases;
+  List<ItemCode> deceasesCommonPreviousDiseases;
 
   MunicipalityModel();
 

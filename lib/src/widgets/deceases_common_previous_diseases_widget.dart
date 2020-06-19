@@ -9,14 +9,24 @@ import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
-class DistributionAgeGroupsDeceasesWidget extends StatelessWidget {
-  final List<ItemCodePlus> distributionByAgeRanges;
+class DeceasesCommonPreviousDiseasesWidget extends StatelessWidget {
+  final List<ItemCode> deceasesCommonPreviousDiseases;
 
-  const DistributionAgeGroupsDeceasesWidget({this.distributionByAgeRanges})
-      : assert(distributionByAgeRanges != null);
-      
+  const DeceasesCommonPreviousDiseasesWidget(
+      {this.deceasesCommonPreviousDiseases})
+      : assert(deceasesCommonPreviousDiseases != null);
+
   @override
   Widget build(BuildContext context) {
+    if (deceasesCommonPreviousDiseases == null ||
+        deceasesCommonPreviousDiseases.length == 0) {
+      return Container();
+    }
+    String dialogText = '';
+    for (var item in deceasesCommonPreviousDiseases) {
+      dialogText += '\n' + item.code + ' = ' + item.name;
+    }
+
     return Column(
       children: <Widget>[
         Container(
@@ -31,7 +41,7 @@ class DistributionAgeGroupsDeceasesWidget extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'Distribución de fallecidos por rangos etarios',
+                  'Antecedentes de enfermedad más comunes en los fallecidos',
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   style: TextStyle(
@@ -42,58 +52,30 @@ class DistributionAgeGroupsDeceasesWidget extends StatelessWidget {
                 ),
               ),
               InfoDialogWidget(
-                title: 'Distribución de fallecidos por rangos etarios',
-                text: '${distributionByAgeRanges.last.name} '
-                    'representa edad desconocida',
+                title: 'Antecedentes de enfermedad más comunes en los fallecidos',
+                text: dialogText,
               )
             ],
           ),
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 350,
+          height: 250,
           child: charts.BarChart(
             [
-              charts.Series<ItemCodePlus, String>(
-                id: 'Fallecidos Hombres',
-                seriesCategory: 'A',
-                colorFn: (_, __) => ChartColors.purple,
-                domainFn: (item, _) => item.name,
-                measureFn: (item, _) => item.men,
-                data: distributionByAgeRanges,
-              ),
-              charts.Series<ItemCodePlus, String>(
-                id: 'Fallecidos Mujeres',
-                seriesCategory: 'A',
-                colorFn: (_, __) => ChartColors.red,
-                domainFn: (item, _) => item.name,
-                measureFn: (item, _) => item.women,
-                data: distributionByAgeRanges,
-              ),
-              if (distributionByAgeRanges.any((x) => x.unknown != 0))
-                charts.Series<ItemCodePlus, String>(
-                  id: 'Fallecidos Sexo Desconocido',
-                  seriesCategory: 'A',
-                  colorFn: (_, __) => ChartColors.yellow,
-                  domainFn: (item, _) => item.name,
-                  measureFn: (item, _) => item.unknown,
-                  data: distributionByAgeRanges,
-                ),
-              charts.Series<ItemCodePlus, String>(
+              charts.Series<ItemCode, String>(
                 id: 'Fallecidos',
-                seriesCategory: 'B',
-                colorFn: (_, __) => ChartColors.grey,
-                domainFn: (item, _) => item.name,
+                colorFn: (_, __) => ChartColors.red,
+                domainFn: (item, _) => item.code,
                 measureFn: (item, _) => item.value,
-                data: distributionByAgeRanges,
+                data: deceasesCommonPreviousDiseases,
               ),
             ],
             animate: false,
             defaultInteractions: true,
-            barGroupingType: charts.BarGroupingType.groupedStacked,
             behaviors: [
               charts.ChartTitle(
-                'Rango',
+                'Engermedades',
                 behaviorPosition: charts.BehaviorPosition.bottom,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -110,6 +92,10 @@ class DistributionAgeGroupsDeceasesWidget extends StatelessWidget {
                 position: charts.BehaviorPosition.bottom,
                 desiredMaxColumns: 1,
                 showMeasures: true,
+                measureFormatter: (num measure) {
+                  if (measure == null) return '';
+                  return measure.toInt().toString() + ' Fallecidos';
+                },
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:
@@ -120,9 +106,6 @@ class DistributionAgeGroupsDeceasesWidget extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: 5,
-        )
       ],
     );
   }
