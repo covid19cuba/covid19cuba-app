@@ -9,24 +9,22 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
 // ignore: must_be_immutable
-class PieCasesNationalityWidget extends StatefulWidget {
-  final CasesByNationality casesByNationality;
+class PieSymptomaticsAsymptomaticsWidget extends StatefulWidget {
+  final PercentSymptomaticsAsymptomatics percentSymptomaticsAsymptomatics;
 
   List<charts.Color> colorPalettes;
-  String title;
 
-  PieCasesNationalityWidget({this.casesByNationality, this.title})
-      : assert(casesByNationality != null) {
-    if (title == null) title = 'Casos';
-    colorPalettes = [ChartColors.purple, ChartColors.red, ChartColors.green];
+  PieSymptomaticsAsymptomaticsWidget({this.percentSymptomaticsAsymptomatics})
+      : assert(percentSymptomaticsAsymptomatics != null) {
+    colorPalettes = [ChartColors.purple, ChartColors.red];
   }
 
   @override
-  PieCasesNationalityWidgetState createState() =>
-      PieCasesNationalityWidgetState();
+  PieSymptomaticsAsymptomaticsWidgetState createState() =>
+      PieSymptomaticsAsymptomaticsWidgetState();
 }
 
-class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
+class PieSymptomaticsAsymptomaticsWidgetState extends State<PieSymptomaticsAsymptomaticsWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +37,7 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
           ),
           child: Center(
             child: Text(
-              '${widget.title} por nacionalidad',
+              'Casos sintomáticos/asintomáticos',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -54,15 +52,14 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
           height: 300,
           child: charts.PieChart(
             [
-              charts.Series<Item, String>(
-                id: '${widget.title} por nacionalidad',
+              charts.Series<ItemDouble, String>(
+                id: 'Casos sintomáticos/asintomáticos',
                 colorFn: (_, i) => widget.colorPalettes[i],
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: [
-                  widget.casesByNationality.foreign,
-                  widget.casesByNationality.cubans,
-                  widget.casesByNationality.unknown
+                  widget.percentSymptomaticsAsymptomatics.symptomatics,
+                  widget.percentSymptomaticsAsymptomatics.asymptomatics,
                 ],
               ),
             ],
@@ -73,7 +70,7 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
                 cellPadding: EdgeInsets.all(10),
                 showMeasures: true,
                 legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
-                desiredMaxColumns: 2,
+                desiredMaxColumns: 1,
               ),
             ],
           ),

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
 class ResumeWidget extends StatelessWidget {
-  final List<Item> resume;
+  final List<ItemDouble> resume;
 
   const ResumeWidget({this.resume}) : assert(resume != null);
 
@@ -76,7 +76,7 @@ class ResumeWidget extends StatelessWidget {
                     margin: EdgeInsets.all(10),
                     child: Center(
                       child: Text(
-                        item.value.toString(),
+                        _getCellValue(item.value),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Constants.primaryColor,
@@ -92,5 +92,10 @@ class ResumeWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _getCellValue(double value) {
+    if (value - value.toInt() == 0.0) return value.toInt().toString();
+    return value.toStringAsPrecision(3);
   }
 }

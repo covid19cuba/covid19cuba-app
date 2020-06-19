@@ -5,13 +5,12 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:covid19cuba/src/blocs/events/events.dart';
 import 'package:covid19cuba/src/blocs/states/states.dart';
 import 'package:covid19cuba/src/data_providers/data_providers.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 export 'events/events.dart';
 export 'states/states.dart';

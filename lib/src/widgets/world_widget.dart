@@ -32,7 +32,7 @@ class WorldWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: RadarChartWidget(
-              data: data.all.radarChartData,
+              data: data.all.multipleComparisonOfCubaWithRadar,
             ),
           ),
         ),
@@ -40,8 +40,7 @@ class WorldWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: ComparisonWidget(
-              comparisonOfAccumulatedCases:
-                  data.all.comparisonOfAccumulatedCases,
+              comparisonOfAccumulatedCases: data.all.curvesComparison,
             ),
           ),
         ),
@@ -61,7 +60,7 @@ class WorldWidget extends StatelessWidget {
             child: Container(
               child: CurvesEvolutionWidget(
                 curvesEvolution: data.all.curvesEvolution,
-                updated: data.all.comparisonOfAccumulatedCases.updated,
+                updated: data.all.curvesComparison.updated,
               ),
             ),
           ),
@@ -70,7 +69,7 @@ class WorldWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: WorldCountriesWidget(
             worldCountries: data.all.worldCountries,
-            updated: data.all.comparisonOfAccumulatedCases.updated,
+            updated: data.all.curvesComparison.updated,
           ),
         ),
         Container(padding: EdgeInsets.all(5)),
