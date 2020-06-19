@@ -13,7 +13,8 @@ class ItemDouble {
 
   ItemDouble();
 
-  factory ItemDouble.fromJson(Map<String, dynamic> json) => _$ItemDoubleFromJson(json);
+  factory ItemDouble.fromJson(Map<String, dynamic> json) =>
+      _$ItemDoubleFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemDoubleToJson(this);
 }

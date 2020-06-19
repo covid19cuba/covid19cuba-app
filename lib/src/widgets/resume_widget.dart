@@ -94,7 +94,7 @@ class ResumeWidget extends StatelessWidget {
     );
   }
 
-  String _getCellValue(double value){
+  String _getCellValue(double value) {
     if (value - value.toInt() == 0.0) return value.toInt().toString();
     return value.toStringAsPrecision(3);
   }

@@ -62,11 +62,13 @@ class _EchartsState extends State<Echarts> {
 
   void init() async {
     final extensionsStr = this.widget.extensions.length > 0
-    ? this.widget.extensions.reduce(
-        (value, element) => (value ?? '') + '\n' + (element ?? '')
-      )
-    : '';
-    final themeStr = this.widget.theme != null ? '\'${this.widget.theme}\'' : 'null';
+        ? this
+            .widget
+            .extensions
+            .reduce((value, element) => (value ?? '') + '\n' + (element ?? ''))
+        : '';
+    final themeStr =
+        this.widget.theme != null ? '\'${this.widget.theme}\'' : 'null';
     await _controller?.evaluateJavascript('''
       $echartsScript
       $extensionsStr
@@ -111,50 +113,50 @@ class _EchartsState extends State<Echarts> {
   Widget build(BuildContext context) {
     // --- FIX_BLINK ---
     return Opacity(
-      opacity: _opacity,
-    // --- FIX_BLINK ---
-      child: WebView(
-        initialUrl: 'flutter_echarts/assets/echart.html',
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller = webViewController;
-        },
-        onPageFinished: (String url) {
-          // --- FIX_BLINK ---
-          if (Platform.isAndroid) {
-            setState(() { _opacity = 1.0; });
-          }
-          // --- FIX_BLINK ---
-          init();
-        },
-        javascriptChannels: <JavascriptChannel>[
-          JavascriptChannel(
-            name: 'Messager',
-            onMessageReceived: (JavascriptMessage javascriptMessage) {
-              widget?.onMessage(javascriptMessage.message);
+        opacity: _opacity,
+        // --- FIX_BLINK ---
+        child: WebView(
+          initialUrl: 'flutter_echarts/assets/echart.html',
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (WebViewController webViewController) {
+            _controller = webViewController;
+          },
+          onPageFinished: (String url) {
+            // --- FIX_BLINK ---
+            if (Platform.isAndroid) {
+              setState(() {
+                _opacity = 1.0;
+              });
             }
-          ),
-        ].toSet(),
-        gestureRecognizers: widget.captureAllGestures
-          ? (Set()
-            ..add(Factory<VerticalDragGestureRecognizer>(() {
-              return VerticalDragGestureRecognizer()
-                ..onStart = (DragStartDetails details) {}
-                ..onUpdate = (DragUpdateDetails details) {}
-                ..onDown = (DragDownDetails details) {}
-                ..onCancel = () {}
-                ..onEnd = (DragEndDetails details) {};
-            }))
-            ..add(Factory<HorizontalDragGestureRecognizer>(() {
-              return HorizontalDragGestureRecognizer()
-                ..onStart = (DragStartDetails details) {}
-                ..onUpdate = (DragUpdateDetails details) {}
-                ..onDown = (DragDownDetails details) {}
-                ..onCancel = () {}
-                ..onEnd = (DragEndDetails details) {};
-            })))
-          : null,
-      )
-    );
+            // --- FIX_BLINK ---
+            init();
+          },
+          javascriptChannels: <JavascriptChannel>[
+            JavascriptChannel(
+                name: 'Messager',
+                onMessageReceived: (JavascriptMessage javascriptMessage) {
+                  widget?.onMessage(javascriptMessage.message);
+                }),
+          ].toSet(),
+          gestureRecognizers: widget.captureAllGestures
+              ? (Set()
+                ..add(Factory<VerticalDragGestureRecognizer>(() {
+                  return VerticalDragGestureRecognizer()
+                    ..onStart = (DragStartDetails details) {}
+                    ..onUpdate = (DragUpdateDetails details) {}
+                    ..onDown = (DragDownDetails details) {}
+                    ..onCancel = () {}
+                    ..onEnd = (DragEndDetails details) {};
+                }))
+                ..add(Factory<HorizontalDragGestureRecognizer>(() {
+                  return HorizontalDragGestureRecognizer()
+                    ..onStart = (DragStartDetails details) {}
+                    ..onUpdate = (DragUpdateDetails details) {}
+                    ..onDown = (DragDownDetails details) {}
+                    ..onCancel = () {}
+                    ..onEnd = (DragEndDetails details) {};
+                })))
+              : null,
+        ));
   }
 }

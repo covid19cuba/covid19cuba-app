@@ -10,8 +10,8 @@ CubaModel _$CubaModelFromJson(Map<String, dynamic> json) {
   return CubaModel()
     ..updated = dateTimeFromJson(json['updated'] as String)
     ..resume = (json['resume'] as List)
-        ?.map(
-            (e) => e == null ? null : ItemDouble.fromJson(e as Map<String, dynamic>))
+        ?.map((e) =>
+            e == null ? null : ItemDouble.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..note = json['note'] as String
     ..mapData = json['map_data'] as Map<String, dynamic>
