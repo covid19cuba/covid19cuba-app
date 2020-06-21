@@ -78,7 +78,7 @@ class ChangelogPageState extends State<ChangelogPage> {
   Widget getBody(BuildContext context, ChangelogState state) {
     if (state is InitialChangelogState) {
       BlocProvider.of<ChangelogBloc>(context).add(
-        RefreshChangelogEvent(),
+        FetchChangelogEvent(),
       );
     }
     if (state is LoadingChangelogState) {

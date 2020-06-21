@@ -52,7 +52,8 @@ class DeceasesCommonPreviousDiseasesWidget extends StatelessWidget {
                 ),
               ),
               InfoDialogWidget(
-                title: 'Antecedentes de enfermedad más comunes en los fallecidos',
+                title:
+                    'Antecedentes de enfermedad más comunes en los fallecidos',
                 text: dialogText,
               )
             ],

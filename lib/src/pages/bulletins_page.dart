@@ -36,15 +36,15 @@ class BulletinsPageState extends State<BulletinsPage> {
   Widget build(BuildContext context) {
     try {
       return BlocProvider(
-        create: (context) => BulletinsBlock(),
-        child: BlocListener<BulletinsBlock, BulletinsState>(
+        create: (context) => BulletinsBloc(),
+        child: BlocListener<BulletinsBloc, BulletinsState>(
           listener: (context, state) {
             if (state is LoadedBulletinsState) {
               refreshCompleter?.complete();
               refreshCompleter = Completer();
             }
           },
-          child: BlocBuilder<BulletinsBlock, BulletinsState>(
+          child: BlocBuilder<BulletinsBloc, BulletinsState>(
             builder: (context, state) {
               return Scaffold(
                 appBar: getAppBar(context, state),
@@ -68,13 +68,10 @@ class BulletinsPageState extends State<BulletinsPage> {
         IconButton(
           icon: Icon(Icons.refresh),
           color: Colors.white,
-          onPressed: ()  {
-            BlocProvider.of<BulletinsBlock>(context).add(
+          onPressed: () {
+            BlocProvider.of<BulletinsBloc>(context).add(
               FetchBulletinsEvent(),
             );
-//         var provider = BulletinsProvider();
-//         print(await provider.getDataOrCache());
-
           },
         ),
       ],
@@ -83,8 +80,8 @@ class BulletinsPageState extends State<BulletinsPage> {
 
   Widget getBody(BuildContext context, BulletinsState state) {
     if (state is InitialBulletinsState) {
-      BlocProvider.of<BulletinsBlock>(context).add(
-        RefreshBulletinsEvent(),
+      BlocProvider.of<BulletinsBloc>(context).add(
+        FetchBulletinsEvent(),
       );
     }
     if (state is LoadingBulletinsState) {
@@ -94,15 +91,13 @@ class BulletinsPageState extends State<BulletinsPage> {
       return Container(
         child: RefreshIndicator(
           onRefresh: () {
-            BlocProvider.of<BulletinsBlock>(context).add(
+            BlocProvider.of<BulletinsBloc>(context).add(
               RefreshBulletinsEvent(),
             );
             return refreshCompleter.future;
           },
           child: ListView(
             children: loadBulletins(state.data),
-            //children: state.data.changelog.reversed.map((item) {
-
           ),
         ),
       );
@@ -111,7 +106,7 @@ class BulletinsPageState extends State<BulletinsPage> {
       return ew.ErrorWidget(
         errorMessage: state.errorMessage,
         onPressed: () {
-          BlocProvider.of<BulletinsBlock>(context).add(FetchBulletinsEvent());
+          BlocProvider.of<BulletinsBloc>(context).add(FetchBulletinsEvent());
         },
         onPressedCache: () {},
         cache: false,
@@ -152,9 +147,9 @@ class BulletinsPageState extends State<BulletinsPage> {
               padding: EdgeInsets.all(10),
               child: Text(
                 'El equipo de desarrollo de la aplicación le pide disculpas '
-                    'y le invita al grupo de Telegram para que reporte el '
-                    'problema y así poder solucionarlo ayudando a los restantes '
-                    'usuarios. Gracias de antemano.',
+                'y le invita al grupo de Telegram para que reporte el '
+                'problema y así poder solucionarlo ayudando a los restantes '
+                'usuarios. Gracias de antemano.',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: Constants.primaryColor,
@@ -191,52 +186,80 @@ class BulletinsPageState extends State<BulletinsPage> {
 }
 
 List<Widget> loadBulletins(Bulletins sources) {
-  var result = [];
-  for (var prov in sources.providers) {
-    for (var bulletin in prov.bulletins){
+  var result = List<Widget>();
+  for (var provider in sources.providers) {
+    result.add(
+      ListTile(
+        title: Container(
+          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+          child: Text(
+            provider.name,
+            style: TextStyle(
+              color: Constants.primaryColor,
+              fontSize: 24,
+            ),
+          ),
+        ),
+        trailing: GestureDetector(
+          child: Icon(Icons.open_in_new, color: Constants.primaryColor),
+          onTap: () async {
+            final url = provider.url;
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              log('Could not launch $url');
+            }
+          },
+        ),
+      ),
+    );
+    result.add(
+      Divider(
+        height: 5,
+        thickness: 2.5,
+        indent: 10,
+        endIndent: 10,
+        color: Constants.primaryColor,
+      ),
+    );
+    for (var bulletin in provider.bulletins) {
       result.add(
-        GFCard(
-          boxFit: BoxFit.cover,
-          image: Image.asset('your asset image'),
-          title: GFListTile(
-              title: Text('Card Title'),
-              icon: GFIconButton(
-                onPressed: null,
-                icon: Icon(Icons.favorite_border),
-              )
-          ),
-          content: Text("Some quick example text to build on the card"),
-          buttonBar: GFButtonBar(
-            children: <Widget>[
-              GFButton(
-                onPressed: () {},
-                text: 'Read More',
+        Card(
+          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+          child: GestureDetector(
+            child: Container(
+              margin: EdgeInsets.all(5),
+              child: ListTile(
+                title: Text(
+                  bulletin.info,
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                  ),
+                ),
+                subtitle: Text(
+                  'Tamaño: ${bulletin.size.toStringAsFixed(2)} Mb',
+                  style: TextStyle(
+                    color: Constants.primaryColor,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.file_download,
+                  color: Constants.primaryColor,
+                ),
               ),
-            ],
+            ),
+            onTap: () async {
+              final url = provider.data_source + bulletin.url;
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                log('Could not launch $url');
+              }
+            },
           ),
-        )
+        ),
       );
     }
   }
-
-  result.add(Text("probando"));
-
   return result;
-}
-
-void sourcePresentation(BulletinProvider provider, List<dynamic> view) {
-  var head = GFListTile(
-    titleText: provider.name,
-  );
-
-  view.add(head);
-
-  for (var bull in provider.bulletins) {
-    view.add(
-      GFListTile(
-        titleText: "No. ${bull.id} ${bull.info}",
-        description: Text("Tamaño en MB: ${bull.size}"),
-      ),
-    );
-  }
 }

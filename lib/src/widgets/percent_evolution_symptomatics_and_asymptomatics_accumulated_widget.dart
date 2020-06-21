@@ -10,8 +10,9 @@ import 'package:quiver/iterables.dart' show zip;
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/models/models.dart';
 
-class PercentEvolutionSymptomaticsAsymptomaticsAccumulatedWidget extends StatelessWidget {
-  final PercentEvolutionSymptomaticsAsymptomatics 
+class PercentEvolutionSymptomaticsAsymptomaticsAccumulatedWidget
+    extends StatelessWidget {
+  final PercentEvolutionSymptomaticsAsymptomatics
       percentEvolutionSymptomaticsAsymptomatics;
 
   const PercentEvolutionSymptomaticsAsymptomaticsAccumulatedWidget(
@@ -46,12 +47,14 @@ class PercentEvolutionSymptomaticsAsymptomaticsAccumulatedWidget extends Statele
           child: charts.TimeSeriesChart(
             [
               charts.Series<List, DateTime>(
-                id: percentEvolutionSymptomaticsAsymptomatics.asymptomatics.name,
+                id: percentEvolutionSymptomaticsAsymptomatics
+                    .asymptomatics.name,
                 colorFn: (_, __) => ChartColors.purple,
                 domainFn: (item, _) => item[1],
                 measureFn: (item, _) => item[0],
                 data: zip([
-                  percentEvolutionSymptomaticsAsymptomatics.asymptomatics.values,
+                  percentEvolutionSymptomaticsAsymptomatics
+                      .asymptomatics.values,
                   percentEvolutionSymptomaticsAsymptomatics.date.values,
                 ]).toList(),
               ),

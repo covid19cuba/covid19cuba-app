@@ -18,5 +18,3 @@ class FetchBulletinsEvent extends BulletinsEvent {
 class RefreshBulletinsEvent extends BulletinsEvent {
   const RefreshBulletinsEvent();
 }
-
-
