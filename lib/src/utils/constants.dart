@@ -118,7 +118,8 @@ class Constants {
       'proxi-credentials-password';
   static const String prefProxyAllowInsecureCertificates =
       'proxy-insecure-certificates';
-
+  static const String prefBulletins = "prefBulletins";
+  static const String prefBulletinState = "prefBulletinState";
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
   static const int ConnectionModeInternet = 1;

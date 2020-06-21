@@ -9,3 +9,4 @@ export 'news_state_provider.dart';
 export 'state_provider.dart';
 export 'about_us_provider.dart';
 export 'faqs_provider.dart';
+export 'bulletins_provider.dart';
