@@ -11,31 +11,31 @@ import 'package:preferences/preferences.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-const urlJTNewsStateDataCU =
-    'https://cusobu.nat.cu/covid/api/v1/jt_news_state.json';
-const urlJTNewsStateDataIO =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/jt_news_state.json';
+const urlNewsStateDataCU =
+    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/news_state.json';
+const urlNewsStateDataIO =
+    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/news_state.json';
 
-Future<JTNewsStateModel> getJTNewsStateData() async {
+Future<NewsStateModel> getNewsStateData() async {
   var mode = PrefService.getInt(Constants.prefConnectionMode) ??
       Constants.ConnectionModeMerge;
   switch (mode) {
     case Constants.ConnectionModeIntranet:
-      return await getJTNewsStateDataFrom(urlJTNewsStateDataCU);
+      return await getNewsStateDataFrom(urlNewsStateDataCU);
     case Constants.ConnectionModeInternet:
-      return await getJTNewsStateDataFrom(urlJTNewsStateDataIO);
+      return await getNewsStateDataFrom(urlNewsStateDataIO);
     case Constants.ConnectionModeMerge:
     default:
       try {
-        return await getJTNewsStateDataFrom(urlJTNewsStateDataCU);
+        return await getNewsStateDataFrom(urlNewsStateDataCU);
       } catch (e) {
         log(e.toString());
-        return await getJTNewsStateDataFrom(urlJTNewsStateDataIO);
+        return await getNewsStateDataFrom(urlNewsStateDataIO);
       }
   }
 }
 
-Future<JTNewsStateModel> getJTNewsStateDataFrom(String url) async {
+Future<NewsStateModel> getNewsStateDataFrom(String url) async {
   var resp = await get(url, headers: {
     'Accept-Encoding': 'gzip, deflate, br',
   });
@@ -44,10 +44,10 @@ Future<JTNewsStateModel> getJTNewsStateDataFrom(String url) async {
   } else if (resp.statusCode != 200) {
     throw BadRequestException('Bad request');
   }
-  JTNewsStateModel result;
+  NewsStateModel result;
   try {
     var json = jsonDecode(utf8.decode(resp.bodyBytes));
-    result = JTNewsStateModel.fromJson(json);
+    result = NewsStateModel.fromJson(json);
   } catch (e) {
     log(e.toString());
     throw ParseException('Parse error');

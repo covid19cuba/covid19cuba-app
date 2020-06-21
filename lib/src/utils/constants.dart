@@ -92,11 +92,11 @@ class Constants {
   static const String prefSetUpTasksMinutes = 'setUpTasksMinutes';
   static const String prefVersionCode = 'versionCode';
   static const String prefData = 'data';
-  static const String prefDataJTNews = 'dataJTNews';
+  static const String prefDataNews = 'dataNews';
   static const String prefDataAboutUs = 'dataAboutUs';
   static const String prefDataFaqs = 'dataFaqs';
   static const String prefCacheHash = 'cacheHash';
-  static const String prefCacheJTNewsHash = 'cacheJTNewsHash';
+  static const String prefCacheNewsHash = 'cacheNewsHash';
   static const String prefVersionLastSkip = 'versionLastSkip';
   static const String prefFirstCacheNotification = 'firstCacheNotification';
   static const String prefFirstVersionNotification = 'firstVersionNotification';
