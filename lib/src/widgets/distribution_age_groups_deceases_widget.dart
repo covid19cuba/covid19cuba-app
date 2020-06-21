@@ -14,7 +14,7 @@ class DistributionAgeGroupsDeceasesWidget extends StatelessWidget {
 
   const DistributionAgeGroupsDeceasesWidget({this.distributionByAgeRanges})
       : assert(distributionByAgeRanges != null);
-      
+
   @override
   Widget build(BuildContext context) {
     return Column(

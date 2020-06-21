@@ -8,8 +8,8 @@ import '../models/bulletins_state.dart';
 import '../utils/utils.dart';
 import 'data_resolver.dart';
 
-
-class BulletinsProvider extends DataProvider<Bulletins> implements DataResolver<Bulletins, BulletinsProvider>{
+class BulletinsProvider extends DataProvider<Bulletins>
+    implements DataResolver<Bulletins, BulletinsProvider> {
   static const String cuDataPath = "/api/v2/bulletins.json";
   static const String ioDataPath = cuDataPath;
 
@@ -19,12 +19,14 @@ class BulletinsProvider extends DataProvider<Bulletins> implements DataResolver<
   static const bulletinState = DataProvider(
       cuPath: cuStatePath, ioPath: ioStatePath, parser: BulletinState.fromJson);
 
-  const BulletinsProvider() : super(
-      cuPath: cuDataPath, ioPath: ioDataPath, parser: Bulletins.fromJson);
+  const BulletinsProvider()
+      : super(
+            cuPath: cuDataPath, ioPath: ioDataPath, parser: Bulletins.fromJson);
 
   @override
   Future<Bulletins> getDataOrCache() {
-    return getDataAndCacheCheck(dataProvider: this,
+    return getDataAndCacheCheck(
+        dataProvider: this,
         cacheProvider: BulletinsProvider.bulletinState,
         dataStateKey: Constants.prefBulletinState,
         dataCacheKey: Constants.prefBulletins);
@@ -37,12 +39,11 @@ class BulletinsProvider extends DataProvider<Bulletins> implements DataResolver<
 
   @override
   BulletinsProvider createInstance() {
-   return BulletinsProvider();
+    return BulletinsProvider();
   }
 
   @override
   Future<void> setCache(Bulletins data) {
     return setDataToCache(data, Constants.prefBulletins);
   }
-
 }

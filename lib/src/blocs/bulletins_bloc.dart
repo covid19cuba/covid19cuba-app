@@ -12,13 +12,13 @@ import 'package:covid19cuba/src/blocs/states/states.dart';
 import 'package:covid19cuba/src/data_providers/data_providers.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-class BulletinsBlock extends Bloc<BulletinsEvent, BulletinsState> {
+class BulletinsBloc extends Bloc<BulletinsEvent, BulletinsState> {
   @override
   BulletinsState get initialState => InitialBulletinsState();
 
   @override
   Stream<BulletinsState> mapEventToState(BulletinsEvent event) async* {
-    if (event is FetchChangelogEvent) {
+    if (event is FetchBulletinsEvent) {
       yield LoadingBulletinsState();
       try {
         var provider = BulletinsProvider();
@@ -49,7 +49,7 @@ class BulletinsBlock extends Bloc<BulletinsEvent, BulletinsState> {
         );
       }
     }
-    if (event is RefreshChangelogEvent) {
+    if (event is RefreshBulletinsEvent) {
       try {
         var provider = BulletinsProvider();
         var data = await provider.getDataOrCache();

@@ -39,8 +39,8 @@ class NewsPage extends StatelessWidget {
     }
   }
 
-  Widget getBody(BuildContext context, NewsState state,
-      Completer<void> refreshCompleter) {
+  Widget getBody(
+      BuildContext context, NewsState state, Completer<void> refreshCompleter) {
     if (state is InitialNewsState) {
       BlocProvider.of<NewsBloc>(context).add(LoadNewsEvent());
     }
@@ -215,8 +215,7 @@ class NewsPage extends StatelessWidget {
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          NewsPageMore(item),
+                                      builder: (context) => NewsPageMore(item),
                                     ),
                                   );
                                 },

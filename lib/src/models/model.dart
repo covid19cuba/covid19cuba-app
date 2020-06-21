@@ -3,7 +3,5 @@
 // found in the LICENSE file.
 
 abstract class Model {
-
   Map<String, dynamic> toJson();
-
 }

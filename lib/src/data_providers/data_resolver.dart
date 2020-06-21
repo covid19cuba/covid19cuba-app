@@ -2,7 +2,7 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
-abstract class DataResolver<T,E>{
+abstract class DataResolver<T, E> {
   Future<T> getDataOrCache();
 
   Future<T> getCache();
@@ -12,12 +12,12 @@ abstract class DataResolver<T,E>{
   E createInstance();
 }
 
-class DataFactory<F, T extends DataResolver<F,T>>{
+class DataFactory<F, T extends DataResolver<F, T>> {
   T data;
 
   DataFactory();
 
-  Future<F> getData(){
+  Future<F> getData() {
     data.createInstance();
     return data.getDataOrCache();
   }

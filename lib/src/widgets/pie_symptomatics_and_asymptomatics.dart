@@ -24,7 +24,8 @@ class PieSymptomaticsAsymptomaticsWidget extends StatefulWidget {
       PieSymptomaticsAsymptomaticsWidgetState();
 }
 
-class PieSymptomaticsAsymptomaticsWidgetState extends State<PieSymptomaticsAsymptomaticsWidget> {
+class PieSymptomaticsAsymptomaticsWidgetState
+    extends State<PieSymptomaticsAsymptomaticsWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(

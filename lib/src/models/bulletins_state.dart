@@ -10,10 +10,10 @@ part 'bulletins_state.g.dart';
 
 @JsonSerializable()
 class BulletinState extends Model with CacheState {
-
   BulletinState();
 
-  static BulletinState fromJson(Map<String, dynamic> json) => _$BulletinStateFromJson(json);
+  static BulletinState fromJson(Map<String, dynamic> json) =>
+      _$BulletinStateFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$BulletinStateToJson(this);

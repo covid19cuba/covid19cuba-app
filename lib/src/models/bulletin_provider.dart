@@ -9,7 +9,7 @@ import 'model.dart';
 part 'bulletin_provider.g.dart';
 
 @JsonSerializable()
-class BulletinProvider extends Model{
+class BulletinProvider extends Model {
   String name;
   String url;
   String data_source;
@@ -17,7 +17,8 @@ class BulletinProvider extends Model{
 
   BulletinProvider();
 
-  static BulletinProvider fromJson(Map<String,dynamic> json) => _$BulletinProviderFromJson(json);
+  static BulletinProvider fromJson(Map<String, dynamic> json) =>
+      _$BulletinProviderFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$BulletinProviderToJson(this);

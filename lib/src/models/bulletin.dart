@@ -8,7 +8,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'bulletin.g.dart';
 
 @JsonSerializable()
-class Bulletin extends Model{
+class Bulletin extends Model {
   String id;
   String info;
   String url;
@@ -16,7 +16,8 @@ class Bulletin extends Model{
 
   Bulletin();
 
-  static Bulletin fromJson(Map<String, dynamic> json) => _$BulletinFromJson(json);
+  static Bulletin fromJson(Map<String, dynamic> json) =>
+      _$BulletinFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$BulletinToJson(this);

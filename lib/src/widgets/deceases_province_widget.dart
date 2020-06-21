@@ -49,7 +49,8 @@ class DeceasesProvinceWidgetState extends State<DeceasesProvinceWidget> {
                   mapData: provinceData.deceasesMapData,
                   provinceCode: provinceData.provinceCode,
                   title: 'Fallecidos',
-                  titleMunicipality: 'Distribución de fallecidos por municipios',
+                  titleMunicipality:
+                      'Distribución de fallecidos por municipios',
                 ),
               ),
             )
