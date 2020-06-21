@@ -16,20 +16,20 @@ import 'package:covid19cuba/src/utils/utils.dart';
 export 'events/events.dart';
 export 'states/states.dart';
 
-class JTNewsBloc extends Bloc<JTNewsEvent, JTNewsState> {
+class NewsBloc extends Bloc<NewsEvent, NewsState> {
   @override
-  JTNewsState get initialState => InitialJTNewsState();
+  NewsState get initialState => InitialNewsState();
 
   @override
-  Stream<JTNewsState> mapEventToState(JTNewsEvent event) async* {
-    if (event is LoadJTNewsEvent) {
-      yield LoadingJTNewsState();
+  Stream<NewsState> mapEventToState(NewsEvent event) async* {
+    if (event is LoadNewsEvent) {
+      yield LoadingNewsState();
       try {
-        JTNewsModel data;
+        NewsModel data;
         try {
-          data = await getJTNewsData();
+          data = await getNewsData();
         } catch (e) {
-          data = await getJTNewsDataFromCache();
+          data = await getNewsDataFromCache();
           if (data == null) {
             throw e;
           } else if (event.showNotification) {
@@ -40,111 +40,111 @@ class JTNewsBloc extends Bloc<JTNewsEvent, JTNewsState> {
             );
           }
         }
-        setJTNewsDataToCache(data);
-        yield LoadedJTNewsState(data: data);
+        setNewsDataToCache(data);
+        yield LoadedNewsState(data: data);
       } on BadRequestException catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: 'No se ha podido establecer conexión. Por favor, '
               'revise su conexión y vuelva a intentarlo.',
           cache: data != null,
         );
       } on SocketException catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: 'No se ha podido establecer conexión. Por favor, '
               'revise su conexión y vuelva a intentarlo.',
           cache: data != null,
         );
       } on ParseException catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: 'Hay problema con los servidores. Por favor, '
               'espere unos minutos y vuelva a intentarlo.',
           cache: data != null,
         );
       } catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: e.toString(),
           cache: data != null,
         );
       }
     }
-    if (event is FetchJTNewsEvent) {
-      yield LoadingJTNewsState();
+    if (event is FetchNewsEvent) {
+      yield LoadingNewsState();
       try {
-        var data = await getJTNewsData();
-        yield LoadedJTNewsState(data: data);
+        var data = await getNewsData();
+        yield LoadedNewsState(data: data);
       } on BadRequestException catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: 'No se ha podido establecer conexión. Por favor, '
               'revise su conexión y vuelva a intentarlo.',
           cache: data != null,
         );
       } on SocketException catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: 'No se ha podido establecer conexión. Por favor, '
               'revise su conexión y vuelva a intentarlo.',
           cache: data != null,
         );
       } on ParseException catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: 'Hay problema con los servidores. Por favor, '
               'espere unos minutos y vuelva a intentarlo.',
           cache: data != null,
         );
       } catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: e.toString(),
           cache: data != null,
         );
       }
     }
-    if (event is RefreshJTNewsEvent) {
+    if (event is RefreshNewsEvent) {
       try {
-        var data = await getJTNewsData();
-        yield LoadedJTNewsState(data: data);
+        var data = await getNewsData();
+        yield LoadedNewsState(data: data);
       } on BadRequestException catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: 'No se ha podido establecer conexión. Por favor, '
               'revise su conexión y vuelva a intentarlo.',
           cache: data != null,
         );
       } on SocketException catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: 'No se ha podido establecer conexión. Por favor, '
               'revise su conexión y vuelva a intentarlo.',
           cache: data != null,
         );
       } on ParseException catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: 'Hay problema con los servidores. Por favor, '
               'espere unos minutos y vuelva a intentarlo.',
           cache: data != null,
         );
       } catch (e) {
         log(e.toString());
-        var data = await getJTNewsDataFromCache();
-        yield ErrorJTNewsState(
+        var data = await getNewsDataFromCache();
+        yield ErrorNewsState(
           errorMessage: e.toString(),
           cache: data != null,
         );

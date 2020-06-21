@@ -1,20 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'jt_news_model.dart';
+part of 'news_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-JTNewsModel _$JTNewsModelFromJson(Map<String, dynamic> json) {
-  return JTNewsModel()
+NewsModel _$NewsModelFromJson(Map<String, dynamic> json) {
+  return NewsModel()
     ..news = (json['news'] as List)
         ?.map((e) =>
-            e == null ? null : JTNewModel.fromJson(e as Map<String, dynamic>))
+            e == null ? null : NewModel.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
-Map<String, dynamic> _$JTNewsModelToJson(JTNewsModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$NewsModelToJson(NewsModel instance) => <String, dynamic>{
       'news': instance.news,
     };

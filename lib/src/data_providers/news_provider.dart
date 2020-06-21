@@ -12,18 +12,19 @@ import 'package:preferences/preferences.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-const urlJTNewsDataCU = 'https://cusobu.nat.cu/covid/api/v1/jt_news.json';
-const urlJTNewsDataIO =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/jt_news.json';
+const urlNewsDataCU =
+    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/news.json';
+const urlNewsDataIO =
+    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/news.json';
 
-Future<JTNewsModel> getJTNewsData() async {
-  var stateList = await JTNewsStateModel.check();
+Future<NewsModel> getNewsData() async {
+  var stateList = await NewsStateModel.check();
   var cache = true;
   if (stateList != null) {
     cache = stateList[0];
   }
   if (!cache) {
-    var data = await getJTNewsDataFromCache();
+    var data = await getNewsDataFromCache();
     if (data != null) {
       log('Data obtained from cache.');
       return data;
@@ -34,21 +35,21 @@ Future<JTNewsModel> getJTNewsData() async {
       Constants.ConnectionModeMerge;
   switch (mode) {
     case Constants.ConnectionModeIntranet:
-      return await getJTNewsDataFrom(urlJTNewsDataCU);
+      return await getNewsDataFrom(urlNewsDataCU);
     case Constants.ConnectionModeInternet:
-      return await getJTNewsDataFrom(urlJTNewsDataIO);
+      return await getNewsDataFrom(urlNewsDataIO);
     case Constants.ConnectionModeMerge:
     default:
       try {
-        return await getJTNewsDataFrom(urlJTNewsDataCU);
+        return await getNewsDataFrom(urlNewsDataCU);
       } catch (e) {
         log(e.toString());
-        return await getJTNewsDataFrom(urlJTNewsDataIO);
+        return await getNewsDataFrom(urlNewsDataIO);
       }
   }
 }
 
-Future<JTNewsModel> getJTNewsDataFrom(String url) async {
+Future<NewsModel> getNewsDataFrom(String url) async {
   var resp = await get(url, headers: {
     'Accept-Encoding': 'gzip, deflate, br',
   });
@@ -57,10 +58,10 @@ Future<JTNewsModel> getJTNewsDataFrom(String url) async {
   } else if (resp.statusCode != 200) {
     throw BadRequestException('Bad request');
   }
-  JTNewsModel result;
+  NewsModel result;
   try {
     var json = jsonDecode(utf8.decode(resp.bodyBytes));
-    result = JTNewsModel.fromJson(json);
+    result = NewsModel.fromJson(json);
   } catch (e) {
     log(e.toString());
     throw ParseException('Parse error');
@@ -68,7 +69,7 @@ Future<JTNewsModel> getJTNewsDataFrom(String url) async {
   return result;
 }
 
-Future<JTNewsModel> getJTNewsDataFromCache() async {
+Future<NewsModel> getNewsDataFromCache() async {
   try {
     var packageInfo = await PackageInfo.fromPlatform();
     var versionCodeNow = int.parse(packageInfo.buildNumber);
@@ -76,21 +77,21 @@ Future<JTNewsModel> getJTNewsDataFromCache() async {
     if (versionCodeNow != versionCodeOld) {
       return null;
     }
-    var data = PrefService.getString(Constants.prefDataJTNews);
+    var data = PrefService.getString(Constants.prefDataNews);
     if (data == null) {
       return null;
     }
-    return JTNewsModel.fromJson(jsonDecode(data));
+    return NewsModel.fromJson(jsonDecode(data));
   } catch (e) {
     log(e.toString());
   }
   return null;
 }
 
-Future<void> setJTNewsDataToCache(JTNewsModel data) async {
+Future<void> setNewsDataToCache(NewsModel data) async {
   try {
     String result = jsonEncode(data.toJson());
-    PrefService.setString(Constants.prefDataJTNews, result);
+    PrefService.setString(Constants.prefDataNews, result);
   } catch (e) {
     log(e.toString());
   }

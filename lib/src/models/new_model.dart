@@ -4,10 +4,10 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'jt_new_model.g.dart';
+part 'new_model.g.dart';
 
 @JsonSerializable()
-class JTNewModel {
+class NewModel {
   String id;
   String link;
   String title;
@@ -16,8 +16,9 @@ class JTNewModel {
   List<int> updated;
   String summary;
   String abstract;
+  String source;
 
-  JTNewModel();
+  NewModel();
 
   DateTime getUpdated() {
     return getDate(updated);
@@ -37,8 +38,8 @@ class JTNewModel {
     return DateTime(year, month, day, hour, minutes, seconds);
   }
 
-  factory JTNewModel.fromJson(Map<String, dynamic> json) =>
-      _$JTNewModelFromJson(json);
+  factory NewModel.fromJson(Map<String, dynamic> json) =>
+      _$NewModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$JTNewModelToJson(this);
+  Map<String, dynamic> toJson() => _$NewModelToJson(this);
 }

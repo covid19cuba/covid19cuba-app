@@ -27,7 +27,7 @@ class HomePageState extends State<HomePage>
     WebViewPage(),
     WorldPage(),
     CubaPage(),
-    JTNewsPage(),
+    NewsPage(),
     InfoPage(),
   ];
 
@@ -86,8 +86,8 @@ class HomePageState extends State<HomePage>
         BlocProvider<HomeBloc>(
           create: (context) => HomeBloc(),
         ),
-        BlocProvider<JTNewsBloc>(
-          create: (context) => JTNewsBloc(),
+        BlocProvider<NewsBloc>(
+          create: (context) => NewsBloc(),
         ),
       ],
       child: Scaffold(
@@ -136,13 +136,13 @@ class HomePageState extends State<HomePage>
       ];
     } else if (index == 3) {
       return <Widget>[
-        BlocBuilder<JTNewsBloc, JTNewsState>(
+        BlocBuilder<NewsBloc, NewsState>(
           builder: (context, state) {
             return IconButton(
               icon: Icon(Icons.refresh),
               color: Colors.white,
               onPressed: () {
-                BlocProvider.of<JTNewsBloc>(context).add(FetchJTNewsEvent());
+                BlocProvider.of<NewsBloc>(context).add(FetchNewsEvent());
               },
             );
           },

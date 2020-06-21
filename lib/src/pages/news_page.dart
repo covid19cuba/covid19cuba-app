@@ -17,14 +17,14 @@ import 'package:getflutter/getflutter.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class JTNewsPage extends StatelessWidget {
+class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Completer<void> refreshCompleter = Completer<void>();
     try {
-      return BlocConsumer<JTNewsBloc, JTNewsState>(
+      return BlocConsumer<NewsBloc, NewsState>(
         listener: (context, state) {
-          if (state is LoadedJTNewsState) {
+          if (state is LoadedNewsState) {
             refreshCompleter?.complete();
             refreshCompleter = Completer();
           }
@@ -39,21 +39,21 @@ class JTNewsPage extends StatelessWidget {
     }
   }
 
-  Widget getBody(BuildContext context, JTNewsState state,
+  Widget getBody(BuildContext context, NewsState state,
       Completer<void> refreshCompleter) {
-    if (state is InitialJTNewsState) {
-      BlocProvider.of<JTNewsBloc>(context).add(LoadJTNewsEvent());
+    if (state is InitialNewsState) {
+      BlocProvider.of<NewsBloc>(context).add(LoadNewsEvent());
     }
-    if (state is LoadingJTNewsState) {
+    if (state is LoadingNewsState) {
       return LoadingWidget();
     }
-    if (state is LoadedJTNewsState) {
+    if (state is LoadedNewsState) {
       PrefService.setBool(Constants.prefBadgeNews, false);
       return Container(
         child: RefreshIndicator(
           onRefresh: () {
-            BlocProvider.of<JTNewsBloc>(context).add(
-              RefreshJTNewsEvent(),
+            BlocProvider.of<NewsBloc>(context).add(
+              RefreshNewsEvent(),
             );
             return refreshCompleter.future;
           },
@@ -115,7 +115,7 @@ class JTNewsPage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      'Juventud Técnica',
+                                      item.source,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         fontWeight: FontWeight.normal,
@@ -216,7 +216,7 @@ class JTNewsPage extends StatelessWidget {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          JTNewsPageMore(item),
+                                          NewsPageMore(item),
                                     ),
                                   );
                                 },
@@ -248,14 +248,14 @@ class JTNewsPage extends StatelessWidget {
         ),
       );
     }
-    if (state is ErrorJTNewsState) {
+    if (state is ErrorNewsState) {
       return ew.ErrorWidget(
         errorMessage: state.errorMessage,
         onPressed: () {
-          BlocProvider.of<JTNewsBloc>(context).add(FetchJTNewsEvent());
+          BlocProvider.of<NewsBloc>(context).add(FetchNewsEvent());
         },
         onPressedCache: () {
-          BlocProvider.of<JTNewsBloc>(context).add(LoadJTNewsEvent(
+          BlocProvider.of<NewsBloc>(context).add(LoadNewsEvent(
             showNotification: false,
           ));
         },
