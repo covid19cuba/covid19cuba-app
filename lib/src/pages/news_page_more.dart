@@ -11,10 +11,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-class JTNewsPageMore extends StatelessWidget {
-  final JTNewModel item;
+class NewsPageMore extends StatelessWidget {
+  final NewModel item;
 
-  JTNewsPageMore(this.item);
+  NewsPageMore(this.item);
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +76,7 @@ class JTNewsPageMore extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Juventud Técnica',
+                              item.source,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,

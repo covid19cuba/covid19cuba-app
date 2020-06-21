@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'jt_new_model.dart';
+part of 'new_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-JTNewModel _$JTNewModelFromJson(Map<String, dynamic> json) {
-  return JTNewModel()
+NewModel _$NewModelFromJson(Map<String, dynamic> json) {
+  return NewModel()
     ..id = json['id'] as String
     ..link = json['link'] as String
     ..title = json['title'] as String
@@ -15,11 +15,11 @@ JTNewModel _$JTNewModelFromJson(Map<String, dynamic> json) {
     ..published = (json['published'] as List)?.map((e) => e as int)?.toList()
     ..updated = (json['updated'] as List)?.map((e) => e as int)?.toList()
     ..summary = json['summary'] as String
-    ..abstract = json['abstract'] as String;
+    ..abstract = json['abstract'] as String
+    ..source = json['source'] as String;
 }
 
-Map<String, dynamic> _$JTNewModelToJson(JTNewModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$NewModelToJson(NewModel instance) => <String, dynamic>{
       'id': instance.id,
       'link': instance.link,
       'title': instance.title,
@@ -28,4 +28,5 @@ Map<String, dynamic> _$JTNewModelToJson(JTNewModel instance) =>
       'updated': instance.updated,
       'summary': instance.summary,
       'abstract': instance.abstract,
+      'source': instance.source,
     };

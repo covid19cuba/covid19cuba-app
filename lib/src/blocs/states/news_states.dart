@@ -7,31 +7,31 @@ import 'package:equatable/equatable.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
 
-abstract class JTNewsState extends Equatable {
-  const JTNewsState();
+abstract class NewsState extends Equatable {
+  const NewsState();
 
   @override
   List<Object> get props => [];
 }
 
-class InitialJTNewsState extends JTNewsState {}
+class InitialNewsState extends NewsState {}
 
-class LoadingJTNewsState extends JTNewsState {}
+class LoadingNewsState extends NewsState {}
 
-class LoadedJTNewsState extends JTNewsState {
-  final JTNewsModel data;
+class LoadedNewsState extends NewsState {
+  final NewsModel data;
 
-  const LoadedJTNewsState({@required this.data}) : assert(data != null);
+  const LoadedNewsState({@required this.data}) : assert(data != null);
 
   @override
   List<Object> get props => [data];
 }
 
-class ErrorJTNewsState extends JTNewsState {
+class ErrorNewsState extends NewsState {
   final String errorMessage;
   final bool cache;
 
-  const ErrorJTNewsState({@required this.errorMessage, @required this.cache})
+  const ErrorNewsState({@required this.errorMessage, @required this.cache})
       : assert(errorMessage != null, cache != null);
 
   @override
