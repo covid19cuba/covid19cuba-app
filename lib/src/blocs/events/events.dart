@@ -4,5 +4,5 @@
 
 export 'bulletins_events.dart';
 export 'changelog_events.dart';
+export 'general_events.dart';
 export 'home_events.dart';
-export 'news_events.dart';

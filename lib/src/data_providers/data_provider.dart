@@ -2,22 +2,26 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.s
 
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:covid19cuba/src/models/model.dart';
 import 'package:covid19cuba/src/models/state.dart';
-import 'package:covid19cuba/src/utils/http_proxy.dart';
-import 'package:flutter/material.dart';
-import 'package:preferences/preferences.dart';
-import 'package:http/http.dart' as http;
-import 'dart:developer';
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:preferences/preferences.dart';
 
 typedef ParserMethod<T> = T Function(Map<String, dynamic> data);
 typedef CacheCheckMethod<T extends CacheState> = Future<bool> Function(
-    DataProvider<T> provider, String prefCache);
+  DataProvider<T> provider,
+  String prefCache,
+);
 
 Future<bool> basicCacheCheck<T extends CacheState>(
-    DataProvider<T> state, String prefCache) async {
+  DataProvider<T> state,
+  String prefCache,
+) async {
   String cache = PrefService.getString(prefCache);
   T serverCache = await state.getData();
   if (cache != null && cache == serverCache.cache) {
@@ -28,9 +32,9 @@ Future<bool> basicCacheCheck<T extends CacheState>(
 
 class DataProvider<T> {
   static final String sourceCu =
-      "https://covid19cuba.github.io/covid19cubadata.github.io";
+      'https://covid19cuba.github.io/covid19cubadata.github.io';
   static final String sourceIo =
-      "https://covid19cuba.github.io/covid19cubadata.github.io";
+      'https://covid19cuba.github.io/covid19cubadata.github.io';
 
   final String cuPath;
   final String ioPath;
@@ -50,7 +54,6 @@ class DataProvider<T> {
     };
     var method = client?.get ?? get;
     var resp = await method(url, headers: headers);
-
     if (resp.statusCode == 404) {
       throw InvalidSourceException('Source is invalid');
     } else if (resp.statusCode != 200) {
@@ -102,7 +105,9 @@ Future<T> getDataAndCacheCheck<T, F extends CacheState>({
 }
 
 Future<T> getDataFromCache<T>(
-    DataProvider<T> dataProvider, String dataCacheKey) async {
+  DataProvider<T> dataProvider,
+  String dataCacheKey,
+) async {
   String cache = PrefService.getString(dataCacheKey);
   if (cache == null) {
     return null;

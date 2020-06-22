@@ -74,8 +74,7 @@ Future<DataModel> getCubaDataFrom(String url) async {
     );
   } catch (e) {
     log(e.toString());
-    throw e;
-    /*throw ParseException('Parse error');*/
+    throw ParseException('Parse error');
   }
   try {
     int time = (DateTime.now().millisecondsSinceEpoch / 1000).round() - 1;

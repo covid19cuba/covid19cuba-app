@@ -5,6 +5,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:crypto/crypto.dart';
+
 import '../utils/http_proxy.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
@@ -30,7 +32,6 @@ Future<NewsModel> getNewsData() async {
       return data;
     }
   }
-  PrefService.setBool(Constants.prefBadgeNews, true);
   var mode = PrefService.getInt(Constants.prefConnectionMode) ??
       Constants.ConnectionModeMerge;
   switch (mode) {
@@ -60,7 +61,12 @@ Future<NewsModel> getNewsDataFrom(String url) async {
   }
   NewsModel result;
   try {
-    var json = jsonDecode(utf8.decode(resp.bodyBytes));
+    var text = utf8.decode(resp.bodyBytes);
+    var bytes = utf8.encode(text);
+    var digest = sha1.convert(bytes);
+    PrefService.setString(Constants.prefCacheNewsHash, digest.toString());
+    PrefService.setBool(Constants.prefBadgeNews, true);
+    var json = jsonDecode(text);
     result = NewsModel.fromJson(json);
   } catch (e) {
     log(e.toString());

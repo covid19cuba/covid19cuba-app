@@ -8,6 +8,7 @@ export 'contacts_registration_page.dart';
 export 'contacts_registration_page.dart';
 export 'credits_page.dart';
 export 'cuba_page.dart';
+export 'page_widget.dart';
 export 'data_page.dart';
 export 'faqs_page.dart';
 export 'home_page.dart';

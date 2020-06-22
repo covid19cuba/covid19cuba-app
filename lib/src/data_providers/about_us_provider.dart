@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
 
@@ -67,7 +67,7 @@ Future<void> getAboutUsData() async {
 }
 
 Future<Map<String, dynamic>> getAboutUsDataFrom(String url) async {
-  var resp = await get(url, headers: {
+  var resp = await http.get(url, headers: {
     'Accept-Encoding': 'gzip, deflate, br',
   });
   if (resp.statusCode == 404) {

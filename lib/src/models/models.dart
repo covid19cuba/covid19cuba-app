@@ -2,6 +2,9 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
+export 'bulletin.dart';
+export 'bulletin_provider.dart';
+export 'bulletins_state.dart';
 export 'cases_by_mode_of_contagion.dart';
 export 'cases_by_nationality.dart';
 export 'cases_by_sex.dart';

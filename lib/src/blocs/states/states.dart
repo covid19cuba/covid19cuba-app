@@ -4,5 +4,5 @@
 
 export 'bulletins_state.dart';
 export 'changelog_states.dart';
+export 'general_states.dart';
 export 'home_states.dart';
-export 'news_states.dart';

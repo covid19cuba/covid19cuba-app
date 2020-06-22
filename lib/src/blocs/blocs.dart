@@ -4,5 +4,5 @@
 
 export 'bulletins_bloc.dart';
 export 'changelog_bloc.dart';
+export 'general_bloc.dart';
 export 'home_bloc.dart';
-export 'news_bloc.dart';

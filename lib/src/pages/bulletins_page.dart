@@ -16,7 +16,6 @@ import 'package:covid19cuba/src/widgets/error_widget.dart' as ew;
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
 import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/data_providers/data_providers.dart';
 
 class BulletinsPage extends StatefulWidget {
   @override
