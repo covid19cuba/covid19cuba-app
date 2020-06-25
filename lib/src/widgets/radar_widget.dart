@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
 
 class RadarChartWidget extends StatefulWidget {
-  final RadarModel data;
+  final MultipleComparisonOfCubaWithRadarModel data;
 
   const RadarChartWidget({this.data}) : assert(data != null);
 
@@ -27,7 +27,7 @@ class RadarChartWidget extends StatefulWidget {
 
 class RadarChartWidgetState extends State<RadarChartWidget> {
   final RadarBoundModel bounds;
-  final RadarModel data;
+  final MultipleComparisonOfCubaWithRadarModel data;
   final List<String> countries;
   final RadarItemModel cubaData;
   String selectedCountry = 'Estados Unidos';
@@ -53,7 +53,7 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
             child: Text(
-              'Comparación de los casos acumulados por provincias',
+              'Comparación múltiple de Cuba con: ',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -169,12 +169,11 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
         ''',
           ),
           padding: EdgeInsets.all(10),
-          //width: 400,
-          //height: 350,
           height: min(MediaQuery.of(context).size.width,
                   MediaQuery.of(context).size.height) -
               25,
-        )
+        ),
+        Container(padding: EdgeInsets.all(5)),
       ],
     );
   }

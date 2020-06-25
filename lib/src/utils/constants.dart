@@ -92,11 +92,11 @@ class Constants {
   static const String prefSetUpTasksMinutes = 'setUpTasksMinutes';
   static const String prefVersionCode = 'versionCode';
   static const String prefData = 'data';
-  static const String prefDataJTNews = 'dataJTNews';
+  static const String prefDataNews = 'dataNews';
   static const String prefDataAboutUs = 'dataAboutUs';
   static const String prefDataFaqs = 'dataFaqs';
   static const String prefCacheHash = 'cacheHash';
-  static const String prefCacheJTNewsHash = 'cacheJTNewsHash';
+  static const String prefCacheNewsHash = 'cacheNewsHash';
   static const String prefVersionLastSkip = 'versionLastSkip';
   static const String prefFirstCacheNotification = 'firstCacheNotification';
   static const String prefFirstVersionNotification = 'firstVersionNotification';
@@ -118,7 +118,8 @@ class Constants {
       'proxi-credentials-password';
   static const String prefProxyAllowInsecureCertificates =
       'proxy-insecure-certificates';
-
+  static const String prefBulletins = "prefBulletins";
+  static const String prefBulletinState = "prefBulletinState";
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
   static const int ConnectionModeInternet = 1;

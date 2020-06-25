@@ -78,7 +78,11 @@ class CubaWidgetState extends State<CubaWidget> {
             );
           }).toList();
     var list = List<Widget>();
-    list.add(UpdateWidget(updated: widget.data.all.updated));
+    list.add(UpdateWidget(
+      updated: mode == Constants.modeGeneral
+          ? widget.data.all.updated
+          : widget.data.all.deceasesUpdated,
+    ));
     list.add(
       Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
@@ -236,13 +240,13 @@ class CubaWidgetState extends State<CubaWidget> {
       }
     } else if (mode == Constants.modeDeceases) {
       if (province == null) {
-        list.add(NationalWidget(data: widget.data));
+        list.add(DeceasesNationalWidget(data: widget.data));
         list.insert(2, titleWidget('Cuba'));
       } else if (municipality == null) {
-        list.add(ProvinceWidget(data: widget.data, province: province));
+        list.add(DeceasesProvinceWidget(data: widget.data, province: province));
         list.insert(2, titleWidget(Constants.provinceAbbreviations[province]));
       } else {
-        list.add(MunicipalityWidget(
+        list.add(DeceasesMunicipalityWidget(
           data: widget.data.getMunicipality(municipality).all,
         ));
         list.insert(

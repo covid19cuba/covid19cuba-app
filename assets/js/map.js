@@ -1,3 +1,5 @@
+title = 'Diagnosticados';
+
 function logx(base, x){
     if(base == 10){
         return Math.log10(x);
@@ -48,6 +50,8 @@ function getMarkerProfile(title, pro, mun) {
     return t;
 }
 
+
+
 covidData = function (data, events) {
 
     var muns = data.muns;
@@ -63,9 +67,9 @@ covidData = function (data, events) {
         var t = '';
         t += '<div class="small-pname"><span class="bd">' + pro + '</span> - <span>' + mun + '</span></div>';
         if (code in muns) {
-            t += '<div class="small-content"><span class="bd">Diagnosticados:</span> <span>' + muns[code] + '</span></div>';
+            t += '<div class="small-content"><span class="bd">' + title + ':</span> <span>' + muns[code] + '</span></div>';
         } else {
-            t += '<div class="small-content">No hay casos diagnosticados</div>';
+            t += '<div class="small-content">No hay ' + title + '</div>';
         }
         t += '<div class="small-plink">&nbsp;</div>';
 
@@ -135,9 +139,9 @@ covidData2 = function (data, events) {
         var t = '';
         t += '<div class="small-pname"><span class="bd">' + pro + '</span></div>';
         if (code in pros) {
-            t += '<div class="small-content"><span class="bd">Diagnosticados:</span> <span>' + pros[code] + '</span></div>';
+            t += '<div class="small-content"><span class="bd">' + title + ':</span> <span>' + pros[code] + '</span></div>';
         } else {
-            t += '<div class="small-content">Sin casos reportados aún</div>';
+            t += '<div class="small-content">No hay ' + title + '</div>';
         }
         t += '<div class="small-plink">&nbsp;</div>';
 
@@ -214,9 +218,9 @@ covidData3 = function (data, province_id, events) {
             var t = '';
             t += '<div class="small-pname"><span class="bd">' + pro + '</span> - <span>' + mun + '</span></div>';
             if (code in muns) {
-                t += '<div class="small-content"><span class="bd">Diagnosticados:</span> <span>' + muns[code] + '</span></div>';
+                t += '<div class="small-content"><span class="bd">' + title + ':</span> <span>' + muns[code] + '</span></div>';
             } else {
-                t += '<div class="small-content">No hay casos diagnosticados</div>';
+                t += '<div class="small-content">No hay ' + title + '</div>';
             }
             t += '<div class="small-plink">&nbsp;</div>';
 

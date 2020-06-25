@@ -46,6 +46,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             header(),
             separator(),
             casesTableItem(),
+            bulletinsDrawerItem(),
             contactRegistrationItem(),
             usefulPhonesItem(),
             tipsItem(),
@@ -85,6 +86,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     IconData icon,
     String text,
     GestureTapCallback onTap,
+    Widget extra,
   }) {
     return ListTile(
       title: Row(
@@ -93,16 +95,19 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             icon,
             color: Colors.white,
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          )
+          ),
+          if (extra != null) extra,
         ],
       ),
       onTap: onTap,
@@ -156,6 +161,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
       context,
       icon: Icons.table_chart,
       text: 'Tabla de Casos',
+      extra: Icon(Icons.open_in_new, color: Colors.white),
       onTap: () async {
         const urlCU = 'https://www.cusobu.nat.cu/covid/casos.html';
         const urlIO = 'https://covid19cubadata.github.io/casos.html';
@@ -418,5 +424,18 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         );
       },
     );
+  }
+
+  Widget bulletinsDrawerItem() {
+    return createDrawerItem(context,
+        icon: Icons.library_books, text: 'Boletines', onTap: () {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BulletinsPage(),
+        ),
+      );
+    });
   }
 }
