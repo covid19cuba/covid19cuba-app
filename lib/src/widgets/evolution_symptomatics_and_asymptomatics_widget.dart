@@ -46,16 +46,6 @@ class EvolutionSymptomaticsAsymptomaticsWidget extends StatelessWidget {
           child: charts.TimeSeriesChart(
             [
               charts.Series<List, DateTime>(
-                id: evolutionSymptomaticsAsymptomatics.asymptomatics.name,
-                colorFn: (_, __) => ChartColors.purple,
-                domainFn: (item, _) => item[1],
-                measureFn: (item, _) => item[0],
-                data: zip([
-                  evolutionSymptomaticsAsymptomatics.asymptomatics.values,
-                  evolutionSymptomaticsAsymptomatics.date.values,
-                ]).toList(),
-              ),
-              charts.Series<List, DateTime>(
                 id: evolutionSymptomaticsAsymptomatics.symptomatics.name,
                 colorFn: (_, __) => ChartColors.red,
                 domainFn: (item, _) => item[1],
@@ -65,12 +55,23 @@ class EvolutionSymptomaticsAsymptomaticsWidget extends StatelessWidget {
                   evolutionSymptomaticsAsymptomatics.date.values,
                 ]).toList(),
               ),
+              charts.Series<List, DateTime>(
+                id: evolutionSymptomaticsAsymptomatics.asymptomatics.name,
+                colorFn: (_, __) => ChartColors.purple,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionSymptomaticsAsymptomatics.asymptomatics.values,
+                  evolutionSymptomaticsAsymptomatics.date.values,
+                ]).toList(),
+              ),
             ],
             animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includeArea: true,
               includePoints: true,
+              stacked: true,
             ),
             behaviors: [
               charts.ChartTitle(

@@ -74,6 +74,7 @@ class PercentEvolutionSymptomaticsAsymptomaticsAccumulatedWidget
             defaultRenderer: charts.LineRendererConfig(
               includeArea: true,
               includePoints: true,
+              stacked: true,
             ),
             behaviors: [
               charts.ChartTitle(

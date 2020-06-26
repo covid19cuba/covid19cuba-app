@@ -47,6 +47,16 @@ class PercentEvolutionSymptomaticsAsymptomaticsDaysWidget
           child: charts.TimeSeriesChart(
             [
               charts.Series<List, DateTime>(
+                id: percentEvolutionSymptomaticsAsymptomatics.symptomatics.name,
+                colorFn: (_, __) => ChartColors.red,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  percentEvolutionSymptomaticsAsymptomatics.symptomatics.values,
+                  percentEvolutionSymptomaticsAsymptomatics.date.values,
+                ]).toList(),
+              ),
+              charts.Series<List, DateTime>(
                 id: percentEvolutionSymptomaticsAsymptomatics
                     .asymptomatics.name,
                 colorFn: (_, __) => ChartColors.purple,
@@ -58,22 +68,13 @@ class PercentEvolutionSymptomaticsAsymptomaticsDaysWidget
                   percentEvolutionSymptomaticsAsymptomatics.date.values,
                 ]).toList(),
               ),
-              charts.Series<List, DateTime>(
-                id: percentEvolutionSymptomaticsAsymptomatics.symptomatics.name,
-                colorFn: (_, __) => ChartColors.red,
-                domainFn: (item, _) => item[1],
-                measureFn: (item, _) => item[0],
-                data: zip([
-                  percentEvolutionSymptomaticsAsymptomatics.symptomatics.values,
-                  percentEvolutionSymptomaticsAsymptomatics.date.values,
-                ]).toList(),
-              ),
             ],
             animate: false,
             defaultInteractions: true,
             defaultRenderer: charts.LineRendererConfig(
               includeArea: true,
               includePoints: true,
+              stacked: true,
             ),
             behaviors: [
               charts.ChartTitle(
