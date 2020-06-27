@@ -10,8 +10,6 @@ import 'package:preferences/preferences.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-import '../utils/constants.dart';
-
 class OnBoardingPage extends StatefulWidget {
   final bool update;
 

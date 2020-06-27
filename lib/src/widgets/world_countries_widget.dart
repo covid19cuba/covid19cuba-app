@@ -4,11 +4,10 @@
 
 import 'dart:developer';
 
+import 'package:covid19cuba/src/models/charts/item_extended.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class WorldCountriesWidget extends StatefulWidget {

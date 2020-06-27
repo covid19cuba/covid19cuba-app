@@ -5,3 +5,7 @@
 abstract class Model {
   Map<String, dynamic> toJson();
 }
+
+abstract class CacheModel extends Model {
+  String cache;
+}

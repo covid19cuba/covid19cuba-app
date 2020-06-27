@@ -15,9 +15,10 @@ class PhoneDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         title: Text('${province.name}'),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Constants.primaryColor,
       ),
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -27,15 +28,7 @@ class PhoneDetailsPage extends StatelessWidget {
             child: Container(
               height: double.infinity,
               width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.4),
-                      BlendMode.darken,
-                    ),
-                    image: AssetImage(province.image),
-                    fit: BoxFit.cover),
-              ),
+              decoration: BoxDecoration(color: Constants.primaryColor),
             ),
           ),
           Container(

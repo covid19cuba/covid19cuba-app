@@ -5,7 +5,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/charts/data.dart';
+import 'package:covid19cuba/src/models/contact/contact.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:hive/hive.dart';
 import 'package:package_info/package_info.dart';
@@ -100,7 +101,7 @@ void getUrl(url) async {
 int getDayFromCache() {
   var data = PrefService.getString(Constants.prefData);
   if (data != null) {
-    DataModel dta = DataModel.fromJson(jsonDecode(data));
+    var dta = Data.fromJson(jsonDecode(data));
     return dta.all.evolutionOfCasesByDays.accumulated.values.length;
   }
   return -1;
@@ -127,17 +128,8 @@ List<Province> getProvinceList() {
     'Isla de la Juventud': ['46-324587', '46-324090 ext 104']
   };
   provinceNames.forEach((name, phonesList) {
-    String image = 'assets/images/' +
-        name
-            .replaceAll(' ', '_')
-            .replaceFirst('í', 'i')
-            .replaceFirst('Á', 'A')
-            .replaceFirst('á', 'a')
-            .replaceFirst('ü', 'u') +
-        '.jpg';
     provinceList.add(Province(
       name: name,
-      image: image,
       phoneNumbers: phonesList,
     ));
   });
@@ -187,11 +179,11 @@ Copyright 2020 ©️""";
   return sharedContent;
 }
 
-List<ContactModel> getContactsList(Box box) {
-  var contacts = List<ContactModel>();
+List<Contact> getContactsList(Box box) {
+  var contacts = List<Contact>();
   for (var i = 0; i < box.length; ++i) {
     var json = box.getAt(i);
-    var contact = ContactModel.fromJson(jsonDecode(json));
+    var contact = Contact.fromJson(jsonDecode(json));
     contact.index = i;
     contacts.add(contact);
   }

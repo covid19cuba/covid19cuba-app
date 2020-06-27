@@ -6,7 +6,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:covid19cuba/src/app.dart';
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/charts/state_model.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';

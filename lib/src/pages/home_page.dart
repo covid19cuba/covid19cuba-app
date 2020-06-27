@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:badges/badges.dart';
+import 'package:covid19cuba/src/models/news/news.dart';
+import 'package:covid19cuba/src/models/news/news_state.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:preferences/preference_service.dart';
@@ -86,8 +88,8 @@ class HomePageState extends State<HomePage>
         BlocProvider<HomeBloc>(
           create: (context) => HomeBloc(),
         ),
-        BlocProvider<NewsBloc>(
-          create: (context) => NewsBloc(),
+        BlocProvider<GeneralBloc<News, NewsState>>(
+          create: (context) => GeneralBloc.getNewsBloc(),
         ),
       ],
       child: Scaffold(
@@ -136,13 +138,15 @@ class HomePageState extends State<HomePage>
       ];
     } else if (index == 3) {
       return <Widget>[
-        BlocBuilder<NewsBloc, NewsState>(
+        BlocBuilder<GeneralBloc<News, NewsState>, GeneralState>(
           builder: (context, state) {
             return IconButton(
               icon: Icon(Icons.refresh),
               color: Colors.white,
               onPressed: () {
-                BlocProvider.of<NewsBloc>(context).add(FetchNewsEvent());
+                BlocProvider.of<GeneralBloc<News, NewsState>>(context).add(
+                  FetchGeneralEvent(),
+                );
               },
             );
           },

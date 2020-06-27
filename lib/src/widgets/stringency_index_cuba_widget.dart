@@ -3,17 +3,17 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/stringency_index_cuba.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class StringencyIndexCubaWidget extends StatelessWidget {
-  final StringencyIndexCubaModel stringencyIndexCuba;
+  final StringencyIndexCuba stringencyIndexCuba;
 
   const StringencyIndexCubaWidget({
     this.stringencyIndexCuba,

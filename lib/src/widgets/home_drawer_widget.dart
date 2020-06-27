@@ -55,7 +55,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             sharerDrawerItem(),
             settingsDrawerItem(),
             faqsDrawerItem(),
-            creditsDrawerItem(),
+            aboutUsDrawerItem(),
             separator(),
             versionAppDrawerItem(),
           ],
@@ -409,7 +409,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     );
   }
 
-  Widget creditsDrawerItem() {
+  Widget aboutUsDrawerItem() {
     return createDrawerItem(
       context,
       icon: Icons.people,
@@ -419,7 +419,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CreditsPage(),
+            builder: (context) => AboutUsPage(),
           ),
         );
       },

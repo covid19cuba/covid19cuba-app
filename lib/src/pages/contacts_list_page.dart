@@ -3,8 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:io';
-
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/contact/contact.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +97,7 @@ class ContactsListPageState extends State<ContactsListPage> {
     );
   }
 
-  Widget getList(List<ContactModel> contacts) {
+  Widget getList(List<Contact> contacts) {
     if (contacts.length == 0) {
       return Center(
         child: Container(
