@@ -11,6 +11,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 class PieDeceasesDistributionAmountDiseaseHistoryWidget
     extends StatelessWidget {
   final Map<String, Item> deceasesDistributionAmountDiseaseHistory;
+  final List<String> colorPalettes = ["#ECBEBF","#DD9698","#BF4649","#CE6E70","#FBE6E6","#B01E22"];
   //final List<charts.Color> colorPalettes;
 
   PieDeceasesDistributionAmountDiseaseHistoryWidget(
@@ -46,6 +47,7 @@ class PieDeceasesDistributionAmountDiseaseHistoryWidget
               id: 'Conmorbilidades',
               domainFn: (item, _) => item.name,
               measureFn: (item, _) => item.value,
+              colorFn: (datum, index) => charts.Color.fromHex(code: colorPalettes[index % colorPalettes.length]),
               data: deceasesDistributionAmountDiseaseHistory.values.toList(),
             )
           ],
