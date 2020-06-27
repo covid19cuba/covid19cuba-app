@@ -4,15 +4,14 @@
 
 import 'dart:developer';
 
+import 'package:covid19cuba/src/models/news/news_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class NewsPageMore extends StatelessWidget {
-  final NewModel item;
+  final NewsItem item;
 
   NewsPageMore(this.item);
 

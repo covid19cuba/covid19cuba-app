@@ -2,11 +2,11 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
+export 'about_us_page.dart';
 export 'changelog_page.dart';
 export 'contacts_list_page.dart';
 export 'contacts_registration_page.dart';
 export 'contacts_registration_page.dart';
-export 'credits_page.dart';
 export 'cuba_page.dart';
 export 'page_widget.dart';
 export 'data_page.dart';

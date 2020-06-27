@@ -8,7 +8,7 @@ import 'dart:io';
 import 'package:covid19cuba/src/blocs/events/events.dart';
 import 'package:covid19cuba/src/blocs/states/states.dart';
 import 'package:covid19cuba/src/data_providers/data_providers.dart';
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/charts/data.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +24,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is LoadHomeEvent) {
       yield LoadingHomeState();
       try {
-        DataModel data;
+        Data data;
         try {
           data = await getCubaData();
         } catch (e) {
@@ -113,6 +113,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
       }
     }
+
     if (event is RefreshHomeEvent) {
       try {
         var data = await getCubaData();

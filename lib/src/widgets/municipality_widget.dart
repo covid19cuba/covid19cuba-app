@@ -1,14 +1,13 @@
 // Copyright (C) 2020 covid19cuba
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
-
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/charts/municipality.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class MunicipalityWidget extends StatelessWidget {
-  final MunicipalityModel data;
+  final Municipality data;
 
   const MunicipalityWidget({this.data}) : assert(data != null);
 

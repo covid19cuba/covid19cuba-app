@@ -2,10 +2,9 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
+import 'package:covid19cuba/src/models/charts/data.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
 
 abstract class HomeState extends Equatable {
   const HomeState();
@@ -19,7 +18,7 @@ class InitialHomeState extends HomeState {}
 class LoadingHomeState extends HomeState {}
 
 class LoadedHomeState extends HomeState {
-  final DataModel data;
+  final Data data;
 
   const LoadedHomeState({@required this.data}) : assert(data != null);
 

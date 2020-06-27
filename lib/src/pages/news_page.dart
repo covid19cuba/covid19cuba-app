@@ -5,7 +5,8 @@
 import 'dart:developer';
 
 import 'package:covid19cuba/src/blocs/blocs.dart';
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/news/news.dart';
+import 'package:covid19cuba/src/models/news/news_state.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -13,19 +14,19 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class NewsPage extends PageWidget<NewsModel> {
+class NewsPage extends PageWidget<News, NewsState> {
   NewsPage() : super(getWidgetLoaded, functionLoaded: getFunctionLoaded);
 
   static void getFunctionLoaded(
     BuildContext context,
-    LoadedGeneralState<NewsModel> state,
+    LoadedGeneralState<News> state,
   ) {
     PrefService.setBool(Constants.prefBadgeNews, false);
   }
 
   static Widget getWidgetLoaded(
     BuildContext context,
-    LoadedGeneralState<NewsModel> state,
+    LoadedGeneralState<News> state,
   ) {
     return ListView(
       children: [

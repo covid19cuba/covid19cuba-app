@@ -3,10 +3,11 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/distribution_of_cases.dart';
+import 'package:covid19cuba/src/models/charts/item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 // ignore: must_be_immutable
 class DistributionOfCasesWidget extends StatefulWidget {

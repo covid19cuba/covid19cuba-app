@@ -3,14 +3,15 @@
 // found in the LICENSE file.
 
 import 'dart:math';
-
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/charts/multiple_comparison_with_radar.dart';
+import 'package:covid19cuba/src/models/charts/radar_bound.dart';
+import 'package:covid19cuba/src/models/charts/radar_item.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
 
 class RadarChartWidget extends StatefulWidget {
-  final MultipleComparisonOfCubaWithRadarModel data;
+  final MultipleComparisonWithRadar data;
 
   const RadarChartWidget({this.data}) : assert(data != null);
 
@@ -26,12 +27,12 @@ class RadarChartWidget extends StatefulWidget {
 }
 
 class RadarChartWidgetState extends State<RadarChartWidget> {
-  final RadarBoundModel bounds;
-  final MultipleComparisonOfCubaWithRadarModel data;
+  final RadarBound bounds;
+  final MultipleComparisonWithRadar data;
   final List<String> countries;
-  final RadarItemModel cubaData;
+  final RadarItem cubaData;
   String selectedCountry = 'Estados Unidos';
-  RadarItemModel selectedData;
+  RadarItem selectedData;
 
   RadarChartWidgetState({
     this.bounds,
