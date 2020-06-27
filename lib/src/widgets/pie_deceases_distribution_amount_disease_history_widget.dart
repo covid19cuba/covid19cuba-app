@@ -47,7 +47,7 @@ class PieDeceasesDistributionAmountDiseaseHistoryWidget
               id: 'Conmorbilidades',
               domainFn: (item, _) => item.name,
               measureFn: (item, _) => item.value,
-              colorFn: (datum, index) => charts.Color.fromHex(code: colorPalettes[index]),
+              colorFn: (datum, index) => charts.Color.fromHex(code: colorPalettes[index % colorPalettes.length]),
               data: deceasesDistributionAmountDiseaseHistory.values.toList(),
             )
           ],
