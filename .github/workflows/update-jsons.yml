@@ -13,12 +13,11 @@ jobs:
           python-version: '3.7'
       - name: Install dependencies
         run: |
-          cd github-actions
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r github-action/requirements.txt
       - name: Update jsons
         run: |
-          python github-actions/get.py
+          python github-action/get.py
           git config --global user.name 'leynier'
           git config --global user.email 'leynier41@gmail.com'
           git add .
