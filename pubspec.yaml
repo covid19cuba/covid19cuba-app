@@ -78,6 +78,7 @@ flutter:
     - assets/map.html
     - assets/map2.html
     - assets/js/municipios.js
+    - assets/data/
   fonts:
     - family: Ubuntu
       fonts:
