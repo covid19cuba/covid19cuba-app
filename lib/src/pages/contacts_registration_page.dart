@@ -8,6 +8,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:simple_autocomplete_formfield/simple_autocomplete_formfield.dart';
+import 'package:fluttercontactpicker/fluttercontactpicker.dart' as contactPicker;
 
 class ContactsRegistrationPage extends StatefulWidget {
   final int index;
@@ -87,7 +88,12 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
                   },
                 ),
               ]
-            : [],
+            : <Widget>[
+              IconButton( 
+                icon: Icon(Icons.account_circle, color: Colors.white,),
+                onPressed: importContact,
+              )
+            ],
         backgroundColor: Constants.primaryColor,
       ),
       floatingActionButton: FloatingActionButton(
@@ -237,5 +243,12 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
       await box.putAt(index, json);
     }
     Navigator.pop(context);
+  }
+
+  void importContact() async {
+    final contactPicker.PhoneContact contact = 
+                        await contactPicker.FlutterContactPicker.pickPhoneContact();
+    
+    nameController.text = contact.fullName;
   }
 }
