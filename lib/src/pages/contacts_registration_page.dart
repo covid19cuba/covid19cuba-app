@@ -8,7 +8,8 @@ import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:simple_autocomplete_formfield/simple_autocomplete_formfield.dart';
-import 'package:fluttercontactpicker/fluttercontactpicker.dart' as contactPicker;
+import 'package:fluttercontactpicker/fluttercontactpicker.dart'
+    as contactPicker;
 
 class ContactsRegistrationPage extends StatefulWidget {
   final int index;
@@ -60,14 +61,21 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Confirme'),
+                          title: Text(
+                            'Confirme',
+                            style: TextStyle(color: Constants.primaryColor),
+                          ),
                           content: Text(
                             'Usted esta seguro o segura que desea '
                             'eliminar el contacto.',
+                            style: TextStyle(color: Constants.primaryColor),
                           ),
                           actions: <Widget>[
                             FlatButton(
-                              child: Text('Si'),
+                              child: Text(
+                                'Si',
+                                style: TextStyle(color: Constants.primaryColor),
+                              ),
                               onPressed: () async {
                                 var box = Hive.box('contacts');
                                 await box.deleteAt(index);
@@ -76,7 +84,10 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
                               },
                             ),
                             FlatButton(
-                              child: Text('No'),
+                              child: Text(
+                                'No',
+                                style: TextStyle(color: Constants.primaryColor),
+                              ),
                               onPressed: () {
                                 Navigator.pop(context);
                               },
@@ -89,11 +100,14 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
                 ),
               ]
             : <Widget>[
-              IconButton( 
-                icon: Icon(Icons.account_circle, color: Colors.white,),
-                onPressed: importContact,
-              )
-            ],
+                IconButton(
+                  icon: Icon(
+                    Icons.contacts,
+                    color: Colors.white,
+                  ),
+                  onPressed: importContact,
+                )
+              ],
         backgroundColor: Constants.primaryColor,
       ),
       floatingActionButton: FloatingActionButton(
@@ -246,9 +260,9 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
   }
 
   void importContact() async {
-    final contactPicker.PhoneContact contact = 
-                        await contactPicker.FlutterContactPicker.pickPhoneContact();
-    
+    final contactPicker.PhoneContact contact =
+        await contactPicker.FlutterContactPicker.pickPhoneContact();
+
     nameController.text = contact.fullName;
   }
 }
