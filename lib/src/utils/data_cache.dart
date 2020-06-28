@@ -20,6 +20,8 @@ class DataCache {
 
   static Future<void> init() async {
     for (var item in items) {
+      var hasData = PrefService.getString(item.key) != null;
+      if (hasData) continue;
       var content = await rootBundle.loadString(item.path);
       print(content);
       PrefService.setString(item.key, content);
