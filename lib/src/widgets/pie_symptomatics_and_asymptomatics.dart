@@ -3,10 +3,11 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/item_double.dart';
+import 'package:covid19cuba/src/models/charts/percent_of_symptomatics_and_asymptomatics.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 // ignore: must_be_immutable
 class PieSymptomaticsAsymptomaticsWidget extends StatefulWidget {
@@ -24,7 +25,8 @@ class PieSymptomaticsAsymptomaticsWidget extends StatefulWidget {
       PieSymptomaticsAsymptomaticsWidgetState();
 }
 
-class PieSymptomaticsAsymptomaticsWidgetState extends State<PieSymptomaticsAsymptomaticsWidget> {
+class PieSymptomaticsAsymptomaticsWidgetState
+    extends State<PieSymptomaticsAsymptomaticsWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(

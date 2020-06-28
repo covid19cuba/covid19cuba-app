@@ -92,11 +92,8 @@ class Constants {
   static const String prefSetUpTasksMinutes = 'setUpTasksMinutes';
   static const String prefVersionCode = 'versionCode';
   static const String prefData = 'data';
-  static const String prefDataJTNews = 'dataJTNews';
   static const String prefDataAboutUs = 'dataAboutUs';
-  static const String prefDataFaqs = 'dataFaqs';
   static const String prefCacheHash = 'cacheHash';
-  static const String prefCacheJTNewsHash = 'cacheJTNewsHash';
   static const String prefVersionLastSkip = 'versionLastSkip';
   static const String prefFirstCacheNotification = 'firstCacheNotification';
   static const String prefFirstVersionNotification = 'firstVersionNotification';
@@ -118,7 +115,18 @@ class Constants {
       'proxi-credentials-password';
   static const String prefProxyAllowInsecureCertificates =
       'proxy-insecure-certificates';
-
+  static const String prefAboutUs = 'prefAboutUs';
+  static const String prefAboutUsState = 'prefAboutUsState';
+  static const String prefBulletins = 'prefBulletins';
+  static const String prefBulletinsState = 'prefBulletinsState';
+  static const String prefChangelog = 'prefChangelog';
+  static const String prefChangelogState = 'prefChangelogState';
+  static const String prefNews = 'prefNews';
+  static const String prefNewsState = 'prefNewsState';
+  static const String prefTips = 'prefTips';
+  static const String prefTipsState = 'prefTipsState';
+  static const String prefFaqs = 'prefFaqs';
+  static const String prefFaqsState = 'prefFaqsState';
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
   static const int ConnectionModeInternet = 1;

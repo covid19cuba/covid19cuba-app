@@ -2,10 +2,9 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
+import 'package:covid19cuba/src/models/charts/item_double.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
 
 class ResumeWidget extends StatelessWidget {
   final List<ItemDouble> resume;

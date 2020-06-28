@@ -3,13 +3,12 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/test_behavior_comparison.dart';
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:random_color/random_color.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:preferences/preference_service.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 

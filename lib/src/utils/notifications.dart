@@ -5,13 +5,12 @@
 import 'dart:developer';
 
 import 'package:background_fetch/background_fetch.dart';
+import 'package:covid19cuba/src/models/charts/state_model.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:demoji/demoji.dart';
 import 'package:preferences/preferences.dart';
 import 'package:timezone/timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
-
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 
 void appTask(String taskId, [bool headless = false]) async {
   if (headless) {

@@ -3,8 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:convert';
-
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/contact/contact.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -36,7 +35,7 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
     contactsPlaces = getContactsList(box).map((x) => x.place).toSet().toList();
     if (index != -1) {
       var json = box.getAt(index);
-      var contact = ContactModel.fromJson(jsonDecode(json));
+      var contact = Contact.fromJson(jsonDecode(json));
       contact.index = index;
       nameController.text = contact.name;
       dateController.text = contact.date.toStrPlus();
@@ -225,7 +224,7 @@ class ContactsRegistrationPageState extends State<ContactsRegistrationPage> {
     if (!formKey.currentState.validate()) {
       return;
     }
-    var contact = ContactModel.create(
+    var contact = Contact.create(
       name: nameController.text,
       date: dateTime ?? DateTime.now(),
       place: placeController.text,

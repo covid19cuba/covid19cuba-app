@@ -3,15 +3,15 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/data.dart';
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 class MunicipalitiesComparisonWidget extends StatefulWidget {
-  final DataModel data;
+  final Data data;
   final String province;
   final String title;
   final String subtitle;
@@ -39,7 +39,7 @@ class MunicipalitiesComparisonWidgetState
   String selectedMunicipality2 = '25.01';
   String provinceCode;
 
-  final DataModel data;
+  final Data data;
   final String province;
 
   MunicipalitiesComparisonWidgetState({this.data, this.province}) {
