@@ -61,14 +61,42 @@ class ContactsListPageState extends State<ContactsListPage> {
                   break;
               }
               if (file != null) {
-                final snackBar = SnackBar(
+                /*final snackBar = SnackBar(
                   content: Text(
                     'Se guardo el archivo correctamente en la dirección:\n\n'
                     '${file.path}',
                   ),
                   duration: Duration(seconds: 5),
                 );
-                Scaffold.of(globalKey.currentContext).showSnackBar(snackBar);
+                Scaffold.of(globalKey.currentContext).showSnackBar(snackBar);*/
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        'Archivo guardado',
+                        style: TextStyle(color: Constants.primaryColor),
+                      ),
+                      content: Text(
+                        'Se guardo el archivo correctamente en la dirección:'
+                        '\n\n'
+                        '${file.path}',
+                        style: TextStyle(color: Constants.primaryColor),
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            'Continuar',
+                            style: TextStyle(color: Constants.primaryColor),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               }
             },
           ),
