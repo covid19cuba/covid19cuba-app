@@ -93,7 +93,7 @@ Future<Data> getCubaDataFromCache() async {
     var packageInfo = await PackageInfo.fromPlatform();
     var versionCodeNow = int.parse(packageInfo.buildNumber);
     var versionCodeOld = PrefService.getInt(Constants.prefVersionCode) ?? 0;
-    if (versionCodeNow != versionCodeOld) {
+    if (versionCodeOld != 0 && versionCodeNow != versionCodeOld) {
       return null;
     }
     var data = PrefService.getString(Constants.prefData);

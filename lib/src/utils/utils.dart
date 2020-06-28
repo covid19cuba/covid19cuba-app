@@ -7,6 +7,7 @@ export 'background_fetch.dart';
 export 'call_to_action.dart';
 export 'colors.dart';
 export 'constants.dart';
+export 'data_cache.dart';
 export 'exceptions.dart';
 export 'exports.dart';
 export 'functions.dart';
