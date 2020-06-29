@@ -29,6 +29,18 @@ class NotificationManager {
     return notificationDetails;
   }
 
+  static AndroidNotificationDetails silentProfile = AndroidNotificationDetails(
+    'Silent',
+    'Silen Profile',
+    'Low priority and noise',
+    importance: Importance.Low,
+    priority: Priority.Low,
+    ongoing: false,
+    playSound: false,
+    enableVibration: false,
+    enableLights: false,
+  );
+
   static Future<bool> initialize({
     String androidDefaultIcon = 'mipmap/ic_launcher',
     bool iOSRequestAlertPermission = true,
