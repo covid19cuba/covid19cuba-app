@@ -47,6 +47,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             separator(),
             casesTableItem(),
             bulletinsDrawerItem(),
+            downloadsDrawerItem(),
             contactRegistrationItem(),
             usefulPhonesItem(),
             tipsItem(),
@@ -403,6 +404,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           context,
           MaterialPageRoute(
             builder: (context) => FaqsPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget downloadsDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.cloud_download,
+      text: 'Descargas',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DownloadsPage(),
           ),
         );
       },

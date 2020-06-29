@@ -20,12 +20,14 @@ class PageWidget<T extends Model, E extends CacheModel>
   final FunctionLoaded<T> functionLoaded;
   final String title;
   final bool isDark;
+  final bool showNotification;
 
   PageWidget(
     this.widgetLoaded, {
     this.functionLoaded,
     this.title,
     this.isDark = false,
+    this.showNotification = false,
   });
 
   @override
@@ -79,7 +81,7 @@ class PageWidget<T extends Model, E extends CacheModel>
   ) {
     if (state is InitialGeneralState) {
       BlocProvider.of<GeneralBloc<T, E>>(context).add(
-        FetchGeneralEvent(showNotification: true, useCache: true),
+        FetchGeneralEvent(showNotification: showNotification, useCache: true),
       );
     }
     if (state is LoadingGeneralState) {

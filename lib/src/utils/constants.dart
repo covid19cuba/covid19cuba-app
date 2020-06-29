@@ -121,6 +121,8 @@ class Constants {
   static const String prefBulletinsState = 'prefBulletinsState';
   static const String prefChangelog = 'prefChangelog';
   static const String prefChangelogState = 'prefChangelogState';
+  static const String prefDownloads = 'prefDownloads';
+  static const String prefDownloadsState = 'prefDownloadsState';
   static const String prefNews = 'prefNews';
   static const String prefNewsState = 'prefNewsState';
   static const String prefTips = 'prefTips';

@@ -8,12 +8,15 @@ import 'dart:io';
 import 'package:covid19cuba/src/blocs/events/events.dart';
 import 'package:covid19cuba/src/blocs/states/states.dart';
 import 'package:covid19cuba/src/data_providers/data_providers.dart';
+import 'package:covid19cuba/src/data_providers/downloads_provider.dart';
 import 'package:covid19cuba/src/models/about_us/about_us.dart';
 import 'package:covid19cuba/src/models/about_us/about_us_state.dart';
 import 'package:covid19cuba/src/models/bulletins/bulletins.dart';
 import 'package:covid19cuba/src/models/bulletins/bulletins_state.dart';
 import 'package:covid19cuba/src/models/changelog/changelog.dart';
 import 'package:covid19cuba/src/models/changelog/changelog_state.dart';
+import 'package:covid19cuba/src/models/downloads/downloads.dart';
+import 'package:covid19cuba/src/models/downloads/downloads_state.dart';
 import 'package:covid19cuba/src/models/faqs/faqs.dart';
 import 'package:covid19cuba/src/models/faqs/faqs_state.dart';
 import 'package:covid19cuba/src/models/model.dart';
@@ -50,6 +53,12 @@ class GeneralBloc<T extends Model, E extends CacheModel>
   static GeneralBloc<Changelog, ChangelogState> getChangelogBloc() {
     return GeneralBloc<Changelog, ChangelogState>(
       provider: ChangelogProvider(),
+    );
+  }
+
+  static GeneralBloc<Downloads, DownloadsState> getDownloadsBloc() {
+    return GeneralBloc<Downloads, DownloadsState>(
+      provider: DownloadsProvider(),
     );
   }
 

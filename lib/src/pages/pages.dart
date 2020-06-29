@@ -30,4 +30,5 @@ export 'webview_page.dart';
 export 'world_page.dart';
 export 'proxy_page.dart';
 export 'bulletins_page.dart';
+export 'downloads_page.dart';
 export 'notifications_settings.dart';
