@@ -6,6 +6,7 @@ import 'dart:developer';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:meta/meta.dart';
+import 'functions.dart';
 
 class NotificationManager {
   static FlutterLocalNotificationsPlugin plugin;
@@ -67,7 +68,7 @@ class NotificationManager {
     plugin = FlutterLocalNotificationsPlugin();
     isInitialized = await plugin.initialize(
       InitializationSettings(
-        androidInitializationSettings,
+        checkDoNotDisturbTime() ? silentProfile : androidInitializationSettings,
         iOSInitializationSettings,
       ),
       onSelectNotification: onSelectNotification,
