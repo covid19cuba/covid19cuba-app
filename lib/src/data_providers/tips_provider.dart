@@ -10,7 +10,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 class TipsProvider extends DataProvider<Tips, TipsState> {
   @override
   String get urlDataCU =>
-      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/tips.json';
+      'https://cusobu.nat.cu/covid/api/v2/tips.json';
 
   @override
   String get urlDataIO =>
@@ -18,7 +18,7 @@ class TipsProvider extends DataProvider<Tips, TipsState> {
 
   @override
   String get urlDataStateCU =>
-      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/tips_state.json';
+      'https://cusobu.nat.cu/covid/api/v2/tips_state.json';
 
   @override
   String get urlDataStateIO =>

@@ -10,7 +10,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 class ChangelogProvider extends DataProvider<Changelog, ChangelogState> {
   @override
   String get urlDataCU =>
-      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/changelog.json';
+      'https://cusobu.nat.cu/covid/api/v2/changelog.json';
 
   @override
   String get urlDataIO =>
@@ -18,7 +18,7 @@ class ChangelogProvider extends DataProvider<Changelog, ChangelogState> {
 
   @override
   String get urlDataStateCU =>
-      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/changelog_state.json';
+      'https://cusobu.nat.cu/covid/api/v2/changelog_state.json';
 
   @override
   String get urlDataStateIO =>
