@@ -11,6 +11,7 @@ names = [
     'downloads',
     'faqs',
     'news',
+    'protocols',
     'tips',
     'full',
 ]
