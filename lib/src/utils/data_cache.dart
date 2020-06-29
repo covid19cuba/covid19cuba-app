@@ -14,6 +14,7 @@ class DataCache {
     DataCache(name: 'downloads', key: Constants.prefDownloads),
     DataCache(name: 'faqs', key: Constants.prefFaqs),
     DataCache(name: 'news', key: Constants.prefNews),
+    DataCache(name: 'protocols', key: Constants.prefProtocols),
     DataCache(name: 'tips', key: Constants.prefTips),
     DataCache(name: 'full', key: Constants.prefData),
   ];
