@@ -19,16 +19,15 @@ class NotificationSettingsState extends State<NotificationSettings> {
   int endMinute = 0;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-
   }
 
   NotificationSettingsState() {
-    this.startHour = 0;
-    this.startMinute = 0;
-    this.endHour = 0;
-    this.endMinute = 0;
+    this.startHour = 21;
+    this.startMinute = 30;
+    this.endHour = 9;
+    this.endMinute = 30;
   }
 
   @override
@@ -49,11 +48,14 @@ class NotificationSettingsState extends State<NotificationSettings> {
               children: <Widget>[
                 GFButton(
                   text: "Inicio",
-                  onPressed: (){
+                  onPressed: () {
                     DateTime now = DateTime.now();
-                    showTimePicker( context: contex,
-                    initialTime: TimeOfDay(hour: now.hour, minute: now.minute),).then((TimeOfDay value) {
-                      if (value != null){
+                    showTimePicker(
+                      context: contex,
+                      initialTime:
+                          TimeOfDay(hour: startHour, minute: startMinute),
+                    ).then((TimeOfDay value) {
+                      if (value != null) {
                         saveOptions(value);
                       }
                     });
@@ -62,11 +64,14 @@ class NotificationSettingsState extends State<NotificationSettings> {
                 ),
                 GFButton(
                   text: "Fin",
-                  onPressed: (){
+                  onPressed: () {
                     DateTime now = DateTime.now();
-                    showTimePicker( context: contex,
-                      initialTime: TimeOfDay(hour: now.hour, minute: now.minute),).then((TimeOfDay value) {
-                      if (value != null){
+                    showTimePicker(
+                      context: contex,
+                      initialTime:
+                          TimeOfDay(hour: endHour, minute: endMinute),
+                    ).then((TimeOfDay value) {
+                      if (value != null) {
                         saveOptions(value, start: false);
                       }
                     });
@@ -76,80 +81,60 @@ class NotificationSettingsState extends State<NotificationSettings> {
               ],
             ),
             title: GFListTile(
-              titleText: "Tiempo de No Molestar",
-              description: Container(padding: EdgeInsets.all(10),
-                child:
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(padding: EdgeInsets.only(top: 20, bottom: 10),child: Text("Hora de Inicio: $startHour"),),
-                  Container(padding: EdgeInsets.all(10),child: Text("Minutos de Inicio: $startMinute"),),
-                  Container(padding: EdgeInsets.all(10),child: Text("Hora de finalización: $endHour"),),
-                  Container(padding: EdgeInsets.only(left: 10, right: 10, top: 10),child: Text("Minutos de finalización: $endMinute"),)
-                ],
-              ),)
-            ),
+                titleText: "Tiempo de No Molestar",
+                description: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        child: Text("Hora de Inicio: $startHour"),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text("Minutos de Inicio: $startMinute"),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text("Hora de finalización: $endHour"),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                        child: Text("Minutos de finalización: $endMinute"),
+                      )
+                    ],
+                  ),
+                )),
           ),
         ],
       ),
     );
   }
 
-  Future<void> saveOptions(TimeOfDay value, {bool start = true}) async{
+  Future<void> saveOptions(TimeOfDay value, {bool start = true}) async {
     int hour = value.hour;
     int minutes = value.minute;
 
-    await PrefService.setInt(start ? Constants.prefDoNotDisturbTimeStartHour : Constants.prefDoNotDisturbTimeEndHour, hour);
-    await PrefService.setInt(start ? Constants.prefDoNotDisturbTimeStartMinutes : Constants.prefDoNotDisturbTimeEndMinutes, minutes);
+    await PrefService.setInt(
+        start
+            ? Constants.prefDoNotDisturbTimeStartHour
+            : Constants.prefDoNotDisturbTimeEndHour,
+        hour);
+    await PrefService.setInt(
+        start
+            ? Constants.prefDoNotDisturbTimeStartMinutes
+            : Constants.prefDoNotDisturbTimeEndMinutes,
+        minutes);
 
     setState(() {
-      if (start){
+      if (start) {
         startHour = hour;
         startMinute = minutes;
-      }
-      else{
+      } else {
         endHour = hour;
         endMinute = minutes;
       }
     });
-  }
-}
-
-class TimeWidget extends StatefulWidget {
-  @override
-  State<TimeWidget> createState() => TimeWidgetState();
-}
-
-class TimeWidgetState extends State<TimeWidget> {
-  final TextEditingController startHour = TextEditingController();
-  final TextEditingController endHour = TextEditingController();
-  final TextEditingController startMinutes = TextEditingController();
-  final TextEditingController endMinutes = TextEditingController();
-
-  TimeWidgetState() {
-    startHour.text = "12";
-    startMinutes.text = "0";
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: <Widget>[
-          TextField(
-            controller: startHour,
-            readOnly: true,
-          ),
-          Text(
-            ":",
-            style: TextStyle(height: 10),
-          ),
-          TextField(
-            controller: startMinutes,
-            readOnly: true,
-          ),
-        ],
-      ),
-    );
   }
 }
