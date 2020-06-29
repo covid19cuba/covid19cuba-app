@@ -5,11 +5,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import '../utils/http_proxy.dart';
-import 'package:preferences/preferences.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/charts/state_model.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:preferences/preferences.dart';
 
 const urlStateDataCU = 'https://cusobu.nat.cu/covid/api/v1/state.json';
 const urlStateDataIO =

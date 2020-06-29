@@ -47,6 +47,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             separator(),
             casesTableItem(),
             bulletinsDrawerItem(),
+            downloadsDrawerItem(),
             contactRegistrationItem(),
             usefulPhonesItem(),
             tipsItem(),
@@ -55,7 +56,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             sharerDrawerItem(),
             settingsDrawerItem(),
             faqsDrawerItem(),
-            creditsDrawerItem(),
+            aboutUsDrawerItem(),
             separator(),
             versionAppDrawerItem(),
           ],
@@ -409,7 +410,24 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     );
   }
 
-  Widget creditsDrawerItem() {
+  Widget downloadsDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.cloud_download,
+      text: 'Descargas',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DownloadsPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget aboutUsDrawerItem() {
     return createDrawerItem(
       context,
       icon: Icons.people,
@@ -419,7 +437,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CreditsPage(),
+            builder: (context) => AboutUsPage(),
           ),
         );
       },

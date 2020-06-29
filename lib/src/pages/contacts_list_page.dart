@@ -3,8 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:io';
-
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/contact/contact.dart';
 import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -62,14 +61,42 @@ class ContactsListPageState extends State<ContactsListPage> {
                   break;
               }
               if (file != null) {
-                final snackBar = SnackBar(
+                /*final snackBar = SnackBar(
                   content: Text(
                     'Se guardo el archivo correctamente en la dirección:\n\n'
                     '${file.path}',
                   ),
                   duration: Duration(seconds: 5),
                 );
-                Scaffold.of(globalKey.currentContext).showSnackBar(snackBar);
+                Scaffold.of(globalKey.currentContext).showSnackBar(snackBar);*/
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        'Archivo guardado',
+                        style: TextStyle(color: Constants.primaryColor),
+                      ),
+                      content: Text(
+                        'Se guardo el archivo correctamente en la dirección:'
+                        '\n\n'
+                        '${file.path}',
+                        style: TextStyle(color: Constants.primaryColor),
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            'Continuar',
+                            style: TextStyle(color: Constants.primaryColor),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               }
             },
           ),
@@ -98,7 +125,7 @@ class ContactsListPageState extends State<ContactsListPage> {
     );
   }
 
-  Widget getList(List<ContactModel> contacts) {
+  Widget getList(List<Contact> contacts) {
     if (contacts.length == 0) {
       return Center(
         child: Container(

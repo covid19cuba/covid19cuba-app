@@ -50,14 +50,7 @@ class UsefulPhonesPage extends StatelessWidget {
               height: double.infinity,
               width: double.infinity,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.55),
-                    BlendMode.darken,
-                  ),
-                  image: AssetImage(province.image),
-                  fit: BoxFit.cover,
-                ),
+                color: Constants.primaryColor,
                 borderRadius: BorderRadius.circular(20),
               ),
             ),

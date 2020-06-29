@@ -7,7 +7,8 @@ import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/charts/curves_comparison.dart';
+import 'package:covid19cuba/src/models/charts/curves_comparison_item.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ import 'package:preferences/preferences.dart';
 import 'package:quiver/iterables.dart' show zip;
 
 class ComparisonWidget extends StatefulWidget {
-  final CurvesComparisonModel comparisonOfAccumulatedCases;
+  final CurvesComparison comparisonOfAccumulatedCases;
 
   const ComparisonWidget({this.comparisonOfAccumulatedCases})
       : assert(comparisonOfAccumulatedCases != null);
@@ -39,7 +40,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ..add('Fallecidos')
     ..add('Stringency Index');
 
-  final CurvesComparisonModel comparisonOfAccumulatedCases;
+  final CurvesComparison comparisonOfAccumulatedCases;
 
   ComparisonWidgetState({this.comparisonOfAccumulatedCases}) {
     assert(comparisonOfAccumulatedCases != null);
@@ -88,7 +89,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     return measure.toInt().toString();
   }
 
-  List<dynamic> getCountryAttribute(CurvesComparisonModelItem country) {
+  List<dynamic> getCountryAttribute(CurvesComparisonItem country) {
     switch (selectedOption) {
       case 'Confirmados':
         return country.confirmed;

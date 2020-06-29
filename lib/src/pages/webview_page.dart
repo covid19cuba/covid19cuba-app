@@ -4,13 +4,12 @@
 
 import 'dart:convert';
 
+import 'package:covid19cuba/src/models/charts/pesquisador.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:preferences/preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
 class WebViewPage extends StatefulWidget {
@@ -31,7 +30,7 @@ class WebViewPageState extends State<WebViewPage>
     super.initState();
     var json = PrefService.getString(Constants.prefPesquisador) ??
         Constants.defaultPesquisador;
-    var data = PesquisadorModel.fromJson(jsonDecode(json));
+    var data = Pesquisador.fromJson(jsonDecode(json));
     webView = WebView(
       initialUrl: data.url,
       javascriptMode: JavascriptMode.unrestricted,
@@ -82,7 +81,7 @@ class WebViewPageState extends State<WebViewPage>
     super.build(context);
     var json = PrefService.getString(Constants.prefPesquisador) ??
         Constants.defaultPesquisador;
-    var data = PesquisadorModel.fromJson(jsonDecode(json));
+    var data = Pesquisador.fromJson(jsonDecode(json));
     return WillPopScope(
       onWillPop: () async {
         if (controller != null &&

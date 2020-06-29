@@ -3,15 +3,15 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/provinces.dart';
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 class ProvincesComparisonWidget extends StatefulWidget {
-  final Map<String, ProvincesModel> provinces;
+  final Map<String, Provinces> provinces;
   final String title;
   final String subtitle;
   final bool isDeceases;
@@ -34,7 +34,7 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
   String selectedProvince1 = 'lha';
   String selectedProvince2 = 'mat';
 
-  final Map<String, ProvincesModel> provinces;
+  final Map<String, Provinces> provinces;
 
   ProvincesComparisonWidgetState({this.provinces}) {
     assert(provinces != null);

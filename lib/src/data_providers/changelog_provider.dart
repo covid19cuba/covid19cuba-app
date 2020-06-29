@@ -2,54 +2,39 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
-import 'dart:convert';
-import 'dart:developer';
-
-import '../utils/http_proxy.dart';
-import 'package:preferences/preferences.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/data_providers/data_providers.dart';
+import 'package:covid19cuba/src/models/changelog/changelog.dart';
+import 'package:covid19cuba/src/models/changelog/changelog_state.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
-const urlChangelogDataCU = 'https://cusobu.nat.cu/covid/api/v1/changelog.json';
-const urlChangelogDataIO =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/changelog.json';
+class ChangelogProvider extends DataProvider<Changelog, ChangelogState> {
+  @override
+  String get urlDataCU =>
+      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/changelog.json';
 
-Future<ChangelogModel> getChangelogData() async {
-  var mode = PrefService.getInt(Constants.prefConnectionMode) ??
-      Constants.ConnectionModeMerge;
-  switch (mode) {
-    case Constants.ConnectionModeIntranet:
-      return await getChangelogDataFrom(urlChangelogDataCU);
-    case Constants.ConnectionModeInternet:
-      return await getChangelogDataFrom(urlChangelogDataIO);
-    case Constants.ConnectionModeMerge:
-    default:
-      try {
-        return await getChangelogDataFrom(urlChangelogDataCU);
-      } catch (e) {
-        log(e.toString());
-        return await getChangelogDataFrom(urlChangelogDataIO);
-      }
-  }
-}
+  @override
+  String get urlDataIO =>
+      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/changelog.json';
 
-Future<ChangelogModel> getChangelogDataFrom(String url) async {
-  var resp = await get(url, headers: {
-    'Accept-Encoding': 'gzip, deflate, br',
-  });
-  if (resp.statusCode == 404) {
-    throw InvalidSourceException('Source is invalid');
-  } else if (resp.statusCode != 200) {
-    throw BadRequestException('Bad request');
-  }
-  ChangelogModel result;
-  try {
-    var json = jsonDecode(utf8.decode(resp.bodyBytes));
-    result = ChangelogModel.fromJson(json);
-  } catch (e) {
-    log(e.toString());
-    throw ParseException('Parse error');
-  }
-  return result;
+  @override
+  String get urlDataStateCU =>
+      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/changelog_state.json';
+
+  @override
+  String get urlDataStateIO =>
+      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/changelog_state.json';
+
+  @override
+  String get prefData => Constants.prefChangelog;
+
+  @override
+  String get prefHash => Constants.prefChangelogState;
+
+  @override
+  Changelog dataFromJson(Map<String, dynamic> data) =>
+      Changelog.fromJson(data);
+
+  @override
+  ChangelogState dataStateFromJson(Map<String, dynamic> data) =>
+      ChangelogState.fromJson(data);
 }

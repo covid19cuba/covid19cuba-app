@@ -2,48 +2,38 @@
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
 
-import 'data_provider.dart';
-import '../models/bulletins.dart';
-import '../models/bulletins_state.dart';
-import '../utils/utils.dart';
-import 'data_resolver.dart';
+import 'package:covid19cuba/src/data_providers/data_providers.dart';
+import 'package:covid19cuba/src/models/bulletins/bulletins.dart';
+import 'package:covid19cuba/src/models/bulletins/bulletins_state.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 
-class BulletinsProvider extends DataProvider<Bulletins>
-    implements DataResolver<Bulletins, BulletinsProvider> {
-  static const String cuDataPath = "/api/v2/bulletins.json";
-  static const String ioDataPath = cuDataPath;
-
-  static const String cuStatePath = "/api/v2/bulletins_state.json";
-  static const String ioStatePath = cuStatePath;
-
-  static const bulletinState = DataProvider(
-      cuPath: cuStatePath, ioPath: ioStatePath, parser: BulletinState.fromJson);
-
-  const BulletinsProvider()
-      : super(
-            cuPath: cuDataPath, ioPath: ioDataPath, parser: Bulletins.fromJson);
+class BulletinsProvider extends DataProvider<Bulletins, BulletinsState> {
+  @override
+  String get urlDataCU =>
+      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/bulletins.json';
 
   @override
-  Future<Bulletins> getDataOrCache() {
-    return getDataAndCacheCheck(
-        dataProvider: this,
-        cacheProvider: BulletinsProvider.bulletinState,
-        dataStateKey: Constants.prefBulletinState,
-        dataCacheKey: Constants.prefBulletins);
-  }
+  String get urlDataIO =>
+      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/bulletins.json';
 
   @override
-  Future<Bulletins> getCache() {
-    return getDataFromCache(this, Constants.prefBulletinState);
-  }
+  String get urlDataStateCU =>
+      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/bulletins_state.json';
 
   @override
-  BulletinsProvider createInstance() {
-    return BulletinsProvider();
-  }
+  String get urlDataStateIO =>
+      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/bulletins_state.json';
 
   @override
-  Future<void> setCache(Bulletins data) {
-    return setDataToCache(data, Constants.prefBulletins);
-  }
+  String get prefData => Constants.prefBulletins;
+
+  @override
+  String get prefHash => Constants.prefBulletinsState;
+
+  @override
+  Bulletins dataFromJson(Map<String, dynamic> data) => Bulletins.fromJson(data);
+
+  @override
+  BulletinsState dataStateFromJson(Map<String, dynamic> data) =>
+      BulletinsState.fromJson(data);
 }
