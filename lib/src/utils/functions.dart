@@ -18,7 +18,7 @@ int getInt(dynamic value) {
 }
 
 DateTime dateTimeFromJson(String dateTime) {
-  if (dateTime == null) {
+  if (dateTime == null || dateTime == '') {
     return null;
   }
   var split = dateTime.split('/');
