@@ -18,16 +18,11 @@ class NotificationSettingsState extends State<NotificationSettings> {
   int startMinute = 0;
   int endMinute = 0;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   NotificationSettingsState() {
-    this.startHour = 21;
-    this.startMinute = 30;
-    this.endHour = 9;
-    this.endMinute = 30;
+    this.startHour = PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour) ?? 21;
+    this.startMinute = PrefService.getInt(Constants.prefDoNotDisturbTimeStartMinutes) ?? 30;
+    this.endHour = PrefService.getInt(Constants.prefDoNotDisturbTimeEndHour) ?? 9;
+    this.endMinute = PrefService.getInt(Constants.prefDoNotDisturbTimeEndMinutes) ?? 30;
   }
 
   @override
