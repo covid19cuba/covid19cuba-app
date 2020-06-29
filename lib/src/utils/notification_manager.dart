@@ -14,17 +14,27 @@ class NotificationManager {
 
   static NotificationDetails getDetails(String text) {
     var androidNotificationDetails = AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
-      'your channel description',
+      'Regular',
+      'Regular Notifications',
+      'Sound and vibrate notifications',
       importance: Importance.Max,
       priority: Priority.High,
       styleInformation: BigTextStyleInformation(text),
       ongoing: false,
+      playSound: true,
+      enableVibration: true,
     );
     var iOSNotificationDetails = IOSNotificationDetails();
+    var not = checkDoNotDisturbTime();
+    if (not){
+      log(silentProfile.channelName.toString());
+    }
+    else{
+      log(androidNotificationDetails.channelName.toString());
+    }
+
     var notificationDetails = NotificationDetails(
-      androidNotificationDetails,
+      checkDoNotDisturbTime() ? silentProfile : androidNotificationDetails,
       iOSNotificationDetails,
     );
     return notificationDetails;
@@ -68,7 +78,7 @@ class NotificationManager {
     plugin = FlutterLocalNotificationsPlugin();
     isInitialized = await plugin.initialize(
       InitializationSettings(
-        checkDoNotDisturbTime() ? silentProfile : androidInitializationSettings,
+        androidInitializationSettings,
         iOSInitializationSettings,
       ),
       onSelectNotification: onSelectNotification,
@@ -91,7 +101,7 @@ class NotificationManager {
       id,
       title,
       body,
-      notificationDetails ?? getDetails(body),
+      notificationDetails ??  getDetails(body),
       payload: payload,
     );
   }
