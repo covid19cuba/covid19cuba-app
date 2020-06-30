@@ -40,6 +40,8 @@ void main() async {
 
   await DataCache.init();
 
+  initializeNotificationSettings();
+
   runApp(App(update));
 
   await setUpBackgroundTasks();
