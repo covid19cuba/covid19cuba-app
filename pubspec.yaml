@@ -65,6 +65,7 @@ flutter:
   assets:
     - flutter_echarts/assets/echart.html
     - assets/images/
+    - assets/images/carousel/
     - assets/js/leaflet.js
     - assets/js/jquery.min.js
     - assets/js/map.js

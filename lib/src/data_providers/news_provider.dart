@@ -11,7 +11,7 @@ import 'package:preferences/preferences.dart';
 class NewsProvider extends DataProvider<News, NewsState> {
   @override
   String get urlDataCU =>
-      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/news.json';
+      'https://cusobu.nat.cu/covid/api/v2/news.json';
 
   @override
   String get urlDataIO =>
@@ -19,7 +19,7 @@ class NewsProvider extends DataProvider<News, NewsState> {
 
   @override
   String get urlDataStateCU =>
-      'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/news_state.json';
+      'https://cusobu.nat.cu/covid/api/v2/news_state.json';
 
   @override
   String get urlDataStateIO =>

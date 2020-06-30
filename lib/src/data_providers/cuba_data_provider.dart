@@ -9,12 +9,11 @@ import 'package:covid19cuba/src/models/charts/data.dart';
 import 'package:covid19cuba/src/models/charts/state_model.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:crypto/crypto.dart';
-import 'package:http/http.dart' as http;
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
 
 const urlCubaDataCU =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/full.json';
+    'https://cusobu.nat.cu/covid/api/v2/full.json';
 const urlCubaDataIO =
     'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/full.json';
 
@@ -50,7 +49,7 @@ Future<Data> getCubaData() async {
 }
 
 Future<Data> getCubaDataFrom(String url) async {
-  var resp = await http.get(url, headers: {
+  var resp = await get(url, headers: {
     'Accept-Encoding': 'gzip, deflate, br',
   });
   if (resp.statusCode == 404) {

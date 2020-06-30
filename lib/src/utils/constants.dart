@@ -131,6 +131,19 @@ class Constants {
   static const String prefFaqsState = 'prefFaqsState';
   static const String prefProtocols = 'prefProtocols';
   static const String prefProtocolsState = 'prefProtocolsState';
+
+  //Do not disturb time
+  static const String prefDoNotDisturbTimeStartHour = 'prefDoNotDisturbTimeStartHour';
+  static const String prefDoNotDisturbTimeEndHour = 'prefDoNotDisturbTimeEndHour';
+  static const String prefDoNotDisturbTimeStartMinutes = 'prefDoNotDisturbTimeStarMinutes';
+  static const String prefDoNotDisturbTimeEndMinutes = 'prefDoNotDisturbTimeEndMinutes';
+
+  //settings options
+  static const String prefInfoUpdateNotifications = 'prefInfoUpdateNotifications';
+  static const String prefClapsNotifications = 'prefClapsNotifications';
+  static const String prefDailyUpdateNotifications = 'prefDailyUpdateNotifications';
+  static const String prefDoNotDisturbTime = 'prefDoNotDisturbTime';
+
   //Connection Modes
   static const int ConnectionModeIntranet = 0;
   static const int ConnectionModeInternet = 1;
