@@ -40,7 +40,10 @@ void appTask(String taskId, [bool headless = false]) async {
       );
     } else if (currentInfo[1]) {
       if (currentInfo[3]) {
-        if (PrefService.getBool(Constants.prefFirstCacheNotification) ?? true) {
+        if (PrefService.getBool(Constants.prefFirstCacheNotification) ??
+            true &&
+                PrefService.getBool(Constants.prefDailyUpdateNotifications) ??
+            true) {
           PrefService.setBool(Constants.prefFirstCacheNotification, false);
           NotificationManager.show(
             title: 'Nueva Información!',
@@ -51,6 +54,8 @@ void appTask(String taskId, [bool headless = false]) async {
         }
       } else {
         if (PrefService.getBool(Constants.prefFirstModificationNotification) ??
+            true &&
+                PrefService.getBool(Constants.prefInfoUpdateNotifications) ??
             true) {
           PrefService.setBool(
               Constants.prefFirstModificationNotification, false);
