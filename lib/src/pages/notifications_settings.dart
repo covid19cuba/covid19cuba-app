@@ -19,9 +19,15 @@ class NotificationSettingsState extends State<NotificationSettings> {
   int endMinute = 0;
   bool doNotDisturbEnabled;
 
+  static const divider = const Divider(
+    thickness: 1,
+    indent: 16,
+    endIndent: 16,
+  );
+
   NotificationSettingsState() {
     this.startHour =
-        PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour) ?? 21;
+        PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour);
     this.startMinute =
         PrefService.getInt(Constants.prefDoNotDisturbTimeStartMinutes) ?? 30;
     this.endHour =
@@ -53,7 +59,8 @@ class NotificationSettingsState extends State<NotificationSettings> {
           SwitchPreference(
             'Cambios en los datos',
             Constants.prefInfoUpdateNotifications,
-            desc: 'Notificar de modificaciones con respecto a los datos. No incluye el parte diario.',
+            desc:
+                'Notificar de modificaciones con respecto a los datos. No incluye el parte diario.',
           ),
           SwitchPreference(
             'Parte Diario',
@@ -65,6 +72,7 @@ class NotificationSettingsState extends State<NotificationSettings> {
             Constants.prefClapsNotifications,
             desc: 'Recordatorio diario de la hora de los aplausos.',
           ),
+          divider,
           PreferenceTitle(
             'Tiempo sin notificaciones',
             style: TextStyle(
@@ -79,74 +87,42 @@ class NotificationSettingsState extends State<NotificationSettings> {
             desc: 'Notificaciones silencionsas por un rango de tiempo',
             onChange: updateDoNotDisturbTime,
           ),
-
-//          Spacer(flex: 10,),
-          GFCard(
-            buttonBar: GFButtonBar(
-              children: <Widget>[
-                GFButton(
-                  text: "Inicio",
-                  onPressed: () {
-                    DateTime now = DateTime.now();
-                    showTimePicker(
-                      context: contex,
-                      initialTime:
-                          TimeOfDay(hour: startHour, minute: startMinute),
-                    ).then((TimeOfDay value) {
-                      if (value != null) {
-                        saveOptions(value);
-                      }
-                    });
-                  },
-                  color: Constants.primaryColor,
-                ),
-                GFButton(
-                  text: "Fin",
-                  onPressed: () {
-                    DateTime now = DateTime.now();
-                    showTimePicker(
-                      context: contex,
-                      initialTime: TimeOfDay(hour: endHour, minute: endMinute),
-                    ).then((TimeOfDay value) {
-                      if (value != null) {
-                        saveOptions(value, start: false);
-                      }
-                    });
-                  },
-                  color: Constants.primaryColor,
-                )
-              ],
+          GFListTile(
+            titleText: "Tiempo de Inicio",
+            description: Text("$startHour:${timeRep(startMinute)}"),
+            icon: GFButton(
+              text: "Cambiar",
+              onPressed: doNotDisturbEnabled ? () => showDialog(context: contex) :null,
+              color: Constants.primaryColor,
+              disabledColor: Color.fromRGBO(147, 147, 147, 1),
             ),
-            title: GFListTile(
-                titleText: "Tiempo de No Molestar",
-                description: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 10),
-                        child: Text("Hora de Inicio: $startHour"),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        child: Text("Minutos de Inicio: $startMinute"),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        child: Text("Hora de finalización: $endHour"),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                        child: Text("Minutos de finalización: $endMinute"),
-                      )
-                    ],
-                  ),
-                )),
+          ),
+          GFListTile(
+            titleText: "Tiempo de Finalización",
+            description: Text("$endHour:${timeRep(endMinute)}"),
+            icon: GFButton(
+              text: "Cambiar",
+              onPressed: doNotDisturbEnabled ? () => showDialog(context: contex, start: false) :null,
+              color: Constants.primaryColor,
+              disabledColor: Color.fromRGBO(147, 147, 147, 1),
+            ),
           ),
         ],
       ),
     );
+  }
+
+  void showDialog({@required BuildContext context, bool start = true}) {
+    DateTime now = DateTime.now();
+    showTimePicker(
+      context: context,
+      initialTime:
+      TimeOfDay(hour: startHour, minute: startMinute),
+    ).then((TimeOfDay value) {
+      if (value != null) {
+        saveOptions(value, start: start);
+      }
+    });
   }
 
   void updateDoNotDisturbTime() {
@@ -155,8 +131,6 @@ class NotificationSettingsState extends State<NotificationSettings> {
           PrefService.getBool(Constants.prefDoNotDisturbTime) ?? false;
     });
   }
-
-
 
   Future<void> saveOptions(TimeOfDay value, {bool start = true}) async {
     int hour = value.hour;
@@ -183,4 +157,11 @@ class NotificationSettingsState extends State<NotificationSettings> {
       }
     });
   }
+}
+
+String timeRep(int value){
+  if(value > 9){
+    return value.toString();
+  }
+  return "0$value";
 }
