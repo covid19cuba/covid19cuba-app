@@ -17,12 +17,28 @@ class NotificationSettingsState extends State<NotificationSettings> {
   int endHour = 0;
   int startMinute = 0;
   int endMinute = 0;
+  bool infoEnabled;
+  bool updateEnabled;
+  bool clapsEnabled;
+  bool doNotDisturbEnabled;
 
   NotificationSettingsState() {
-    this.startHour = PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour) ?? 21;
-    this.startMinute = PrefService.getInt(Constants.prefDoNotDisturbTimeStartMinutes) ?? 30;
-    this.endHour = PrefService.getInt(Constants.prefDoNotDisturbTimeEndHour) ?? 9;
-    this.endMinute = PrefService.getInt(Constants.prefDoNotDisturbTimeEndMinutes) ?? 30;
+    this.startHour =
+        PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour) ?? 21;
+    this.startMinute =
+        PrefService.getInt(Constants.prefDoNotDisturbTimeStartMinutes) ?? 30;
+    this.endHour =
+        PrefService.getInt(Constants.prefDoNotDisturbTimeEndHour) ?? 9;
+    this.endMinute =
+        PrefService.getInt(Constants.prefDoNotDisturbTimeEndMinutes) ?? 30;
+    this.infoEnabled =
+        PrefService.getBool(Constants.prefInfoUpdateNotifications) ?? true;
+    this.updateEnabled =
+        PrefService.getBool(Constants.prefDailyUpdateNotifications) ?? true;
+    this.clapsEnabled =
+        PrefService.getBool(Constants.prefClapsNotifications) ?? true;
+    this.doNotDisturbEnabled =
+        PrefService.getBool(Constants.prefDoNotDisturbTime) ?? false;
   }
 
   @override
@@ -33,10 +49,49 @@ class NotificationSettingsState extends State<NotificationSettings> {
         title: Text('Notificaciones'),
         centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: ListView(
         children: <Widget>[
+          PreferenceTitle(
+            'Habilitar Notificaciones',
+            style: TextStyle(
+              color: Constants.primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          SwitchPreference(
+            'Cambios en los datos',
+            Constants.prefInfoUpdateNotifications,
+            desc: 'Notificar de modificaciones con respecto a los datos. No incluye el parte diario.',
+            onChange: updateInfoChangeNotifications,
+          ),
+          SwitchPreference(
+            'Parte Diario',
+            Constants.prefDailyUpdateNotifications,
+            desc: 'Notificar de la actualización del parte diario.',
+            onChange: updateDailyInfoNotifications,
+          ),
+          SwitchPreference(
+            'Aplausos Diaros',
+            Constants.prefClapsNotifications,
+            desc: 'Recordatorio diario de la hora de los aplausos.',
+            onChange: updateClapsNotifications,
+          ),
+          PreferenceTitle(
+            'Tiempo sin notificaciones',
+            style: TextStyle(
+              color: Constants.primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          SwitchPreference(
+            'Habilitar Notificaciones silenciosas',
+            Constants.prefDoNotDisturbTime,
+            desc: 'Notificaciones silencionsas por un rango de tiempo',
+            onChange: updateDoNotDisturbTime,
+          ),
+
 //          Spacer(flex: 10,),
           GFCard(
             buttonBar: GFButtonBar(
@@ -63,8 +118,7 @@ class NotificationSettingsState extends State<NotificationSettings> {
                     DateTime now = DateTime.now();
                     showTimePicker(
                       context: contex,
-                      initialTime:
-                          TimeOfDay(hour: endHour, minute: endMinute),
+                      initialTime: TimeOfDay(hour: endHour, minute: endMinute),
                     ).then((TimeOfDay value) {
                       if (value != null) {
                         saveOptions(value, start: false);
@@ -106,6 +160,36 @@ class NotificationSettingsState extends State<NotificationSettings> {
       ),
     );
   }
+
+  void updateInfoChangeNotifications() {
+    setState(() {
+      this.infoEnabled =
+          PrefService.getBool(Constants.prefInfoUpdateNotifications) ?? true;
+    });
+  }
+
+  void updateDailyInfoNotifications() {
+    setState(() {
+      this.updateEnabled =
+          PrefService.getBool(Constants.prefDailyUpdateNotifications) ?? true;
+    });
+  }
+
+  void updateClapsNotifications() {
+    setState(() {
+      this.clapsEnabled =
+          PrefService.getBool(Constants.prefClapsNotifications) ?? true;
+    });
+  }
+
+  void updateDoNotDisturbTime() {
+    setState(() {
+      this.doNotDisturbEnabled =
+          PrefService.getBool(Constants.prefDoNotDisturbTime) ?? false;
+    });
+  }
+
+
 
   Future<void> saveOptions(TimeOfDay value, {bool start = true}) async {
     int hour = value.hour;
