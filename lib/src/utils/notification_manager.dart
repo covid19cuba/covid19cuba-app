@@ -25,14 +25,7 @@ class NotificationManager {
       enableVibration: true,
     );
     var iOSNotificationDetails = IOSNotificationDetails();
-    var not = checkDoNotDisturbTime();
-    if (not){
-      log(silentProfile.channelName.toString());
-    }
-    else{
-      log(androidNotificationDetails.channelName.toString());
-    }
-
+    
     var notificationDetails = NotificationDetails(
       checkDoNotDisturbTime() ? silentProfile : androidNotificationDetails,
       iOSNotificationDetails,

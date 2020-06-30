@@ -214,10 +214,7 @@ bool checkDoNotDisturbTime(){
     return minutes <= endMinutes;
   }
   else{
-    bool ans = (hour > startHour) && (hour < endHour);
-   // log("$ans $startHour $endHour $startMinutes $endMinutes ${startHour < endHour }");
-   // return startHour < endHour ? ans : !ans;
-    return ans;
+    return startHour < endHour ? (hour > startHour) && (hour < endHour) : (hour < startHour) || (hour > endHour);
   }
 }
 
