@@ -14,7 +14,7 @@ import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
 
 const urlCubaDataCU =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/full.json';
+    'https://cusobu.nat.cu/covid/api/v2/full.json';
 const urlCubaDataIO =
     'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/full.json';
 
