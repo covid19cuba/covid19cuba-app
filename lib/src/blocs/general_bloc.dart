@@ -9,6 +9,7 @@ import 'package:covid19cuba/src/blocs/events/events.dart';
 import 'package:covid19cuba/src/blocs/states/states.dart';
 import 'package:covid19cuba/src/data_providers/data_providers.dart';
 import 'package:covid19cuba/src/data_providers/downloads_provider.dart';
+import 'package:covid19cuba/src/data_providers/protocols_provider.dart';
 import 'package:covid19cuba/src/models/about_us/about_us.dart';
 import 'package:covid19cuba/src/models/about_us/about_us_state.dart';
 import 'package:covid19cuba/src/models/bulletins/bulletins.dart';
@@ -22,6 +23,8 @@ import 'package:covid19cuba/src/models/faqs/faqs_state.dart';
 import 'package:covid19cuba/src/models/model.dart';
 import 'package:covid19cuba/src/models/news/news.dart';
 import 'package:covid19cuba/src/models/news/news_state.dart';
+import 'package:covid19cuba/src/models/protocols/protocols.dart';
+import 'package:covid19cuba/src/models/protocols/protocols_state.dart';
 import 'package:covid19cuba/src/models/tips/tips.dart';
 import 'package:covid19cuba/src/models/tips/tips_state.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
@@ -71,6 +74,12 @@ class GeneralBloc<T extends Model, E extends CacheModel>
   static GeneralBloc<News, NewsState> getNewsBloc() {
     return GeneralBloc<News, NewsState>(
       provider: NewsProvider(),
+    );
+  }
+
+  static GeneralBloc<Protocols, ProtocolsState> getProtocolsBloc() {
+    return GeneralBloc<Protocols, ProtocolsState>(
+      provider: ProtocolsProvider(),
     );
   }
 

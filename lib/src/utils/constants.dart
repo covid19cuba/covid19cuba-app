@@ -129,6 +129,8 @@ class Constants {
   static const String prefTipsState = 'prefTipsState';
   static const String prefFaqs = 'prefFaqs';
   static const String prefFaqsState = 'prefFaqsState';
+  static const String prefProtocols = 'prefProtocols';
+  static const String prefProtocolsState = 'prefProtocolsState';
 
   //Do not disturb time
   static const String prefDoNotDisturbTimeStartHour = 'prefDoNotDisturbTimeStartHour';

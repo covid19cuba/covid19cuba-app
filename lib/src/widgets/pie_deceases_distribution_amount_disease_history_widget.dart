@@ -11,7 +11,7 @@ import 'package:covid19cuba/src/utils/utils.dart';
 class PieDeceasesDistributionAmountDiseaseHistoryWidget
     extends StatelessWidget {
   final Map<String, Item> deceasesDistributionAmountDiseaseHistory;
-  final List<String> colorPalettes = ["#ECBEBF","#DD9698","#BF4649","#CE6E70","#FBE6E6","#B01E22"];
+  final List<String> colorPalettes = ["#B01E22","#121340","#00AEEF","#CA9F31","#1A8323","#939393"];
   //final List<charts.Color> colorPalettes;
 
   PieDeceasesDistributionAmountDiseaseHistoryWidget(
