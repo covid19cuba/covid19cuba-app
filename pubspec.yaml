@@ -1,7 +1,7 @@
 name: covid19cuba
 description: Mobile application of Covid19 Cuba Data project implemented with Flutter.
 
-version: 0.8.0+13
+version: 1.0.0+14
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
