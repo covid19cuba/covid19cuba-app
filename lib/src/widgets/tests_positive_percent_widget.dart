@@ -3,14 +3,15 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter/material.dart';
-
+import 'package:covid19cuba/src/models/charts/percent_positive_tests.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 class TestsPositivePercentWidget extends StatelessWidget {
-  final TestsPositivePercent testsPositivePercent;
+  final PercentPositiveTests testsPositivePercent;
 
   const TestsPositivePercentWidget({this.testsPositivePercent})
       : assert(testsPositivePercent != null);
@@ -54,19 +55,25 @@ class TestsPositivePercentWidget extends StatelessWidget {
           height: 300,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<double, DateTime>(
+              charts.Series<List, DateTime>(
                 id: testsPositivePercent.daily.name,
                 colorFn: (_, __) => ChartColors.red,
-                domainFn: (_, i) => testsPositivePercent.date.values[i],
-                measureFn: (item, _) => item,
-                data: testsPositivePercent.daily.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  testsPositivePercent.daily.values,
+                  testsPositivePercent.date.values,
+                ]).toList(),
               ),
-              charts.Series<double, DateTime>(
+              charts.Series<List, DateTime>(
                 id: testsPositivePercent.accumulated.name,
                 colorFn: (_, __) => ChartColors.purple,
-                domainFn: (_, i) => testsPositivePercent.date.values[i],
-                measureFn: (item, _) => item,
-                data: testsPositivePercent.accumulated.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  testsPositivePercent.accumulated.values,
+                  testsPositivePercent.date.values,
+                ]).toList(),
               ),
             ],
             animate: false,
@@ -100,6 +107,8 @@ class TestsPositivePercentWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),

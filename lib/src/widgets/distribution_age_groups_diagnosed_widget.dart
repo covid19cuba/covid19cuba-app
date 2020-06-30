@@ -3,14 +3,13 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/item_code_plus.dart';
 import 'package:flutter/material.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
 
 class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
-  final List<ItemCode> distributionByAgeRanges;
+  final List<ItemCodePlus> distributionByAgeRanges;
 
   const DistributionAgeGroupsDiagnosedWidget({this.distributionByAgeRanges})
       : assert(distributionByAgeRanges != null);
@@ -51,12 +50,38 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(10),
-          height: 250,
+          height: 350,
           child: charts.BarChart(
             [
-              charts.Series<ItemCode, String>(
-                id: 'Diagnosticados',
+              charts.Series<ItemCodePlus, String>(
+                id: 'Diagnosticados Hombres',
+                seriesCategory: 'A',
+                colorFn: (_, __) => ChartColors.purple,
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.men,
+                data: distributionByAgeRanges,
+              ),
+              charts.Series<ItemCodePlus, String>(
+                id: 'Diagnosticados Mujeres',
+                seriesCategory: 'A',
                 colorFn: (_, __) => ChartColors.red,
+                domainFn: (item, _) => item.name,
+                measureFn: (item, _) => item.women,
+                data: distributionByAgeRanges,
+              ),
+              if (distributionByAgeRanges.any((x) => x.unknown != 0))
+                charts.Series<ItemCodePlus, String>(
+                  id: 'Diagnosticados Sexo Desconocido',
+                  seriesCategory: 'A',
+                  colorFn: (_, __) => ChartColors.yellow,
+                  domainFn: (item, _) => item.name,
+                  measureFn: (item, _) => item.unknown,
+                  data: distributionByAgeRanges,
+                ),
+              charts.Series<ItemCodePlus, String>(
+                id: 'Diagnosticados',
+                seriesCategory: 'B',
+                colorFn: (_, __) => ChartColors.grey,
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
                 data: distributionByAgeRanges,
@@ -64,6 +89,7 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
             ],
             animate: false,
             defaultInteractions: true,
+            barGroupingType: charts.BarGroupingType.groupedStacked,
             behaviors: [
               charts.ChartTitle(
                 'Rango',
@@ -83,10 +109,6 @@ class DistributionAgeGroupsDiagnosedWidget extends StatelessWidget {
                 position: charts.BehaviorPosition.bottom,
                 desiredMaxColumns: 1,
                 showMeasures: true,
-                measureFormatter: (num measure) {
-                  if (measure == null) return '';
-                  return measure.toInt().toString() + ' Casos';
-                },
               ),
               charts.LinePointHighlighter(
                 showHorizontalFollowLine:

@@ -5,19 +5,20 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:covid19cuba/src/models/charts/data.dart';
+import 'package:covid19cuba/src/models/contact/contact.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:hive/hive.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preference_service.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 
 int getInt(dynamic value) {
   return value is String ? int.parse(value) : value;
 }
 
 DateTime dateTimeFromJson(String dateTime) {
-  if (dateTime == null) {
+  if (dateTime == null || dateTime == '') {
     return null;
   }
   var split = dateTime.split('/');
@@ -100,10 +101,39 @@ void getUrl(url) async {
 int getDayFromCache() {
   var data = PrefService.getString(Constants.prefData);
   if (data != null) {
-    DataModel dta = DataModel.fromJson(jsonDecode(data));
+    var dta = Data.fromJson(jsonDecode(data));
     return dta.all.evolutionOfCasesByDays.accumulated.values.length;
   }
   return -1;
+}
+
+List<Province> getProvinceList() {
+  List<Province> provinceList = new List();
+  final provinceNames = {
+    'Pinar del Río': ['48-724640', '48-724639'],
+    'Artemisa': ['47-367157', '47-366503', '47-367491'],
+    'La Habana': ['78-302524', '78-302521', '78-302116'],
+    'Mayabeque': ['47-867533', '47-848543'],
+    'Matanzas': ['45-243725', '45-262417'],
+    'Villa Clara': ['42-215057', '42-223936'],
+    'Cienfuegos': ['43-515873', '43-519512', '43-517737'],
+    'Sancti Spíritus': ['41-336137'],
+    'Ciego de Ávila': ['33-223192', '33202748'],
+    'Camagüey': ['32-297118', '32-256218'],
+    'Las Tunas': ['31-349244', '31-346179'],
+    'Holguín': ['24-473036', '24-453766', '24 -429557'],
+    'Granma': ['23-411012', '23-423017', '23-423009'],
+    'Santiago de Cuba': ['22-656455 ext 192', '22-651573', '22-651542'],
+    'Guantánamo': ['21-326890', '21-326705'],
+    'Isla de la Juventud': ['46-324587', '46-324090 ext 104']
+  };
+  provinceNames.forEach((name, phonesList) {
+    provinceList.add(Province(
+      name: name,
+      phoneNumbers: phonesList,
+    ));
+  });
+  return provinceList;
 }
 
 Future<String> getSharedContent() async {
@@ -147,4 +177,69 @@ Autores:
 
 Copyright 2020 ©️""";
   return sharedContent;
+}
+
+List<Contact> getContactsList(Box box) {
+  var contacts = List<Contact>();
+  for (var i = 0; i < box.length; ++i) {
+    var json = box.getAt(i);
+    var contact = Contact.fromJson(jsonDecode(json));
+    contact.index = i;
+    contacts.add(contact);
+  }
+  contacts.sort((a, b) {
+    var cmpName = a.name.compareTo(b.name);
+    var cmpDate = a.date.compareTo(b.date);
+    var cmpPlace = a.name.compareTo(b.name);
+    return cmpDate == 0 ? (cmpName == 0 ? cmpPlace : cmpName) : cmpDate;
+  });
+  return contacts;
+}
+
+bool checkDoNotDisturbTime() {
+  if (PrefService.getBool(Constants.prefDoNotDisturbTime) ?? false) {
+    int startHour =
+        PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour) ?? 21;
+    int endHour =
+        PrefService.getInt(Constants.prefDoNotDisturbTimeEndHour) ?? 9;
+    int startMinutes =
+        PrefService.getInt(Constants.prefDoNotDisturbTimeStartMinutes) ?? 30;
+    int endMinutes =
+        PrefService.getInt(Constants.prefDoNotDisturbTimeEndMinutes) ?? 30;
+
+    var time = DateTime.now();
+
+    int hour = time.hour;
+    int minutes = time.minute;
+
+    if (hour == startHour) {
+      return minutes >= startMinutes;
+    } else if (hour == endHour) {
+      return minutes <= endMinutes;
+    } else {
+      return startHour < endHour
+          ? (hour > startHour) && (hour < endHour)
+          : (hour < startHour) || (hour > endHour);
+    }
+  }
+  return false;
+}
+
+void initializeNotificationSettings() {
+  var infoEnabled = PrefService.getBool(Constants.prefInfoUpdateNotifications);
+  var updateEnabled =
+      PrefService.getBool(Constants.prefDailyUpdateNotifications);
+  var clapsEnabled = PrefService.getBool(Constants.prefClapsNotifications);
+
+  if (infoEnabled == null) {
+    PrefService.setBool(Constants.prefInfoUpdateNotifications, true);
+  }
+
+  if (updateEnabled == null) {
+    PrefService.setBool(Constants.prefDailyUpdateNotifications, true);
+  }
+
+  if (clapsEnabled == null) {
+    PrefService.setBool(Constants.prefClapsNotifications, true);
+  }
 }

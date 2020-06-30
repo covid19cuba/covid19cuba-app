@@ -7,15 +7,16 @@ import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
-import 'package:flutter/material.dart';
-import 'package:preferences/preferences.dart';
-
-import 'package:covid19cuba/src/models/models.dart';
+import 'package:covid19cuba/src/models/charts/curves_comparison.dart';
+import 'package:covid19cuba/src/models/charts/curves_comparison_item.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:preferences/preferences.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 class ComparisonWidget extends StatefulWidget {
-  final ComparisonOfAccumulatedCases comparisonOfAccumulatedCases;
+  final CurvesComparison comparisonOfAccumulatedCases;
 
   const ComparisonWidget({this.comparisonOfAccumulatedCases})
       : assert(comparisonOfAccumulatedCases != null);
@@ -39,7 +40,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     ..add('Fallecidos')
     ..add('Stringency Index');
 
-  final ComparisonOfAccumulatedCases comparisonOfAccumulatedCases;
+  final CurvesComparison comparisonOfAccumulatedCases;
 
   ComparisonWidgetState({this.comparisonOfAccumulatedCases}) {
     assert(comparisonOfAccumulatedCases != null);
@@ -88,7 +89,7 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
     return measure.toInt().toString();
   }
 
-  List<dynamic> getCountryAttribute(ComparisonOfAccumulatedCasesItem country) {
+  List<dynamic> getCountryAttribute(CurvesComparisonItem country) {
     switch (selectedOption) {
       case 'Confirmados':
         return country.confirmed;
@@ -135,6 +136,8 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         showVerticalFollowLine:
             charts.LinePointHighlighterFollowLineType.nearest,
       ),
+      if (PrefService.getBool(Constants.prefChartsZoom))
+        charts.PanAndZoomBehavior(),
     ];
   }
 
@@ -203,19 +206,19 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         comparisonOfAccumulatedCases.countries[secondSelectedCountry]);
 
     return [
-      charts.Series<dynamic, int>(
+      charts.Series<List, int>(
         id: comparisonOfAccumulatedCases.countries[firstSelectedCountry].name,
         colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: firstList,
+        measureFn: (item, _) => item[0],
+        data: zip([firstList]).toList(),
       ),
-      charts.Series<dynamic, int>(
+      charts.Series<List, int>(
         id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
         colorFn: (_, __) => ChartColors.blue,
         domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: secondList,
+        measureFn: (item, _) => item[0],
+        data: zip([secondList]).toList(),
       ),
     ];
   }
@@ -227,23 +230,21 @@ class ComparisonWidgetState extends State<ComparisonWidget> {
         comparisonOfAccumulatedCases.countries[secondSelectedCountry]);
 
     return [
-      charts.Series<dynamic, int>(
+      charts.Series<List, int>(
         id: comparisonOfAccumulatedCases.countries[firstSelectedCountry].name,
         colorFn: (_, __) => ChartColors.red,
         domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: firstList,
+        measureFn: (item, _) => item[0],
+        data: zip([firstList]).toList(),
       ),
       charts.Series<dynamic, int>(
         id: comparisonOfAccumulatedCases.countries[secondSelectedCountry].name,
         colorFn: (_, __) => ChartColors.blue,
         domainFn: (_, i) => i,
-        measureFn: (item, _) => item,
-        data: secondList
-            .take(
-              min(secondList.length, firstList.length),
-            )
-            .toList(),
+        measureFn: (item, _) => item[0],
+        data: zip([
+          secondList.take(min(secondList.length, firstList.length)).toList(),
+        ]).toList(),
       ),
     ];
   }

@@ -3,15 +3,25 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/provinces.dart';
 import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 class ProvincesComparisonWidget extends StatefulWidget {
-  final Map<String, ProvincesModel> provinces;
+  final Map<String, Provinces> provinces;
+  final String title;
+  final String subtitle;
+  final bool isDeceases;
 
-  const ProvincesComparisonWidget({this.provinces}) : assert(provinces != null);
+  const ProvincesComparisonWidget({
+    this.provinces,
+    this.title,
+    this.subtitle,
+    this.isDeceases = false,
+  }) : assert(provinces != null);
 
   @override
   ProvincesComparisonWidgetState createState() =>
@@ -24,7 +34,7 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
   String selectedProvince1 = 'lha';
   String selectedProvince2 = 'mat';
 
-  final Map<String, ProvincesModel> provinces;
+  final Map<String, Provinces> provinces;
 
   ProvincesComparisonWidgetState({this.provinces}) {
     assert(provinces != null);
@@ -38,7 +48,8 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
             child: Text(
-              'Comparación de los casos acumulados por provincias',
+              widget.title ??
+                  'Comparación de los casos acumulados por provincias',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -106,28 +117,44 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
           padding: EdgeInsets.all(10),
           height: 300,
           child: charts.LineChart(
-            <charts.Series<int, int>>[
-              charts.Series<int, int>(
+            <charts.Series<List, int>>[
+              charts.Series<List, int>(
                 id: Constants.provinceAbbreviations[selectedProvince1],
                 colorFn: (_, __) => ChartColors.blue,
                 domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: provinces[selectedProvince1]
-                    .all
-                    .evolutionOfCasesByDays
-                    .accumulated
-                    .values,
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  widget.isDeceases
+                      ? provinces[selectedProvince1]
+                          .all
+                          .deceasesEvolutionByDays
+                          .accumulated
+                          .values
+                      : provinces[selectedProvince1]
+                          .all
+                          .evolutionOfCasesByDays
+                          .accumulated
+                          .values,
+                ]).toList(),
               ),
-              charts.Series<int, int>(
+              charts.Series<List, int>(
                 id: Constants.provinceAbbreviations[selectedProvince2],
                 colorFn: (_, __) => ChartColors.orange,
                 domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: provinces[selectedProvince2]
-                    .all
-                    .evolutionOfCasesByDays
-                    .accumulated
-                    .values,
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  widget.isDeceases
+                      ? provinces[selectedProvince2]
+                          .all
+                          .deceasesEvolutionByDays
+                          .accumulated
+                          .values
+                      : provinces[selectedProvince2]
+                          .all
+                          .evolutionOfCasesByDays
+                          .accumulated
+                          .values,
+                ]).toList(),
               ),
             ],
             animate: false,
@@ -144,7 +171,7 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Casos',
+                widget.subtitle ?? 'Casos',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -156,7 +183,8 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                 showMeasures: true,
                 measureFormatter: (num measure) {
                   if (measure == null) return '';
-                  return measure.toInt().toString() + ' Casos';
+                  return measure.toInt().toString() + ' ' + widget.subtitle ??
+                      'Casos';
                 },
               ),
               charts.LinePointHighlighter(
@@ -165,6 +193,8 @@ class ProvincesComparisonWidgetState extends State<ProvincesComparisonWidget> {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),

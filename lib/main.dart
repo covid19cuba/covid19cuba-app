@@ -3,14 +3,17 @@
 // found in the LICENSE file.
 
 import 'dart:developer';
-
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:preferences/preference_service.dart';
+import 'dart:io';
 
 import 'package:covid19cuba/src/app.dart';
+import 'package:covid19cuba/src/models/charts/state_model.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:device_info/device_info.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:preferences/preference_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +22,10 @@ void main() async {
 
   await PrefService.init();
 
+  PrefService.setDefaultValues({
+    Constants.prefChartsZoom: await chartsZoomInitValue(),
+  });
+
   await NotificationManager.initialize();
 
   await NotificationManager.cancelAll();
@@ -26,6 +33,14 @@ void main() async {
   var update = await checkUpdate();
 
   await setUpTasks();
+
+  await Hive.initFlutter();
+
+  await Hive.openBox('contacts');
+
+  await DataCache.init();
+
+  initializeNotificationSettings();
 
   runApp(App(update));
 
@@ -50,4 +65,19 @@ Future<bool> checkUpdate() async {
     log(e.toString());
   }
   return false;
+}
+
+Future<bool> chartsZoomInitValue() async {
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
+    String version = androidInfo.version.release;
+    if (version.contains('.')) {
+      version = version.substring(0, version.indexOf('.'));
+    }
+    return int.parse(version) >= 7;
+  } else if (Platform.isIOS) {
+    // iOS implementation here
+    return true;
+  }
+  return true; // desktop OSes
 }

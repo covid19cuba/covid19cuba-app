@@ -3,17 +3,27 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/data.dart';
 import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 class MunicipalitiesComparisonWidget extends StatefulWidget {
-  final DataModel data;
+  final Data data;
   final String province;
+  final String title;
+  final String subtitle;
+  final bool isDeceases;
 
-  const MunicipalitiesComparisonWidget({this.data, this.province})
-      : assert(data != null);
+  const MunicipalitiesComparisonWidget({
+    this.data,
+    this.province,
+    this.title,
+    this.subtitle,
+    this.isDeceases = false,
+  }) : assert(data != null);
 
   @override
   MunicipalitiesComparisonWidgetState createState() =>
@@ -29,7 +39,7 @@ class MunicipalitiesComparisonWidgetState
   String selectedMunicipality2 = '25.01';
   String provinceCode;
 
-  final DataModel data;
+  final Data data;
   final String province;
 
   MunicipalitiesComparisonWidgetState({this.data, this.province}) {
@@ -52,7 +62,8 @@ class MunicipalitiesComparisonWidgetState
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Center(
             child: Text(
-              'Comparación de los casos acumulados por municipios',
+              widget.title ??
+                  'Comparación de los casos acumulados por municipios',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -140,30 +151,48 @@ class MunicipalitiesComparisonWidgetState
           padding: EdgeInsets.all(10),
           height: 300,
           child: charts.LineChart(
-            <charts.Series<int, int>>[
-              charts.Series<int, int>(
+            <charts.Series<List, int>>[
+              charts.Series<List, int>(
                 id: Constants.municipalitiesCodes[selectedMunicipality1],
                 colorFn: (_, __) => ChartColors.blue,
                 domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: data
-                    .getMunicipality(selectedMunicipality1)
-                    .all
-                    .evolutionOfCasesByDays
-                    .accumulated
-                    .values,
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  widget.isDeceases
+                      ? data
+                          .getMunicipality(selectedMunicipality1)
+                          .all
+                          .deceasesEvolutionByDays
+                          .accumulated
+                          .values
+                      : data
+                          .getMunicipality(selectedMunicipality1)
+                          .all
+                          .evolutionOfCasesByDays
+                          .accumulated
+                          .values,
+                ]).toList(),
               ),
-              charts.Series<int, int>(
+              charts.Series<List, int>(
                 id: Constants.municipalitiesCodes[selectedMunicipality2],
                 colorFn: (_, __) => ChartColors.orange,
                 domainFn: (_, i) => i,
-                measureFn: (item, _) => item,
-                data: data
-                    .getMunicipality(selectedMunicipality2)
-                    .all
-                    .evolutionOfCasesByDays
-                    .accumulated
-                    .values,
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  widget.isDeceases
+                      ? data
+                          .getMunicipality(selectedMunicipality2)
+                          .all
+                          .deceasesEvolutionByDays
+                          .accumulated
+                          .values
+                      : data
+                          .getMunicipality(selectedMunicipality2)
+                          .all
+                          .evolutionOfCasesByDays
+                          .accumulated
+                          .values,
+                ]).toList(),
               ),
             ],
             animate: false,
@@ -180,7 +209,7 @@ class MunicipalitiesComparisonWidgetState
                     charts.OutsideJustification.middleDrawArea,
               ),
               charts.ChartTitle(
-                'Casos',
+                widget.subtitle ?? 'Casos',
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(fontSize: 11),
                 titleOutsideJustification:
@@ -192,7 +221,8 @@ class MunicipalitiesComparisonWidgetState
                 showMeasures: true,
                 measureFormatter: (num measure) {
                   if (measure == null) return '';
-                  return measure.toInt().toString() + ' Casos';
+                  return measure.toInt().toString() + ' ' + widget.subtitle ??
+                      'Casos';
                 },
               ),
               charts.LinePointHighlighter(
@@ -201,6 +231,8 @@ class MunicipalitiesComparisonWidgetState
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),

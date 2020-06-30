@@ -1,13 +1,15 @@
 name: covid19cuba
 description: Mobile application of Covid19 Cuba Data project implemented with Flutter.
 
-version: 0.8.0+13
+version: 1.0.0+14
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
   cupertino_icons: ^0.1.3
   flutter_bloc: ^4.0.0
@@ -21,16 +23,12 @@ dependencies:
   url_launcher: ^5.4.5
   flutter_local_notifications: ^1.4.2
   background_fetch: ^0.5.5
-  webview_flutter:
-    path: ./webview_flutter
   package_info: ^0.4.0+17
   introduction_screen: ^1.0.8
   json_annotation: ^3.0.1
   font_awesome_flutter: ^8.8.1
   share: ^0.6.4
   demoji: ^1.0.1
-  random_color:
-    path: ./RandomColor
   crypto: ^2.1.4
   country_pickers: ^1.2.1
   flutter_linkify: ^3.1.2
@@ -39,23 +37,39 @@ dependencies:
   flutter_html: ^0.11.1
   flutter_svg: ^0.17.4
   flutter_custom_clippers: ^1.1.1
-  flutter_localizations:
-    sdk: flutter
   search_choices: ^1.0.15
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
+  grizzly_io: ^2.2.0
+  pdf: ^1.8.0
+  device_info: ">=0.4.2+4 <2.0.0"
+  badges: ^1.1.1
+  simple_autocomplete_formfield: ^0.2.7
+  quiver: ^2.1.3
+  random_color:
+    path: ./RandomColor
+  flutter_echarts:
+    path: ./flutter_echarts
+  webview_flutter:
+    path: ./webview_flutter
+  fluttercontactpicker: ^2.4.2
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
-  build_runner: ^1.9.0
   json_serializable: ^3.3.0
+  build_runner: ^1.10.0
 
 flutter:
   uses-material-design: true
 
   assets:
+    - flutter_echarts/assets/echart.html
     - assets/images/
+    - assets/images/carousel/
     - assets/js/leaflet.js
     - assets/js/jquery.min.js
     - assets/js/map.js
+    - assets/js/bootstrap.min.js
     - assets/css/bootstrap.min.css
     - assets/css/custom.css
     - assets/css/leaflet.css
@@ -65,10 +79,14 @@ flutter:
     - assets/map.html
     - assets/map2.html
     - assets/js/municipios.js
+    - assets/data/
   fonts:
     - family: Ubuntu
       fonts:
         - asset: fonts/Ubuntu/Ubuntu-Regular.ttf
+    - family: CubaIcon
+      fonts:
+        - asset: fonts/CubaIcon.ttf
 
 flutter_native_splash:
   image: assets/images/icon.jpg

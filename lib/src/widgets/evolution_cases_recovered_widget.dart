@@ -3,10 +3,12 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/evolution_of_cases_and_recovered_by_days.dart';
 import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 class EvolutionCasesRecoveredWidget extends StatelessWidget {
   final EvolutionOfCasesAndRecoveredByDays evolutionOfCasesAndRecoveredByDays;
@@ -41,21 +43,25 @@ class EvolutionCasesRecoveredWidget extends StatelessWidget {
           height: 400,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: evolutionOfCasesAndRecoveredByDays.diagnosed.name,
                 colorFn: (_, __) => ChartColors.red,
-                domainFn: (_, i) =>
-                    evolutionOfCasesAndRecoveredByDays.date.values[i],
-                measureFn: (item, _) => item,
-                data: evolutionOfCasesAndRecoveredByDays.diagnosed.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfCasesAndRecoveredByDays.diagnosed.values,
+                  evolutionOfCasesAndRecoveredByDays.date.values,
+                ]).toList(),
               ),
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: evolutionOfCasesAndRecoveredByDays.recovered.name,
                 colorFn: (_, __) => ChartColors.blueLight,
-                domainFn: (_, i) =>
-                    evolutionOfCasesAndRecoveredByDays.date.values[i],
-                measureFn: (item, _) => item,
-                data: evolutionOfCasesAndRecoveredByDays.recovered.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfCasesAndRecoveredByDays.recovered.values,
+                  evolutionOfCasesAndRecoveredByDays.date.values,
+                ]).toList(),
               ),
             ],
             animate: false,
@@ -89,6 +95,8 @@ class EvolutionCasesRecoveredWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),

@@ -3,10 +3,12 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/evolution_of_active_and_recovered_accumulated.dart';
 import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 class EvolutionActiveRecoveredWidget extends StatelessWidget {
   final EvolutionOfActiveAndRecoveredAccumulated
@@ -43,21 +45,25 @@ class EvolutionActiveRecoveredWidget extends StatelessWidget {
           height: 400,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: evolutionOfActiveAndRecoveredAccumulated.active.name,
                 colorFn: (_, __) => ChartColors.red,
-                domainFn: (_, i) =>
-                    evolutionOfActiveAndRecoveredAccumulated.date.values[i],
-                measureFn: (item, _) => item,
-                data: evolutionOfActiveAndRecoveredAccumulated.active.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfActiveAndRecoveredAccumulated.active.values,
+                  evolutionOfActiveAndRecoveredAccumulated.date.values,
+                ]).toList(),
               ),
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: evolutionOfActiveAndRecoveredAccumulated.recovered.name,
                 colorFn: (_, __) => ChartColors.blueLight,
-                domainFn: (_, i) =>
-                    evolutionOfActiveAndRecoveredAccumulated.date.values[i],
-                measureFn: (item, _) => item,
-                data: evolutionOfActiveAndRecoveredAccumulated.recovered.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfActiveAndRecoveredAccumulated.recovered.values,
+                  evolutionOfActiveAndRecoveredAccumulated.date.values,
+                ]).toList(),
               ),
             ],
             animate: false,
@@ -91,6 +97,8 @@ class EvolutionActiveRecoveredWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),

@@ -3,19 +3,22 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/cases_by_nationality.dart';
+import 'package:covid19cuba/src/models/charts/item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 // ignore: must_be_immutable
 class PieCasesNationalityWidget extends StatefulWidget {
   final CasesByNationality casesByNationality;
 
   List<charts.Color> colorPalettes;
+  String title;
 
-  PieCasesNationalityWidget({this.casesByNationality})
+  PieCasesNationalityWidget({this.casesByNationality, this.title})
       : assert(casesByNationality != null) {
+    if (title == null) title = 'Casos';
     colorPalettes = [ChartColors.purple, ChartColors.red, ChartColors.green];
   }
 
@@ -37,7 +40,7 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
           ),
           child: Center(
             child: Text(
-              'Casos por nacionalidad',
+              '${widget.title} por nacionalidad',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -53,7 +56,7 @@ class PieCasesNationalityWidgetState extends State<PieCasesNationalityWidget> {
           child: charts.PieChart(
             [
               charts.Series<Item, String>(
-                id: 'Casos por nacionalidad',
+                id: '${widget.title} por nacionalidad',
                 colorFn: (_, i) => widget.colorPalettes[i],
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,

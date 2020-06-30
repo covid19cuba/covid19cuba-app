@@ -4,15 +4,15 @@
 
 import 'dart:developer';
 
+import 'package:covid19cuba/src/pages/pages.dart';
+import 'package:covid19cuba/src/pages/protocols_page.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:covid19cuba/src/pages/pages.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
   @override
@@ -47,13 +47,18 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             header(),
             separator(),
             casesTableItem(),
+            bulletinsDrawerItem(),
+            downloadsDrawerItem(),
+            protocolsDrawerItem(),
+            contactRegistrationItem(),
+            usefulPhonesItem(),
             tipsItem(),
             linksDrawerItem(),
             updateDrawerItem(),
             sharerDrawerItem(),
             settingsDrawerItem(),
             faqsDrawerItem(),
-            creditsDrawerItem(),
+            aboutUsDrawerItem(),
             separator(),
             versionAppDrawerItem(),
           ],
@@ -84,6 +89,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     IconData icon,
     String text,
     GestureTapCallback onTap,
+    Widget extra,
   }) {
     return ListTile(
       title: Row(
@@ -92,16 +98,19 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             icon,
             color: Colors.white,
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          )
+          ),
+          if (extra != null) extra,
         ],
       ),
       onTap: onTap,
@@ -155,6 +164,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
       context,
       icon: Icons.table_chart,
       text: 'Tabla de Casos',
+      extra: Icon(Icons.open_in_new, color: Colors.white),
       onTap: () async {
         const urlCU = 'https://www.cusobu.nat.cu/covid/casos.html';
         const urlIO = 'https://covid19cubadata.github.io/casos.html';
@@ -317,6 +327,40 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     );
   }
 
+  Widget contactRegistrationItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.account_box,
+      text: 'Registro de Contactos',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ContactsListPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget usefulPhonesItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.people,
+      text: 'Atención a la Población',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UsefulPhonesPage(),
+          ),
+        );
+      },
+    );
+  }
+
   Widget settingsDrawerItem() {
     return createDrawerItem(
       context,
@@ -368,7 +412,41 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     );
   }
 
-  Widget creditsDrawerItem() {
+  Widget downloadsDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.cloud_download,
+      text: 'Descargas',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DownloadsPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget protocolsDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.straighten,
+      text: 'Protocolos',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProtocolsPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget aboutUsDrawerItem() {
     return createDrawerItem(
       context,
       icon: Icons.people,
@@ -378,10 +456,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CreditsPage(),
+            builder: (context) => AboutUsPage(),
           ),
         );
       },
     );
+  }
+
+  Widget bulletinsDrawerItem() {
+    return createDrawerItem(context,
+        icon: Icons.library_books, text: 'Boletines', onTap: () {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BulletinsPage(),
+        ),
+      );
+    });
   }
 }
