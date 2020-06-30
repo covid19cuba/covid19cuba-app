@@ -99,6 +99,17 @@ class SettingsPageState extends State<SettingsPage> {
           ),
         ),
         divider,
+        ListTile(
+          title: Text('Notificaciones'),
+          trailing: Icon(Icons.arrow_right),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NotificationSettings(),
+            ),
+          ),
+        ),
+        divider,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           child: GFButton(
