@@ -195,3 +195,27 @@ List<Contact> getContactsList(Box box) {
   });
   return contacts;
 }
+
+bool checkDoNotDisturbTime(){
+  int startHour = PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour) ?? 21;
+  int endHour = PrefService.getInt(Constants.prefDoNotDisturbTimeEndHour) ?? 9;
+  int startMinutes = PrefService.getInt(Constants.prefDoNotDisturbTimeStartMinutes) ?? 30;
+  int endMinutes = PrefService.getInt(Constants.prefDoNotDisturbTimeEndMinutes) ?? 30;
+
+  var time = DateTime.now();
+
+  int hour = time.hour;
+  int minutes = time.minute;
+
+  if(hour == startHour){
+    return minutes >= startMinutes;
+  }
+  else if(hour == endHour){
+    return minutes <= endMinutes;
+  }
+  else{
+    return startHour < endHour ? (hour > startHour) && (hour < endHour) : (hour < startHour) || (hour > endHour);
+  }
+}
+
+
