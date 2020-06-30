@@ -27,7 +27,7 @@ class NotificationSettingsState extends State<NotificationSettings> {
 
   NotificationSettingsState() {
     this.startHour =
-        PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour);
+        PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour) ?? 21;
     this.startMinute =
         PrefService.getInt(Constants.prefDoNotDisturbTimeStartMinutes) ?? 30;
     this.endHour =
