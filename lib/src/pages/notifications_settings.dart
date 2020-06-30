@@ -117,7 +117,7 @@ class NotificationSettingsState extends State<NotificationSettings> {
     showTimePicker(
       context: context,
       initialTime:
-      TimeOfDay(hour: startHour, minute: startMinute),
+      TimeOfDay(hour: start ? startHour : endHour, minute: start ? startMinute : endMinute),
     ).then((TimeOfDay value) {
       if (value != null) {
         saveOptions(value, start: start);
