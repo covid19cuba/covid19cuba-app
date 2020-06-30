@@ -1,5 +1,27 @@
 # Covid19 Cuba Data Mobile Application Changelog
 
+## [1.0.0] - July 1, 2020
+
+### Added
+
+* New images and descriptions to the initial welcoming carousel.
+* Separation of men and women in the Distribution chart by age ranges in the General de Cuba chart section.
+* Charts of symptomatic / asymptomatic cases in the General charts section of Cuba.
+* Charts section of cases deceased in Cuba.
+* More news sources such as Juventud Técnica, the Cuban News Agency, Cubadebate, among others.
+* Radar graph comparing various parameters of Cuba with other countries in the World section.
+* Bulletin section of the Center for Demographic Studies (CEDEM) of the University of Havana focused on the theme of COVID-19.
+* Download section with the databases used in different formats.
+* Section with action protocols, with national scope, that contribute to the prevention, control and management of cases related to Covid-19 disease.
+* Manual registration of the people with whom you had contact (in addition to the date and place) to improve and help the work of the satirical authorities in the fight against the pandemic.
+* Population Assistance Section with the telephone numbers of each province for the Covid-19.
+* Proxy configuration for users who use a corporate, student network, etc. where you need to configure a proxy. 
+* Notification settings by notification type and time of day.
+
+### Changed
+
+* Reduce application size to half the size of the previous version.
+
 ## [0.8.0] - May 11, 2020
 
 ### Added
