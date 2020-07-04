@@ -16,6 +16,7 @@ NewsItem _$NewsItemFromJson(Map<String, dynamic> json) {
     ..updated = (json['updated'] as List)?.map((e) => e as int)?.toList()
     ..summary = json['summary'] as String
     ..abstract = json['abstract'] as String
+    ..abstractStr = json['abstract_str'] as String
     ..source = json['source'] as String;
 }
 
@@ -28,5 +29,6 @@ Map<String, dynamic> _$NewsItemToJson(NewsItem instance) => <String, dynamic>{
       'updated': instance.updated,
       'summary': instance.summary,
       'abstract': instance.abstract,
+      'abstract_str': instance.abstractStr,
       'source': instance.source,
     };
