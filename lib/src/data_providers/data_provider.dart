@@ -152,7 +152,7 @@ abstract class DataProvider<T extends Model, E extends CacheModel> {
       var state = await getStateData();
       var cacheNew = state.cache;
       var cacheOld = PrefService.getString(prefHash) ?? "";
-      var cache = cacheNew != cacheOld;
+      var cache = cacheNew == cacheOld;
       return cache;
     } catch (e) {
       log(e.toString());
