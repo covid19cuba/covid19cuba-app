@@ -76,6 +76,7 @@ extension DateTimeToString on DateTime {
       'abril',
       'mayo',
       'junio',
+      'julio',
       'agosto',
       'septiembre',
       'octubre',
