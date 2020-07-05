@@ -25,7 +25,7 @@ class NewsPageMore extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.share),
             onPressed: () {
-              var subject = '';
+              var subject = item.title;
               var text = """${item.title}
 
 Fuente: ${item.source}
