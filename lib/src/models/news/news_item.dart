@@ -16,6 +16,8 @@ class NewsItem {
   List<int> updated;
   String summary;
   String abstract;
+  @JsonKey(name: 'abstract_str')
+  String abstractStr;
   String source;
 
   NewsItem();

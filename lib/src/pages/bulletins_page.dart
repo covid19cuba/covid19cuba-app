@@ -11,6 +11,7 @@ import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BulletinsPage extends StatelessWidget {
@@ -76,36 +77,68 @@ class BulletinsPageWidget extends PageWidget<Bulletins, BulletinsState> {
         result.add(
           Card(
             margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-            child: GestureDetector(
-              child: Container(
-                margin: EdgeInsets.all(5),
-                child: ListTile(
-                  title: Text(
-                    bulletin.info,
-                    style: TextStyle(
-                      color: Constants.primaryColor,
+            child: Container(
+              margin: EdgeInsets.all(5),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.all(5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            bulletin.info,
+                            style: TextStyle(
+                              color: Constants.primaryColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(
+                            'Tamaño: ${bulletin.size.toStringAsFixed(2)} Mb',
+                            style: TextStyle(
+                              color: Constants.primaryColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  subtitle: Text(
-                    'Tamaño: ${bulletin.size.toStringAsFixed(2)} Mb',
-                    style: TextStyle(
+                  IconButton(
+                    icon: Icon(
+                      Icons.share,
                       color: Constants.primaryColor,
                     ),
+                    onPressed: () {
+                      var subject = bulletin.info;
+                      var text = """${bulletin.info}
+
+Tamaño: ${bulletin.size.toStringAsFixed(2)} Mb
+
+Enlace de descarga: ${provider.dataSource + bulletin.url}
+
+Compartido por Covid19 Cuba Data (https://covid19cubadata.github.io)
+""";
+                      Share.share(text, subject: subject);
+                    },
                   ),
-                  trailing: Icon(
-                    Icons.file_download,
-                    color: Constants.primaryColor,
+                  IconButton(
+                    icon: Icon(
+                      Icons.file_download,
+                      color: Constants.primaryColor,
+                    ),
+                    onPressed: () async {
+                      final url = provider.dataSource + bulletin.url;
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        log('Could not launch $url');
+                      }
+                    },
                   ),
-                ),
+                ],
               ),
-              onTap: () async {
-                final url = provider.dataSource + bulletin.url;
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  log('Could not launch $url');
-                }
-              },
             ),
           ),
         );

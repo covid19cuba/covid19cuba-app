@@ -76,6 +76,7 @@ extension DateTimeToString on DateTime {
       'abril',
       'mayo',
       'junio',
+      'julio',
       'agosto',
       'septiembre',
       'octubre',
@@ -94,7 +95,6 @@ void getUrl(url) async {
     launch(url);
   } else {
     log("Url $url resolve failed");
-    //throw InvalidSourceException("No se ha podido obtener la url");
   }
 }
 
@@ -152,30 +152,10 @@ Aplicación:
 
 Sitio Web: https://covid19cubadata.github.io
 
-Replicas del Sitio Web:
-- http://www.cusobu.nat.cu/covid cortesía de CUSOBU
-- http://covid19.frcuba.cu cortesía de la Federación de Radioaficionados de Cuba
-- http://covidcuba.swlx.info cortesía del Proyecto SWL-X
-- http://covid19.jovenclub.cu cortesía de Joven Club
-
-Bot de Telegram: https://t.me/covid19cubadata_bot
-
-Colaboradores:
-- CUSOBU: https://www.cusobu.nat.cu
-- Proyecto SWL-X: https://www.swlx.info
-- Daxslab: https://www.daxslab.com
-- Unión de Informáticos de Cuba: https://www.uic.cu
-- Universidad de Oriente: https://www.uo.edu.cu
-- Universidad de La Habana: http://www.uh.cu
-
-Agradecimientos: El equipo de desarrollo de Covid19 Cuba Data agradece a todos los que de una forma u otra ayudan a combatir la pandemia de la Covid-19, en especial a los que arriesgan su vida luchando en primera línea.
-
 Autores:
 - MatCom: http://www.matcom.uh.cu
 - Postdata.club: https://www.postdata.club
-- Juventud Técnica: https://medium.com/juventud-técnica
-
-Copyright 2020 ©️""";
+- Juventud Técnica: https://medium.com/juventud-técnica""";
   return sharedContent;
 }
 
@@ -198,29 +178,23 @@ List<Contact> getContactsList(Box box) {
 
 bool checkDoNotDisturbTime() {
   if (PrefService.getBool(Constants.prefDoNotDisturbTime) ?? false) {
-    int startHour =
+    var time = DateTime.now();
+    var startHour =
         PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour) ?? 21;
-    int endHour =
+    var endHour =
         PrefService.getInt(Constants.prefDoNotDisturbTimeEndHour) ?? 9;
-    int startMinutes =
+    var startMinutes =
         PrefService.getInt(Constants.prefDoNotDisturbTimeStartMinutes) ?? 30;
-    int endMinutes =
+    var endMinutes =
         PrefService.getInt(Constants.prefDoNotDisturbTimeEndMinutes) ?? 30;
 
-    var time = DateTime.now();
+    var now = time.hour * 60 + time.minute;
+    var start = startHour * 60 + startMinutes;
+    var end = endHour * 60 + endMinutes;
 
-    int hour = time.hour;
-    int minutes = time.minute;
-
-    if (hour == startHour) {
-      return minutes >= startMinutes;
-    } else if (hour == endHour) {
-      return minutes <= endMinutes;
-    } else {
-      return startHour < endHour
-          ? (hour > startHour) && (hour < endHour)
-          : (hour < startHour) || (hour > endHour);
-    }
+    return start <= end
+        ? start <= now && now <= end
+        : start <= now || now <= end;
   }
   return false;
 }

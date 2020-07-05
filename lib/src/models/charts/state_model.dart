@@ -16,7 +16,6 @@ part 'state_model.g.dart';
 @JsonSerializable()
 class StateModel {
   int version;
-  @JsonKey(name: 'data')
   String cache;
   int days;
 
