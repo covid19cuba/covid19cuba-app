@@ -95,7 +95,6 @@ void getUrl(url) async {
     launch(url);
   } else {
     log("Url $url resolve failed");
-    //throw InvalidSourceException("No se ha podido obtener la url");
   }
 }
 
@@ -179,29 +178,23 @@ List<Contact> getContactsList(Box box) {
 
 bool checkDoNotDisturbTime() {
   if (PrefService.getBool(Constants.prefDoNotDisturbTime) ?? false) {
-    int startHour =
+    var time = DateTime.now();
+    var startHour =
         PrefService.getInt(Constants.prefDoNotDisturbTimeStartHour) ?? 21;
-    int endHour =
+    var endHour =
         PrefService.getInt(Constants.prefDoNotDisturbTimeEndHour) ?? 9;
-    int startMinutes =
+    var startMinutes =
         PrefService.getInt(Constants.prefDoNotDisturbTimeStartMinutes) ?? 30;
-    int endMinutes =
+    var endMinutes =
         PrefService.getInt(Constants.prefDoNotDisturbTimeEndMinutes) ?? 30;
 
-    var time = DateTime.now();
+    var now = time.hour * 60 + time.minute;
+    var start = startHour * 60 + startMinutes;
+    var end = endHour * 60 + endMinutes;
 
-    int hour = time.hour;
-    int minutes = time.minute;
-
-    if (hour == startHour) {
-      return minutes >= startMinutes;
-    } else if (hour == endHour) {
-      return minutes <= endMinutes;
-    } else {
-      return startHour < endHour
-          ? (hour > startHour) && (hour < endHour)
-          : (hour < startHour) || (hour > endHour);
-    }
+    return start <= end
+        ? start <= now && now <= end
+        : start <= now || now <= end;
   }
   return false;
 }
