@@ -5,15 +5,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:http/http.dart';
+import 'package:covid19cuba/src/models/charts/state_model.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:preferences/preferences.dart';
 
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
-
-const urlStateDataCU = 'https://cusobu.nat.cu/covid/api/v1/state.json';
+const urlStateDataCU = 'https://cusobu.nat.cu/covid/api/v2/state.json';
 const urlStateDataIO =
-    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v1/state.json';
+    'https://covid19cuba.github.io/covid19cubadata.github.io/api/v2/state.json';
 
 Future<StateModel> getStateData() async {
   var mode = PrefService.getInt(Constants.prefConnectionMode) ??

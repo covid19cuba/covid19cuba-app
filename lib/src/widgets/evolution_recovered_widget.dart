@@ -3,10 +3,12 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/evolution_of_recovered_by_days.dart';
 import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 class EvolutionRecoveredWidget extends StatelessWidget {
   final EvolutionOfRecoveredByDays evolutionOfRecoveredByDays;
@@ -41,19 +43,25 @@ class EvolutionRecoveredWidget extends StatelessWidget {
           height: 300,
           child: charts.TimeSeriesChart(
             [
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: evolutionOfRecoveredByDays.daily.name,
                 colorFn: (_, __) => ChartColors.blueDark,
-                domainFn: (_, i) => evolutionOfRecoveredByDays.date.values[i],
-                measureFn: (item, _) => item,
-                data: evolutionOfRecoveredByDays.daily.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfRecoveredByDays.daily.values,
+                  evolutionOfRecoveredByDays.date.values,
+                ]).toList(),
               ),
-              charts.Series<int, DateTime>(
+              charts.Series<List, DateTime>(
                 id: evolutionOfRecoveredByDays.accumulated.name,
                 colorFn: (_, __) => ChartColors.blueLight,
-                domainFn: (_, i) => evolutionOfRecoveredByDays.date.values[i],
-                measureFn: (item, _) => item,
-                data: evolutionOfRecoveredByDays.accumulated.values,
+                domainFn: (item, _) => item[1],
+                measureFn: (item, _) => item[0],
+                data: zip([
+                  evolutionOfRecoveredByDays.accumulated.values,
+                  evolutionOfRecoveredByDays.date.values,
+                ]).toList(),
               ),
             ],
             animate: false,
@@ -87,6 +95,8 @@ class EvolutionRecoveredWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),

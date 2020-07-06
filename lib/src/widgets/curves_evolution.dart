@@ -5,13 +5,14 @@
 import 'dart:math';
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter/material.dart';
-import 'package:getflutter/getflutter.dart';
-import 'package:random_color/random_color.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
-
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:getflutter/getflutter.dart';
+import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
+import 'package:random_color/random_color.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class CurvesEvolutionWidget extends StatefulWidget {
   final Map<String, dynamic> curvesEvolution;
@@ -128,23 +129,29 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
                       list.add(double.parse(x.toString()));
                     }
                   }
-                  return charts.Series<double, double>(
+                  return charts.Series<List, double>(
                     id: key,
                     colorFn: (_, __) => colors[localIndex],
-                    domainFn: (_, i) => value['cummulative_sum'][i],
-                    measureFn: (item, _) => item,
-                    data: list,
+                    domainFn: (item, _) => item[1],
+                    measureFn: (item, _) => item[0],
+                    data: zip([
+                      list,
+                      List<double>.from(value['cummulative_sum']),
+                    ]).toList(),
                     domainLowerBoundFn: (_, __) => 1.4771212547196624,
                   );
                 }).toList() +
                 [
-                  charts.Series<double, double>(
+                  charts.Series<List, double>(
                     id: 'Cuba',
                     colorFn: (_, __) => colors[index],
-                    domainFn: (_, i) =>
-                        curvesEvolution['Cuba']['cummulative_sum'][i],
-                    measureFn: (item, _) => item,
-                    data: List<double>.from(curvesEvolution['Cuba']['weeks']),
+                    domainFn: (item, _) => item[1],
+                    measureFn: (item, _) => item[0],
+                    data: zip([
+                      List<double>.from(curvesEvolution['Cuba']['weeks']),
+                      List<double>.from(
+                          curvesEvolution['Cuba']['cummulative_sum']),
+                    ]).toList(),
                     domainLowerBoundFn: (_, __) => 1.4771212547196624,
                   )
                 ],
@@ -183,6 +190,8 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
             domainAxis: charts.NumericAxisSpec(
               viewport: charts.NumericExtents(
@@ -213,9 +222,9 @@ class CurvesEvolutionWidgetState extends State<CurvesEvolutionWidget> {
             },
             hint: Padding(
               padding: EdgeInsets.all(3),
-              child: Text('Seleccione los países que desee'),
+              child: Text('Seleccione los países'),
             ),
-            searchHint: 'Seleccione los países que desee',
+            searchHint: 'Seleccione los países',
             onChanged: (value) {
               setState(() {
                 selectedItems = value;

@@ -1,14 +1,14 @@
 // Copyright (C) 2020 covid19cuba
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
-
+import 'package:covid19cuba/src/models/charts/data.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/widgets/widgets.dart';
-
 class NationalWidget extends StatelessWidget {
-  final DataModel data;
+  final Data data;
 
   const NationalWidget({this.data}) : assert(data != null);
 
@@ -17,18 +17,19 @@ class NationalWidget extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            child: ResumeWidget(resume: data.all.resume),
-          ),
-        ),
-        Container(
           margin: data.all.note == null || data.all.note == ''
               ? EdgeInsets.all(0)
               : EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             color: Colors.red,
             child: NoteWidget(note: data.all.note),
+          ),
+        ),
+        if (shouldBe()) getWidget(context),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: ResumeWidget(resume: data.all.resume),
           ),
         ),
         Container(
@@ -133,7 +134,7 @@ class NationalWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: PieTestsPercentWidget(
-              listOfTestsPerformed: data.all.listOfTestsPerformed,
+              listOfTestsPerformed: data.all.relationOfTestsPerformed,
             ),
           ),
         ),
@@ -147,7 +148,43 @@ class NationalWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: TestsPositivePercentWidget(
-              testsPositivePercent: data.all.testsPositivePercent,
+              testsPositivePercent: data.all.percentPositiveTests,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PieSymptomaticsAsymptomaticsWidget(
+              percentSymptomaticsAsymptomatics:
+                  data.all.percentSymptomaticsAsymptomatics,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: EvolutionSymptomaticsAsymptomaticsWidget(
+              evolutionSymptomaticsAsymptomatics:
+                  data.all.evolutionSymptomaticsAsymptomaticsDays,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PercentEvolutionSymptomaticsAsymptomaticsDaysWidget(
+              percentEvolutionSymptomaticsAsymptomatics:
+                  data.all.percentEvolutionSymptomaticsAsymptomaticsDays,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PercentEvolutionSymptomaticsAsymptomaticsAccumulatedWidget(
+              percentEvolutionSymptomaticsAsymptomatics:
+                  data.all.percentEvolutionSymptomaticsAsymptomaticsAccumulated,
             ),
           ),
         ),

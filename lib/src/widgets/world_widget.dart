@@ -1,14 +1,14 @@
 // Copyright (C) 2020 covid19cuba
 // Use of this source code is governed by a GNU GPL 3 license that can be
 // found in the LICENSE file.
-
+import 'package:covid19cuba/src/models/charts/data.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:covid19cuba/src/widgets/radar_widget.dart';
+import 'package:covid19cuba/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/widgets/widgets.dart';
-
 class WorldWidget extends StatelessWidget {
-  final DataModel data;
+  final Data data;
 
   const WorldWidget({this.data}) : assert(data != null);
 
@@ -26,12 +26,20 @@ class WorldWidget extends StatelessWidget {
             child: NoteWidget(note: data.all.note),
           ),
         ),
+        if (shouldBe()) getWidget(context),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: RadarChartWidget(
+              data: data.all.multipleComparisonOfCubaWithRadar,
+            ),
+          ),
+        ),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(
             child: ComparisonWidget(
-              comparisonOfAccumulatedCases:
-                  data.all.comparisonOfAccumulatedCases,
+              comparisonOfAccumulatedCases: data.all.curvesComparison,
             ),
           ),
         ),
@@ -51,7 +59,7 @@ class WorldWidget extends StatelessWidget {
             child: Container(
               child: CurvesEvolutionWidget(
                 curvesEvolution: data.all.curvesEvolution,
-                updated: data.all.comparisonOfAccumulatedCases.updated,
+                updated: data.all.curvesComparison.updated,
               ),
             ),
           ),
@@ -60,7 +68,7 @@ class WorldWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: WorldCountriesWidget(
             worldCountries: data.all.worldCountries,
-            updated: data.all.comparisonOfAccumulatedCases.updated,
+            updated: data.all.curvesComparison.updated,
           ),
         ),
         Container(padding: EdgeInsets.all(5)),

@@ -4,72 +4,86 @@
 
 import 'dart:developer';
 
+import 'package:covid19cuba/src/blocs/blocs.dart';
+import 'package:covid19cuba/src/models/faqs/faqs.dart';
+import 'package:covid19cuba/src/models/faqs/faqs_state.dart';
+import 'package:covid19cuba/src/pages/pages.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:getflutter/getflutter.dart';
-import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:covid19cuba/src/utils/utils.dart';
 
 class FaqsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('Preguntas Frecuentes'),
-        centerTitle: true,
-      ),
-      backgroundColor: Constants.primaryColor,
-      body: Center(
-        child: ListView(
-          children: faqs(),
-        ),
+    return BlocProvider(
+      create: (context) => GeneralBloc.getFaqsBloc(),
+      child: FaqsPageWidget(),
+    );
+  }
+}
+
+class FaqsPageWidget extends PageWidget<Faqs, FaqsState> {
+  FaqsPageWidget() : super(getWidgetLoaded, title: 'Preguntas Frecuentes');
+
+  static Widget getWidgetLoaded(
+      BuildContext context,
+      LoadedGeneralState<Faqs> state,
+      ) {
+    return Center(
+      child: ListView(
+        children: faqs(state.data) + [Container(height: 15)],
       ),
     );
   }
 
-  List<Widget> faqs() {
+  static List<Widget> faqs(Faqs data) {
     List<Widget> result = [];
-    for (var faq in Constants.faqs) {
-      result.add(GFAccordion(
-        collapsedTitlebackgroundColor: Constants.primaryColor,
-        expandedTitlebackgroundColor: Constants.primaryColor,
-        contentbackgroundColor: Constants.primaryColor,
-        textStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-        collapsedIcon: Icon(
-          Icons.keyboard_arrow_down,
-          color: Colors.white,
-        ),
-        expandedIcon: Icon(
-          Icons.keyboard_arrow_up,
-          color: Colors.white,
-        ),
-        title: faq[0],
-        contentChild: Linkify(
-          text: faq[1],
-          options: LinkifyOptions(humanize: true),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
+    for (var tip in data.faqs) {
+      result.add(
+        Card(
+          child: GFAccordion(
+            collapsedTitlebackgroundColor: Colors.white,
+            expandedTitlebackgroundColor: Colors.white,
+            contentbackgroundColor: Colors.white,
+            textStyle: TextStyle(
+              color: Constants.primaryColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+            collapsedIcon: Icon(
+              Icons.keyboard_arrow_down,
+              color: Constants.primaryColor,
+            ),
+            expandedIcon: Icon(
+              Icons.keyboard_arrow_up,
+              color: Constants.primaryColor,
+            ),
+            title: tip.title,
+            contentChild: Linkify(
+              text: tip.body,
+              options: LinkifyOptions(humanize: true),
+              style: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 16,
+              ),
+              linkStyle: TextStyle(
+                color: Constants.primaryColor,
+                fontSize: 16,
+              ),
+              onOpen: (link) async {
+                if (await canLaunch(link.url)) {
+                  await launch(link.url);
+                } else {
+                  log('Could not launch $link');
+                }
+              },
+            ),
           ),
-          linkStyle: TextStyle(
-            color: Colors.red,
-            fontSize: 16,
-          ),
-          onOpen: (link) async {
-            if (await canLaunch(link.url)) {
-              await launch(link.url);
-            } else {
-              log('Could not launch $link');
-            }
-          },
         ),
-      ));
+      );
     }
     return result;
   }

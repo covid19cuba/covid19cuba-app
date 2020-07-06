@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:preferences/preferences.dart';
@@ -16,6 +17,12 @@ class SettingsPage extends StatefulWidget {
 }
 
 class SettingsPageState extends State<SettingsPage> {
+  static const divider = const Divider(
+    thickness: 1,
+    indent: 16,
+    endIndent: 16,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +49,7 @@ class SettingsPageState extends State<SettingsPage> {
            displayValues: ["15 minutos", "30 minutos", "1 hora"],
         ),*/
         PreferenceTitle(
-          'Modo de conexión:',
+          'Modo de conexión',
           style: TextStyle(
             color: Constants.primaryColor,
             fontWeight: FontWeight.bold,
@@ -72,30 +79,62 @@ class SettingsPageState extends State<SettingsPage> {
               'ahorrar y a la vez tener una estabilidad del servicio buena.',
           isDefault: true,
         ),
+        divider,
+        SwitchPreference(
+          'Zoom en las gráficas',
+          Constants.prefChartsZoom,
+          desc: 'Permite hacer zoom en las gráficas. '
+              'Puede que necesite de mayor consumo de recursos '
+              'de su teléfono.',
+        ),
+        divider,
+        ListTile(
+          title: Text('Configurar Proxy'),
+          trailing: Icon(Icons.arrow_right),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProxyPage(),
+            ),
+          ),
+        ),
+        divider,
+        ListTile(
+          title: Text('Notificaciones'),
+          trailing: Icon(Icons.arrow_right),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NotificationSettings(),
+            ),
+          ),
+        ),
+        divider,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           child: GFButton(
             text: 'Reiniciar estado de la Aplicación',
-            textColor: Colors.black,
+            textColor: Constants.primaryColor,
             textStyle: TextStyle(
-              color: Colors.black,
+              color: Constants.primaryColor,
             ),
             color: Constants.primaryColor,
             shape: GFButtonShape.pills,
             type: GFButtonType.outline2x,
-            borderSide: BorderSide(width: 1.0, color: Colors.black),
+            borderSide: BorderSide(width: 1.0, color: Constants.primaryColor),
             fullWidthButton: true,
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  // return object of type Dialog
                   return AlertDialog(
                     title: Text('Confirme'),
-                    content: Text('Usted esta seguro o segura que desea '
-                        'reiniciar el estado de la aplicación.\n\n'
-                        'Esto hará que vuelva al estado de acabada de '
-                        'instalar.'),
+                    content: Text(
+                      'Usted esta seguro o segura que desea '
+                      'reiniciar el estado de la aplicación.\n\n'
+                      'Esto hará que vuelva al estado de acabada de '
+                      'instalar.',
+                    ),
                     actions: <Widget>[
                       FlatButton(
                         child: Text('Si'),

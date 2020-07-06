@@ -3,10 +3,12 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/evolution_of_cases_by_days.dart';
 import 'package:flutter/material.dart';
+import 'package:preferences/preference_service.dart';
+import 'package:quiver/iterables.dart' show zip;
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 class EvolutionCasesWidget extends StatelessWidget {
   final EvolutionOfCasesByDays evolutionOfCasesByDays;
@@ -41,33 +43,41 @@ class EvolutionCasesWidget extends StatelessWidget {
           height: 400,
           child: charts.TimeSeriesChart(
             [
-                  charts.Series<int, DateTime>(
+                  charts.Series<List, DateTime>(
                     id: evolutionOfCasesByDays.daily.name,
                     colorFn: (_, __) => ChartColors.blueDark,
-                    domainFn: (_, i) => evolutionOfCasesByDays.date.values[i],
-                    measureFn: (item, _) => item,
-                    data: evolutionOfCasesByDays.daily.values,
+                    domainFn: (item, _) => item[1],
+                    measureFn: (item, _) => item[0],
+                    data: zip([
+                      evolutionOfCasesByDays.daily.values,
+                      evolutionOfCasesByDays.date.values,
+                    ]).toList(),
                   )
                 ] +
                 (evolutionOfCasesByDays.active != null
                     ? [
-                        charts.Series<int, DateTime>(
+                        charts.Series<List, DateTime>(
                           id: evolutionOfCasesByDays.active.name,
                           colorFn: (_, __) => ChartColors.redDark,
-                          domainFn: (_, i) =>
-                              evolutionOfCasesByDays.date.values[i],
-                          measureFn: (item, _) => item,
-                          data: evolutionOfCasesByDays.active.values,
+                          domainFn: (item, _) => item[1],
+                          measureFn: (item, _) => item[0],
+                          data: zip([
+                            evolutionOfCasesByDays.active.values,
+                            evolutionOfCasesByDays.date.values,
+                          ]).toList(),
                         ),
                       ]
                     : []) +
                 [
-                  charts.Series<int, DateTime>(
+                  charts.Series<List, DateTime>(
                     id: evolutionOfCasesByDays.accumulated.name,
                     colorFn: (_, __) => ChartColors.pink,
-                    domainFn: (_, i) => evolutionOfCasesByDays.date.values[i],
-                    measureFn: (item, _) => item,
-                    data: evolutionOfCasesByDays.accumulated.values,
+                    domainFn: (item, _) => item[1],
+                    measureFn: (item, _) => item[0],
+                    data: zip([
+                      evolutionOfCasesByDays.accumulated.values,
+                      evolutionOfCasesByDays.date.values,
+                    ]).toList(),
                   ),
                 ],
             animate: false,
@@ -101,6 +111,8 @@ class EvolutionCasesWidget extends StatelessWidget {
                 showVerticalFollowLine:
                     charts.LinePointHighlighterFollowLineType.nearest,
               ),
+              if (PrefService.getBool(Constants.prefChartsZoom))
+                charts.PanAndZoomBehavior(),
             ],
           ),
         ),

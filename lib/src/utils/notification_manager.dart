@@ -6,6 +6,7 @@ import 'dart:developer';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:meta/meta.dart';
+import 'functions.dart';
 
 class NotificationManager {
   static FlutterLocalNotificationsPlugin plugin;
@@ -13,21 +14,36 @@ class NotificationManager {
 
   static NotificationDetails getDetails(String text) {
     var androidNotificationDetails = AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
-      'your channel description',
+      'Regular',
+      'Regular Notifications',
+      'Sound and vibrate notifications',
       importance: Importance.Max,
       priority: Priority.High,
       styleInformation: BigTextStyleInformation(text),
       ongoing: false,
+      playSound: true,
+      enableVibration: true,
     );
     var iOSNotificationDetails = IOSNotificationDetails();
+    
     var notificationDetails = NotificationDetails(
-      androidNotificationDetails,
+      checkDoNotDisturbTime() ? silentProfile : androidNotificationDetails,
       iOSNotificationDetails,
     );
     return notificationDetails;
   }
+
+  static AndroidNotificationDetails silentProfile = AndroidNotificationDetails(
+    'Silent',
+    'Silen Profile',
+    'Low priority and noise',
+    importance: Importance.Low,
+    priority: Priority.Low,
+    ongoing: false,
+    playSound: false,
+    enableVibration: false,
+    enableLights: false,
+  );
 
   static Future<bool> initialize({
     String androidDefaultIcon = 'mipmap/ic_launcher',
@@ -78,7 +94,7 @@ class NotificationManager {
       id,
       title,
       body,
-      notificationDetails ?? getDetails(body),
+      notificationDetails ??  getDetails(body),
       payload: payload,
     );
   }

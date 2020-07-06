@@ -17,8 +17,14 @@ class WebViewKeepAlive extends StatefulWidget {
   final Map<String, dynamic> mapData;
   final Map<String, dynamic> eventsData;
   final String jsCommand;
+  final String title;
 
-  WebViewKeepAlive({this.mapData, this.eventsData, this.jsCommand});
+  WebViewKeepAlive({
+    this.mapData,
+    this.eventsData,
+    this.jsCommand,
+    this.title,
+  });
 
   @override
   WebViewKeepAliveState createState() => WebViewKeepAliveState();
@@ -45,6 +51,9 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
         eventsData = jsonEncode(widget.eventsData);
         controller
             .evaluateJavascript(widget.jsCommand + '($mapData, $eventsData)')
+            .whenComplete(() {});
+        controller
+            .evaluateJavascript("title = '${widget.title ?? 'Diagnosticados'}'")
             .whenComplete(() {});
       },
       gestureRecognizers: Set()
@@ -94,8 +103,17 @@ class WebViewKeepAliveState extends State<WebViewKeepAlive>
 class MapWebViewWidget extends StatefulWidget {
   final Map<String, dynamic> mapData;
   final Map<String, dynamic> eventsData;
+  final String title;
+  final String titleMunicipality;
+  final String titleProvince;
 
-  MapWebViewWidget({this.mapData, this.eventsData}) : assert(mapData != null);
+  MapWebViewWidget({
+    this.mapData,
+    this.eventsData,
+    this.title,
+    this.titleMunicipality,
+    this.titleProvince,
+  }) : assert(mapData != null);
 
   @override
   MapWebViewWidgetState createState() => MapWebViewWidgetState();
@@ -114,7 +132,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'Distribución por Municipios',
+                  widget.titleMunicipality ?? 'Distribución por Municipios',
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   style: TextStyle(
@@ -125,7 +143,8 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
                 ),
               ),
               InfoDialogWidget(
-                title: 'Distribución por Provincias',
+                title:
+                    widget.titleMunicipality ?? 'Distribución por Municipios',
                 text:
                     'El cuadrado representa aquellos que por distintas razones '
                     'no tengan localización conocida.',
@@ -137,46 +156,49 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
           mapData: widget.mapData,
           eventsData: widget.eventsData,
           jsCommand: Constants.showMunicipalities,
+          title: widget.title,
         ),
         Container(
           height: 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Eventos de transmisión local activos',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 10,
+        if (widget.eventsData != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Eventos de transmisión local activos',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Constants.primaryColor,
+                  fontSize: 10,
+                ),
               ),
-            ),
-            Container(
-              child: Image.asset('assets/images/marker-icon-2x-gold.png'),
-              width: 15,
-              height: 15,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Eventos de transmisión local cerrados',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.primaryColor,
-                fontSize: 10,
+              Container(
+                child: Image.asset('assets/images/marker-icon-2x-gold.png'),
+                width: 15,
+                height: 15,
               ),
-            ),
-            Container(
-              child: Image.asset('assets/images/marker-icon-2x-green.png'),
-              width: 15,
-              height: 15,
-            ),
-          ],
-        ),
+            ],
+          ),
+        if (widget.eventsData != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Eventos de transmisión local cerrados',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Constants.primaryColor,
+                  fontSize: 10,
+                ),
+              ),
+              Container(
+                child: Image.asset('assets/images/marker-icon-2x-green.png'),
+                width: 15,
+                height: 15,
+              ),
+            ],
+          ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Row(
@@ -185,7 +207,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'Distribución por Provincias',
+                  widget.titleProvince ?? 'Distribución por Provincias',
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   style: TextStyle(
@@ -196,7 +218,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
                 ),
               ),
               InfoDialogWidget(
-                title: 'Distribución por Provincias',
+                title: widget.titleProvince ?? 'Distribución por Provincias',
                 text:
                     'El cuadrado representa aquellos que por distintas razones '
                     'no tengan localización conocida.',
@@ -208,6 +230,7 @@ class MapWebViewWidgetState extends State<MapWebViewWidget> {
           mapData: widget.mapData,
           eventsData: widget.eventsData,
           jsCommand: Constants.showProvinces,
+          title: widget.title,
         ),
         Container(height: 20),
       ],

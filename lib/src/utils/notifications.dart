@@ -5,13 +5,12 @@
 import 'dart:developer';
 
 import 'package:background_fetch/background_fetch.dart';
+import 'package:covid19cuba/src/models/charts/state_model.dart';
+import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:demoji/demoji.dart';
 import 'package:preferences/preferences.dart';
 import 'package:timezone/timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
-
-import 'package:covid19cuba/src/models/models.dart';
-import 'package:covid19cuba/src/utils/utils.dart';
 
 void appTask(String taskId, [bool headless = false]) async {
   if (headless) {
@@ -42,25 +41,31 @@ void appTask(String taskId, [bool headless = false]) async {
     } else if (currentInfo[1]) {
       if (currentInfo[3]) {
         if (PrefService.getBool(Constants.prefFirstCacheNotification) ?? true) {
-          PrefService.setBool(Constants.prefFirstCacheNotification, false);
-          NotificationManager.show(
-            title: 'Nueva Información!',
-            body: 'Los datos del parte diario se han actualizado. '
-                'Póngase al día. Toque para revisar.',
-            id: Constants.infoUpdateNotification,
-          );
+          if (PrefService.getBool(Constants.prefDailyUpdateNotifications) ??
+              true) {
+            PrefService.setBool(Constants.prefFirstCacheNotification, false);
+            NotificationManager.show(
+              title: 'Nueva Información!',
+              body: 'Los datos del parte diario se han actualizado. '
+                  'Póngase al día. Toque para revisar.',
+              id: Constants.infoUpdateNotification,
+            );
+          }
         }
       } else {
         if (PrefService.getBool(Constants.prefFirstModificationNotification) ??
             true) {
-          PrefService.setBool(
-              Constants.prefFirstModificationNotification, false);
-          NotificationManager.show(
-            title: 'Cambios Realizados!',
-            body: 'Los datos se han actualizado. '
-                'Hemos mejorado los datos disponibles. Toque para revisar.',
-            id: Constants.infoUpdateNotification,
-          );
+          if (PrefService.getBool(Constants.prefInfoUpdateNotifications) ??
+              true) {
+            PrefService.setBool(
+                Constants.prefFirstModificationNotification, false);
+            NotificationManager.show(
+              title: 'Cambios Realizados!',
+              body: 'Los datos se han actualizado. '
+                  'Hemos mejorado los datos disponibles. Toque para revisar.',
+              id: Constants.infoUpdateNotification,
+            );
+          }
         }
       }
     }
@@ -110,12 +115,14 @@ bool timeToShowNotifications() {
 }
 
 bool clapsTime() {
-  tz.initializeTimeZones();
-  final havana = getLocation('America/Havana');
-  final havanaTime = new TZDateTime.now(havana);
-  DateTime date = havanaTime;
-
-  return date.hour >= Constants.startClapsHour &&
-      date.minute >= Constants.startClapsMinute &&
-      date.hour < Constants.stopClapsHour;
+  if (PrefService.getBool(Constants.prefClapsNotifications) ?? true) {
+    tz.initializeTimeZones();
+    final havana = getLocation('America/Havana');
+    final havanaTime = new TZDateTime.now(havana);
+    DateTime date = havanaTime;
+    return date.hour >= Constants.startClapsHour &&
+        date.minute >= Constants.startClapsMinute &&
+        date.hour < Constants.stopClapsHour;
+  }
+  return false;
 }

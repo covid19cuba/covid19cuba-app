@@ -3,17 +3,20 @@
 // found in the LICENSE file.
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19cuba/src/models/charts/cases_by_sex.dart';
+import 'package:covid19cuba/src/models/charts/item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19cuba/src/utils/utils.dart';
-import 'package:covid19cuba/src/models/models.dart';
 
 // ignore: must_be_immutable
 class PieSexWidget extends StatefulWidget {
   final CasesBySex casesBySex;
   List<charts.Color> colorPalettes;
+  String title;
 
-  PieSexWidget({this.casesBySex}) : assert(casesBySex != null) {
+  PieSexWidget({this.casesBySex, this.title}) : assert(casesBySex != null) {
+    if (title == null) title = 'Casos';
     colorPalettes = [ChartColors.purple, ChartColors.red, ChartColors.green];
   }
 
@@ -34,7 +37,7 @@ class PieSexWidgetState extends State<PieSexWidget> {
           ),
           child: Center(
             child: Text(
-              'Casos por Sexo',
+              '${widget.title} por Sexo',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Constants.primaryColor,
@@ -50,7 +53,7 @@ class PieSexWidgetState extends State<PieSexWidget> {
           child: charts.PieChart(
             [
               charts.Series<Item, String>(
-                id: 'Casos por Sexo',
+                id: '${widget.title} por Sexo',
                 colorFn: (_, i) => widget.colorPalettes[i],
                 domainFn: (item, _) => item.name,
                 measureFn: (item, _) => item.value,
