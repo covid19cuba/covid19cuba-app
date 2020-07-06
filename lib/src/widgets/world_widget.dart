@@ -17,7 +17,6 @@ class WorldWidget extends StatelessWidget {
     return ListView(
       children: <Widget>[
         UpdateWidget(updated: data.all.updated),
-        if (shouldBe()) getWidget(context),
         Container(
           margin: data.all.note == null || data.all.note == ''
               ? EdgeInsets.all(0)
@@ -27,6 +26,7 @@ class WorldWidget extends StatelessWidget {
             child: NoteWidget(note: data.all.note),
           ),
         ),
+        if (shouldBe()) getWidget(context),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Card(

@@ -7,6 +7,7 @@ import 'dart:developer';
 import 'package:covid19cuba/src/models/news/news_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 
@@ -20,6 +21,27 @@ class NewsPageMore extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Noticias'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.share),
+            onPressed: () {
+              var subject = item.title;
+              var text = """${item.title}
+
+Fuente: ${item.source}
+Autor: ${item.author}
+Fecha: ${item.getUpdated().toStrPlus()}
+
+${item.abstractStr}
+
+Leer más: ${item.link}
+
+Compartido por Covid19 Cuba Data (https://covid19cubadata.github.io)
+""";
+              Share.share(text, subject: subject);
+            },
+          )
+        ],
       ),
       body: ListView(
         children: <Widget>[

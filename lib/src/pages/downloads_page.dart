@@ -11,6 +11,7 @@ import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DownloadsPage extends StatelessWidget {
@@ -41,36 +42,68 @@ class DownloadsPageWidget extends PageWidget<Downloads, DownloadsState> {
       result.add(
         Card(
           margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-          child: GestureDetector(
-            child: Container(
-              margin: EdgeInsets.all(5),
-              child: ListTile(
-                title: Text(
-                  item.name,
-                  style: TextStyle(
-                    color: Constants.primaryColor,
+          child: Container(
+            margin: EdgeInsets.all(5),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.all(5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          item.name,
+                          style: TextStyle(
+                            color: Constants.primaryColor,
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          'Formato: ${item.format}',
+                          style: TextStyle(
+                            color: Constants.primaryColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                subtitle: Text(
-                  'Formato: ${item.format}',
-                  style: TextStyle(
+                IconButton(
+                  icon: Icon(
+                    Icons.share,
                     color: Constants.primaryColor,
                   ),
+                  onPressed: () {
+                    var subject = item.name;
+                    var text = """${item.name}
+
+Formato: ${item.format}
+
+Enlace de descarga: ${item.link}
+
+Compartido por Covid19 Cuba Data (https://covid19cubadata.github.io)
+""";
+                    Share.share(text, subject: subject);
+                  },
                 ),
-                trailing: Icon(
-                  Icons.file_download,
-                  color: Constants.primaryColor,
+                IconButton(
+                  icon: Icon(
+                    Icons.file_download,
+                    color: Constants.primaryColor,
+                  ),
+                  onPressed: () async {
+                    final url = item.link;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      log('Could not launch $url');
+                    }
+                  },
                 ),
-              ),
+              ],
             ),
-            onTap: () async {
-              final url = item.link;
-              if (await canLaunch(url)) {
-                await launch(url);
-              } else {
-                log('Could not launch $url');
-              }
-            },
           ),
         ),
       );
