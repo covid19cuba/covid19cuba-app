@@ -16,15 +16,6 @@ class NationalWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
-          margin: data.all.note == null || data.all.note == ''
-              ? EdgeInsets.all(0)
-              : EdgeInsets.only(left: 5, right: 5, top: 5),
-          child: Card(
-            color: Colors.red,
-            child: NoteWidget(note: data.all.note),
-          ),
-        ),
         if (shouldBe()) getWidget(context),
         Container(
           margin: EdgeInsets.only(left: 5, right: 5, top: 5),

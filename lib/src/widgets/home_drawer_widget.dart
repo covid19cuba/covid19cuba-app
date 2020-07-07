@@ -50,6 +50,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
             bulletinsDrawerItem(),
             downloadsDrawerItem(),
             protocolsDrawerItem(),
+            contactPhasesItem(),
             contactRegistrationItem(),
             usefulPhonesItem(),
             tipsItem(),
@@ -87,6 +88,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
   Widget createDrawerItem(
     BuildContext context, {
     IconData icon,
+    String iconPath,
     String text,
     GestureTapCallback onTap,
     Widget extra,
@@ -94,10 +96,18 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Icon(
-            icon,
-            color: Colors.white,
-          ),
+          if (icon != null)
+            Icon(
+              icon,
+              color: Colors.white,
+            ),
+          if (iconPath != null)
+            Image.asset(
+              iconPath,
+              width: 24,
+              height: 24,
+              fit: BoxFit.fill,
+            ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(left: 15),
@@ -344,6 +354,23 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
     );
   }
 
+  Widget contactPhasesItem() {
+    return createDrawerItem(
+      context,
+      iconPath: 'assets/images/stair.png',
+      text: 'Fases de Desescalada',
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PhasesPage(),
+          ),
+        );
+      },
+    );
+  }
+
   Widget usefulPhonesItem() {
     return createDrawerItem(
       context,
@@ -432,7 +459,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
   Widget protocolsDrawerItem() {
     return createDrawerItem(
       context,
-      icon: Icons.straighten,
+      iconPath: 'assets/images/medical_services.png',
       text: 'Protocolos',
       onTap: () {
         Navigator.of(context).pop();
