@@ -83,6 +83,15 @@ class CubaWidgetState extends State<CubaWidget> {
           ? widget.data.all.updated
           : widget.data.all.deceasesUpdated,
     ));
+    list.add(Container(
+      margin: widget.data.all.note == null || widget.data.all.note.isEmpty
+          ? EdgeInsets.all(0)
+          : EdgeInsets.only(left: 5, right: 5, top: 5),
+      child: Card(
+        color: Colors.red,
+        child: NoteWidget(note: widget.data.all.note),
+      ),
+    ));
     list.add(
       Container(
         margin: EdgeInsets.symmetric(horizontal: 10),

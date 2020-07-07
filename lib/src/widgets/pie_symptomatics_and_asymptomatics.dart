@@ -71,6 +71,9 @@ class PieSymptomaticsAsymptomaticsWidgetState
                 position: charts.BehaviorPosition.bottom,
                 cellPadding: EdgeInsets.all(10),
                 showMeasures: true,
+                measureFormatter: (num measure) {
+                  return measure.toString() + '%';
+                },
                 legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
                 desiredMaxColumns: 1,
               ),
