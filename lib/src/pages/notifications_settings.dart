@@ -113,7 +113,6 @@ class NotificationSettingsState extends State<NotificationSettings> {
   }
 
   void showDialog({@required BuildContext context, bool start = true}) {
-    DateTime now = DateTime.now();
     showTimePicker(
       context: context,
       initialTime:

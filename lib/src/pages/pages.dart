@@ -19,6 +19,7 @@ export 'news_page_more.dart';
 export 'municipality_item_page.dart';
 export 'municipality_list_page.dart';
 export 'on_boarding_page.dart';
+export 'phases_page.dart';
 export 'phone_details_page.dart';
 export 'province_item_page.dart';
 export 'province_list_page.dart';

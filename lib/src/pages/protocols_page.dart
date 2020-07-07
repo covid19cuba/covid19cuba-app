@@ -147,7 +147,10 @@ class ProtocolsWidgetState extends State<ProtocolsWidget> {
                   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Text(
                     'Protocolo Versión ${protocol.version}',
-                    style: TextStyle(color: Constants.primaryColor, fontSize: 20),
+                    style: TextStyle(
+                      color: Constants.primaryColor,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),

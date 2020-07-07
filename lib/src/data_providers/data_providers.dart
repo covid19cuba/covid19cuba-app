@@ -9,5 +9,6 @@ export 'state_provider.dart';
 export 'about_us_provider.dart';
 export 'faqs_provider.dart';
 export 'bulletins_provider.dart';
+export 'phases_provider.dart';
 export 'data_provider.dart';
 export 'tips_provider.dart';
