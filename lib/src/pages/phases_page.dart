@@ -51,6 +51,8 @@ class PhasesWidget extends StatefulWidget {
 class PhasesWidgetState extends State<PhasesWidget> {
   final Phases phases;
   var index = 0;
+  var pattern = "";
+  var controller = TextEditingController();
 
   PhasesWidgetState(this.phases);
 
@@ -190,10 +192,57 @@ class PhasesWidgetState extends State<PhasesWidget> {
             ),
           ),
         ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
+          child: Card(
+            color: Colors.grey[50],
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  )),
+              child: Center(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller,
+                        decoration: InputDecoration(
+                          hintText: 'Buscar medida ...',
+                          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          border: InputBorder.none,
+                        ),
+                        onFieldSubmitted: (_) {
+                          setState(() {
+                            pattern = controller?.text ?? "";
+                          });
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        setState(() {
+                          pattern = controller?.text ?? "";
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
         Column(
           children: groupBy(
-              phase.measures.map((String id) => phases.measures[id]),
-              (x) => x.category).entries.map((item) {
+                  phase.measures.map((String id) => phases.measures[id]),
+                  (x) => x.category)
+              .entries
+              .where((x) => x.value.any((y) => y.text.contains(pattern)))
+              .map((item) {
             return Container(
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Card(
@@ -216,7 +265,9 @@ class PhasesWidgetState extends State<PhasesWidget> {
                   ),
                   title: phases.categories[item.key].name,
                   contentChild: SeparatedColumn(
-                    children: item.value.map((value) {
+                    children: item.value
+                        .where((x) => x.text.contains(pattern))
+                        .map((value) {
                       return Tooltip(
                         child: Container(
                           margin: EdgeInsets.symmetric(vertical: 10),
@@ -238,6 +289,24 @@ class PhasesWidgetState extends State<PhasesWidget> {
             );
           }).toList(),
         ),
+        if (groupBy(phase.measures.map((String id) => phases.measures[id]),
+                    (x) => x.category)
+                .entries
+                .where((x) => x.value.any((y) => y.text.contains(pattern)))
+                .length ==
+            0)
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
+            child: Card(
+              color: Colors.grey[50],
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Center(
+                  child: Text('Ninguna medida contiene el patrón buscado'),
+                ),
+              ),
+            ),
+          ),
         GestureDetector(
           child: Container(
             margin: EdgeInsets.all(20),
