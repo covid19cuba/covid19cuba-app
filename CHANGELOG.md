@@ -12,6 +12,7 @@
 * Radar graph comparing various parameters of Cuba with other countries in the World section.
 * Bulletin section of the Center for Demographic Studies (CEDEM) of the University of Havana focused on the theme of COVID-19.
 * Download section with the databases used in different formats.
+* Section with the measures of each phase of the post-Covid-19 recovery stage, as well as the phase in which the provinces are located.
 * Section with action protocols, with national scope, that contribute to the prevention, control and management of cases related to Covid-19 disease.
 * Manual registration of the people with whom you had contact (in addition to the date and place) to improve and help the work of the satirical authorities in the fight against the pandemic.
 * Population Assistance Section with the telephone numbers of each province for the Covid-19.
