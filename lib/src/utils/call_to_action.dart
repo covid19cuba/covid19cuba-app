@@ -328,7 +328,7 @@ Widget getWidget(BuildContext context) {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => BulletinsPage(),
+                      builder: (context) => PhasesPage(),
                     ),
                   );
                 },
