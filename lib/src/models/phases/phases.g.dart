@@ -22,11 +22,19 @@ Phases _$PhasesFromJson(Map<String, dynamic> json) {
     ..measures = (json['measures'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(k,
           e == null ? null : PhasesMeasure.fromJson(e as Map<String, dynamic>)),
-    );
+    )
+    ..introExplanation = json['intro_explanation'] as String
+    ..buttonExplanation = json['button_explanation'] as String
+    ..titleExplanation = json['title_explanation'] as String
+    ..contentExplanation = json['content_explanation'] as String;
 }
 
 Map<String, dynamic> _$PhasesToJson(Phases instance) => <String, dynamic>{
       'phases': instance.phases,
       'categories': instance.categories,
       'measures': instance.measures,
+      'intro_explanation': instance.introExplanation,
+      'button_explanation': instance.buttonExplanation,
+      'title_explanation': instance.titleExplanation,
+      'content_explanation': instance.contentExplanation,
     };

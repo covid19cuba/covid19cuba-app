@@ -15,6 +15,14 @@ class Phases extends Model {
   List<PhasesItem> phases;
   Map<String, PhasesCategory> categories;
   Map<String, PhasesMeasure> measures;
+  @JsonKey(name: 'intro_explanation')
+  String introExplanation;
+  @JsonKey(name: 'button_explanation')
+  String buttonExplanation;
+  @JsonKey(name: 'title_explanation')
+  String titleExplanation;
+  @JsonKey(name: 'content_explanation')
+  String contentExplanation;
 
   Phases();
 

@@ -55,6 +55,7 @@ dependencies:
   fluttercontactpicker: ^2.4.2
   collection: ^1.14.12
   separated_column: ^1.0.1+2
+  flutter_markdown: ^0.4.2
 
 dev_dependencies:
   flutter_native_splash: ^0.1.9
