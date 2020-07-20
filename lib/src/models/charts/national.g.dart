@@ -56,6 +56,8 @@ National _$NationalFromJson(Map<String, dynamic> json) {
     ..evolutionSymptomaticsAsymptomaticsDays = json['evolution_of_symptomatics_and_asymptomatics_by_days'] == null ? null : EvolutionSymptomaticsAsymptomaticsDays.fromJson(json['evolution_of_symptomatics_and_asymptomatics_by_days'] as Map<String, dynamic>)
     ..percentEvolutionSymptomaticsAsymptomaticsDays = json['percent_evolution_of_symptomatics_and_asymptomatics_by_days'] == null ? null : PercentEvolutionSymptomaticsAsymptomatics.fromJson(json['percent_evolution_of_symptomatics_and_asymptomatics_by_days'] as Map<String, dynamic>)
     ..percentEvolutionSymptomaticsAsymptomaticsAccumulated = json['percent_evolution_of_symptomatics_and_asymptomatics_accumulated'] == null ? null : PercentEvolutionSymptomaticsAsymptomatics.fromJson(json['percent_evolution_of_symptomatics_and_asymptomatics_accumulated'] as Map<String, dynamic>)
+    ..peopleUnderSurveillanceEvolution = json['people_under_surveillance_evolution'] == null ? null : PeopleUnderSurveillanceEvolution.fromJson(json['people_under_surveillance_evolution'] as Map<String, dynamic>)
+    ..hospitalizedPeopleEvolution = json['hospitalized_people_evolution'] == null ? null : HospitalizedPeopleEvolution.fromJson(json['hospitalized_people_evolution'] as Map<String, dynamic>)
     ..criticsSeriousEvolution = json['critics_serious_evolution'] == null ? null : CriticsSeriousEvolution.fromJson(json['critics_serious_evolution'] as Map<String, dynamic>)
     ..percentCriticsSeriousToActives = json['percent_critics_serious_to_actives'] == null ? null : PercentCriticsSeriousToActives.fromJson(json['percent_critics_serious_to_actives'] as Map<String, dynamic>)
     ..effectiveReproductiveNumber = json['effective_reproductive_number'] == null ? null : EffectiveReproductiveNumber.fromJson(json['effective_reproductive_number'] as Map<String, dynamic>)
@@ -121,6 +123,9 @@ Map<String, dynamic> _$NationalToJson(National instance) => <String, dynamic>{
           instance.percentEvolutionSymptomaticsAsymptomaticsDays,
       'percent_evolution_of_symptomatics_and_asymptomatics_accumulated':
           instance.percentEvolutionSymptomaticsAsymptomaticsAccumulated,
+      'people_under_surveillance_evolution':
+          instance.peopleUnderSurveillanceEvolution,
+      'hospitalized_people_evolution': instance.hospitalizedPeopleEvolution,
       'critics_serious_evolution': instance.criticsSeriousEvolution,
       'percent_critics_serious_to_actives':
           instance.percentCriticsSeriousToActives,

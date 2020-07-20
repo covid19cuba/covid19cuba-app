@@ -55,3 +55,7 @@ export 'touchable_url_widget.dart';
 export 'world_widget.dart';
 export 'pie_deceases_distribution_amount_disease_history_widget.dart';
 export 'distribution_age_groups_deceases_widget.dart';
+export 'critics_serious_evolution_widget.dart';
+export 'percent_critics_serious_to_actives_widget.dart';
+export 'hospitalized_people_evolution_widget.dart';
+export 'people_under_surveillance_evolution_widget.dart';
