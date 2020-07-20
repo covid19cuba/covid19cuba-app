@@ -549,12 +549,12 @@ packages:
     source: hosted
     version: "0.4.0+18"
   path:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.4"
+    version: "1.7.0"
   path_drawing:
     dependency: transitive
     description:
