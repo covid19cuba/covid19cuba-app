@@ -4,7 +4,6 @@
 import 'package:covid19cuba/src/models/charts/data.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:covid19cuba/src/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NationalWidget extends StatelessWidget {
@@ -176,6 +175,40 @@ class NationalWidget extends StatelessWidget {
             child: PercentEvolutionSymptomaticsAsymptomaticsAccumulatedWidget(
               percentEvolutionSymptomaticsAsymptomatics:
                   data.all.percentEvolutionSymptomaticsAsymptomaticsAccumulated,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PeopleUnderSurveillanceEvolutionWidget(
+              peopleUnderSurveillanceEvolution:
+                  data.all.peopleUnderSurveillanceEvolution,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: HospitalizedPeopleEvolutionWidget(
+              hospitalizedPeopleEvolution: data.all.hospitalizedPeopleEvolution,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: CriticsSeriousEvolutionWidget(
+              criticsSeriousEvolution: data.all.criticsSeriousEvolution,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+          child: Card(
+            child: PercentCriticsSeriousToActivesWidget(
+              percentCriticsSeriousToActives:
+                  data.all.percentCriticsSeriousToActives,
             ),
           ),
         ),

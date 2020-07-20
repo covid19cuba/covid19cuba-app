@@ -7,6 +7,8 @@
 * New images and descriptions to the initial welcoming carousel.
 * Separation of men and women in the Distribution chart by age ranges in the General de Cuba chart section.
 * Charts of symptomatic / asymptomatic cases in the General charts section of Cuba.
+* Charts of the evolution of people under surveillance in the General charts section of Cuba.
+* Charts of the evolution of hospitalized people in the General charts section of Cuba.
 * Charts section of cases deceased in Cuba.
 * More news sources such as Juventud Técnica, the Cuban News Agency, Cubadebate, among others.
 * Radar graph comparing various parameters of Cuba with other countries in the World section.
