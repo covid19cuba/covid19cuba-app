@@ -15,6 +15,7 @@ import 'package:covid19cuba/src/models/charts/evolution_of_cases_by_days.dart';
 import 'package:covid19cuba/src/models/charts/evolution_of_deaths_by_days.dart';
 import 'package:covid19cuba/src/models/charts/evolution_of_recovered_by_days.dart';
 import 'package:covid19cuba/src/models/charts/evolution_of_symptomatics_and_asymptomatics_by_days.dart';
+import 'package:covid19cuba/src/models/charts/hospitalized_people_evolution.dart';
 import 'package:covid19cuba/src/models/charts/item.dart';
 import 'package:covid19cuba/src/models/charts/item_code.dart';
 import 'package:covid19cuba/src/models/charts/item_code_plus.dart';
@@ -23,6 +24,7 @@ import 'package:covid19cuba/src/models/charts/item_extended.dart';
 import 'package:covid19cuba/src/models/charts/item_municipality.dart';
 import 'package:covid19cuba/src/models/charts/item_province.dart';
 import 'package:covid19cuba/src/models/charts/multiple_comparison_with_radar.dart';
+import 'package:covid19cuba/src/models/charts/people_under_surveillance_evolution.dart';
 import 'package:covid19cuba/src/models/charts/percent_critics_serious_to_actives.dart';
 import 'package:covid19cuba/src/models/charts/percent_evolution_of_symptomatics_and_asymptomatics.dart';
 import 'package:covid19cuba/src/models/charts/percent_of_symptomatics_and_asymptomatics.dart';
@@ -111,6 +113,12 @@ class National {
       name: 'percent_evolution_of_symptomatics_and_asymptomatics_accumulated')
   PercentEvolutionSymptomaticsAsymptomatics
       percentEvolutionSymptomaticsAsymptomaticsAccumulated;
+
+  @JsonKey(name: 'people_under_surveillance_evolution')
+  PeopleUnderSurveillanceEvolution peopleUnderSurveillanceEvolution;
+
+  @JsonKey(name: 'hospitalized_people_evolution')
+  HospitalizedPeopleEvolution hospitalizedPeopleEvolution;
 
   @JsonKey(name: 'critics_serious_evolution')
   CriticsSeriousEvolution criticsSeriousEvolution;
