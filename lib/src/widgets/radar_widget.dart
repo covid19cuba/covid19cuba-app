@@ -48,6 +48,11 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
 
   @override
   Widget build(BuildContext context) {
+    int width = MediaQuery.of(context).size.width.toInt();
+    String endl = '';
+    if(width<=375){
+      endl = '\\n';
+    }
     return Column(
       children: <Widget>[
         Container(
@@ -132,11 +137,11 @@ class RadarChartWidgetState extends State<RadarChartWidget> {
             },
             indicator: [
               { name: 'Test por millón de habitantes', max: ${selectedData.testPerMillionBound}},
-              { name: '% test positivos', max: ${bounds.testPercent}},
-              { name: 'Stringency Index' , max: ${bounds.stringency}},
+              { name: '% test${endl} positivos', max: ${bounds.testPercent}},
+              { name: 'Stringency${endl} Index' , max: ${bounds.stringency}},
               { name: 'Casos por millón de habitantes', max: ${selectedData.confirmedPerMillionBound}},
-              { name: '% casos recuperados', max: ${bounds.recoveredPercent}},
-              { name: '% casos fallecidos', max: ${bounds.deathPercent}}
+              { name: '% casos${endl} recuperados', max: ${bounds.recoveredPercent}},
+              { name: '% casos${endl} fallecidos', max: ${bounds.deathPercent}}
             ]
           },
           series: [{
