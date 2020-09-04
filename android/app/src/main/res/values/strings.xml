@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Covid19 Cuba Data</string>
+    <string name="content_description_logo">Logotipo de Covid19 Cuba Data</string>
+    <string name="resume">Resumen</string>
+</resources>
